@@ -239,17 +239,6 @@ function collectHtmlUrls(value, path = "", urls = []) {
   return urls;
 }
 
-function collectStringValues(value, strings = []) {
-  if (Array.isArray(value)) {
-    value.forEach((item) => collectStringValues(item, strings));
-  } else if (value && typeof value === "object") {
-    Object.values(value).forEach((child) => collectStringValues(child, strings));
-  } else if (typeof value === "string") {
-    strings.push(value);
-  }
-  return strings;
-}
-
 function collectNamedFields(value, fieldName, path = "", fields = []) {
   if (Array.isArray(value)) {
     value.forEach((item, index) => collectNamedFields(item, fieldName, `${path}[${index}]`, fields));
@@ -263,13 +252,29 @@ function collectNamedFields(value, fieldName, path = "", fields = []) {
   return fields;
 }
 
-const homepageNames = new Set();
-for (const value of collectStringValues(sourceContentJson)) {
-  personalNames(value).forEach((name) => homepageNames.add(name));
+function collectPersonalNamesByPath(value, path = "", names = []) {
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectPersonalNamesByPath(item, `${path}[${index}]`, names));
+  } else if (value && typeof value === "object") {
+    Object.entries(value).forEach(([key, child]) =>
+      collectPersonalNamesByPath(child, path ? `${path}.${key}` : key, names),
+    );
+  } else if (typeof value === "string") {
+    personalNames(value).forEach((name) => names.push({ path, name }));
+  }
+  return names;
 }
-const localizedHomepageValues = collectStringValues(chineseContent);
+
+const localizedHomepageNames = new Map();
+for (const { path, name } of collectPersonalNamesByPath(chineseContent)) {
+  const names = localizedHomepageNames.get(path) || new Set();
+  names.add(name);
+  localizedHomepageNames.set(path, names);
+}
 assert.ok(
-  [...homepageNames].every((name) => localizedHomepageValues.some((value) => value.includes(name))),
+  collectPersonalNamesByPath(sourceContentJson).every(({ path, name }) =>
+    localizedHomepageNames.get(path)?.has(name),
+  ),
   "Homepage personal names changed",
 );
 const localizedAuthors = new Map(
