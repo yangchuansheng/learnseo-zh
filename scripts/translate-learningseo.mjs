@@ -137,18 +137,19 @@ function normalizeLocalizedMarkup(markup, sourceMarkup = "") {
   return preserveStandaloneNames(sourceMarkup, preserved).replace(/[ \t]+$/gm, "");
 }
 
-function normalizeLocalizedJson(value, source) {
+function normalizeLocalizedJson(value, source, fieldKey = "") {
   if (Array.isArray(value) && Array.isArray(source)) {
-    return value.map((item, index) => normalizeLocalizedJson(item, source[index]));
+    return value.map((item, index) => normalizeLocalizedJson(item, source[index], fieldKey));
   }
   if (value && typeof value === "object" && source && typeof source === "object") {
     return Object.fromEntries(
-      Object.entries(value).map(([key, child]) => [
-        key,
-        normalizeLocalizedJson(child, source[key]),
+      Object.entries(value).map(([childKey, child]) => [
+        childKey,
+        normalizeLocalizedJson(child, source[childKey], childKey),
       ]),
     );
   }
+  if (fieldKey === "author" && typeof source === "string") return source;
   if (typeof value === "string" && typeof source === "string" && source.includes("<")) {
     return normalizeLocalizedMarkup(value, source);
   }
@@ -209,6 +210,7 @@ function collectJsonStrings(value, strings, key = "") {
     return;
   }
   if (typeof value !== "string" || skipKeys.has(key)) return;
+  if (key === "author") protectedPeople.add(normalizeText(value));
   if (value.includes("<")) collectMarkupStrings(value, strings);
   else splitText(value).forEach((part) => strings.add(part));
 }

@@ -226,6 +226,19 @@ function collectStringValues(value, strings = []) {
   return strings;
 }
 
+function collectNamedFields(value, fieldName, path = "", fields = []) {
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectNamedFields(item, fieldName, `${path}[${index}]`, fields));
+  } else if (value && typeof value === "object") {
+    Object.entries(value).forEach(([key, child]) =>
+      collectNamedFields(child, fieldName, path ? `${path}.${key}` : key, fields),
+    );
+  } else if (typeof value === "string" && path.endsWith(`.${fieldName}`)) {
+    fields.push({ path, value });
+  }
+  return fields;
+}
+
 const homepageNames = new Set();
 for (const value of collectStringValues(sourceContentJson)) {
   personalNames(value).forEach((name) => homepageNames.add(name));
@@ -234,6 +247,15 @@ const localizedHomepageValues = collectStringValues(chineseContent);
 assert.ok(
   [...homepageNames].every((name) => localizedHomepageValues.some((value) => value.includes(name))),
   "Homepage personal names changed",
+);
+const localizedAuthors = new Map(
+  collectNamedFields(chineseContent, "author").map(({ path, value }) => [path, value]),
+);
+assert.ok(
+  collectNamedFields(sourceContentJson, "author").every(
+    ({ path, value }) => localizedAuthors.get(path) === value,
+  ),
+  "Homepage author names changed",
 );
 
 assert.deepEqual(collectLinks(chineseContent), collectLinks(sourceContentJson), "Homepage URLs changed");
