@@ -60,7 +60,7 @@ export function HeaderNavigation() {
       className={`left-0 right-0 top-0 z-[100] mx-auto flex items-center justify-between ${
         scrolled
           ? "fixed w-full max-w-none bg-[#f2f2f2] px-3 py-[10px] shadow-[0_1px_10px_rgba(0,0,0,0.07)]"
-          : "absolute w-[calc(100%_-_40px)] py-5 md:w-[88%] md:max-w-[1267px] md:pt-10 md:pb-20 min-[1368px]:pt-20 min-[1368px]:pb-[120px]"
+          : "absolute w-[calc(100%_-_40px)] py-5 md:w-[88%] md:max-w-[1267px] md:pt-10 md:pb-20 xl:pt-20 xl:pb-[120px]"
       }`}
     >
       <a

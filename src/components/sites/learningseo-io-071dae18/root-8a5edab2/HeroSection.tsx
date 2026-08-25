@@ -4,10 +4,10 @@ const animationSource = "/sites/learningseo-io-071dae18/root-8a5edab2/hero-anima
 
 export function HeroSection() {
   return (
-    <section className="relative w-full overflow-visible pt-[78px] md:pt-[158px] min-[1368px]:pt-[238px]">
+    <section className="relative w-full overflow-visible pt-[78px] md:pt-[158px] xl:pt-[238px]">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-[-40px] right-[-35%] z-0 w-[110%] max-w-[450px] overflow-hidden min-[400px]:top-[-10px] min-[400px]:right-[-30%] min-[500px]:top-0 min-[500px]:right-[-20%] min-[575px]:top-[30px] min-[575px]:right-0 min-[575px]:w-1/2 md:hidden min-[1080px]:top-[120px] min-[1080px]:right-[-15%] min-[1080px]:block min-[1080px]:w-[60%] min-[1080px]:max-w-none min-[1368px]:top-[232px] min-[1368px]:right-0 min-[1368px]:w-[48%]"
+        className="pointer-events-none absolute top-[-40px] right-[-35%] z-0 w-[110%] max-w-[450px] overflow-hidden min-[400px]:top-[-10px] min-[400px]:right-[-30%] min-[500px]:top-0 min-[500px]:right-[-20%] min-[575px]:top-[30px] min-[575px]:right-0 min-[575px]:w-1/2 md:hidden lg:top-[120px] lg:right-[-15%] lg:block lg:w-[60%] lg:max-w-none xl:top-[232px] xl:right-0 xl:w-[48%]"
       >
         <object
           data={animationSource}
@@ -22,7 +22,7 @@ export function HeroSection() {
       <article className="relative z-10 mx-auto w-[calc(100%_-_40px)] md:w-[88%] md:max-w-[1224px] min-[1368px]:pl-20">
         <header className="max-w-[850px]">
           <h1
-            className="mt-[25px] mb-[15px] max-w-[255px] text-[24.5px] leading-[32.9px] font-extrabold text-[#000036] [&_.color-violeta]:text-[#a87be9] md:mt-0 md:mb-[25px] md:max-w-none md:text-[72px] md:leading-[84px] min-[768px]:max-[980px]:max-w-[70%] min-[768px]:max-[980px]:text-[57.8px] min-[768px]:max-[980px]:leading-[63.75px] min-[1368px]:text-[76.5px] min-[1368px]:leading-[89.25px]"
+            className="mt-[25px] mb-[15px] max-w-[255px] text-[24.5px] leading-[32.9px] font-extrabold text-[#000036] [&_.color-violeta]:text-[#a87be9] md:mt-0 md:mb-[25px] md:max-w-none md:text-[72px] md:leading-[84px] min-[768px]:max-[980px]:max-w-[70%] min-[768px]:max-[980px]:text-[57.8px] min-[768px]:max-[980px]:leading-[63.75px] xl:text-[76.5px] xl:leading-[89.25px]"
             dangerouslySetInnerHTML={{ __html: content.hero.titleHtml }}
           />
         </header>
