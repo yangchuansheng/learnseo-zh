@@ -1,9 +1,29 @@
+import { FaqSection } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/FaqSection";
+import { FooterSection } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/FooterSection";
+import { HeaderNavigation } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/HeaderNavigation";
+import { HeroSection } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/HeroSection";
+import { ResourceBanner } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/ResourceBanner";
+import { RoadmapSection } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/RoadmapSection";
+import { TipsSection } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/TipsSection";
+import { VideoGallery } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/VideoGallery";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <p className="text-muted-foreground">
-        Clone target not yet built. Run <code className="font-mono text-foreground">/clone-website</code> to start.
-      </p>
-    </main>
+    <div data-learning-seo className="min-h-screen">
+      <HeaderNavigation />
+      <main className="relative">
+        <HeroSection />
+        <div className="mx-auto w-[calc(100%-40px)] max-w-[1224px]">
+          <RoadmapSection />
+        </div>
+        <ResourceBanner />
+        <div className="mx-auto w-[calc(100%-40px)] max-w-[1224px]">
+          <VideoGallery />
+        </div>
+        <FaqSection />
+        <TipsSection />
+      </main>
+      <FooterSection />
+    </div>
   );
 }
