@@ -1,100 +1,100 @@
 {
-  "source": "https://learningseo.io/",
+  "source": "/",
   "extractedAt": "2026-08-25T05:50:56.114Z",
   "header": {
     "menuTitle": "Roadmap",
     "navigation": [
       {
         "label": "SEO Fundamentals",
-        "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/",
+        "href": "/seo_roadmap/seo-fundamentals/",
         "children": [
           {
             "label": "Introduction to SEO",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/introduction-to-seo/"
+            "href": "/seo_roadmap/seo-fundamentals/introduction-to-seo/"
           },
           {
             "label": "Keyword Research",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/keyword-research/"
+            "href": "/seo_roadmap/seo-fundamentals/keyword-research/"
           },
           {
             "label": "Competition analysis",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/competition-analysis/"
+            "href": "/seo_roadmap/seo-fundamentals/competition-analysis/"
           },
           {
             "label": "Technical optimization",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/technical-seo/"
+            "href": "/seo_roadmap/seo-fundamentals/technical-seo/"
           },
           {
             "label": "Content optimization",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/content-optimization/"
+            "href": "/seo_roadmap/seo-fundamentals/content-optimization/"
           },
           {
             "label": "Link building",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/link-building/"
+            "href": "/seo_roadmap/seo-fundamentals/link-building/"
           }
         ]
       },
       {
         "label": "Execute an SEO Process",
-        "href": "https://learningseo.io/seo_roadmap/execute-seo/",
+        "href": "/seo_roadmap/execute-seo/",
         "children": [
           {
             "label": "Developing an SEO Audit",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-audits-recommendations/"
+            "href": "/seo_roadmap/execute-seo/seo-audits-recommendations/"
           },
           {
             "label": "Measuring SEO",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-measurement/"
+            "href": "/seo_roadmap/execute-seo/seo-measurement/"
           },
           {
             "label": "Reporting SEO",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-reporting/"
+            "href": "/seo_roadmap/execute-seo/seo-reporting/"
           }
         ]
       },
       {
         "label": "SEO in your CMS",
-        "href": "https://learningseo.io/seo_roadmap/implement-in-cms/",
+        "href": "/seo_roadmap/implement-in-cms/",
         "children": []
       },
       {
         "label": "Deepen your SEO Knowledge",
-        "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/",
+        "href": "/seo_roadmap/deepen-knowledge/",
         "children": []
       },
       {
         "label": "Specialize within SEO",
-        "href": "https://learningseo.io/seo_roadmap/specialize/",
+        "href": "/seo_roadmap/specialize/",
         "children": []
       },
       {
         "label": "Automate SEO Tasks",
-        "href": "https://learningseo.io/seo_roadmap/automate-tasks/",
+        "href": "/seo_roadmap/automate-tasks/",
         "children": []
       },
       {
         "label": "SEO in other Search Engines",
-        "href": "https://learningseo.io/seo_roadmap/other-search-engines/",
+        "href": "/seo_roadmap/other-search-engines/",
         "children": []
       },
       {
         "label": "Keep up with SEO News",
-        "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/",
+        "href": "/seo_roadmap/keep-up-with-news/",
         "children": []
       },
       {
         "label": "Free SEO Tools To Use",
-        "href": "https://learningseo.io/seo_roadmap/seo-tools/",
+        "href": "/seo_roadmap/seo-tools/",
         "children": []
       },
       {
         "label": "Complement your SEO",
-        "href": "https://learningseo.io/seo_roadmap/complement-knowledge/",
+        "href": "/seo_roadmap/complement-knowledge/",
         "children": []
       },
       {
         "label": "Train, test & troubleshoot your SEO further",
-        "href": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+        "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
         "children": []
       },
       {
@@ -136,9 +136,9 @@
     "version": "Version 28",
     "updated": "Updated on June 9, 2025",
     "paragraphsHtml": [
-      "Start learning SEO or expand your SEO education to grow your site’s organic search traffic by understanding every aspect of a <a class=\"inlinks\" href=\"https://learningseo.io/seo_roadmap/other-search-engines/\">search engine</a> optimization process to become or grow further as an SEO specialist with Learning SEO.",
-      "LearningSEO.io is a comprehensive roadmap, featuring the main SEO areas and phases, along with free reliable guides, tips, FAQs and <a class=\"inlinks\" href=\"https://learningseo.io/seo_roadmap/seo-tools/\">tools to learn about each</a>; including those related to AI Search.",
-      "From SEO fundamentals concepts, such as keyword research, <a class=\"inlinks\" href=\"https://learningseo.io/seo_roadmap/deepen-knowledge/backlinks/\">link building</a>, to <a class=\"inlinks\" href=\"https://learningseo.io/seo_roadmap/deepen-knowledge/content/content-pruning/\">content</a> optimization, technical SEO, to SEO metrics to monitor, how to establish an SEO strategy and what to do when a search algorithm update happens, SEO advice and tips about each main topic from specialists and more, here you’ll find a complete roadmap to learn all the aspects of SEO with free reliable comprehensive blog posts, guides, online courses, resources and tools developed by the SEO community."
+      "Start learning SEO or expand your SEO education to grow your site’s organic search traffic by understanding every aspect of a <a class=\"inlinks\" href=\"/seo_roadmap/other-search-engines/\">search engine</a> optimization process to become or grow further as an SEO specialist with Learning SEO.",
+      "LearningSEO.io is a comprehensive roadmap, featuring the main SEO areas and phases, along with free reliable guides, tips, FAQs and <a class=\"inlinks\" href=\"/seo_roadmap/seo-tools/\">tools to learn about each</a>; including those related to AI Search.",
+      "From SEO fundamentals concepts, such as keyword research, <a class=\"inlinks\" href=\"/seo_roadmap/deepen-knowledge/backlinks/\">link building</a>, to <a class=\"inlinks\" href=\"/seo_roadmap/deepen-knowledge/content/content-pruning/\">content</a> optimization, technical SEO, to SEO metrics to monitor, how to establish an SEO strategy and what to do when a search algorithm update happens, SEO advice and tips about each main topic from specialists and more, here you’ll find a complete roadmap to learn all the aspects of SEO with free reliable comprehensive blog posts, guides, online courses, resources and tools developed by the SEO community."
     ]
   },
   "roadmap": {
@@ -148,32 +148,32 @@
       {
         "number": "1",
         "title": "SEO Fundamentals",
-        "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/",
+        "href": "/seo_roadmap/seo-fundamentals/",
         "descriptionHtml": "Start learning SEO with the fundamental concepts and areas, why they're important, and the basics to execute them: keyword research, content optimization analysis, technical optimization and link building.",
         "links": [
           {
             "label": "Introduction to SEO",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/introduction-to-seo/"
+            "href": "/seo_roadmap/seo-fundamentals/introduction-to-seo/"
           },
           {
             "label": "Keyword Research",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/keyword-research/"
+            "href": "/seo_roadmap/seo-fundamentals/keyword-research/"
           },
           {
             "label": "Competition analysis",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/competition-analysis/"
+            "href": "/seo_roadmap/seo-fundamentals/competition-analysis/"
           },
           {
             "label": "Content optimization",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/content-optimization/"
+            "href": "/seo_roadmap/seo-fundamentals/content-optimization/"
           },
           {
             "label": "Technical optimization",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/technical-seo/"
+            "href": "/seo_roadmap/seo-fundamentals/technical-seo/"
           },
           {
             "label": "Link building",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/link-building/"
+            "href": "/seo_roadmap/seo-fundamentals/link-building/"
           }
         ],
         "initiallyOpen": true
@@ -181,40 +181,40 @@
       {
         "number": "2",
         "title": "Execute an SEO Process",
-        "href": "https://learningseo.io/seo_roadmap/execute-seo/",
+        "href": "/seo_roadmap/execute-seo/",
         "descriptionHtml": "Once you know the main SEO concepts, it's time to put them in practice by learning to develop an SEO process, from establishing a strategy and setting goals to management, measurement, and reporting.",
         "links": [
           {
             "label": "Establishing an SEO Strategy",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/#establishing-an-seo-strategy"
+            "href": "/seo_roadmap/execute-seo/#establishing-an-seo-strategy"
           },
           {
             "label": "Setting SEO Goals",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/setting-seo-goals/"
+            "href": "/seo_roadmap/execute-seo/setting-seo-goals/"
           },
           {
             "label": "Measuring SEO",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-measurement/"
+            "href": "/seo_roadmap/execute-seo/seo-measurement/"
           },
           {
             "label": "Reporting SEO",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-reporting/"
+            "href": "/seo_roadmap/execute-seo/seo-reporting/"
           },
           {
             "label": "Developing an SEO Audit",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-audits-recommendations/"
+            "href": "/seo_roadmap/execute-seo/seo-audits-recommendations/"
           },
           {
             "label": "Getting SEO Buy-In",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-buy-in/"
+            "href": "/seo_roadmap/execute-seo/seo-buy-in/"
           },
           {
             "label": "SEO Process Management",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/#seo-process-management"
+            "href": "/seo_roadmap/execute-seo/#seo-process-management"
           },
           {
             "label": "Common SEO Execution Mistakes To Avoid",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-execution-mistakes/"
+            "href": "/seo_roadmap/execute-seo/seo-execution-mistakes/"
           }
         ],
         "initiallyOpen": false
@@ -222,32 +222,32 @@
       {
         "number": "3",
         "title": "SEO in your CMS",
-        "href": "https://learningseo.io/seo_roadmap/implement-in-cms/",
+        "href": "/seo_roadmap/implement-in-cms/",
         "descriptionHtml": "Learn to implement the most important SEO configurations in the top Web platforms in the market, along with considerations to take into account.",
         "links": [
           {
             "label": "Shopify SEO Guidelines",
-            "href": "https://learningseo.io/seo_roadmap/implement-in-cms/#shopify-seo-guidelines"
+            "href": "/seo_roadmap/implement-in-cms/#shopify-seo-guidelines"
           },
           {
             "label": "Magento SEO Guidelines",
-            "href": "https://learningseo.io/seo_roadmap/implement-in-cms/#magento-seo-guidelines"
+            "href": "/seo_roadmap/implement-in-cms/#magento-seo-guidelines"
           },
           {
             "label": "Webflow SEO Guidelines",
-            "href": "https://learningseo.io/seo_roadmap/implement-in-cms/#webflow-seo-guidelines"
+            "href": "/seo_roadmap/implement-in-cms/#webflow-seo-guidelines"
           },
           {
             "label": "Squarespace SEO Guidelines",
-            "href": "https://learningseo.io/seo_roadmap/implement-in-cms/#squarespace-seo-guidelines"
+            "href": "/seo_roadmap/implement-in-cms/#squarespace-seo-guidelines"
           },
           {
             "label": "WordPress SEO Guidelines",
-            "href": "https://learningseo.io/seo_roadmap/implement-in-cms/#wordpress-seo-guidelines"
+            "href": "/seo_roadmap/implement-in-cms/#wordpress-seo-guidelines"
           },
           {
             "label": "Wix SEO Guidelines",
-            "href": "https://learningseo.io/seo_roadmap/implement-in-cms/#wix-seo-guidelines"
+            "href": "/seo_roadmap/implement-in-cms/#wix-seo-guidelines"
           }
         ],
         "initiallyOpen": false
@@ -255,228 +255,228 @@
       {
         "number": "4",
         "title": "Deepen your SEO Knowledge",
-        "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/",
+        "href": "/seo_roadmap/deepen-knowledge/",
         "descriptionHtml": "It's time for an SEO deep-dive into those particular areas and common scenarios where you have a bigger interest or need to tackle.",
         "links": [
           {
             "label": "Javascript SEO Guidelines",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#javascript-seo-guidelines"
+            "href": "/seo_roadmap/deepen-knowledge/#javascript-seo-guidelines"
           },
           {
             "label": "Internal Linking Optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#internal-linking-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#internal-linking-optimization"
           },
           {
             "label": "Logfile Analysis for SEO",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#logfile-analysis-for-seo"
+            "href": "/seo_roadmap/deepen-knowledge/#logfile-analysis-for-seo"
           },
           {
             "label": "Crawl budget optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#crawl-budget-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#crawl-budget-optimization"
           },
           {
             "label": "Mobile optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#mobile-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#mobile-optimization"
           },
           {
             "label": "Web speed optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#web-speed-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#web-speed-optimization"
           },
           {
             "label": "Edge SEO",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#edge-seo"
+            "href": "/seo_roadmap/deepen-knowledge/#edge-seo"
           },
           {
             "label": "XML Sitemaps optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#xml-sitemaps-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#xml-sitemaps-optimization"
           },
           {
             "label": "Robots.txt optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#robots-txt-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#robots-txt-optimization"
           },
           {
             "label": "Paginations optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#paginations-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#paginations-optimization"
           },
           {
             "label": "Developing topic clusters",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#developing-topic-clusters"
+            "href": "/seo_roadmap/deepen-knowledge/#developing-topic-clusters"
           },
           {
             "label": "Keyword mapping",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#keyword-mapping"
+            "href": "/seo_roadmap/deepen-knowledge/#keyword-mapping"
           },
           {
             "label": "Content Quality and E-E-A-T",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/quality-eeat/"
+            "href": "/seo_roadmap/deepen-knowledge/content/quality-eeat/"
           },
           {
             "label": "Keyword cannibalization analysis",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#keyword-cannibalization-analysis"
+            "href": "/seo_roadmap/deepen-knowledge/#keyword-cannibalization-analysis"
           },
           {
             "label": "Image optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#image-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#image-optimization"
           },
           {
             "label": "Video optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#video-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#video-optimization"
           },
           {
             "label": "Structured data",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#structured-data"
+            "href": "/seo_roadmap/deepen-knowledge/#structured-data"
           },
           {
             "label": "Content pruning for SEO",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/content-pruning/"
+            "href": "/seo_roadmap/deepen-knowledge/content/content-pruning/"
           },
           {
             "label": "Avoiding Duplicate Content",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/avoiding-duplicate-content/"
+            "href": "/seo_roadmap/deepen-knowledge/content/avoiding-duplicate-content/"
           },
           {
             "label": "Programmatic SEO",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/programmatic-seo/"
+            "href": "/seo_roadmap/deepen-knowledge/content/programmatic-seo/"
           },
           {
             "label": "Backlinks analysis",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#backlinks-analysis"
+            "href": "/seo_roadmap/deepen-knowledge/#backlinks-analysis"
           },
           {
             "label": "Outreach for link building",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#outreach-for-link-building"
+            "href": "/seo_roadmap/deepen-knowledge/#outreach-for-link-building"
           },
           {
             "label": "Disavowing backlinks",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#disavowing-backlinks"
+            "href": "/seo_roadmap/deepen-knowledge/#disavowing-backlinks"
           },
           {
             "label": "Digital PR & Link Building",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#digital-pr-link-building"
+            "href": "/seo_roadmap/deepen-knowledge/#digital-pr-link-building"
           },
           {
             "label": "Broken link building",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#broken-link-building"
+            "href": "/seo_roadmap/deepen-knowledge/#broken-link-building"
           },
           {
             "label": "SEO Forecasting",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/seo-forecasting/"
+            "href": "/seo_roadmap/deepen-knowledge/management/seo-forecasting/"
           },
           {
             "label": "Calculate SEO ROI",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#calculate-seo-roi"
+            "href": "/seo_roadmap/deepen-knowledge/#calculate-seo-roi"
           },
           {
             "label": "Show SEO Value to Non-SEOs",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#show-seo-value-to-non-seos"
+            "href": "/seo_roadmap/deepen-knowledge/#show-seo-value-to-non-seos"
           },
           {
             "label": "Budgeting SEO",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#budgeting-seo"
+            "href": "/seo_roadmap/deepen-knowledge/#budgeting-seo"
           },
           {
             "label": "SEO Myths",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#seo-myths"
+            "href": "/seo_roadmap/deepen-knowledge/#seo-myths"
           },
           {
             "label": "Building an SEO Team",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#building-an-seo-team"
+            "href": "/seo_roadmap/deepen-knowledge/#building-an-seo-team"
           },
           {
             "label": "SEO Product Management",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#seo-product-management"
+            "href": "/seo_roadmap/deepen-knowledge/#seo-product-management"
           },
           {
             "label": "Communication with SEO Stakeholders",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#communication-with-seo-stakeholders"
+            "href": "/seo_roadmap/deepen-knowledge/#communication-with-seo-stakeholders"
           },
           {
             "label": "Creating SEO Contracts",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#creating-seo-contracts"
+            "href": "/seo_roadmap/deepen-knowledge/#creating-seo-contracts"
           },
           {
             "label": "SEO Jobs Interviews",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#seo-jobs-interviews"
+            "href": "/seo_roadmap/deepen-knowledge/#seo-jobs-interviews"
           },
           {
             "label": "SERP Features optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#serp-features-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#serp-features-optimization"
           },
           {
             "label": "SEO Testing",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#seo-testing"
+            "href": "/seo_roadmap/deepen-knowledge/#seo-testing"
           },
           {
             "label": "Web Stories",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#web-stories"
+            "href": "/seo_roadmap/deepen-knowledge/#web-stories"
           },
           {
             "label": "Google Discover",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#google-discover"
+            "href": "/seo_roadmap/deepen-knowledge/#google-discover"
           },
           {
             "label": "Knowledge Panel optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#knowledge-panel-optimization"
+            "href": "/seo_roadmap/deepen-knowledge/#knowledge-panel-optimization"
           },
           {
             "label": "Google AIO's, AI Mode and LLMs Optimization",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/opportunities/google-ai-overviews/"
+            "href": "/seo_roadmap/deepen-knowledge/opportunities/google-ai-overviews/"
           },
           {
             "label": "Search Rankings Drop Analysis",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#search-rankings-drop-analysis"
+            "href": "/seo_roadmap/deepen-knowledge/#search-rankings-drop-analysis"
           },
           {
             "label": "SEO for Web Migrations",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#seo-for-web-migrations"
+            "href": "/seo_roadmap/deepen-knowledge/#seo-for-web-migrations"
           },
           {
             "label": "SEO for Web Redesigns",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#seo-for-web-redesigns"
+            "href": "/seo_roadmap/deepen-knowledge/#seo-for-web-redesigns"
           },
           {
             "label": "SEO for New Web Launch",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#seo-for-new-web-launch"
+            "href": "/seo_roadmap/deepen-knowledge/#seo-for-new-web-launch"
           },
           {
             "label": "Google Core Search Updates Analysis and Recovery",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/google-core-updates-recovery/"
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/google-core-updates-recovery/"
           },
           {
             "label": "Dealing with Google Penalties",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#dealing-with-google-penalties"
+            "href": "/seo_roadmap/deepen-knowledge/#dealing-with-google-penalties"
           },
           {
             "label": "Removing URLs from Google",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#removing-urls-from-google"
+            "href": "/seo_roadmap/deepen-knowledge/#removing-urls-from-google"
           },
           {
             "label": "Optimizing Product Pages",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#optimizing-product-pages"
+            "href": "/seo_roadmap/deepen-knowledge/#optimizing-product-pages"
           },
           {
             "label": "Optimizing Faceted Navigation",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#optimizing-faceted-navigation"
+            "href": "/seo_roadmap/deepen-knowledge/#optimizing-faceted-navigation"
           },
           {
             "label": "Detect & Protect from Negative SEO",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/#detect-protect-from-negative-seo"
+            "href": "/seo_roadmap/deepen-knowledge/#detect-protect-from-negative-seo"
           },
           {
             "label": "SEO For Black Friday, Cyber Monday and Holiday Season Deals",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/black-friday-cyber-monday-holiday-seo-season/"
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/black-friday-cyber-monday-holiday-seo-season/"
           },
           {
             "label": "SEO Predictions, Trends & Tips for 2025",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/seo-predictions-trends-tips/"
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/seo-predictions-trends-tips/"
           },
           {
             "label": "SEO for Brand Recognition & Visibility",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/seo-branding/"
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/seo-branding/"
           },
           {
             "label": "The Great Decoupling or How to Optimize for Zero Click Search",
-            "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/great-decoupling/"
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/great-decoupling/"
           }
         ],
         "initiallyOpen": false
@@ -484,40 +484,40 @@
       {
         "number": "5.1",
         "title": "Specialize within SEO",
-        "href": "https://learningseo.io/seo_roadmap/specialize/",
+        "href": "/seo_roadmap/specialize/",
         "descriptionHtml": "Learn and specialize in one of the most popular SEO verticals.",
         "links": [
           {
             "label": "International SEO",
-            "href": "https://learningseo.io/seo_roadmap/specialize/#international-seo"
+            "href": "/seo_roadmap/specialize/#international-seo"
           },
           {
             "label": "E-commerce SEO",
-            "href": "https://learningseo.io/seo_roadmap/specialize/#e-commerce-seo"
+            "href": "/seo_roadmap/specialize/#e-commerce-seo"
           },
           {
             "label": "Local SEO",
-            "href": "https://learningseo.io/seo_roadmap/specialize/#local-seo"
+            "href": "/seo_roadmap/specialize/#local-seo"
           },
           {
             "label": "Enterprise SEO",
-            "href": "https://learningseo.io/seo_roadmap/specialize/#enterprise-seo"
+            "href": "/seo_roadmap/specialize/#enterprise-seo"
           },
           {
             "label": "News SEO",
-            "href": "https://learningseo.io/seo_roadmap/specialize/#news-seo"
+            "href": "/seo_roadmap/specialize/#news-seo"
           },
           {
             "label": "Saas SEO",
-            "href": "https://learningseo.io/seo_roadmap/specialize/#saas-seo"
+            "href": "/seo_roadmap/specialize/#saas-seo"
           },
           {
             "label": "Travel SEO",
-            "href": "https://learningseo.io/seo_roadmap/specialize/#travel-seo"
+            "href": "/seo_roadmap/specialize/#travel-seo"
           },
           {
             "label": "Small Business SEO",
-            "href": "https://learningseo.io/seo_roadmap/specialize/#small-business-seo"
+            "href": "/seo_roadmap/specialize/#small-business-seo"
           }
         ],
         "initiallyOpen": false
@@ -525,40 +525,40 @@
       {
         "number": "5.2",
         "title": "Automate SEO Tasks",
-        "href": "https://learningseo.io/seo_roadmap/automate-tasks/",
+        "href": "/seo_roadmap/automate-tasks/",
         "descriptionHtml": "Learn to automate your SEO tasks and accelerate your SEO process execution.",
         "links": [
           {
             "label": "Python for SEO",
-            "href": "https://learningseo.io/seo_roadmap/automate-tasks/#python-for-seo"
+            "href": "/seo_roadmap/automate-tasks/#python-for-seo"
           },
           {
             "label": "BigQuery & SQL for SEO",
-            "href": "https://learningseo.io/seo_roadmap/automate-tasks/#bigquery-sql-for-seo"
+            "href": "/seo_roadmap/automate-tasks/#bigquery-sql-for-seo"
           },
           {
             "label": "R for SEO",
-            "href": "https://learningseo.io/seo_roadmap/automate-tasks/#r-for-seo"
+            "href": "/seo_roadmap/automate-tasks/#r-for-seo"
           },
           {
             "label": "App Scripts for SEO",
-            "href": "https://learningseo.io/seo_roadmap/automate-tasks/#app-scripts-for-seo"
+            "href": "/seo_roadmap/automate-tasks/#app-scripts-for-seo"
           },
           {
             "label": "RegEx for SEO",
-            "href": "https://learningseo.io/seo_roadmap/automate-tasks/#regex-for-seo"
+            "href": "/seo_roadmap/automate-tasks/#regex-for-seo"
           },
           {
             "label": "JS for SEO",
-            "href": "https://learningseo.io/seo_roadmap/automate-tasks/#js-for-seo"
+            "href": "/seo_roadmap/automate-tasks/#js-for-seo"
           },
           {
             "label": "AI LLMs & Chatbots for SEO",
-            "href": "https://learningseo.io/seo_roadmap/automate-tasks/#ai-llms-chatbots-for-seo"
+            "href": "/seo_roadmap/automate-tasks/#ai-llms-chatbots-for-seo"
           },
           {
             "label": "Machine Learning for SEO",
-            "href": "https://learningseo.io/seo_roadmap/automate-tasks/machine-learning-seo/"
+            "href": "/seo_roadmap/automate-tasks/machine-learning-seo/"
           }
         ],
         "initiallyOpen": false
@@ -566,40 +566,40 @@
       {
         "number": "6",
         "title": "SEO in other Search Engines",
-        "href": "https://learningseo.io/seo_roadmap/other-search-engines/",
+        "href": "/seo_roadmap/other-search-engines/",
         "descriptionHtml": "Learn how to rank in other search engines besides Google.",
         "links": [
           {
             "label": "Bing SEO Guidelines & Tips",
-            "href": "https://learningseo.io/seo_roadmap/other-search-engines/#bing-seo-guidelines-tips"
+            "href": "/seo_roadmap/other-search-engines/#bing-seo-guidelines-tips"
           },
           {
             "label": "Yandex SEO Guidelines & Tips",
-            "href": "https://learningseo.io/seo_roadmap/other-search-engines/#yandex-seo-guidelines-tips"
+            "href": "/seo_roadmap/other-search-engines/#yandex-seo-guidelines-tips"
           },
           {
             "label": "Baidu SEO Guidelines & Tips",
-            "href": "https://learningseo.io/seo_roadmap/other-search-engines/#baidu-seo-guidelines-tips"
+            "href": "/seo_roadmap/other-search-engines/#baidu-seo-guidelines-tips"
           },
           {
             "label": "Naver SEO Guidelines & Tips",
-            "href": "https://learningseo.io/seo_roadmap/other-search-engines/#naver-seo-guidelines-tips"
+            "href": "/seo_roadmap/other-search-engines/#naver-seo-guidelines-tips"
           },
           {
             "label": "Amazon SEO Guidelines & Tips",
-            "href": "https://learningseo.io/seo_roadmap/other-search-engines/#amazon-seo-guidelines-tips"
+            "href": "/seo_roadmap/other-search-engines/#amazon-seo-guidelines-tips"
           },
           {
             "label": "Youtube SEO Guidelines & Tips",
-            "href": "https://learningseo.io/seo_roadmap/other-search-engines/#youtube-seo-guidelines-tips"
+            "href": "/seo_roadmap/other-search-engines/#youtube-seo-guidelines-tips"
           },
           {
             "label": "TikTok SEO Guidelines & Tips",
-            "href": "https://learningseo.io/seo_roadmap/other-search-engines/tiktok-seo-guidelines/"
+            "href": "/seo_roadmap/other-search-engines/tiktok-seo-guidelines/"
           },
           {
             "label": "Reddit For SEO Guidelines & Tips",
-            "href": "https://learningseo.io/seo_roadmap/other-search-engines/reddit-seo-guidelines/"
+            "href": "/seo_roadmap/other-search-engines/reddit-seo-guidelines/"
           }
         ],
         "initiallyOpen": false
@@ -607,32 +607,32 @@
       {
         "number": "7",
         "title": "Keep up with SEO News",
-        "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/",
+        "href": "/seo_roadmap/keep-up-with-news/",
         "descriptionHtml": "Stay updated with the latest news, updates and resources in SEO.",
         "links": [
           {
             "label": "Search Engine’s Official Publications",
-            "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/#search-engines-official-publications"
+            "href": "/seo_roadmap/keep-up-with-news/#search-engines-official-publications"
           },
           {
             "label": "Search News Publications",
-            "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/#search-news-publications"
+            "href": "/seo_roadmap/keep-up-with-news/#search-news-publications"
           },
           {
             "label": "Search News Aggregators",
-            "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/#search-news-aggregators"
+            "href": "/seo_roadmap/keep-up-with-news/#search-news-aggregators"
           },
           {
             "label": "SEO Podcasts",
-            "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/#seo-podcasts"
+            "href": "/seo_roadmap/keep-up-with-news/#seo-podcasts"
           },
           {
             "label": "SEO Newsletters",
-            "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/#seo-newsletters"
+            "href": "/seo_roadmap/keep-up-with-news/#seo-newsletters"
           },
           {
             "label": "Online Events",
-            "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/#online-events"
+            "href": "/seo_roadmap/keep-up-with-news/#online-events"
           }
         ],
         "initiallyOpen": false
@@ -640,32 +640,32 @@
       {
         "number": "9",
         "title": "Optimize for AI Search (GEO, AEO, LLMO)",
-        "href": "https://learningseo.io/seo_roadmap/optimize-ai-search/",
+        "href": "/seo_roadmap/optimize-ai-search/",
         "descriptionHtml": "Learn about AI search optimization with free, reliable guides and resources.",
         "links": [
           {
             "label": "AI Search Landscape",
-            "href": "https://learningseo.io/seo_roadmap/optimize-ai-search/ai-search-landscape/"
+            "href": "/seo_roadmap/optimize-ai-search/ai-search-landscape/"
           },
           {
             "label": "AI Search Optimization Fundamentals",
-            "href": "https://learningseo.io/seo_roadmap/optimize-ai-search/fundamentals-ai-search-optimization/"
+            "href": "/seo_roadmap/optimize-ai-search/fundamentals-ai-search-optimization/"
           },
           {
             "label": "Optimizing Content for AI Search",
-            "href": "https://learningseo.io/seo_roadmap/optimize-ai-search/ai-search-content-optimization/"
+            "href": "/seo_roadmap/optimize-ai-search/ai-search-content-optimization/"
           },
           {
             "label": "Technical Optimization for AI Search",
-            "href": "https://learningseo.io/seo_roadmap/optimize-ai-search/ai-search-technical-optimization/"
+            "href": "/seo_roadmap/optimize-ai-search/ai-search-technical-optimization/"
           },
           {
             "label": "Measuring AI Search Visibility & Traffic",
-            "href": "https://learningseo.io/seo_roadmap/optimize-ai-search/measuring-ai-search/"
+            "href": "/seo_roadmap/optimize-ai-search/measuring-ai-search/"
           },
           {
             "label": "AI Search Tracking and Optimization Tools",
-            "href": "https://learningseo.io/seo_roadmap/optimize-ai-search/tools/"
+            "href": "/seo_roadmap/optimize-ai-search/tools/"
           }
         ],
         "initiallyOpen": false
@@ -673,40 +673,40 @@
       {
         "number": "8",
         "title": "Complement your SEO",
-        "href": "https://learningseo.io/seo_roadmap/complement-knowledge/",
+        "href": "/seo_roadmap/complement-knowledge/",
         "descriptionHtml": "Learn about complementary areas that can help you as an SEO.",
         "links": [
           {
             "label": "HTML & CSS",
-            "href": "https://learningseo.io/seo_roadmap/complement-knowledge/#html-css"
+            "href": "/seo_roadmap/complement-knowledge/#html-css"
           },
           {
             "label": "Javascript",
-            "href": "https://learningseo.io/seo_roadmap/complement-knowledge/#javascript"
+            "href": "/seo_roadmap/complement-knowledge/#javascript"
           },
           {
             "label": "Soft Skills",
-            "href": "https://learningseo.io/seo_roadmap/complement-knowledge/#soft-skills"
+            "href": "/seo_roadmap/complement-knowledge/#soft-skills"
           },
           {
             "label": "Start an SEO Business",
-            "href": "https://learningseo.io/seo_roadmap/complement-knowledge/#start-an-seo-business"
+            "href": "/seo_roadmap/complement-knowledge/#start-an-seo-business"
           },
           {
             "label": "App Store Optimization",
-            "href": "https://learningseo.io/seo_roadmap/complement-knowledge/#app-store-optimization"
+            "href": "/seo_roadmap/complement-knowledge/#app-store-optimization"
           },
           {
             "label": "Google Analytics",
-            "href": "https://learningseo.io/seo_roadmap/complement-knowledge/#google-analytics"
+            "href": "/seo_roadmap/complement-knowledge/#google-analytics"
           },
           {
             "label": "Looker Studio [Google Data Studio]",
-            "href": "https://learningseo.io/seo_roadmap/complement-knowledge/#looker-studio-google-data-studio"
+            "href": "/seo_roadmap/complement-knowledge/#looker-studio-google-data-studio"
           },
           {
             "label": "Google Tag Manager",
-            "href": "https://learningseo.io/seo_roadmap/complement-knowledge/#google-tag-manager"
+            "href": "/seo_roadmap/complement-knowledge/#google-tag-manager"
           }
         ],
         "initiallyOpen": false
@@ -714,68 +714,68 @@
       {
         "number": "9",
         "title": "Free SEO Tools To Use",
-        "href": "https://learningseo.io/seo_roadmap/seo-tools/",
+        "href": "/seo_roadmap/seo-tools/",
         "descriptionHtml": "Get access to free SEO tools to execute your SEO tasks.",
         "links": [
           {
             "label": "Keyword Research Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#keyword-research-tools"
+            "href": "/seo_roadmap/seo-tools/#keyword-research-tools"
           },
           {
             "label": "On-Page SEO Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#on-page-seo-tools"
+            "href": "/seo_roadmap/seo-tools/#on-page-seo-tools"
           },
           {
             "label": "Link Building Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#link-building-tools"
+            "href": "/seo_roadmap/seo-tools/#link-building-tools"
           },
           {
             "label": "Monitoring & Rank Tracking Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#monitoring-rank-tracking-tools"
+            "href": "/seo_roadmap/seo-tools/#monitoring-rank-tracking-tools"
           },
           {
             "label": "SEO Dashboard & Reporting Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#seo-dashboard-reporting-tools"
+            "href": "/seo_roadmap/seo-tools/#seo-dashboard-reporting-tools"
           },
           {
             "label": "Web Speed Optimization Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#web-speed-optimization-tools"
+            "href": "/seo_roadmap/seo-tools/#web-speed-optimization-tools"
           },
           {
             "label": "Structured Data Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#structured-data-tools"
+            "href": "/seo_roadmap/seo-tools/#structured-data-tools"
           },
           {
             "label": "Mobile SEO Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#mobile-seo-tools"
+            "href": "/seo_roadmap/seo-tools/#mobile-seo-tools"
           },
           {
             "label": "Local SEO Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#local-seo-tools"
+            "href": "/seo_roadmap/seo-tools/#local-seo-tools"
           },
           {
             "label": "International SEO Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#international-seo-tools"
+            "href": "/seo_roadmap/seo-tools/#international-seo-tools"
           },
           {
             "label": "Javascript SEO Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#javascript-seo-tools"
+            "href": "/seo_roadmap/seo-tools/#javascript-seo-tools"
           },
           {
             "label": "SEO Forecastings Tools",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#seo-forecastings-tools"
+            "href": "/seo_roadmap/seo-tools/#seo-forecastings-tools"
           },
           {
             "label": "SEO Audit Templates",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#seo-audit-templates"
+            "href": "/seo_roadmap/seo-tools/#seo-audit-templates"
           },
           {
             "label": "WordPress SEO Plugins",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#wordpress-seo-plugins"
+            "href": "/seo_roadmap/seo-tools/#wordpress-seo-plugins"
           },
           {
             "label": "Google Search Console Guidelines",
-            "href": "https://learningseo.io/seo_roadmap/seo-tools/#google-search-console-guidelines"
+            "href": "/seo_roadmap/seo-tools/#google-search-console-guidelines"
           }
         ],
         "initiallyOpen": false
@@ -783,24 +783,24 @@
       {
         "number": "10",
         "title": "Train, test & troubleshoot your SEO further",
-        "href": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+        "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
         "descriptionHtml": "It's time to take your SEO knowledge further.",
         "links": [
           {
             "label": "SEO Courses & Training",
-            "href": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/online-seo-courses/"
+            "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/online-seo-courses/"
           },
           {
             "label": "SEO Test & Quizzes",
-            "href": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/free-seo-tests-quizzes/"
+            "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/free-seo-tests-quizzes/"
           },
           {
             "label": "Why my page doesn’t rank in Google Checklist",
-            "href": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/"
+            "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/"
           },
           {
             "label": "The Learning SEO Free Accelerator",
-            "href": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/the-learningseo-accelerator/"
+            "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/the-learningseo-accelerator/"
           }
         ],
         "initiallyOpen": false
@@ -812,13 +812,13 @@
     "bodyHtml": "<p>In case you want to easily copy to use or share these free reliable SEO resources from the different areas covered by the roadmap, I’ve also created a Google Sheet that you can copy here to use it as a reference while you learn SEO.</p>",
     "cta": "Copy Google Sheet",
     "href": "https://docs.google.com/spreadsheets/d/16zgkN6jw35X-6NDsYU1gZMbhxF5Sj0gLqgv9VSPmlT0/copy",
-    "icon": "https://learningseo.io/wp-content/themes/learningseo/imgs/google-sheets.svg"
+    "icon": "/wp-content/themes/learningseo/imgs/google-sheets.svg"
   },
   "videos": [
     {
       "title": "Welcome to the New Version of LearningSEO.io",
       "description": "The LearningSEO.io site has a new look, updates resources, and more functionalities and resources. This is only the start of a whole new phase of initiatives with the goal to facilitate the learning journey of new SEOs, including the Learning SEO Free Accelerator. Don't miss out and subscribe to the Website's email alert at the bottom of the site.",
-      "thumbnail": "https://learningseo.io/wp-content/uploads/2023/05/learningseo_thumbnail-1024x570.jpg",
+      "thumbnail": "/wp-content/uploads/2023/05/learningseo_thumbnail-1024x570.jpg",
       "embed": "https://www.youtube.com/embed/b260u37x7EA",
       "iframeTitle": "YouTube video player"
     },
@@ -947,7 +947,7 @@
     "items": [
       {
         "question": "What's SEO?",
-        "answerHtml": "<p>SEO, or Search Engine Optimization, is a practice that involves enhancing a website’s <a class=\"inlinks\" href=\"https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/\">technical configuration</a>, content, and backlinks -among other aspects- to make it more visible in search engine results pages (SERPs). The primary goal is to improve a website’s ranking, so it appears among the top results when users search for relevant information, product, or services; and as a consequence, grow its traffic and conversions or sales.&nbsp;</p>"
+        "answerHtml": "<p>SEO, or Search Engine Optimization, is a practice that involves enhancing a website’s <a class=\"inlinks\" href=\"/seo_roadmap/deepen-knowledge/advanced-technical/\">technical configuration</a>, content, and backlinks -among other aspects- to make it more visible in search engine results pages (SERPs). The primary goal is to improve a website’s ranking, so it appears among the top results when users search for relevant information, product, or services; and as a consequence, grow its traffic and conversions or sales.&nbsp;</p>"
       },
       {
         "question": "Can I learn SEO on my own?",
@@ -959,7 +959,7 @@
       },
       {
         "question": "Does SEO require coding?",
-        "answerHtml": "<p>SEO doesn’t require coding, but understanding some basic elements of Web coding -HTML and JS- that affect the capacity of search engines to access your content and rank it, can certainly help you, especially when doing technical SEO. You have reliable <a href=\"https://learningseo.io/seo_roadmap/complement-knowledge/#html-css\">HTML &amp; CSS</a> resources, as well as <a href=\"https://learningseo.io/seo_roadmap/complement-knowledge/#javascript\">JavaScript</a> guides in the “complement your SEO” section.&nbsp;</p>"
+        "answerHtml": "<p>SEO doesn’t require coding, but understanding some basic elements of Web coding -HTML and JS- that affect the capacity of search engines to access your content and rank it, can certainly help you, especially when doing technical SEO. You have reliable <a href=\"/seo_roadmap/complement-knowledge/#html-css\">HTML &amp; CSS</a> resources, as well as <a href=\"/seo_roadmap/complement-knowledge/#javascript\">JavaScript</a> guides in the “complement your SEO” section.&nbsp;</p>"
       },
       {
         "question": "Does Google offer an SEO Certification?",
@@ -971,7 +971,7 @@
       },
       {
         "question": "In what order should you go through the SEO roadmap?",
-        "answerHtml": "<h3><strong>For SEO Beginners Looking to Start Learning:&nbsp;</strong></h3>\n<p>If you’re just starting to learn SEO, begin with the first phase “<a href=\"https://learningseo.io/seo_roadmap/seo-fundamentals/\"><strong>Learn SEO Basics</strong></a>” which teaches about the main concepts and areas that influence SEO, what are search engine crawlers and how they work, what are title tags, what is an internal link, what impact search rankings, what doesn’t affect search results, how to identify relevant keywords with keyword research tools, how to optimize relevant content, what is link building and what link metrics to pay attention to, and more start with your understanding of SEO and most common SEO issues.&nbsp;</p>\n<p>Then follow with the second phase “<a href=\"https://learningseo.io/seo_roadmap/execute-seo/\"><strong>Learn to Execute an SEO Process</strong></a>” which covers what SEO needs to be implemented, fundamental to have an “overview” of how the SEO process actually works from a strategical standpoint to attract the desired relevant traffic: How to develop an on page SEO audit, how to establish a link building strategy or how to monitor your search engine rankings or Website’s visibility.&nbsp;</p>\n<p>If you want to start executing an SEO campaign for hands-on experience for free or very little resources in your own sites, take a look at the “<a href=\"https://learningseo.io/seo_roadmap/seo-tools/\"><strong>Implement with Free SEO tools</strong></a>” section to obtain reliable handy free tools to use in your first SEO processes: from on page optimization to page speed, and keyword tools, with tips from SEO experts about how to use them.</p>\n<p>Have a WordPress site? Or a Website using Shopify, Magento or Webflow? If the site you’re working on is using one of the most popular Web platforms, take a look at the “<a href=\"https://learningseo.io/seo_roadmap/implement-in-cms/\"><strong>Implement SEO in your CMS</strong></a>“, to get hands-on advice to effectively implement SEO related best practices in them, leveraging these platforms functionalities and plug-ins.&nbsp;&nbsp;</p>\n<p>&nbsp;</p>\n<h3><strong>For SEOs Looking to Expand Knowledge:&nbsp;</strong></h3>\n<p>Expand your SEO knowledge beyond the fundamentals, to take your organic search results to the next level with the “<a href=\"https://learningseo.io/seo_roadmap/deepen-knowledge/\"><strong>Deepen your SEO Knowledge</strong></a>” to get more in-depth SEO understanding: from site speed to content strategy, this section covers the different technical, content, backlinks, management and opportunities across different day to day SEO scenarios.&nbsp;</p>\n<p>Depending on the type of company or industry you’re working for (or want to work at) you might want to decide to specialize, and for that you can pick the specialization you’re interested about from the “<a href=\"https://learningseo.io/seo_roadmap/specialize/\"><strong>Specialize within SEO</strong></a>” area.&nbsp;</p>\n<p>At this point, you would have already started with your SEO process implementation and seen there are very time-consuming tasks that within your context they should be viable to automate and you already know (or willing to learn) some of the most popular programming/scripting languages to automate them. For that take a look at the “<a href=\"https://learningseo.io/seo_roadmap/automate-tasks/\"><strong>Automate SEO Tasks</strong></a>” section.</p>\n<p>In parallel, I would recommend you to start following the latest SEO related updates and search engine news, to keep up with all what you’ve started to learn. Check out the “<a href=\"https://learningseo.io/seo_roadmap/keep-up-with-news/\"><strong>Keep up with SEO News</strong></a>” for that, listing reliable SEO publications, podcasts, newsletters, etc. that you can subscribe to.&nbsp;</p>\n<p>Finally, to complement your SEO journey and support your efforts through the execution of the SEO process, you can take a look at the “<a href=\"https://learningseo.io/seo_roadmap/complement-knowledge/\"><strong>Complement your SEO Knowledge</strong></a>” section, listing broader digital marketing&nbsp; resources of connected areas known to be useful for SEO projects success, although not SEO specific, like using Google Analytics, or the building blocks of Front-End Web Development.&nbsp;</p>"
+        "answerHtml": "<h3><strong>For SEO Beginners Looking to Start Learning:&nbsp;</strong></h3>\n<p>If you’re just starting to learn SEO, begin with the first phase “<a href=\"/seo_roadmap/seo-fundamentals/\"><strong>Learn SEO Basics</strong></a>” which teaches about the main concepts and areas that influence SEO, what are search engine crawlers and how they work, what are title tags, what is an internal link, what impact search rankings, what doesn’t affect search results, how to identify relevant keywords with keyword research tools, how to optimize relevant content, what is link building and what link metrics to pay attention to, and more start with your understanding of SEO and most common SEO issues.&nbsp;</p>\n<p>Then follow with the second phase “<a href=\"/seo_roadmap/execute-seo/\"><strong>Learn to Execute an SEO Process</strong></a>” which covers what SEO needs to be implemented, fundamental to have an “overview” of how the SEO process actually works from a strategical standpoint to attract the desired relevant traffic: How to develop an on page SEO audit, how to establish a link building strategy or how to monitor your search engine rankings or Website’s visibility.&nbsp;</p>\n<p>If you want to start executing an SEO campaign for hands-on experience for free or very little resources in your own sites, take a look at the “<a href=\"/seo_roadmap/seo-tools/\"><strong>Implement with Free SEO tools</strong></a>” section to obtain reliable handy free tools to use in your first SEO processes: from on page optimization to page speed, and keyword tools, with tips from SEO experts about how to use them.</p>\n<p>Have a WordPress site? Or a Website using Shopify, Magento or Webflow? If the site you’re working on is using one of the most popular Web platforms, take a look at the “<a href=\"/seo_roadmap/implement-in-cms/\"><strong>Implement SEO in your CMS</strong></a>“, to get hands-on advice to effectively implement SEO related best practices in them, leveraging these platforms functionalities and plug-ins.&nbsp;&nbsp;</p>\n<p>&nbsp;</p>\n<h3><strong>For SEOs Looking to Expand Knowledge:&nbsp;</strong></h3>\n<p>Expand your SEO knowledge beyond the fundamentals, to take your organic search results to the next level with the “<a href=\"/seo_roadmap/deepen-knowledge/\"><strong>Deepen your SEO Knowledge</strong></a>” to get more in-depth SEO understanding: from site speed to content strategy, this section covers the different technical, content, backlinks, management and opportunities across different day to day SEO scenarios.&nbsp;</p>\n<p>Depending on the type of company or industry you’re working for (or want to work at) you might want to decide to specialize, and for that you can pick the specialization you’re interested about from the “<a href=\"/seo_roadmap/specialize/\"><strong>Specialize within SEO</strong></a>” area.&nbsp;</p>\n<p>At this point, you would have already started with your SEO process implementation and seen there are very time-consuming tasks that within your context they should be viable to automate and you already know (or willing to learn) some of the most popular programming/scripting languages to automate them. For that take a look at the “<a href=\"/seo_roadmap/automate-tasks/\"><strong>Automate SEO Tasks</strong></a>” section.</p>\n<p>In parallel, I would recommend you to start following the latest SEO related updates and search engine news, to keep up with all what you’ve started to learn. Check out the “<a href=\"/seo_roadmap/keep-up-with-news/\"><strong>Keep up with SEO News</strong></a>” for that, listing reliable SEO publications, podcasts, newsletters, etc. that you can subscribe to.&nbsp;</p>\n<p>Finally, to complement your SEO journey and support your efforts through the execution of the SEO process, you can take a look at the “<a href=\"/seo_roadmap/complement-knowledge/\"><strong>Complement your SEO Knowledge</strong></a>” section, listing broader digital marketing&nbsp; resources of connected areas known to be useful for SEO projects success, although not SEO specific, like using Google Analytics, or the building blocks of Front-End Web Development.&nbsp;</p>"
       },
       {
         "question": "Should you go through all the areas and resources of the SEO Roadmap to learn SEO?",
@@ -979,7 +979,7 @@
       },
       {
         "question": "Can you help me to sort out why a page doesn’t rank better (or at all)?",
-        "answerHtml": "<p>Sure thing! “Why a page is not ranking for a relevant query in Google Search results” is one of the most common questions you’ll get asked as an SEO. To help you,&nbsp;<a href=\"https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/\">here’s a checklist with basic SEO diagnostics questions to ask,</a>&nbsp;as well as areas to analyze and types of tools to use, including a Google Sheets resource too.&nbsp;</p>"
+        "answerHtml": "<p>Sure thing! “Why a page is not ranking for a relevant query in Google Search results” is one of the most common questions you’ll get asked as an SEO. To help you,&nbsp;<a href=\"/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/\">here’s a checklist with basic SEO diagnostics questions to ask,</a>&nbsp;as well as areas to analyze and types of tools to use, including a Google Sheets resource too.&nbsp;</p>"
       },
       {
         "question": "What are the top issues, challenges and mistakes to avoid when learning SEO?",
@@ -1004,8 +1004,8 @@
         "text": "\"There is no SEO that is an expert in everything, and that’s why it’s more than okay to ask for opinions or thoughts on a subject no matter how long you have been in the game.\"",
         "author": "Tessa Bonacci Nadik",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=There%20is%20no%20SEO%20that%20is%20an%20expert%20in%20everything,%20and%20that%E2%80%99s%20why%20it%E2%80%99s%20more%20than%20okay%20to%20ask%20for%20opinions%20or%20thoughts%20on%20a%20subject%20no%20matter%20how%20long%20you%20have%20been%20in%20the%20game.%20Tessa%20Bonacci%20Nadik.%20https://learningseo.io/%23tip_1",
-          "threads": "https://www.threads.net/intent/post?text=There%20is%20no%20SEO%20that%20is%20an%20expert%20in%20everything,%20and%20that%E2%80%99s%20why%20it%E2%80%99s%20more%20than%20okay%20to%20ask%20for%20opinions%20or%20thoughts%20on%20a%20subject%20no%20matter%20how%20long%20you%20have%20been%20in%20the%20game.%20%0D%0DTessa%20Bonacci%20Nadik.%20https://learningseo.io/%23tip_1",
+          "x": "https://twitter.com/intent/tweet?text=There%20is%20no%20SEO%20that%20is%20an%20expert%20in%20everything,%20and%20that%E2%80%99s%20why%20it%E2%80%99s%20more%20than%20okay%20to%20ask%20for%20opinions%20or%20thoughts%20on%20a%20subject%20no%20matter%20how%20long%20you%20have%20been%20in%20the%20game.%20Tessa%20Bonacci%20Nadik.%20/%23tip_1",
+          "threads": "https://www.threads.net/intent/post?text=There%20is%20no%20SEO%20that%20is%20an%20expert%20in%20everything,%20and%20that%E2%80%99s%20why%20it%E2%80%99s%20more%20than%20okay%20to%20ask%20for%20opinions%20or%20thoughts%20on%20a%20subject%20no%20matter%20how%20long%20you%20have%20been%20in%20the%20game.%20%0D%0DTessa%20Bonacci%20Nadik.%20/%23tip_1",
           "linkedIn": ""
         }
       },
@@ -1014,8 +1014,8 @@
         "text": "\"Try everything and then find and stick to your niche. Seo is too broad a field to be good at every aspect of it. It's okay to openly talk to your manager about this and ask to be \"allowed\" to specialise.\"",
         "author": "Anett Pohl",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Try%20everything%20and%20then%20find%20and%20stick%20to%20your%20niche.%20Seo%20is%20too%20broad%20a%20field%20to%20be%20good%20at%20every%20aspect%20of%20it.%20Its%20okay%20to%20openly%20talk%20to%20your%20manager%20about%20this%20and%20ask%20to%20be%20allowed%20to%20specialise.%20Anett%20Pohl.%20https://learningseo.io/%23tip_2",
-          "threads": "https://www.threads.net/intent/post?text=Try%20everything%20and%20then%20find%20and%20stick%20to%20your%20niche.%20Seo%20is%20too%20broad%20a%20field%20to%20be%20good%20at%20every%20aspect%20of%20it.%20Its%20okay%20to%20openly%20talk%20to%20your%20manager%20about%20this%20and%20ask%20to%20be%20allowed%20to%20specialise.%20%0D%0DAnett%20Pohl.%20https://learningseo.io/%23tip_2",
+          "x": "https://twitter.com/intent/tweet?text=Try%20everything%20and%20then%20find%20and%20stick%20to%20your%20niche.%20Seo%20is%20too%20broad%20a%20field%20to%20be%20good%20at%20every%20aspect%20of%20it.%20Its%20okay%20to%20openly%20talk%20to%20your%20manager%20about%20this%20and%20ask%20to%20be%20allowed%20to%20specialise.%20Anett%20Pohl.%20/%23tip_2",
+          "threads": "https://www.threads.net/intent/post?text=Try%20everything%20and%20then%20find%20and%20stick%20to%20your%20niche.%20Seo%20is%20too%20broad%20a%20field%20to%20be%20good%20at%20every%20aspect%20of%20it.%20Its%20okay%20to%20openly%20talk%20to%20your%20manager%20about%20this%20and%20ask%20to%20be%20allowed%20to%20specialise.%20%0D%0DAnett%20Pohl.%20/%23tip_2",
           "linkedIn": ""
         }
       },
@@ -1024,8 +1024,8 @@
         "text": "\"Focus on the principles rather than just the tactics. What do Google want to serve their customers? Results that are.. Valuable, Relevant, Indexable, A positive User Experience. When in doubt, that should steer you well.\"",
         "author": "Mark Johnstone",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Focus%20on%20the%20principles%20rather%20than%20just%20the%20tactics.%20What%20do%20Google%20want%20to%20serve%20their%20customers?%20Results%20that%20are..%20Valuable,%20Relevant,%20Indexable,%20A%20positive%20User%20Experience.%20When%20in%20doubt,%20that%20should%20steer%20you%20well.%20Mark%20Johnstone.%20https://learningseo.io/%23tip_3",
-          "threads": "https://www.threads.net/intent/post?text=Focus%20on%20the%20principles%20rather%20than%20just%20the%20tactics.%20What%20do%20Google%20want%20to%20serve%20their%20customers?%20Results%20that%20are..%20Valuable,%20Relevant,%20Indexable,%20A%20positive%20User%20Experience.%20When%20in%20doubt,%20that%20should%20steer%20you%20well.%20%0D%0DMark%20Johnstone.%20https://learningseo.io/%23tip_3",
+          "x": "https://twitter.com/intent/tweet?text=Focus%20on%20the%20principles%20rather%20than%20just%20the%20tactics.%20What%20do%20Google%20want%20to%20serve%20their%20customers?%20Results%20that%20are..%20Valuable,%20Relevant,%20Indexable,%20A%20positive%20User%20Experience.%20When%20in%20doubt,%20that%20should%20steer%20you%20well.%20Mark%20Johnstone.%20/%23tip_3",
+          "threads": "https://www.threads.net/intent/post?text=Focus%20on%20the%20principles%20rather%20than%20just%20the%20tactics.%20What%20do%20Google%20want%20to%20serve%20their%20customers?%20Results%20that%20are..%20Valuable,%20Relevant,%20Indexable,%20A%20positive%20User%20Experience.%20When%20in%20doubt,%20that%20should%20steer%20you%20well.%20%0D%0DMark%20Johnstone.%20/%23tip_3",
           "linkedIn": ""
         }
       },
@@ -1034,8 +1034,8 @@
         "text": "\"I would tell myself to try things for yourself, build a site that doesn't have to be anything but a testing ground for you. Also, talk to others in the industry and outside it. Ask questions - stay curious and question your own assumptions to get outside your bubbles.\"",
         "author": "Jess Joyce",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=I%20would%20tell%20myself%20to%20try%20things%20for%20yourself,%20build%20a%20site%20that%20doesnt%20have%20to%20be%20anything%20but%20a%20testing%20ground%20for%20you.%20Also,%20talk%20to%20others%20in%20the%20industry%20and%20outside%20it.%20Ask%20questions%20-%20stay%20curious%20and%20question%20your%20own%20assumptions%20to%20get%20outside%20your%20bubbles.%20Jess%20Joyce.%20https://learningseo.io/%23tip_4",
-          "threads": "https://www.threads.net/intent/post?text=I%20would%20tell%20myself%20to%20try%20things%20for%20yourself,%20build%20a%20site%20that%20doesnt%20have%20to%20be%20anything%20but%20a%20testing%20ground%20for%20you.%20Also,%20talk%20to%20others%20in%20the%20industry%20and%20outside%20it.%20Ask%20questions%20-%20stay%20curious%20and%20question%20your%20own%20assumptions%20to%20get%20outside%20your%20bubbles.%20%0D%0DJess%20Joyce.%20https://learningseo.io/%23tip_4",
+          "x": "https://twitter.com/intent/tweet?text=I%20would%20tell%20myself%20to%20try%20things%20for%20yourself,%20build%20a%20site%20that%20doesnt%20have%20to%20be%20anything%20but%20a%20testing%20ground%20for%20you.%20Also,%20talk%20to%20others%20in%20the%20industry%20and%20outside%20it.%20Ask%20questions%20-%20stay%20curious%20and%20question%20your%20own%20assumptions%20to%20get%20outside%20your%20bubbles.%20Jess%20Joyce.%20/%23tip_4",
+          "threads": "https://www.threads.net/intent/post?text=I%20would%20tell%20myself%20to%20try%20things%20for%20yourself,%20build%20a%20site%20that%20doesnt%20have%20to%20be%20anything%20but%20a%20testing%20ground%20for%20you.%20Also,%20talk%20to%20others%20in%20the%20industry%20and%20outside%20it.%20Ask%20questions%20-%20stay%20curious%20and%20question%20your%20own%20assumptions%20to%20get%20outside%20your%20bubbles.%20%0D%0DJess%20Joyce.%20/%23tip_4",
           "linkedIn": ""
         }
       },
@@ -1044,8 +1044,8 @@
         "text": "\"SEO is a medium and not the ultimate goal. We as SEO's tend to get involved in getting things done that are sometimes not aligned with the business/marketing goals which leads to disparity! That's why we should focus on the ultimate goal using SEO as a medium.\"",
         "author": "The Rank Machine",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=SEO%20is%20a%20medium%20and%20not%20the%20ultimate%20goal.%20We%20as%20SEOs%20tend%20to%20get%20involved%20in%20getting%20things%20done%20that%20are%20sometimes%20not%20aligned%20with%20the%20business/marketing%20goals%20which%20leads%20to%20disparity!%20Thats%20why%20we%20should%20focus%20on%20the%20ultimate%20goal%20using%20SEO%20as%20a%20medium.%20The%20Rank%20Machine.%20https://learningseo.io/%23tip_5",
-          "threads": "https://www.threads.net/intent/post?text=SEO%20is%20a%20medium%20and%20not%20the%20ultimate%20goal.%20We%20as%20SEOs%20tend%20to%20get%20involved%20in%20getting%20things%20done%20that%20are%20sometimes%20not%20aligned%20with%20the%20business/marketing%20goals%20which%20leads%20to%20disparity!%20Thats%20why%20we%20should%20focus%20on%20the%20ultimate%20goal%20using%20SEO%20as%20a%20medium.%20%0D%0DThe%20Rank%20Machine.%20https://learningseo.io/%23tip_5",
+          "x": "https://twitter.com/intent/tweet?text=SEO%20is%20a%20medium%20and%20not%20the%20ultimate%20goal.%20We%20as%20SEOs%20tend%20to%20get%20involved%20in%20getting%20things%20done%20that%20are%20sometimes%20not%20aligned%20with%20the%20business/marketing%20goals%20which%20leads%20to%20disparity!%20Thats%20why%20we%20should%20focus%20on%20the%20ultimate%20goal%20using%20SEO%20as%20a%20medium.%20The%20Rank%20Machine.%20/%23tip_5",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20is%20a%20medium%20and%20not%20the%20ultimate%20goal.%20We%20as%20SEOs%20tend%20to%20get%20involved%20in%20getting%20things%20done%20that%20are%20sometimes%20not%20aligned%20with%20the%20business/marketing%20goals%20which%20leads%20to%20disparity!%20Thats%20why%20we%20should%20focus%20on%20the%20ultimate%20goal%20using%20SEO%20as%20a%20medium.%20%0D%0DThe%20Rank%20Machine.%20/%23tip_5",
           "linkedIn": ""
         }
       },
@@ -1054,8 +1054,8 @@
         "text": "\"Half the battle is building relationships, earning buy-in and making sure you're in the loop. You need to sell yourself and the value of your recommendations if you want to succeed in SEO. Make friends with your writers, developers (in house or not), and even non marketing folks!\"",
         "author": "Sara Naatz",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Half%20the%20battle%20is%20building%20relationships,%20earning%20buy-in%20and%20making%20sure%20youre%20in%20the%20loop.%20You%20need%20to%20sell%20yourself%20and%20the%20value%20of%20your%20recommendations%20if%20you%20want%20to%20succeed%20in%20SEO.%20Make%20friends%20with%20your%20writers,%20developers%20(in%20house%20or%20not),%20and%20even%20non%20marketing%20folks!%20Sara%20Naatz.%20https://learningseo.io/%23tip_6",
-          "threads": "https://www.threads.net/intent/post?text=Half%20the%20battle%20is%20building%20relationships,%20earning%20buy-in%20and%20making%20sure%20youre%20in%20the%20loop.%20You%20need%20to%20sell%20yourself%20and%20the%20value%20of%20your%20recommendations%20if%20you%20want%20to%20succeed%20in%20SEO.%20Make%20friends%20with%20your%20writers,%20developers%20(in%20house%20or%20not),%20and%20even%20non%20marketing%20folks!%20%0D%0DSara%20Naatz.%20https://learningseo.io/%23tip_6",
+          "x": "https://twitter.com/intent/tweet?text=Half%20the%20battle%20is%20building%20relationships,%20earning%20buy-in%20and%20making%20sure%20youre%20in%20the%20loop.%20You%20need%20to%20sell%20yourself%20and%20the%20value%20of%20your%20recommendations%20if%20you%20want%20to%20succeed%20in%20SEO.%20Make%20friends%20with%20your%20writers,%20developers%20(in%20house%20or%20not),%20and%20even%20non%20marketing%20folks!%20Sara%20Naatz.%20/%23tip_6",
+          "threads": "https://www.threads.net/intent/post?text=Half%20the%20battle%20is%20building%20relationships,%20earning%20buy-in%20and%20making%20sure%20youre%20in%20the%20loop.%20You%20need%20to%20sell%20yourself%20and%20the%20value%20of%20your%20recommendations%20if%20you%20want%20to%20succeed%20in%20SEO.%20Make%20friends%20with%20your%20writers,%20developers%20(in%20house%20or%20not),%20and%20even%20non%20marketing%20folks!%20%0D%0DSara%20Naatz.%20/%23tip_6",
           "linkedIn": ""
         }
       },
@@ -1064,8 +1064,8 @@
         "text": "\"Almost everything you do should begin in the mind & experience of the searcher. It’s ok to push back on a client, it’s ok to hold a client accountable, it’s ok to say no to a client, it’s ok to fire a client.\"",
         "author": "Sam McRoberts",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Almost%20everything%20you%20do%20should%20begin%20in%20the%20mind%20and%20experience%20of%20the%20searcher.%20It%E2%80%99s%20ok%20to%20push%20back%20on%20a%20client,%20it%E2%80%99s%20ok%20to%20hold%20a%20client%20accountable,%20it%E2%80%99s%20ok%20to%20say%20no%20to%20a%20client,%20it%E2%80%99s%20ok%20to%20fire%20a%20client.%20Sam%20McRoberts.%20https://learningseo.io/%23tip_7",
-          "threads": "https://www.threads.net/intent/post?text=Almost%20everything%20you%20do%20should%20begin%20in%20the%20mind%20and%20experience%20of%20the%20searcher.%20It%E2%80%99s%20ok%20to%20push%20back%20on%20a%20client,%20it%E2%80%99s%20ok%20to%20hold%20a%20client%20accountable,%20it%E2%80%99s%20ok%20to%20say%20no%20to%20a%20client,%20it%E2%80%99s%20ok%20to%20fire%20a%20client.%20%0D%0DSam%20McRoberts.%20https://learningseo.io/%23tip_7",
+          "x": "https://twitter.com/intent/tweet?text=Almost%20everything%20you%20do%20should%20begin%20in%20the%20mind%20and%20experience%20of%20the%20searcher.%20It%E2%80%99s%20ok%20to%20push%20back%20on%20a%20client,%20it%E2%80%99s%20ok%20to%20hold%20a%20client%20accountable,%20it%E2%80%99s%20ok%20to%20say%20no%20to%20a%20client,%20it%E2%80%99s%20ok%20to%20fire%20a%20client.%20Sam%20McRoberts.%20/%23tip_7",
+          "threads": "https://www.threads.net/intent/post?text=Almost%20everything%20you%20do%20should%20begin%20in%20the%20mind%20and%20experience%20of%20the%20searcher.%20It%E2%80%99s%20ok%20to%20push%20back%20on%20a%20client,%20it%E2%80%99s%20ok%20to%20hold%20a%20client%20accountable,%20it%E2%80%99s%20ok%20to%20say%20no%20to%20a%20client,%20it%E2%80%99s%20ok%20to%20fire%20a%20client.%20%0D%0DSam%20McRoberts.%20/%23tip_7",
           "linkedIn": ""
         }
       },
@@ -1074,8 +1074,8 @@
         "text": "\"Surround yourself with smart people, but be confident in yourself. Talk to people at conferences, that's where I've learnt the best things! There's a ratio between mouths and ears for a reason tho, listen twice as much as you speak.\"",
         "author": "Gerry White",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Surround%20yourself%20with%20smart%20people,%20but%20be%20confident%20in%20yourself.%20Talk%20to%20people%20at%20conferences,%20thats%20where%20Ive%20learnt%20the%20best%20things!%20Theres%20a%20ratio%20between%20mouths%20and%20ears%20for%20a%20reason%20tho,%20listen%20twice%20as%20much%20as%20you%20speak.%20Gerry%20White.%20https://learningseo.io/%23tip_8",
-          "threads": "https://www.threads.net/intent/post?text=Surround%20yourself%20with%20smart%20people,%20but%20be%20confident%20in%20yourself.%20Talk%20to%20people%20at%20conferences,%20thats%20where%20Ive%20learnt%20the%20best%20things!%20Theres%20a%20ratio%20between%20mouths%20and%20ears%20for%20a%20reason%20tho,%20listen%20twice%20as%20much%20as%20you%20speak.%20%0D%0DGerry%20White.%20https://learningseo.io/%23tip_8",
+          "x": "https://twitter.com/intent/tweet?text=Surround%20yourself%20with%20smart%20people,%20but%20be%20confident%20in%20yourself.%20Talk%20to%20people%20at%20conferences,%20thats%20where%20Ive%20learnt%20the%20best%20things!%20Theres%20a%20ratio%20between%20mouths%20and%20ears%20for%20a%20reason%20tho,%20listen%20twice%20as%20much%20as%20you%20speak.%20Gerry%20White.%20/%23tip_8",
+          "threads": "https://www.threads.net/intent/post?text=Surround%20yourself%20with%20smart%20people,%20but%20be%20confident%20in%20yourself.%20Talk%20to%20people%20at%20conferences,%20thats%20where%20Ive%20learnt%20the%20best%20things!%20Theres%20a%20ratio%20between%20mouths%20and%20ears%20for%20a%20reason%20tho,%20listen%20twice%20as%20much%20as%20you%20speak.%20%0D%0DGerry%20White.%20/%23tip_8",
           "linkedIn": ""
         }
       },
@@ -1084,8 +1084,8 @@
         "text": "\"Don’t ever think that you know everything. Things change far too quickly for you to ever possibly know EVERYTHING, even in your niche! Plus talk to people, network, surround yourself with people who are just as passionate about SEO as you are. That’s how you’ll grow.\"",
         "author": "Sophie Brannon",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Don%E2%80%99t%20ever%20think%20that%20you%20know%20everything.%20Things%20change%20far%20too%20quickly%20for%20you%20to%20ever%20possibly%20know%20EVERYTHING,%20even%20in%20your%20niche!%20Plus%20talk%20to%20people,%20network,%20surround%20yourself%20with%20people%20who%20are%20just%20as%20passionate%20about%20SEO%20as%20you%20are.%20That%E2%80%99s%20how%20you%E2%80%99ll%20grow.%20Sophie%20Brannon.%20https://learningseo.io/%23tip_9",
-          "threads": "https://www.threads.net/intent/post?text=Don%E2%80%99t%20ever%20think%20that%20you%20know%20everything.%20Things%20change%20far%20too%20quickly%20for%20you%20to%20ever%20possibly%20know%20EVERYTHING,%20even%20in%20your%20niche!%20Plus%20talk%20to%20people,%20network,%20surround%20yourself%20with%20people%20who%20are%20just%20as%20passionate%20about%20SEO%20as%20you%20are.%20That%E2%80%99s%20how%20you%E2%80%99ll%20grow.%20%0D%0DSophie%20Brannon.%20https://learningseo.io/%23tip_9",
+          "x": "https://twitter.com/intent/tweet?text=Don%E2%80%99t%20ever%20think%20that%20you%20know%20everything.%20Things%20change%20far%20too%20quickly%20for%20you%20to%20ever%20possibly%20know%20EVERYTHING,%20even%20in%20your%20niche!%20Plus%20talk%20to%20people,%20network,%20surround%20yourself%20with%20people%20who%20are%20just%20as%20passionate%20about%20SEO%20as%20you%20are.%20That%E2%80%99s%20how%20you%E2%80%99ll%20grow.%20Sophie%20Brannon.%20/%23tip_9",
+          "threads": "https://www.threads.net/intent/post?text=Don%E2%80%99t%20ever%20think%20that%20you%20know%20everything.%20Things%20change%20far%20too%20quickly%20for%20you%20to%20ever%20possibly%20know%20EVERYTHING,%20even%20in%20your%20niche!%20Plus%20talk%20to%20people,%20network,%20surround%20yourself%20with%20people%20who%20are%20just%20as%20passionate%20about%20SEO%20as%20you%20are.%20That%E2%80%99s%20how%20you%E2%80%99ll%20grow.%20%0D%0DSophie%20Brannon.%20/%23tip_9",
           "linkedIn": ""
         }
       },
@@ -1094,8 +1094,8 @@
         "text": "\"The one thing I wish I'd known earlier is to always be mindful of commercial goals. It doesn't matter how technical you are, if you can't track your tactics and strategy to the money and convey that connection to your stakeholders, your projects and ultimately, career will stall.\"",
         "author": "Nick Wilsdon",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=The%20one%20thing%20I%20wish%20Id%20known%20earlier%20is%20to%20always%20be%20mindful%20of%20commercial%20goals.%20It%20doesnt%20matter%20how%20technical%20you%20are,%20if%20you%20cant%20track%20your%20tactics%20and%20strategy%20to%20the%20money%20and%20convey%20that%20connection%20to%20your%20stakeholders,%20your%20projects%20and%20ultimately,%20career%20will%20stall.%20Nick%20Wilsdon.%20https://learningseo.io/%23tip_10",
-          "threads": "https://www.threads.net/intent/post?text=The%20one%20thing%20I%20wish%20Id%20known%20earlier%20is%20to%20always%20be%20mindful%20of%20commercial%20goals.%20It%20doesnt%20matter%20how%20technical%20you%20are,%20if%20you%20cant%20track%20your%20tactics%20and%20strategy%20to%20the%20money%20and%20convey%20that%20connection%20to%20your%20stakeholders,%20your%20projects%20and%20ultimately,%20career%20will%20stall.%20%0D%0DNick%20Wilsdon.%20https://learningseo.io/%23tip_10",
+          "x": "https://twitter.com/intent/tweet?text=The%20one%20thing%20I%20wish%20Id%20known%20earlier%20is%20to%20always%20be%20mindful%20of%20commercial%20goals.%20It%20doesnt%20matter%20how%20technical%20you%20are,%20if%20you%20cant%20track%20your%20tactics%20and%20strategy%20to%20the%20money%20and%20convey%20that%20connection%20to%20your%20stakeholders,%20your%20projects%20and%20ultimately,%20career%20will%20stall.%20Nick%20Wilsdon.%20/%23tip_10",
+          "threads": "https://www.threads.net/intent/post?text=The%20one%20thing%20I%20wish%20Id%20known%20earlier%20is%20to%20always%20be%20mindful%20of%20commercial%20goals.%20It%20doesnt%20matter%20how%20technical%20you%20are,%20if%20you%20cant%20track%20your%20tactics%20and%20strategy%20to%20the%20money%20and%20convey%20that%20connection%20to%20your%20stakeholders,%20your%20projects%20and%20ultimately,%20career%20will%20stall.%20%0D%0DNick%20Wilsdon.%20/%23tip_10",
           "linkedIn": ""
         }
       },
@@ -1104,8 +1104,8 @@
         "text": "\"I wish I found out earlier in my career that it's fine to say \"I don't know\" and to ask for help rather than trying to pretend I'm always on it, especially in my relationship with development.\"",
         "author": "Roxana Stingu",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=I%20wish%20I%20found%20out%20earlier%20in%20my%20career%20that%20its%20fine%20to%20say%20I%20dont%20know%20and%20to%20ask%20for%20help%20rather%20than%20trying%20to%20pretend%20Im%20always%20on%20it,%20especially%20in%20my%20relationship%20with%20development.%20Roxana%20Stingu.%20https://learningseo.io/%23tip_11",
-          "threads": "https://www.threads.net/intent/post?text=I%20wish%20I%20found%20out%20earlier%20in%20my%20career%20that%20its%20fine%20to%20say%20I%20dont%20know%20and%20to%20ask%20for%20help%20rather%20than%20trying%20to%20pretend%20Im%20always%20on%20it,%20especially%20in%20my%20relationship%20with%20development.%20%0D%0DRoxana%20Stingu.%20https://learningseo.io/%23tip_11",
+          "x": "https://twitter.com/intent/tweet?text=I%20wish%20I%20found%20out%20earlier%20in%20my%20career%20that%20its%20fine%20to%20say%20I%20dont%20know%20and%20to%20ask%20for%20help%20rather%20than%20trying%20to%20pretend%20Im%20always%20on%20it,%20especially%20in%20my%20relationship%20with%20development.%20Roxana%20Stingu.%20/%23tip_11",
+          "threads": "https://www.threads.net/intent/post?text=I%20wish%20I%20found%20out%20earlier%20in%20my%20career%20that%20its%20fine%20to%20say%20I%20dont%20know%20and%20to%20ask%20for%20help%20rather%20than%20trying%20to%20pretend%20Im%20always%20on%20it,%20especially%20in%20my%20relationship%20with%20development.%20%0D%0DRoxana%20Stingu.%20/%23tip_11",
           "linkedIn": ""
         }
       },
@@ -1114,8 +1114,8 @@
         "text": "\".. Don't get caught up about other people \"cheating\". There's not a lot you can do, and don't expect G to take action. Instead - look for anything \"good\" they are doing/getting, and replicate/emulate that, and then move on. The goal is Not Rankings - that's only a metric..\"",
         "author": "Lyndon NA",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=..%20Dont%20get%20caught%20up%20about%20other%20people%20cheating.%20Theres%20not%20a%20lot%20you%20can%20do,%20and%20dont%20expect%20G%20to%20take%20action.%20Instead%20-%20look%20for%20anything%20good%20they%20are%20doing/getting,%20and%20replicate/emulate%20that,%20and%20then%20move%20on.%20The%20goal%20is%20Not%20Rankings%20-%20thats%20only%20a%20metric..%20Lyndon%20NA.%20https://learningseo.io/%23tip_12",
-          "threads": "https://www.threads.net/intent/post?text=..%20Dont%20get%20caught%20up%20about%20other%20people%20cheating.%20Theres%20not%20a%20lot%20you%20can%20do,%20and%20dont%20expect%20G%20to%20take%20action.%20Instead%20-%20look%20for%20anything%20good%20they%20are%20doing/getting,%20and%20replicate/emulate%20that,%20and%20then%20move%20on.%20The%20goal%20is%20Not%20Rankings%20-%20thats%20only%20a%20metric..%20%0D%0DLyndon%20NA.%20https://learningseo.io/%23tip_12",
+          "x": "https://twitter.com/intent/tweet?text=..%20Dont%20get%20caught%20up%20about%20other%20people%20cheating.%20Theres%20not%20a%20lot%20you%20can%20do,%20and%20dont%20expect%20G%20to%20take%20action.%20Instead%20-%20look%20for%20anything%20good%20they%20are%20doing/getting,%20and%20replicate/emulate%20that,%20and%20then%20move%20on.%20The%20goal%20is%20Not%20Rankings%20-%20thats%20only%20a%20metric..%20Lyndon%20NA.%20/%23tip_12",
+          "threads": "https://www.threads.net/intent/post?text=..%20Dont%20get%20caught%20up%20about%20other%20people%20cheating.%20Theres%20not%20a%20lot%20you%20can%20do,%20and%20dont%20expect%20G%20to%20take%20action.%20Instead%20-%20look%20for%20anything%20good%20they%20are%20doing/getting,%20and%20replicate/emulate%20that,%20and%20then%20move%20on.%20The%20goal%20is%20Not%20Rankings%20-%20thats%20only%20a%20metric..%20%0D%0DLyndon%20NA.%20/%23tip_12",
           "linkedIn": ""
         }
       },
@@ -1124,8 +1124,8 @@
         "text": "\"Keep it simple. The industry can seem overwhelmingly overcomplicated when you start but as you gain more experience you realise it’s the simple things, the foundations of SEO if you will, that have the most impact.\"",
         "author": "Andrew Charlton",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Keep%20it%20simple.%20The%20industry%20can%20seem%20overwhelmingly%20overcomplicated%20when%20you%20start%20but%20as%20you%20gain%20more%20experience%20you%20realise%20it%E2%80%99s%20the%20simple%20things,%20the%20foundations%20of%20SEO%20if%20you%20will,%20that%20have%20the%20most%20impact.%20Andrew%20Charlton.%20https://learningseo.io/%23tip_13",
-          "threads": "https://www.threads.net/intent/post?text=Keep%20it%20simple.%20The%20industry%20can%20seem%20overwhelmingly%20overcomplicated%20when%20you%20start%20but%20as%20you%20gain%20more%20experience%20you%20realise%20it%E2%80%99s%20the%20simple%20things,%20the%20foundations%20of%20SEO%20if%20you%20will,%20that%20have%20the%20most%20impact.%20%0D%0DAndrew%20Charlton.%20https://learningseo.io/%23tip_13",
+          "x": "https://twitter.com/intent/tweet?text=Keep%20it%20simple.%20The%20industry%20can%20seem%20overwhelmingly%20overcomplicated%20when%20you%20start%20but%20as%20you%20gain%20more%20experience%20you%20realise%20it%E2%80%99s%20the%20simple%20things,%20the%20foundations%20of%20SEO%20if%20you%20will,%20that%20have%20the%20most%20impact.%20Andrew%20Charlton.%20/%23tip_13",
+          "threads": "https://www.threads.net/intent/post?text=Keep%20it%20simple.%20The%20industry%20can%20seem%20overwhelmingly%20overcomplicated%20when%20you%20start%20but%20as%20you%20gain%20more%20experience%20you%20realise%20it%E2%80%99s%20the%20simple%20things,%20the%20foundations%20of%20SEO%20if%20you%20will,%20that%20have%20the%20most%20impact.%20%0D%0DAndrew%20Charlton.%20/%23tip_13",
           "linkedIn": ""
         }
       },
@@ -1134,8 +1134,8 @@
         "text": "\"Doing X won't lead to the same amount of improvement for site B, as when you did it for site A. That's not because you failed, it's because you cannot control all the variables, no two sites are exactly the same this way. So be prepared to be flexible, and adjust your approach. Also a good reason not to look what successful sites are doing, emulate that and expect the same success. Those sites may well be ranking in spite of whatever tactic you are planning on replicating.\"",
         "author": "Dave Smart",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Doing%20X%20wont%20lead%20to%20the%20same%20amount%20of%20improvement%20for%20site%20B,%20as%20when%20you%20did%20it%20for%20site%20A.%20Thats%20not%20because%20you%20failed,%20its%20because%20you%20cannot%20control%20all%20the%20variables,%20no%20two%20sites%20are%20exactly%20the%20same%20this%20way.%20So%20be%20prepared%20to%20be%20flexible,%20and%20adjust%20your%20approach.%20Also%20a%20good%20reason%20not%20to%20look%20what%20successful%20sites%20are%20doing,%20emulate%20that%20and%20expect%20the%20same%20success.%20Those%20sites%20may%20well%20be%20ranking%20in%20spite%20of%20whatever%20tactic%20you%20are%20planning%20on%20replicating.%20Dave%20Smart.%20https://learningseo.io/%23tip_14",
-          "threads": "https://www.threads.net/intent/post?text=Doing%20X%20wont%20lead%20to%20the%20same%20amount%20of%20improvement%20for%20site%20B,%20as%20when%20you%20did%20it%20for%20site%20A.%20Thats%20not%20because%20you%20failed,%20its%20because%20you%20cannot%20control%20all%20the%20variables,%20no%20two%20sites%20are%20exactly%20the%20same%20this%20way.%20So%20be%20prepared%20to%20be%20flexible,%20and%20adjust%20your%20approach.%20Also%20a%20good%20reason%20not%20to%20look%20what%20successful%20sites%20are%20doing,%20emulate%20that%20and%20expect%20the%20same%20success.%20Those%20sites%20may%20well%20be%20ranking%20in%20spite%20of%20whatever%20tactic%20you%20are%20planning%20on%20replicating.%20%0D%0DDave%20Smart.%20https://learningseo.io/%23tip_14",
+          "x": "https://twitter.com/intent/tweet?text=Doing%20X%20wont%20lead%20to%20the%20same%20amount%20of%20improvement%20for%20site%20B,%20as%20when%20you%20did%20it%20for%20site%20A.%20Thats%20not%20because%20you%20failed,%20its%20because%20you%20cannot%20control%20all%20the%20variables,%20no%20two%20sites%20are%20exactly%20the%20same%20this%20way.%20So%20be%20prepared%20to%20be%20flexible,%20and%20adjust%20your%20approach.%20Also%20a%20good%20reason%20not%20to%20look%20what%20successful%20sites%20are%20doing,%20emulate%20that%20and%20expect%20the%20same%20success.%20Those%20sites%20may%20well%20be%20ranking%20in%20spite%20of%20whatever%20tactic%20you%20are%20planning%20on%20replicating.%20Dave%20Smart.%20/%23tip_14",
+          "threads": "https://www.threads.net/intent/post?text=Doing%20X%20wont%20lead%20to%20the%20same%20amount%20of%20improvement%20for%20site%20B,%20as%20when%20you%20did%20it%20for%20site%20A.%20Thats%20not%20because%20you%20failed,%20its%20because%20you%20cannot%20control%20all%20the%20variables,%20no%20two%20sites%20are%20exactly%20the%20same%20this%20way.%20So%20be%20prepared%20to%20be%20flexible,%20and%20adjust%20your%20approach.%20Also%20a%20good%20reason%20not%20to%20look%20what%20successful%20sites%20are%20doing,%20emulate%20that%20and%20expect%20the%20same%20success.%20Those%20sites%20may%20well%20be%20ranking%20in%20spite%20of%20whatever%20tactic%20you%20are%20planning%20on%20replicating.%20%0D%0DDave%20Smart.%20/%23tip_14",
           "linkedIn": ""
         }
       },
@@ -1144,8 +1144,8 @@
         "text": "\"Choose your tools wisely. Deeply learning and understanding a core set of pro-level SEO tools is far more valuable than chasing each new shiny thing. Bonus points if your tools play well together, but if not just brush up on manipulating spreadsheets to get the answers you need!\"",
         "author": "Michelle Bourbonniere",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Choose%20your%20tools%20wisely.%20Deeply%20learning%20and%20understanding%20a%20core%20set%20of%20pro-level%20SEO%20tools%20is%20far%20more%20valuable%20than%20chasing%20each%20new%20shiny%20thing.%20Bonus%20points%20if%20your%20tools%20play%20well%20together,%20but%20if%20not%20just%20brush%20up%20on%20manipulating%20spreadsheets%20to%20get%20the%20answers%20you%20need!%20Michelle%20Bourbonniere.%20https://learningseo.io/%23tip_15",
-          "threads": "https://www.threads.net/intent/post?text=Choose%20your%20tools%20wisely.%20Deeply%20learning%20and%20understanding%20a%20core%20set%20of%20pro-level%20SEO%20tools%20is%20far%20more%20valuable%20than%20chasing%20each%20new%20shiny%20thing.%20Bonus%20points%20if%20your%20tools%20play%20well%20together,%20but%20if%20not%20just%20brush%20up%20on%20manipulating%20spreadsheets%20to%20get%20the%20answers%20you%20need!%20%0D%0DMichelle%20Bourbonniere.%20https://learningseo.io/%23tip_15",
+          "x": "https://twitter.com/intent/tweet?text=Choose%20your%20tools%20wisely.%20Deeply%20learning%20and%20understanding%20a%20core%20set%20of%20pro-level%20SEO%20tools%20is%20far%20more%20valuable%20than%20chasing%20each%20new%20shiny%20thing.%20Bonus%20points%20if%20your%20tools%20play%20well%20together,%20but%20if%20not%20just%20brush%20up%20on%20manipulating%20spreadsheets%20to%20get%20the%20answers%20you%20need!%20Michelle%20Bourbonniere.%20/%23tip_15",
+          "threads": "https://www.threads.net/intent/post?text=Choose%20your%20tools%20wisely.%20Deeply%20learning%20and%20understanding%20a%20core%20set%20of%20pro-level%20SEO%20tools%20is%20far%20more%20valuable%20than%20chasing%20each%20new%20shiny%20thing.%20Bonus%20points%20if%20your%20tools%20play%20well%20together,%20but%20if%20not%20just%20brush%20up%20on%20manipulating%20spreadsheets%20to%20get%20the%20answers%20you%20need!%20%0D%0DMichelle%20Bourbonniere.%20/%23tip_15",
           "linkedIn": ""
         }
       },
@@ -1154,8 +1154,8 @@
         "text": "\"I would go back and tell myself that if you're just pushing pixels around the page (making small adjustments), you can't expect profound changes in performance. Also, not everyone cares about SEO as much as I do/did. Embrace TL;DR in communications.\"",
         "author": "Chris Green",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=I%20would%20go%20back%20and%20tell%20myself%20that%20if%20youre%20just%20pushing%20pixels%20around%20the%20page%20(making%20small%20adjustments),%20you%20cant%20expect%20profound%20changes%20in%20performance.%20Also,%20not%20everyone%20cares%20about%20SEO%20as%20much%20as%20I%20do/did.%20Embrace%20TL;DR%20in%20communications.%20Chris%20Green.%20https://learningseo.io/%23tip_16",
-          "threads": "https://www.threads.net/intent/post?text=I%20would%20go%20back%20and%20tell%20myself%20that%20if%20youre%20just%20pushing%20pixels%20around%20the%20page%20(making%20small%20adjustments),%20you%20cant%20expect%20profound%20changes%20in%20performance.%20Also,%20not%20everyone%20cares%20about%20SEO%20as%20much%20as%20I%20do/did.%20Embrace%20TL;DR%20in%20communications.%20%0D%0DChris%20Green.%20https://learningseo.io/%23tip_16",
+          "x": "https://twitter.com/intent/tweet?text=I%20would%20go%20back%20and%20tell%20myself%20that%20if%20youre%20just%20pushing%20pixels%20around%20the%20page%20(making%20small%20adjustments),%20you%20cant%20expect%20profound%20changes%20in%20performance.%20Also,%20not%20everyone%20cares%20about%20SEO%20as%20much%20as%20I%20do/did.%20Embrace%20TL;DR%20in%20communications.%20Chris%20Green.%20/%23tip_16",
+          "threads": "https://www.threads.net/intent/post?text=I%20would%20go%20back%20and%20tell%20myself%20that%20if%20youre%20just%20pushing%20pixels%20around%20the%20page%20(making%20small%20adjustments),%20you%20cant%20expect%20profound%20changes%20in%20performance.%20Also,%20not%20everyone%20cares%20about%20SEO%20as%20much%20as%20I%20do/did.%20Embrace%20TL;DR%20in%20communications.%20%0D%0DChris%20Green.%20/%23tip_16",
           "linkedIn": ""
         }
       },
@@ -1164,8 +1164,8 @@
         "text": "\"Use and try all the tools you can. Listen and learn from the global SEO community and let everyone around you know about it. Never assume you know everything about how to use a search engine. Learn to be comfortable when the honest answer to your bosses is *It Depends*\"",
         "author": "Ellie",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Use%20and%20try%20all%20the%20tools%20you%20can.%20Listen%20and%20learn%20from%20the%20global%20SEO%20community%20and%20let%20everyone%20around%20you%20know%20about%20it.%20Never%20assume%20you%20know%20everything%20about%20how%20to%20use%20a%20search%20engine.%20Learn%20to%20be%20comfortable%20when%20the%20honest%20answer%20to%20your%20bosses%20is%20*It%20Depends*%20Ellie.%20https://learningseo.io/%23tip_17",
-          "threads": "https://www.threads.net/intent/post?text=Use%20and%20try%20all%20the%20tools%20you%20can.%20Listen%20and%20learn%20from%20the%20global%20SEO%20community%20and%20let%20everyone%20around%20you%20know%20about%20it.%20Never%20assume%20you%20know%20everything%20about%20how%20to%20use%20a%20search%20engine.%20Learn%20to%20be%20comfortable%20when%20the%20honest%20answer%20to%20your%20bosses%20is%20*It%20Depends*%20%0D%0DEllie.%20https://learningseo.io/%23tip_17",
+          "x": "https://twitter.com/intent/tweet?text=Use%20and%20try%20all%20the%20tools%20you%20can.%20Listen%20and%20learn%20from%20the%20global%20SEO%20community%20and%20let%20everyone%20around%20you%20know%20about%20it.%20Never%20assume%20you%20know%20everything%20about%20how%20to%20use%20a%20search%20engine.%20Learn%20to%20be%20comfortable%20when%20the%20honest%20answer%20to%20your%20bosses%20is%20*It%20Depends*%20Ellie.%20/%23tip_17",
+          "threads": "https://www.threads.net/intent/post?text=Use%20and%20try%20all%20the%20tools%20you%20can.%20Listen%20and%20learn%20from%20the%20global%20SEO%20community%20and%20let%20everyone%20around%20you%20know%20about%20it.%20Never%20assume%20you%20know%20everything%20about%20how%20to%20use%20a%20search%20engine.%20Learn%20to%20be%20comfortable%20when%20the%20honest%20answer%20to%20your%20bosses%20is%20*It%20Depends*%20%0D%0DEllie.%20/%23tip_17",
           "linkedIn": ""
         }
       },
@@ -1174,8 +1174,8 @@
         "text": "\"SEO is no black and white, and learning never stops. Learn what sources to trust: magazines, professionals, seo blogs, newsletters. Build your opinion the way researchers would to- collect different angles, case studies, test yourself and then be ready to implement.\"",
         "author": "Svetlana Stankovic",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=SEO%20is%20no%20black%20and%20white,%20and%20learning%20never%20stops.%20Learn%20what%20sources%20to%20trust:%20magazines,%20professionals,%20seo%20blogs,%20newsletters.%20Build%20your%20opinion%20the%20way%20researchers%20would%20to-%20collect%20different%20angles,%20case%20studies,%20test%20yourself%20and%20then%20be%20ready%20to%20implement.%20Svetlana%20Stankovic.%20https://learningseo.io/%23tip_18",
-          "threads": "https://www.threads.net/intent/post?text=SEO%20is%20no%20black%20and%20white,%20and%20learning%20never%20stops.%20Learn%20what%20sources%20to%20trust:%20magazines,%20professionals,%20seo%20blogs,%20newsletters.%20Build%20your%20opinion%20the%20way%20researchers%20would%20to-%20collect%20different%20angles,%20case%20studies,%20test%20yourself%20and%20then%20be%20ready%20to%20implement.%20%0D%0DSvetlana%20Stankovic.%20https://learningseo.io/%23tip_18",
+          "x": "https://twitter.com/intent/tweet?text=SEO%20is%20no%20black%20and%20white,%20and%20learning%20never%20stops.%20Learn%20what%20sources%20to%20trust:%20magazines,%20professionals,%20seo%20blogs,%20newsletters.%20Build%20your%20opinion%20the%20way%20researchers%20would%20to-%20collect%20different%20angles,%20case%20studies,%20test%20yourself%20and%20then%20be%20ready%20to%20implement.%20Svetlana%20Stankovic.%20/%23tip_18",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20is%20no%20black%20and%20white,%20and%20learning%20never%20stops.%20Learn%20what%20sources%20to%20trust:%20magazines,%20professionals,%20seo%20blogs,%20newsletters.%20Build%20your%20opinion%20the%20way%20researchers%20would%20to-%20collect%20different%20angles,%20case%20studies,%20test%20yourself%20and%20then%20be%20ready%20to%20implement.%20%0D%0DSvetlana%20Stankovic.%20/%23tip_18",
           "linkedIn": ""
         }
       },
@@ -1184,8 +1184,8 @@
         "text": "\"SEO tools are great and they are getting better. But it's easy to get blinded by them. Sometimes you just need to look through a website - not wait for an error to be flagged by a tool. Step back and look at a website, not base your success on getting top marks by a tool.\"",
         "author": "Mike Richardson",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=SEO%20tools%20are%20great%20and%20they%20are%20getting%20better.%20But%20its%20easy%20to%20get%20blinded%20by%20them.%20Sometimes%20you%20just%20need%20to%20look%20through%20a%20website%20-%20not%20wait%20for%20an%20error%20to%20be%20flagged%20by%20a%20tool.%20Step%20back%20and%20look%20at%20a%20website,%20not%20base%20your%20success%20on%20getting%20top%20marks%20by%20a%20tool.%20Mike%20Richardson.%20https://learningseo.io/%23tip_19",
-          "threads": "https://www.threads.net/intent/post?text=SEO%20tools%20are%20great%20and%20they%20are%20getting%20better.%20But%20its%20easy%20to%20get%20blinded%20by%20them.%20Sometimes%20you%20just%20need%20to%20look%20through%20a%20website%20-%20not%20wait%20for%20an%20error%20to%20be%20flagged%20by%20a%20tool.%20Step%20back%20and%20look%20at%20a%20website,%20not%20base%20your%20success%20on%20getting%20top%20marks%20by%20a%20tool.%20%0D%0DMike%20Richardson.%20https://learningseo.io/%23tip_19",
+          "x": "https://twitter.com/intent/tweet?text=SEO%20tools%20are%20great%20and%20they%20are%20getting%20better.%20But%20its%20easy%20to%20get%20blinded%20by%20them.%20Sometimes%20you%20just%20need%20to%20look%20through%20a%20website%20-%20not%20wait%20for%20an%20error%20to%20be%20flagged%20by%20a%20tool.%20Step%20back%20and%20look%20at%20a%20website,%20not%20base%20your%20success%20on%20getting%20top%20marks%20by%20a%20tool.%20Mike%20Richardson.%20/%23tip_19",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20tools%20are%20great%20and%20they%20are%20getting%20better.%20But%20its%20easy%20to%20get%20blinded%20by%20them.%20Sometimes%20you%20just%20need%20to%20look%20through%20a%20website%20-%20not%20wait%20for%20an%20error%20to%20be%20flagged%20by%20a%20tool.%20Step%20back%20and%20look%20at%20a%20website,%20not%20base%20your%20success%20on%20getting%20top%20marks%20by%20a%20tool.%20%0D%0DMike%20Richardson.%20/%23tip_19",
           "linkedIn": ""
         }
       },
@@ -1194,8 +1194,8 @@
         "text": "\"Like many things in marketing, it should start with a goal and strategy in mind. We cannot be pushing changes by being reactive to algo updates. Beyond on page and off page techniques - best serve quality content, build your brand and make your site user friendly!\"",
         "author": "JJ Nato-Pascasio",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Like%20many%20things%20in%20marketing,%20it%20should%20start%20with%20a%20goal%20and%20strategy%20in%20mind.%20We%20cannot%20be%20pushing%20changes%20by%20being%20reactive%20to%20algo%20updates.%20Beyond%20on%20page%20and%20off%20page%20techniques%20-%20best%20serve%20quality%20content,%20build%20your%20brand%20and%20make%20your%20site%20user%20friendly!%20JJ%20Nato-Pascasio.%20https://learningseo.io/%23tip_20",
-          "threads": "https://www.threads.net/intent/post?text=Like%20many%20things%20in%20marketing,%20it%20should%20start%20with%20a%20goal%20and%20strategy%20in%20mind.%20We%20cannot%20be%20pushing%20changes%20by%20being%20reactive%20to%20algo%20updates.%20Beyond%20on%20page%20and%20off%20page%20techniques%20-%20best%20serve%20quality%20content,%20build%20your%20brand%20and%20make%20your%20site%20user%20friendly!%20%0D%0DJJ%20Nato-Pascasio.%20https://learningseo.io/%23tip_20",
+          "x": "https://twitter.com/intent/tweet?text=Like%20many%20things%20in%20marketing,%20it%20should%20start%20with%20a%20goal%20and%20strategy%20in%20mind.%20We%20cannot%20be%20pushing%20changes%20by%20being%20reactive%20to%20algo%20updates.%20Beyond%20on%20page%20and%20off%20page%20techniques%20-%20best%20serve%20quality%20content,%20build%20your%20brand%20and%20make%20your%20site%20user%20friendly!%20JJ%20Nato-Pascasio.%20/%23tip_20",
+          "threads": "https://www.threads.net/intent/post?text=Like%20many%20things%20in%20marketing,%20it%20should%20start%20with%20a%20goal%20and%20strategy%20in%20mind.%20We%20cannot%20be%20pushing%20changes%20by%20being%20reactive%20to%20algo%20updates.%20Beyond%20on%20page%20and%20off%20page%20techniques%20-%20best%20serve%20quality%20content,%20build%20your%20brand%20and%20make%20your%20site%20user%20friendly!%20%0D%0DJJ%20Nato-Pascasio.%20/%23tip_20",
           "linkedIn": ""
         }
       },
@@ -1204,8 +1204,8 @@
         "text": "\"At start I always tried to just check a lot of boxes with known ranking factors in mind. Now we put everything that is seen, consumed & interacted with by the users first & work on the tech and co. after that. So the first question is always are we providing a good exp. for users\"",
         "author": "Whyzkid",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=At%20start%20I%20always%20tried%20to%20just%20check%20a%20lot%20of%20boxes%20with%20known%20ranking%20factors%20in%20mind.%20Now%20we%20put%20everything%20that%20is%20seen,%20consumed%20and%20interacted%20with%20by%20the%20users%20first%20and%20work%20on%20the%20tech%20and%20co.%20after%20that.%20So%20the%20first%20question%20is%20always%20are%20we%20providing%20a%20good%20exp.%20for%20users%20Whyzkid.%20https://learningseo.io/%23tip_21",
-          "threads": "https://www.threads.net/intent/post?text=At%20start%20I%20always%20tried%20to%20just%20check%20a%20lot%20of%20boxes%20with%20known%20ranking%20factors%20in%20mind.%20Now%20we%20put%20everything%20that%20is%20seen,%20consumed%20and%20interacted%20with%20by%20the%20users%20first%20and%20work%20on%20the%20tech%20and%20co.%20after%20that.%20So%20the%20first%20question%20is%20always%20are%20we%20providing%20a%20good%20exp.%20for%20users%20%0D%0DWhyzkid.%20https://learningseo.io/%23tip_21",
+          "x": "https://twitter.com/intent/tweet?text=At%20start%20I%20always%20tried%20to%20just%20check%20a%20lot%20of%20boxes%20with%20known%20ranking%20factors%20in%20mind.%20Now%20we%20put%20everything%20that%20is%20seen,%20consumed%20and%20interacted%20with%20by%20the%20users%20first%20and%20work%20on%20the%20tech%20and%20co.%20after%20that.%20So%20the%20first%20question%20is%20always%20are%20we%20providing%20a%20good%20exp.%20for%20users%20Whyzkid.%20/%23tip_21",
+          "threads": "https://www.threads.net/intent/post?text=At%20start%20I%20always%20tried%20to%20just%20check%20a%20lot%20of%20boxes%20with%20known%20ranking%20factors%20in%20mind.%20Now%20we%20put%20everything%20that%20is%20seen,%20consumed%20and%20interacted%20with%20by%20the%20users%20first%20and%20work%20on%20the%20tech%20and%20co.%20after%20that.%20So%20the%20first%20question%20is%20always%20are%20we%20providing%20a%20good%20exp.%20for%20users%20%0D%0DWhyzkid.%20/%23tip_21",
           "linkedIn": ""
         }
       },
@@ -1214,8 +1214,8 @@
         "text": "\"Build for users, but with Google in mind. (Cheers @SEOMalc). Simple phrase that steered me right. That and Business Reasons > SEO reasons. There may be a good reason it’s a sub domain rather than a subfolder. Ask or risk getting ripped apart by a client in a boardroom...\"",
         "author": "John Jackson",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Build%20for%20users,%20but%20with%20Google%20in%20mind.%20(Cheers%20@SEOMalc).%20Simple%20phrase%20that%20steered%20me%20right.%20That%20and%20Business%20Reasons%20%3E%20SEO%20reasons.%20There%20may%20be%20a%20good%20reason%20it%E2%80%99s%20a%20sub%20domain%20rather%20than%20a%20subfolder.%20Ask%20or%20risk%20getting%20ripped%20apart%20by%20a%20client%20in%20a%20boardroom...%20John%20Jackson.%20https://learningseo.io/%23tip_22",
-          "threads": "https://www.threads.net/intent/post?text=Build%20for%20users,%20but%20with%20Google%20in%20mind.%20(Cheers%20@SEOMalc).%20Simple%20phrase%20that%20steered%20me%20right.%20That%20and%20Business%20Reasons%20%3E%20SEO%20reasons.%20There%20may%20be%20a%20good%20reason%20it%E2%80%99s%20a%20sub%20domain%20rather%20than%20a%20subfolder.%20Ask%20or%20risk%20getting%20ripped%20apart%20by%20a%20client%20in%20a%20boardroom...%20%0D%0DJohn%20Jackson.%20https://learningseo.io/%23tip_22",
+          "x": "https://twitter.com/intent/tweet?text=Build%20for%20users,%20but%20with%20Google%20in%20mind.%20(Cheers%20@SEOMalc).%20Simple%20phrase%20that%20steered%20me%20right.%20That%20and%20Business%20Reasons%20%3E%20SEO%20reasons.%20There%20may%20be%20a%20good%20reason%20it%E2%80%99s%20a%20sub%20domain%20rather%20than%20a%20subfolder.%20Ask%20or%20risk%20getting%20ripped%20apart%20by%20a%20client%20in%20a%20boardroom...%20John%20Jackson.%20/%23tip_22",
+          "threads": "https://www.threads.net/intent/post?text=Build%20for%20users,%20but%20with%20Google%20in%20mind.%20(Cheers%20@SEOMalc).%20Simple%20phrase%20that%20steered%20me%20right.%20That%20and%20Business%20Reasons%20%3E%20SEO%20reasons.%20There%20may%20be%20a%20good%20reason%20it%E2%80%99s%20a%20sub%20domain%20rather%20than%20a%20subfolder.%20Ask%20or%20risk%20getting%20ripped%20apart%20by%20a%20client%20in%20a%20boardroom...%20%0D%0DJohn%20Jackson.%20/%23tip_22",
           "linkedIn": ""
         }
       },
@@ -1224,8 +1224,8 @@
         "text": "\"A good checklist of actions prioritized for cost/effectiveness is more valuable than a cerebral audit of 100 pages.\"",
         "author": "Gianluca Fiorelli",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=A%20good%20checklist%20of%20actions%20prioritized%20for%20cost/effectiveness%20is%20more%20valuable%20than%20a%20cerebral%20audit%20of%20100%20pages.%20Gianluca%20Fiorelli.%20https://learningseo.io/%23tip_23",
-          "threads": "https://www.threads.net/intent/post?text=A%20good%20checklist%20of%20actions%20prioritized%20for%20cost/effectiveness%20is%20more%20valuable%20than%20a%20cerebral%20audit%20of%20100%20pages.%20%0D%0DGianluca%20Fiorelli.%20https://learningseo.io/%23tip_23",
+          "x": "https://twitter.com/intent/tweet?text=A%20good%20checklist%20of%20actions%20prioritized%20for%20cost/effectiveness%20is%20more%20valuable%20than%20a%20cerebral%20audit%20of%20100%20pages.%20Gianluca%20Fiorelli.%20/%23tip_23",
+          "threads": "https://www.threads.net/intent/post?text=A%20good%20checklist%20of%20actions%20prioritized%20for%20cost/effectiveness%20is%20more%20valuable%20than%20a%20cerebral%20audit%20of%20100%20pages.%20%0D%0DGianluca%20Fiorelli.%20/%23tip_23",
           "linkedIn": ""
         }
       },
@@ -1234,8 +1234,8 @@
         "text": "\"Don't treat SEO and SEO efforts as an isolated channel. SEO should be part of a more 360 strategy from the begining both technical/website foundations and overall company's online marketing strategy related\"",
         "author": "Edgar Sánchez",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Dont%20treat%20SEO%20and%20SEO%20efforts%20as%20an%20isolated%20channel.%20SEO%20should%20be%20part%20of%20a%20more%20360%20strategy%20from%20the%20begining%20both%20technical/website%20foundations%20and%20overall%20companys%20online%20marketing%20strategy%20related%20Edgar%20S%C3%A1nchez.%20https://learningseo.io/%23tip_24",
-          "threads": "https://www.threads.net/intent/post?text=Dont%20treat%20SEO%20and%20SEO%20efforts%20as%20an%20isolated%20channel.%20SEO%20should%20be%20part%20of%20a%20more%20360%20strategy%20from%20the%20begining%20both%20technical/website%20foundations%20and%20overall%20companys%20online%20marketing%20strategy%20related%20%0D%0DEdgar%20S%C3%A1nchez.%20https://learningseo.io/%23tip_24",
+          "x": "https://twitter.com/intent/tweet?text=Dont%20treat%20SEO%20and%20SEO%20efforts%20as%20an%20isolated%20channel.%20SEO%20should%20be%20part%20of%20a%20more%20360%20strategy%20from%20the%20begining%20both%20technical/website%20foundations%20and%20overall%20companys%20online%20marketing%20strategy%20related%20Edgar%20S%C3%A1nchez.%20/%23tip_24",
+          "threads": "https://www.threads.net/intent/post?text=Dont%20treat%20SEO%20and%20SEO%20efforts%20as%20an%20isolated%20channel.%20SEO%20should%20be%20part%20of%20a%20more%20360%20strategy%20from%20the%20begining%20both%20technical/website%20foundations%20and%20overall%20companys%20online%20marketing%20strategy%20related%20%0D%0DEdgar%20S%C3%A1nchez.%20/%23tip_24",
           "linkedIn": ""
         }
       },
@@ -1244,8 +1244,8 @@
         "text": "\"Best practices are good but don’t just spout them without first looking at the constraints of the CMS, budget, staff, time, and internal/political/brand pressure. The ultimate best practices are the ones that improve the bottom line.\"",
         "author": "Mark Alves",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Best%20practices%20are%20good%20but%20don%E2%80%99t%20just%20spout%20them%20without%20first%20looking%20at%20the%20constraints%20of%20the%20CMS,%20budget,%20staff,%20time,%20and%20internal/political/brand%20pressure.%20The%20ultimate%20best%20practices%20are%20the%20ones%20that%20improve%20the%20bottom%20line.%20Mark%20Alves.%20https://learningseo.io/%23tip_25",
-          "threads": "https://www.threads.net/intent/post?text=Best%20practices%20are%20good%20but%20don%E2%80%99t%20just%20spout%20them%20without%20first%20looking%20at%20the%20constraints%20of%20the%20CMS,%20budget,%20staff,%20time,%20and%20internal/political/brand%20pressure.%20The%20ultimate%20best%20practices%20are%20the%20ones%20that%20improve%20the%20bottom%20line.%20%0D%0DMark%20Alves.%20https://learningseo.io/%23tip_25",
+          "x": "https://twitter.com/intent/tweet?text=Best%20practices%20are%20good%20but%20don%E2%80%99t%20just%20spout%20them%20without%20first%20looking%20at%20the%20constraints%20of%20the%20CMS,%20budget,%20staff,%20time,%20and%20internal/political/brand%20pressure.%20The%20ultimate%20best%20practices%20are%20the%20ones%20that%20improve%20the%20bottom%20line.%20Mark%20Alves.%20/%23tip_25",
+          "threads": "https://www.threads.net/intent/post?text=Best%20practices%20are%20good%20but%20don%E2%80%99t%20just%20spout%20them%20without%20first%20looking%20at%20the%20constraints%20of%20the%20CMS,%20budget,%20staff,%20time,%20and%20internal/political/brand%20pressure.%20The%20ultimate%20best%20practices%20are%20the%20ones%20that%20improve%20the%20bottom%20line.%20%0D%0DMark%20Alves.%20/%23tip_25",
           "linkedIn": ""
         }
       },
@@ -1254,8 +1254,8 @@
         "text": "\"Stop watching graphs going up or down; watch the tickets getting done. If your strategy is focusing on serving user intent the best way possible, instead of shady short-term practices, focus on that instead of hastily analysing every single suspected Google update.\"",
         "author": "Gianna Brachetti-Truskawa",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Stop%20watching%20graphs%20going%20up%20or%20down;%20watch%20the%20tickets%20getting%20done.%20If%20your%20strategy%20is%20focusing%20on%20serving%20user%20intent%20the%20best%20way%20possible,%20instead%20of%20shady%20short-term%20practices,%20focus%20on%20that%20instead%20of%20hastily%20analysing%20every%20single%20suspected%20Google%20update.%20Gianna%20Brachetti-Truskawa.%20https://learningseo.io/%23tip_26",
-          "threads": "https://www.threads.net/intent/post?text=Stop%20watching%20graphs%20going%20up%20or%20down;%20watch%20the%20tickets%20getting%20done.%20If%20your%20strategy%20is%20focusing%20on%20serving%20user%20intent%20the%20best%20way%20possible,%20instead%20of%20shady%20short-term%20practices,%20focus%20on%20that%20instead%20of%20hastily%20analysing%20every%20single%20suspected%20Google%20update.%20%0D%0DGianna%20Brachetti-Truskawa.%20https://learningseo.io/%23tip_26",
+          "x": "https://twitter.com/intent/tweet?text=Stop%20watching%20graphs%20going%20up%20or%20down;%20watch%20the%20tickets%20getting%20done.%20If%20your%20strategy%20is%20focusing%20on%20serving%20user%20intent%20the%20best%20way%20possible,%20instead%20of%20shady%20short-term%20practices,%20focus%20on%20that%20instead%20of%20hastily%20analysing%20every%20single%20suspected%20Google%20update.%20Gianna%20Brachetti-Truskawa.%20/%23tip_26",
+          "threads": "https://www.threads.net/intent/post?text=Stop%20watching%20graphs%20going%20up%20or%20down;%20watch%20the%20tickets%20getting%20done.%20If%20your%20strategy%20is%20focusing%20on%20serving%20user%20intent%20the%20best%20way%20possible,%20instead%20of%20shady%20short-term%20practices,%20focus%20on%20that%20instead%20of%20hastily%20analysing%20every%20single%20suspected%20Google%20update.%20%0D%0DGianna%20Brachetti-Truskawa.%20/%23tip_26",
           "linkedIn": ""
         }
       },
@@ -1264,8 +1264,8 @@
         "text": "\"Understand the business goals, and remember that it not all about traffic, traffic costs money...the right traffic makes you money...\"",
         "author": "Arnout Hellemans",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Understand%20the%20business%20goals,%20and%20remember%20that%20it%20not%20all%20about%20traffic,%20traffic%20costs%20money...the%20right%20traffic%20makes%20you%20money...%20Arnout%20Hellemans.%20https://learningseo.io/%23tip_27",
-          "threads": "https://www.threads.net/intent/post?text=Understand%20the%20business%20goals,%20and%20remember%20that%20it%20not%20all%20about%20traffic,%20traffic%20costs%20money...the%20right%20traffic%20makes%20you%20money...%20%0D%0DArnout%20Hellemans.%20https://learningseo.io/%23tip_27",
+          "x": "https://twitter.com/intent/tweet?text=Understand%20the%20business%20goals,%20and%20remember%20that%20it%20not%20all%20about%20traffic,%20traffic%20costs%20money...the%20right%20traffic%20makes%20you%20money...%20Arnout%20Hellemans.%20/%23tip_27",
+          "threads": "https://www.threads.net/intent/post?text=Understand%20the%20business%20goals,%20and%20remember%20that%20it%20not%20all%20about%20traffic,%20traffic%20costs%20money...the%20right%20traffic%20makes%20you%20money...%20%0D%0DArnout%20Hellemans.%20/%23tip_27",
           "linkedIn": ""
         }
       },
@@ -1274,8 +1274,8 @@
         "text": "\"When I was in-house I wished I had known how to express that all the SEO and blogging we were doing was pointless without a strategy.\"",
         "author": "Lidia Infante",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=When%20I%20was%20in-house%20I%20wished%20I%20had%20known%20how%20to%20express%20that%20all%20the%20SEO%20and%20blogging%20we%20were%20doing%20was%20pointless%20without%20a%20strategy.%20Lidia%20Infante.%20https://learningseo.io/%23tip_28",
-          "threads": "https://www.threads.net/intent/post?text=When%20I%20was%20in-house%20I%20wished%20I%20had%20known%20how%20to%20express%20that%20all%20the%20SEO%20and%20blogging%20we%20were%20doing%20was%20pointless%20without%20a%20strategy.%20%0D%0DLidia%20Infante.%20https://learningseo.io/%23tip_28",
+          "x": "https://twitter.com/intent/tweet?text=When%20I%20was%20in-house%20I%20wished%20I%20had%20known%20how%20to%20express%20that%20all%20the%20SEO%20and%20blogging%20we%20were%20doing%20was%20pointless%20without%20a%20strategy.%20Lidia%20Infante.%20/%23tip_28",
+          "threads": "https://www.threads.net/intent/post?text=When%20I%20was%20in-house%20I%20wished%20I%20had%20known%20how%20to%20express%20that%20all%20the%20SEO%20and%20blogging%20we%20were%20doing%20was%20pointless%20without%20a%20strategy.%20%0D%0DLidia%20Infante.%20/%23tip_28",
           "linkedIn": ""
         }
       },
@@ -1284,8 +1284,8 @@
         "text": "\"You can specialise in one area and you can hire expertise in the other areas, you don't need to know everything on your own.\"",
         "author": "Martin McGarry",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=You%20can%20specialise%20in%20one%20area%20and%20you%20can%20hire%20expertise%20in%20the%20other%20areas,%20you%20dont%20need%20to%20know%20everything%20on%20your%20own.%20Martin%20McGarry.%20https://learningseo.io/%23tip_29",
-          "threads": "https://www.threads.net/intent/post?text=You%20can%20specialise%20in%20one%20area%20and%20you%20can%20hire%20expertise%20in%20the%20other%20areas,%20you%20dont%20need%20to%20know%20everything%20on%20your%20own.%20%0D%0DMartin%20McGarry.%20https://learningseo.io/%23tip_29",
+          "x": "https://twitter.com/intent/tweet?text=You%20can%20specialise%20in%20one%20area%20and%20you%20can%20hire%20expertise%20in%20the%20other%20areas,%20you%20dont%20need%20to%20know%20everything%20on%20your%20own.%20Martin%20McGarry.%20/%23tip_29",
+          "threads": "https://www.threads.net/intent/post?text=You%20can%20specialise%20in%20one%20area%20and%20you%20can%20hire%20expertise%20in%20the%20other%20areas,%20you%20dont%20need%20to%20know%20everything%20on%20your%20own.%20%0D%0DMartin%20McGarry.%20/%23tip_29",
           "linkedIn": ""
         }
       },
@@ -1294,8 +1294,8 @@
         "text": "\"Future-proof your SEO: don't waste your time chasing hype - keep your efforts focused on what search engines want long-term, even if there's a small loophole being exploited by some at the moment.\"",
         "author": "Dustin Woodard",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Future-proof%20your%20SEO:%20dont%20waste%20your%20time%20chasing%20hype%20-%20keep%20your%20efforts%20focused%20on%20what%20search%20engines%20want%20long-term,%20even%20if%20theres%20a%20small%20loophole%20being%20exploited%20by%20some%20at%20the%20moment.%20Dustin%20Woodard.%20https://learningseo.io/%23tip_30",
-          "threads": "https://www.threads.net/intent/post?text=Future-proof%20your%20SEO:%20dont%20waste%20your%20time%20chasing%20hype%20-%20keep%20your%20efforts%20focused%20on%20what%20search%20engines%20want%20long-term,%20even%20if%20theres%20a%20small%20loophole%20being%20exploited%20by%20some%20at%20the%20moment.%20%0D%0DDustin%20Woodard.%20https://learningseo.io/%23tip_30",
+          "x": "https://twitter.com/intent/tweet?text=Future-proof%20your%20SEO:%20dont%20waste%20your%20time%20chasing%20hype%20-%20keep%20your%20efforts%20focused%20on%20what%20search%20engines%20want%20long-term,%20even%20if%20theres%20a%20small%20loophole%20being%20exploited%20by%20some%20at%20the%20moment.%20Dustin%20Woodard.%20/%23tip_30",
+          "threads": "https://www.threads.net/intent/post?text=Future-proof%20your%20SEO:%20dont%20waste%20your%20time%20chasing%20hype%20-%20keep%20your%20efforts%20focused%20on%20what%20search%20engines%20want%20long-term,%20even%20if%20theres%20a%20small%20loophole%20being%20exploited%20by%20some%20at%20the%20moment.%20%0D%0DDustin%20Woodard.%20/%23tip_30",
           "linkedIn": ""
         }
       },
@@ -1304,8 +1304,8 @@
         "text": "\"SEO really requires pushing back against perfectionism. You can’t fix everything - there’s no “perfect” site. Over time I’ve learned to focus on the bigger picture. Get crystal clear on your client’s goals & tackle the 3-5 highest priority items that can get them there.\"",
         "author": "Abby Reimer",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=SEO%20really%20requires%20pushing%20back%20against%20perfectionism.%20You%20can%E2%80%99t%20fix%20everything%20-%20there%E2%80%99s%20no%20%E2%80%9Cperfect%E2%80%9D%20site.%20Over%20time%20I%E2%80%99ve%20learned%20to%20focus%20on%20the%20bigger%20picture.%20Get%20crystal%20clear%20on%20your%20client%E2%80%99s%20goals%20and%20tackle%20the%203-5%20highest%20priority%20items%20that%20can%20get%20them%20there.%20Abby%20Reimer.%20https://learningseo.io/%23tip_31",
-          "threads": "https://www.threads.net/intent/post?text=SEO%20really%20requires%20pushing%20back%20against%20perfectionism.%20You%20can%E2%80%99t%20fix%20everything%20-%20there%E2%80%99s%20no%20%E2%80%9Cperfect%E2%80%9D%20site.%20Over%20time%20I%E2%80%99ve%20learned%20to%20focus%20on%20the%20bigger%20picture.%20Get%20crystal%20clear%20on%20your%20client%E2%80%99s%20goals%20and%20tackle%20the%203-5%20highest%20priority%20items%20that%20can%20get%20them%20there.%20%0D%0DAbby%20Reimer.%20https://learningseo.io/%23tip_31",
+          "x": "https://twitter.com/intent/tweet?text=SEO%20really%20requires%20pushing%20back%20against%20perfectionism.%20You%20can%E2%80%99t%20fix%20everything%20-%20there%E2%80%99s%20no%20%E2%80%9Cperfect%E2%80%9D%20site.%20Over%20time%20I%E2%80%99ve%20learned%20to%20focus%20on%20the%20bigger%20picture.%20Get%20crystal%20clear%20on%20your%20client%E2%80%99s%20goals%20and%20tackle%20the%203-5%20highest%20priority%20items%20that%20can%20get%20them%20there.%20Abby%20Reimer.%20/%23tip_31",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20really%20requires%20pushing%20back%20against%20perfectionism.%20You%20can%E2%80%99t%20fix%20everything%20-%20there%E2%80%99s%20no%20%E2%80%9Cperfect%E2%80%9D%20site.%20Over%20time%20I%E2%80%99ve%20learned%20to%20focus%20on%20the%20bigger%20picture.%20Get%20crystal%20clear%20on%20your%20client%E2%80%99s%20goals%20and%20tackle%20the%203-5%20highest%20priority%20items%20that%20can%20get%20them%20there.%20%0D%0DAbby%20Reimer.%20/%23tip_31",
           "linkedIn": ""
         }
       },
@@ -1314,8 +1314,8 @@
         "text": "\"3 Things: Think about your target audience and their needs, try to serve them what they are looking for. This is exactly what Google is doing for its audience. Don't fear Google updates, SEO principles will remain same.\"",
         "author": "Praveen Sharma",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=3%20Things:%20Think%20about%20your%20target%20audience%20and%20their%20needs,%20try%20to%20serve%20them%20what%20they%20are%20looking%20for.%20This%20is%20exactly%20what%20Google%20is%20doing%20for%20its%20audience.%20Dont%20fear%20Google%20updates,%20SEO%20principles%20will%20remain%20same.%20Praveen%20Sharma.%20https://learningseo.io/%23tip_32",
-          "threads": "https://www.threads.net/intent/post?text=3%20Things:%20Think%20about%20your%20target%20audience%20and%20their%20needs,%20try%20to%20serve%20them%20what%20they%20are%20looking%20for.%20This%20is%20exactly%20what%20Google%20is%20doing%20for%20its%20audience.%20Dont%20fear%20Google%20updates,%20SEO%20principles%20will%20remain%20same.%20%0D%0DPraveen%20Sharma.%20https://learningseo.io/%23tip_32",
+          "x": "https://twitter.com/intent/tweet?text=3%20Things:%20Think%20about%20your%20target%20audience%20and%20their%20needs,%20try%20to%20serve%20them%20what%20they%20are%20looking%20for.%20This%20is%20exactly%20what%20Google%20is%20doing%20for%20its%20audience.%20Dont%20fear%20Google%20updates,%20SEO%20principles%20will%20remain%20same.%20Praveen%20Sharma.%20/%23tip_32",
+          "threads": "https://www.threads.net/intent/post?text=3%20Things:%20Think%20about%20your%20target%20audience%20and%20their%20needs,%20try%20to%20serve%20them%20what%20they%20are%20looking%20for.%20This%20is%20exactly%20what%20Google%20is%20doing%20for%20its%20audience.%20Dont%20fear%20Google%20updates,%20SEO%20principles%20will%20remain%20same.%20%0D%0DPraveen%20Sharma.%20/%23tip_32",
           "linkedIn": ""
         }
       },
@@ -1324,8 +1324,8 @@
         "text": "\"Don't chase the wrong thing. When you're tracking your progress using metrics - sometimes you forget what that metric leads back to. And you end up focusing on wins and fails that have no real value, and lose opportunities that would have contributed to success.\"",
         "author": "Bibi Raven",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Dont%20chase%20the%20wrong%20thing.%20When%20youre%20tracking%20your%20progress%20using%20metrics%20-%20sometimes%20you%20forget%20what%20that%20metric%20leads%20back%20to.%20And%20you%20end%20up%20focusing%20on%20wins%20and%20fails%20that%20have%20no%20real%20value,%20and%20lose%20opportunities%20that%20would%20have%20contributed%20to%20success.%20Bibi%20Raven.%20https://learningseo.io/%23tip_33",
-          "threads": "https://www.threads.net/intent/post?text=Dont%20chase%20the%20wrong%20thing.%20When%20youre%20tracking%20your%20progress%20using%20metrics%20-%20sometimes%20you%20forget%20what%20that%20metric%20leads%20back%20to.%20And%20you%20end%20up%20focusing%20on%20wins%20and%20fails%20that%20have%20no%20real%20value,%20and%20lose%20opportunities%20that%20would%20have%20contributed%20to%20success.%20%0D%0DBibi%20Raven.%20https://learningseo.io/%23tip_33",
+          "x": "https://twitter.com/intent/tweet?text=Dont%20chase%20the%20wrong%20thing.%20When%20youre%20tracking%20your%20progress%20using%20metrics%20-%20sometimes%20you%20forget%20what%20that%20metric%20leads%20back%20to.%20And%20you%20end%20up%20focusing%20on%20wins%20and%20fails%20that%20have%20no%20real%20value,%20and%20lose%20opportunities%20that%20would%20have%20contributed%20to%20success.%20Bibi%20Raven.%20/%23tip_33",
+          "threads": "https://www.threads.net/intent/post?text=Dont%20chase%20the%20wrong%20thing.%20When%20youre%20tracking%20your%20progress%20using%20metrics%20-%20sometimes%20you%20forget%20what%20that%20metric%20leads%20back%20to.%20And%20you%20end%20up%20focusing%20on%20wins%20and%20fails%20that%20have%20no%20real%20value,%20and%20lose%20opportunities%20that%20would%20have%20contributed%20to%20success.%20%0D%0DBibi%20Raven.%20/%23tip_33",
           "linkedIn": ""
         }
       },
@@ -1334,8 +1334,8 @@
         "text": "\"Best practices aren’t always the best answer... you can spend a lot of time chasing them and never find success. While it’s always a good idea to implement best practices, learning how to identify and set the best priorities should be your main focus.\"",
         "author": "Jake Bohall",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Best%20practices%20aren%E2%80%99t%20always%20the%20best%20answer...%20you%20can%20spend%20a%20lot%20of%20time%20chasing%20them%20and%20never%20find%20success.%20While%20it%E2%80%99s%20always%20a%20good%20idea%20to%20implement%20best%20practices,%20learning%20how%20to%20identify%20and%20set%20the%20best%20priorities%20should%20be%20your%20main%20focus.%20Jake%20Bohall.%20https://learningseo.io/%23tip_34",
-          "threads": "https://www.threads.net/intent/post?text=Best%20practices%20aren%E2%80%99t%20always%20the%20best%20answer...%20you%20can%20spend%20a%20lot%20of%20time%20chasing%20them%20and%20never%20find%20success.%20While%20it%E2%80%99s%20always%20a%20good%20idea%20to%20implement%20best%20practices,%20learning%20how%20to%20identify%20and%20set%20the%20best%20priorities%20should%20be%20your%20main%20focus.%20%0D%0DJake%20Bohall.%20https://learningseo.io/%23tip_34",
+          "x": "https://twitter.com/intent/tweet?text=Best%20practices%20aren%E2%80%99t%20always%20the%20best%20answer...%20you%20can%20spend%20a%20lot%20of%20time%20chasing%20them%20and%20never%20find%20success.%20While%20it%E2%80%99s%20always%20a%20good%20idea%20to%20implement%20best%20practices,%20learning%20how%20to%20identify%20and%20set%20the%20best%20priorities%20should%20be%20your%20main%20focus.%20Jake%20Bohall.%20/%23tip_34",
+          "threads": "https://www.threads.net/intent/post?text=Best%20practices%20aren%E2%80%99t%20always%20the%20best%20answer...%20you%20can%20spend%20a%20lot%20of%20time%20chasing%20them%20and%20never%20find%20success.%20While%20it%E2%80%99s%20always%20a%20good%20idea%20to%20implement%20best%20practices,%20learning%20how%20to%20identify%20and%20set%20the%20best%20priorities%20should%20be%20your%20main%20focus.%20%0D%0DJake%20Bohall.%20/%23tip_34",
           "linkedIn": ""
         }
       },
@@ -1344,8 +1344,8 @@
         "text": "\"How to prioritise better. I started in an ecom business and was being pulled all over the place - would've loved to say \"this isn't a priority\" when I was being pushed to do a load of work that wouldn't move the SEO needle\"",
         "author": "Plants and SEO",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=How%20to%20prioritise%20better.%20I%20started%20in%20an%20ecom%20business%20and%20was%20being%20pulled%20all%20over%20the%20place%20-%20wouldve%20loved%20to%20say%20this%20isnt%20a%20priority%20when%20I%20was%20being%20pushed%20to%20do%20a%20load%20of%20work%20that%20wouldnt%20move%20the%20SEO%20needle%20Plants%20and%20SEO.%20https://learningseo.io/%23tip_35",
-          "threads": "https://www.threads.net/intent/post?text=How%20to%20prioritise%20better.%20I%20started%20in%20an%20ecom%20business%20and%20was%20being%20pulled%20all%20over%20the%20place%20-%20wouldve%20loved%20to%20say%20this%20isnt%20a%20priority%20when%20I%20was%20being%20pushed%20to%20do%20a%20load%20of%20work%20that%20wouldnt%20move%20the%20SEO%20needle%20%0D%0DPlants%20and%20SEO.%20https://learningseo.io/%23tip_35",
+          "x": "https://twitter.com/intent/tweet?text=How%20to%20prioritise%20better.%20I%20started%20in%20an%20ecom%20business%20and%20was%20being%20pulled%20all%20over%20the%20place%20-%20wouldve%20loved%20to%20say%20this%20isnt%20a%20priority%20when%20I%20was%20being%20pushed%20to%20do%20a%20load%20of%20work%20that%20wouldnt%20move%20the%20SEO%20needle%20Plants%20and%20SEO.%20/%23tip_35",
+          "threads": "https://www.threads.net/intent/post?text=How%20to%20prioritise%20better.%20I%20started%20in%20an%20ecom%20business%20and%20was%20being%20pulled%20all%20over%20the%20place%20-%20wouldve%20loved%20to%20say%20this%20isnt%20a%20priority%20when%20I%20was%20being%20pushed%20to%20do%20a%20load%20of%20work%20that%20wouldnt%20move%20the%20SEO%20needle%20%0D%0DPlants%20and%20SEO.%20/%23tip_35",
           "linkedIn": ""
         }
       },
@@ -1354,8 +1354,8 @@
         "text": "\"- You are not alone: there is an awesome SEO community out there, so contribute to it. And if you don't see one, build it. - Try not to stress out so much. Keep a healthy perspective on what you are doing. Learn how to negotiate. Be part of the solution & listen to other depts\"",
         "author": "Kayleigh Toyra",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=-%20You%20are%20not%20alone:%20there%20is%20an%20awesome%20SEO%20community%20out%20there,%20so%20contribute%20to%20it.%20And%20if%20you%20dont%20see%20one,%20build%20it.%20-%20Try%20not%20to%20stress%20out%20so%20much.%20Keep%20a%20healthy%20perspective%20on%20what%20you%20are%20doing.%20Learn%20how%20to%20negotiate.%20Be%20part%20of%20the%20solution%20and%20listen%20to%20other%20depts%20Kayleigh%20Toyra.%20https://learningseo.io/%23tip_36",
-          "threads": "https://www.threads.net/intent/post?text=-%20You%20are%20not%20alone:%20there%20is%20an%20awesome%20SEO%20community%20out%20there,%20so%20contribute%20to%20it.%20And%20if%20you%20dont%20see%20one,%20build%20it.%20-%20Try%20not%20to%20stress%20out%20so%20much.%20Keep%20a%20healthy%20perspective%20on%20what%20you%20are%20doing.%20Learn%20how%20to%20negotiate.%20Be%20part%20of%20the%20solution%20and%20listen%20to%20other%20depts%20%0D%0DKayleigh%20Toyra.%20https://learningseo.io/%23tip_36",
+          "x": "https://twitter.com/intent/tweet?text=-%20You%20are%20not%20alone:%20there%20is%20an%20awesome%20SEO%20community%20out%20there,%20so%20contribute%20to%20it.%20And%20if%20you%20dont%20see%20one,%20build%20it.%20-%20Try%20not%20to%20stress%20out%20so%20much.%20Keep%20a%20healthy%20perspective%20on%20what%20you%20are%20doing.%20Learn%20how%20to%20negotiate.%20Be%20part%20of%20the%20solution%20and%20listen%20to%20other%20depts%20Kayleigh%20Toyra.%20/%23tip_36",
+          "threads": "https://www.threads.net/intent/post?text=-%20You%20are%20not%20alone:%20there%20is%20an%20awesome%20SEO%20community%20out%20there,%20so%20contribute%20to%20it.%20And%20if%20you%20dont%20see%20one,%20build%20it.%20-%20Try%20not%20to%20stress%20out%20so%20much.%20Keep%20a%20healthy%20perspective%20on%20what%20you%20are%20doing.%20Learn%20how%20to%20negotiate.%20Be%20part%20of%20the%20solution%20and%20listen%20to%20other%20depts%20%0D%0DKayleigh%20Toyra.%20/%23tip_36",
           "linkedIn": ""
         }
       },
@@ -1364,8 +1364,8 @@
         "text": "\"How SEO fits into the larger landscape of the particular business you're in. Interaction with other channels, how to place it in an overall strategy and how much weight to give it, and what area of SEO that will move the needle based on that.\"",
         "author": "Ben Böhmer",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=How%20SEO%20fits%20into%20the%20larger%20landscape%20of%20the%20particular%20business%20youre%20in.%20Interaction%20with%20other%20channels,%20how%20to%20place%20it%20in%20an%20overall%20strategy%20and%20how%20much%20weight%20to%20give%20it,%20and%20what%20area%20of%20SEO%20that%20will%20move%20the%20needle%20based%20on%20that.%3Cbr%20/%3E%20Ben%20B%C3%B6hmer.%20https://learningseo.io/%23tip_37",
-          "threads": "https://www.threads.net/intent/post?text=How%20SEO%20fits%20into%20the%20larger%20landscape%20of%20the%20particular%20business%20youre%20in.%20Interaction%20with%20other%20channels,%20how%20to%20place%20it%20in%20an%20overall%20strategy%20and%20how%20much%20weight%20to%20give%20it,%20and%20what%20area%20of%20SEO%20that%20will%20move%20the%20needle%20based%20on%20that.%3Cbr%20/%3E%20%0D%0DBen%20B%C3%B6hmer.%20https://learningseo.io/%23tip_37",
+          "x": "https://twitter.com/intent/tweet?text=How%20SEO%20fits%20into%20the%20larger%20landscape%20of%20the%20particular%20business%20youre%20in.%20Interaction%20with%20other%20channels,%20how%20to%20place%20it%20in%20an%20overall%20strategy%20and%20how%20much%20weight%20to%20give%20it,%20and%20what%20area%20of%20SEO%20that%20will%20move%20the%20needle%20based%20on%20that.%3Cbr%20/%3E%20Ben%20B%C3%B6hmer.%20/%23tip_37",
+          "threads": "https://www.threads.net/intent/post?text=How%20SEO%20fits%20into%20the%20larger%20landscape%20of%20the%20particular%20business%20youre%20in.%20Interaction%20with%20other%20channels,%20how%20to%20place%20it%20in%20an%20overall%20strategy%20and%20how%20much%20weight%20to%20give%20it,%20and%20what%20area%20of%20SEO%20that%20will%20move%20the%20needle%20based%20on%20that.%3Cbr%20/%3E%20%0D%0DBen%20B%C3%B6hmer.%20/%23tip_37",
           "linkedIn": ""
         }
       },
@@ -1374,8 +1374,8 @@
         "text": "\"I wish I had known how valuable it was learning from building my own project websites. You can experiment to your heart's desire with your own site and you dont need anyone else's buy in!\"",
         "author": "Adam Durrant",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=I%20wish%20I%20had%20known%20how%20valuable%20it%20was%20learning%20from%20building%20my%20own%20project%20websites.%20You%20can%20experiment%20to%20your%20hearts%20desire%20with%20your%20own%20site%20and%20you%20dont%20need%20anyone%20elses%20buy%20in!%20Adam%20Durrant.%20https://learningseo.io/%23tip_38",
-          "threads": "https://www.threads.net/intent/post?text=I%20wish%20I%20had%20known%20how%20valuable%20it%20was%20learning%20from%20building%20my%20own%20project%20websites.%20You%20can%20experiment%20to%20your%20hearts%20desire%20with%20your%20own%20site%20and%20you%20dont%20need%20anyone%20elses%20buy%20in!%20%0D%0DAdam%20Durrant.%20https://learningseo.io/%23tip_38",
+          "x": "https://twitter.com/intent/tweet?text=I%20wish%20I%20had%20known%20how%20valuable%20it%20was%20learning%20from%20building%20my%20own%20project%20websites.%20You%20can%20experiment%20to%20your%20hearts%20desire%20with%20your%20own%20site%20and%20you%20dont%20need%20anyone%20elses%20buy%20in!%20Adam%20Durrant.%20/%23tip_38",
+          "threads": "https://www.threads.net/intent/post?text=I%20wish%20I%20had%20known%20how%20valuable%20it%20was%20learning%20from%20building%20my%20own%20project%20websites.%20You%20can%20experiment%20to%20your%20hearts%20desire%20with%20your%20own%20site%20and%20you%20dont%20need%20anyone%20elses%20buy%20in!%20%0D%0DAdam%20Durrant.%20/%23tip_38",
           "linkedIn": ""
         }
       },
@@ -1384,8 +1384,8 @@
         "text": "\"Build. A. Test. Site. So many SEOs have never done the simple process of buying a domain, setting up hosting, and dogfooding their own tactics. You'll learn more getting a site from zero to $50/mo than nearly anything else.\"",
         "author": "Kris Roadruck",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=Build.%20A.%20Test.%20Site.%20So%20many%20SEOs%20have%20never%20done%20the%20simple%20process%20of%20buying%20a%20domain,%20setting%20up%20hosting,%20and%20dogfooding%20their%20own%20tactics.%20Youll%20learn%20more%20getting%20a%20site%20from%20zero%20to%20$50/mo%20than%20nearly%20anything%20else.%20Kris%20Roadruck.%20https://learningseo.io/%23tip_39",
-          "threads": "https://www.threads.net/intent/post?text=Build.%20A.%20Test.%20Site.%20So%20many%20SEOs%20have%20never%20done%20the%20simple%20process%20of%20buying%20a%20domain,%20setting%20up%20hosting,%20and%20dogfooding%20their%20own%20tactics.%20Youll%20learn%20more%20getting%20a%20site%20from%20zero%20to%20$50/mo%20than%20nearly%20anything%20else.%20%0D%0DKris%20Roadruck.%20https://learningseo.io/%23tip_39",
+          "x": "https://twitter.com/intent/tweet?text=Build.%20A.%20Test.%20Site.%20So%20many%20SEOs%20have%20never%20done%20the%20simple%20process%20of%20buying%20a%20domain,%20setting%20up%20hosting,%20and%20dogfooding%20their%20own%20tactics.%20Youll%20learn%20more%20getting%20a%20site%20from%20zero%20to%20$50/mo%20than%20nearly%20anything%20else.%20Kris%20Roadruck.%20/%23tip_39",
+          "threads": "https://www.threads.net/intent/post?text=Build.%20A.%20Test.%20Site.%20So%20many%20SEOs%20have%20never%20done%20the%20simple%20process%20of%20buying%20a%20domain,%20setting%20up%20hosting,%20and%20dogfooding%20their%20own%20tactics.%20Youll%20learn%20more%20getting%20a%20site%20from%20zero%20to%20$50/mo%20than%20nearly%20anything%20else.%20%0D%0DKris%20Roadruck.%20/%23tip_39",
           "linkedIn": ""
         }
       },
@@ -1394,8 +1394,8 @@
         "text": "\"SEO in theory, is very different to SEO in practice. There's very rarely 'an' answer, just lots of different shades of grey. What works in one scenario, might not work in another. Plus, it's all meaningless without business perspective.\"",
         "author": "Geoff Kennedy",
         "share": {
-          "x": "https://twitter.com/intent/tweet?text=SEO%20in%20theory,%20is%20very%20different%20to%20SEO%20in%20practice.%20Theres%20very%20rarely%20an%20answer,%20just%20lots%20of%20different%20shades%20of%20grey.%20What%20works%20in%20one%20scenario,%20might%20not%20work%20in%20another.%20Plus,%20its%20all%20meaningless%20without%20business%20perspective.%20Geoff%20Kennedy.%20https://learningseo.io/%23tip_40",
-          "threads": "https://www.threads.net/intent/post?text=SEO%20in%20theory,%20is%20very%20different%20to%20SEO%20in%20practice.%20Theres%20very%20rarely%20an%20answer,%20just%20lots%20of%20different%20shades%20of%20grey.%20What%20works%20in%20one%20scenario,%20might%20not%20work%20in%20another.%20Plus,%20its%20all%20meaningless%20without%20business%20perspective.%20%0D%0DGeoff%20Kennedy.%20https://learningseo.io/%23tip_40",
+          "x": "https://twitter.com/intent/tweet?text=SEO%20in%20theory,%20is%20very%20different%20to%20SEO%20in%20practice.%20Theres%20very%20rarely%20an%20answer,%20just%20lots%20of%20different%20shades%20of%20grey.%20What%20works%20in%20one%20scenario,%20might%20not%20work%20in%20another.%20Plus,%20its%20all%20meaningless%20without%20business%20perspective.%20Geoff%20Kennedy.%20/%23tip_40",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20in%20theory,%20is%20very%20different%20to%20SEO%20in%20practice.%20Theres%20very%20rarely%20an%20answer,%20just%20lots%20of%20different%20shades%20of%20grey.%20What%20works%20in%20one%20scenario,%20might%20not%20work%20in%20another.%20Plus,%20its%20all%20meaningless%20without%20business%20perspective.%20%0D%0DGeoff%20Kennedy.%20/%23tip_40",
           "linkedIn": ""
         }
       }
@@ -1411,95 +1411,95 @@
     "navigation": [
       {
         "label": "SEO Fundamentals",
-        "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/",
+        "href": "/seo_roadmap/seo-fundamentals/",
         "children": [
           {
             "label": "Introduction to SEO",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/introduction-to-seo/"
+            "href": "/seo_roadmap/seo-fundamentals/introduction-to-seo/"
           },
           {
             "label": "Keyword Research",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/keyword-research/"
+            "href": "/seo_roadmap/seo-fundamentals/keyword-research/"
           },
           {
             "label": "Competition analysis",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/competition-analysis/"
+            "href": "/seo_roadmap/seo-fundamentals/competition-analysis/"
           },
           {
             "label": "Technical optimization",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/technical-seo/"
+            "href": "/seo_roadmap/seo-fundamentals/technical-seo/"
           },
           {
             "label": "Content optimization",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/content-optimization/"
+            "href": "/seo_roadmap/seo-fundamentals/content-optimization/"
           },
           {
             "label": "Link building",
-            "href": "https://learningseo.io/seo_roadmap/seo-fundamentals/link-building/"
+            "href": "/seo_roadmap/seo-fundamentals/link-building/"
           }
         ]
       },
       {
         "label": "Execute an SEO Process",
-        "href": "https://learningseo.io/seo_roadmap/execute-seo/",
+        "href": "/seo_roadmap/execute-seo/",
         "children": [
           {
             "label": "Developing an SEO Audit",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-audits-recommendations/"
+            "href": "/seo_roadmap/execute-seo/seo-audits-recommendations/"
           },
           {
             "label": "Measuring SEO",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-measurement/"
+            "href": "/seo_roadmap/execute-seo/seo-measurement/"
           },
           {
             "label": "Reporting SEO",
-            "href": "https://learningseo.io/seo_roadmap/execute-seo/seo-reporting/"
+            "href": "/seo_roadmap/execute-seo/seo-reporting/"
           }
         ]
       },
       {
         "label": "SEO in your CMS",
-        "href": "https://learningseo.io/seo_roadmap/implement-in-cms/",
+        "href": "/seo_roadmap/implement-in-cms/",
         "children": []
       },
       {
         "label": "Deepen your SEO Knowledge",
-        "href": "https://learningseo.io/seo_roadmap/deepen-knowledge/",
+        "href": "/seo_roadmap/deepen-knowledge/",
         "children": []
       },
       {
         "label": "Specialize within SEO",
-        "href": "https://learningseo.io/seo_roadmap/specialize/",
+        "href": "/seo_roadmap/specialize/",
         "children": []
       },
       {
         "label": "Automate SEO Tasks",
-        "href": "https://learningseo.io/seo_roadmap/automate-tasks/",
+        "href": "/seo_roadmap/automate-tasks/",
         "children": []
       },
       {
         "label": "SEO in other Search Engines",
-        "href": "https://learningseo.io/seo_roadmap/other-search-engines/",
+        "href": "/seo_roadmap/other-search-engines/",
         "children": []
       },
       {
         "label": "Keep up with SEO News",
-        "href": "https://learningseo.io/seo_roadmap/keep-up-with-news/",
+        "href": "/seo_roadmap/keep-up-with-news/",
         "children": []
       },
       {
         "label": "Free SEO Tools To Use",
-        "href": "https://learningseo.io/seo_roadmap/seo-tools/",
+        "href": "/seo_roadmap/seo-tools/",
         "children": []
       },
       {
         "label": "Complement your SEO",
-        "href": "https://learningseo.io/seo_roadmap/complement-knowledge/",
+        "href": "/seo_roadmap/complement-knowledge/",
         "children": []
       },
       {
         "label": "Train, test & troubleshoot your SEO further",
-        "href": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+        "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
         "children": []
       },
       {
@@ -1516,7 +1516,7 @@
     "legal": [
       {
         "label": "Privacy Policy & Terms of Use",
-        "href": "https://learningseo.io/privacy-policy-terms-of-use/"
+        "href": "/privacy-policy-terms-of-use/"
       }
     ],
     "social": [
@@ -1541,6 +1541,6 @@
         "href": "https://www.linkedin.com/in/aleyda/"
       }
     ],
-    "copyrightHtml": "Copyright © 2026. All rights reserved. \n        <p>Learn more <a href=\"https://learningseo.io/about/\">about LearningSEO.io</a>, developed by <a title=\"Aleyda Solis, SEO Consultant.\" href=\"https://www.aleydasolis.com/en/\" target=\"_blank\" rel=\"noopener\">Aleyda Solis</a>, SEO Consultant.&nbsp;</p>\n \n        <div class=\"creditos\">\n            Made with\n            <svg width=\"16\" height=\"13\" viewBox=\"0 0 16 13\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M0.23882 3.15412C1.87935 -1.20352 7.21106 0.744602 7.69809 2.92343C8.36455 0.616435 13.5681 -1.10099 15.1574 3.15412C16.9261 7.89627 8.31329 12.1514 7.69809 12.8435C7.08289 12.2796 -1.52987 7.81937 0.23882 3.15412Z\" fill=\"#F2F2F2\"></path>\n            </svg>\n            by\n            <a href=\"https://www.missmarketing.es/\" title=\"Miss Marketing. Desarrollo Web\">Miss Marketing</a>\n        </div>"
+    "copyrightHtml": "Copyright © 2026. All rights reserved. \n        <p>Learn more <a href=\"/about/\">about LearningSEO.io</a>, developed by <a title=\"Aleyda Solis, SEO Consultant.\" href=\"https://www.aleydasolis.com/en/\" target=\"_blank\" rel=\"noopener\">Aleyda Solis</a>, SEO Consultant.&nbsp;</p>\n \n        <div class=\"creditos\">\n            Made with\n            <svg width=\"16\" height=\"13\" viewBox=\"0 0 16 13\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M0.23882 3.15412C1.87935 -1.20352 7.21106 0.744602 7.69809 2.92343C8.36455 0.616435 13.5681 -1.10099 15.1574 3.15412C16.9261 7.89627 8.31329 12.1514 7.69809 12.8435C7.08289 12.2796 -1.52987 7.81937 0.23882 3.15412Z\" fill=\"#F2F2F2\"></path>\n            </svg>\n            by\n            <a href=\"https://www.missmarketing.es/\" title=\"Miss Marketing. Desarrollo Web\">Miss Marketing</a>\n        </div>"
   }
 }

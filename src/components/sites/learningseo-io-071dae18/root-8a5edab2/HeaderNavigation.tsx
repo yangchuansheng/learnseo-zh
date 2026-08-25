@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { LearningSeoLogo } from "@/components/sites/learningseo-io-071dae18/shared/Brand";
+import { localHref } from "@/components/sites/learningseo-io-071dae18/shared/links";
 import content from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/content.json";
 
 const assetRoot = "/sites/learningseo-io-071dae18/shared";
@@ -64,13 +66,13 @@ export function HeaderNavigation() {
           : "absolute w-[calc(100%_-_40px)] py-5 md:max-w-[1267px] md:pt-10 md:pb-20 lg:w-[88%] xl:pt-20 xl:pb-[120px]"
       }`}
     >
-      <a
-        href="https://learningseo.io/"
+      <Link
+        href="/"
         aria-label="LearningSEO.io home"
         className="relative z-0 block text-[#000036]"
       >
         <LearningSeoLogo className="block text-[21.7px] leading-[29px] tracking-[-0.4px] [&_small]:ml-px [&_small]:text-[11px] md:text-[29.75px] md:leading-[29.75px] md:[&_small]:text-[17px]" />
-      </a>
+      </Link>
 
       <div className="flex items-center">
         <SearchForm open={searchOpen} scrolled={scrolled} />
@@ -128,7 +130,7 @@ export function HeaderNavigation() {
                       {content.header.navigation.map((item, index) => (
                         <li key={item.href} className="relative m-0 p-0 hover:bg-[#fafafa]">
                           <a
-                            href={item.href}
+                            href={localHref(item.href)}
                             className="block border-b border-[#ededed] py-2 pr-10 pl-5 text-[12.6px] leading-[14px] tracking-[0.7px] text-[#303030] md:px-10 md:text-[14.96px] md:leading-4 md:tracking-[0.85px]"
                           >
                             {item.label}
@@ -168,7 +170,7 @@ function SearchForm({ open, scrolled }: { open: boolean; scrolled: boolean }) {
   return (
     <form
       role="search"
-      action="https://learningseo.io/"
+      action="/"
       method="get"
       className={`absolute z-10 md:relative md:top-auto md:left-auto md:block md:w-[288px] ${
         scrolled ? "top-[10px] left-[10px] w-[calc(100%_-_70px)]" : "top-5 left-0 w-[calc(100%_-_44px)]"
@@ -236,7 +238,7 @@ function Submenu({
         {links.map((link, index) => (
           <li key={link.href} className="m-0 p-0 hover:bg-[#fafafa]">
             <a
-              href={link.href}
+              href={localHref(link.href)}
               className={`block border-b border-[#ededed] py-2 pr-10 pl-10 text-[12.6px] leading-[14px] tracking-[0.7px] md:text-[14.96px] md:leading-4 md:tracking-[0.85px] ${
                 index === 0 ? "font-bold text-[#000036]" : "text-[#303030]"
               }`}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import content from "./content.json";
 import { ArrowRightIcon } from "../shared/Icons";
+import { localHref, localHtml } from "../shared/links";
 
 export function ResourceBanner() {
   const banner = content.resourceBanner;
@@ -23,11 +24,11 @@ export function ResourceBanner() {
         </h2>
         <div
           className="mt-2.5 text-sm leading-[18.9px] md:text-[17px] md:leading-[22.95px]"
-          dangerouslySetInnerHTML={{ __html: banner.bodyHtml }}
+          dangerouslySetInnerHTML={{ __html: localHtml(banner.bodyHtml) }}
         />
         <a
           className="mt-[15px] inline-flex items-center gap-[13px] rounded bg-white p-3 text-sm leading-[14px] text-[#2e73ea] hover:shadow-[0_0_8px_rgba(17,58,128,.35)] md:px-4 md:py-3.5 md:text-base md:leading-4"
-          href={banner.href}
+          href={localHref(banner.href)}
           target="_blank"
           rel="noopener noreferrer"
         >

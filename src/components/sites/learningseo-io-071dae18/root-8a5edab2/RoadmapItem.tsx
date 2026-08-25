@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 
 import { ArrowRightIcon } from "../shared/Icons";
+import { localHref, localHtml } from "../shared/links";
 
 type RoadmapLink = {
   label: string;
@@ -41,7 +42,7 @@ export function RoadmapItem({
       <h3
         className={`pr-8 text-[15.4px] leading-[16.1px] font-bold text-[#000036] uppercase md:pr-10 md:text-[18.7px] md:leading-[21.25px] ${isOpen ? "md:mb-2.5 xl:mb-0" : ""}`}
       >
-        <a href={href}>{title}</a>
+        <a href={localHref(href)}>{title}</a>
       </h3>
 
       <button
@@ -68,14 +69,14 @@ export function RoadmapItem({
         <div className="min-h-0 overflow-hidden">
           <div
             className="py-[10px] text-[14px] leading-[17.5px] text-[#606060] md:text-[17px] md:leading-[21.25px] [&_a]:text-[#2e73ea] [&_a]:underline"
-            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            dangerouslySetInnerHTML={{ __html: localHtml(descriptionHtml) }}
           />
 
           <div className="grid grid-cols-2 gap-x-[10px] md:grid-cols-3">
             {links.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={localHref(link.href)}
                 tabIndex={isOpen ? undefined : -1}
                 className="group mt-[5px] flex min-w-0 items-center justify-between gap-2 rounded border border-[#a87be9] px-3 py-2 text-[12.6px] leading-[14.7px] text-[#303030] duration-100 hover:bg-[#a87be9] hover:text-white md:mt-[15px] md:self-start md:justify-self-start md:gap-[13.4px] md:text-[15.3px] md:leading-[21.25px]"
               >

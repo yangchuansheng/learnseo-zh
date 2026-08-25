@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import content from "./content.json";
+import { localHtml } from "../shared/links";
 
 export function FaqSection() {
   const [open, setOpen] = useState<boolean[]>(() =>
@@ -55,7 +56,7 @@ export function FaqSection() {
                 <div className="overflow-hidden">
                   <div
                     className="px-[4%] pb-[2%] text-sm leading-[17.5px] [&_a]:text-[#2e73ea] [&_a_strong]:text-[#2e73ea] [&_h3]:mb-2 [&_h3]:text-[15.4px] [&_li]:relative [&_li]:my-2.5 [&_li]:pl-[15px] [&_li]:before:absolute [&_li]:before:top-[3px] [&_li]:before:left-0 [&_li]:before:h-[7px] [&_li]:before:w-[7px] [&_li]:before:-rotate-90 [&_li]:before:bg-[url('/sites/learningseo-io-071dae18/shared/arrow-accordion.svg')] [&_li]:before:bg-contain [&_li]:before:bg-center [&_li]:before:bg-no-repeat [&_li]:before:content-[''] [&_p]:mb-2 [&_strong]:font-extrabold [&_strong]:text-[#000036] md:px-[3%] md:text-[15.3px] md:leading-[21.25px] md:[&_h3]:mb-4 md:[&_h3]:text-[18.7px] md:[&_li]:pl-5 md:[&_li]:before:h-[9px] md:[&_li]:before:w-[9px] md:[&_p]:mb-4"
-                    dangerouslySetInnerHTML={{ __html: item.answerHtml }}
+                    dangerouslySetInnerHTML={{ __html: localHtml(item.answerHtml) }}
                   />
                 </div>
               </div>

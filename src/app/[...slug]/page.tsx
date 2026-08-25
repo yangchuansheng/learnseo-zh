@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 import { SubpageDocument } from "@/components/sites/learningseo-io-071dae18/subpages/SubpageDocument";
+import { localHref } from "@/components/sites/learningseo-io-071dae18/shared/links";
 import subpageData from "@/components/sites/learningseo-io-071dae18/subpages/data.json";
 
 type SubpageParams = Promise<{ slug: string[] }>;
@@ -48,7 +49,7 @@ export async function generateMetadata({
   return {
     title: route.title,
     description: route.description,
-    alternates: { canonical: route.canonical },
+    alternates: { canonical: localHref(route.canonical) },
   };
 }
 

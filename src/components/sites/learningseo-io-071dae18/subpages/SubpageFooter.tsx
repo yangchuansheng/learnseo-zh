@@ -1,10 +1,7 @@
 import Link from "next/link";
 
 import content from "../root-8a5edab2/content.json";
-
-function localHref(href: string): string {
-  return href.replace("https://learningseo.io", "") || "/";
-}
+import { localHref, localHtml } from "../shared/links";
 
 export function SubpageFooter() {
   return (
@@ -73,10 +70,7 @@ export function SubpageFooter() {
         <div
           id="copyright"
           dangerouslySetInnerHTML={{
-            __html: content.footer.copyrightHtml.replace(
-              /https:\/\/learningseo\.io(?=\/)/g,
-              "",
-            ),
+            __html: localHtml(content.footer.copyrightHtml),
           }}
         />
       </footer>

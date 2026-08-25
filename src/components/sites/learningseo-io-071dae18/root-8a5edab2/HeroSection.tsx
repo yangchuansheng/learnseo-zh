@@ -1,4 +1,5 @@
 import content from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/content.json";
+import { localHtml } from "@/components/sites/learningseo-io-071dae18/shared/links";
 
 const animationSource = "/sites/learningseo-io-071dae18/root-8a5edab2/hero-animation.svg";
 
@@ -36,7 +37,7 @@ export function HeroSection() {
 
         <div className="-mx-[10px] max-w-[850px] rounded-[8px] bg-[#ededed] p-5 text-[14px] leading-[21.28px] [&_.inlinks]:text-[#0000ee] [&_p]:mb-[10px] [&_p:first-child]:mt-0 [&_p:first-child]:text-[16.38px] [&_p:first-child]:leading-[24.64px] md:mx-0 md:bg-transparent md:p-0 md:text-[17px] md:leading-[25.84px] md:[&_p]:mb-[25px] md:[&_p:first-child]:mt-[25px] md:[&_p:first-child]:text-[19.89px] md:[&_p:first-child]:leading-[29.92px]">
           {content.hero.paragraphsHtml.map((paragraph) => (
-            <p key={paragraph} dangerouslySetInnerHTML={{ __html: paragraph }} />
+            <p key={paragraph} dangerouslySetInnerHTML={{ __html: localHtml(paragraph) }} />
           ))}
         </div>
       </article>
