@@ -16,7 +16,7 @@ export function TipsSection() {
 
       <div className="relative mx-auto mt-[30px] w-[90%] max-w-[1224px] columns-1 gap-0 min-[600px]:columns-2 min-[960px]:columns-3 md:mt-[50px]">
         {content.tips.items.map((tip) => (
-          <TipCard key={tip.id} tip={tip} />
+          <TipCard key={tip.id} source={content.source} tip={tip} />
         ))}
       </div>
     </section>

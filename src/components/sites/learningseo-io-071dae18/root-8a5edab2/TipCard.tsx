@@ -2,14 +2,21 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import content from "./content.json";
 
-type Tip = (typeof content.tips.items)[number];
+type Tip = {
+  author: string;
+  id: string;
+  share: {
+    threads: string;
+    x: string;
+  };
+  text: string;
+};
 
-export function TipCard({ tip }: { tip: Tip }) {
+export function TipCard({ source, tip }: { source: string; tip: Tip }) {
   const [open, setOpen] = useState(false);
   const linkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-    `${content.source}#${tip.id}`,
+    `${source}#${tip.id}`,
   )}`;
 
   return (

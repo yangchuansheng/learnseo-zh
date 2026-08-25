@@ -11,21 +11,29 @@ type RoadmapLink = {
 };
 
 type RoadmapItemProps = {
+  activeLinkHref?: string | null;
   number: string;
   title: string;
   href: string;
   descriptionHtml: string;
   links: RoadmapLink[];
   initiallyOpen: boolean;
+  isCurrent?: boolean;
 };
 
+function sameHref(left: string, right: string | null): boolean {
+  return right !== null && localHref(left) === localHref(right);
+}
+
 export function RoadmapItem({
+  activeLinkHref = null,
   number,
   title,
   href,
   descriptionHtml,
   links,
   initiallyOpen,
+  isCurrent = false,
 }: RoadmapItemProps) {
   const [isOpen, setIsOpen] = useState(initiallyOpen);
   const contentId = useId();
@@ -39,10 +47,18 @@ export function RoadmapItem({
         {number}
       </span>
 
+      {isCurrent ? (
+        <span className="mb-2 inline-flex rounded-full bg-[#a87be9] px-2 py-1 text-[11px] leading-none font-bold text-white">
+          You are here
+        </span>
+      ) : null}
+
       <h3
         className={`pr-8 text-[15.4px] leading-[16.1px] font-bold text-[#000036] uppercase md:pr-10 md:text-[18.7px] md:leading-[21.25px] ${isOpen ? "md:mb-2.5 xl:mb-0" : ""}`}
       >
-        <a href={localHref(href)}>{title}</a>
+        <a href={localHref(href)} aria-current={isCurrent ? "page" : undefined}>
+          {title}
+        </a>
       </h3>
 
       <button
@@ -73,17 +89,25 @@ export function RoadmapItem({
           />
 
           <div className="grid grid-cols-2 gap-x-[10px] md:grid-cols-3">
-            {links.map((link) => (
+            {links.map((link) => {
+              const active = sameHref(link.href, activeLinkHref);
+              return (
               <a
                 key={link.href}
                 href={localHref(link.href)}
+                aria-current={active ? "page" : undefined}
                 tabIndex={isOpen ? undefined : -1}
-                className="group mt-[5px] flex min-w-0 items-center justify-between gap-2 rounded border border-[#a87be9] px-3 py-2 text-[12.6px] leading-[14.7px] text-[#303030] duration-100 hover:bg-[#a87be9] hover:text-white md:mt-[15px] md:self-start md:justify-self-start md:gap-[13.4px] md:text-[15.3px] md:leading-[21.25px]"
+                className={`group mt-[5px] flex min-w-0 items-center justify-between gap-2 rounded border border-[#a87be9] px-3 py-2 text-[12.6px] leading-[14.7px] duration-100 hover:bg-[#a87be9] hover:text-white md:mt-[15px] md:self-start md:justify-self-start md:gap-[13.4px] md:text-[15.3px] md:leading-[21.25px] ${
+                  active ? "bg-[#a87be9] text-white" : "text-[#303030]"
+                }`}
               >
                 <span>{link.label}</span>
-                <ArrowRightIcon className="shrink-0 text-[#a87be9] group-hover:text-white" />
+                <ArrowRightIcon
+                  className={`shrink-0 group-hover:text-white ${active ? "text-white" : "text-[#a87be9]"}`}
+                />
               </a>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

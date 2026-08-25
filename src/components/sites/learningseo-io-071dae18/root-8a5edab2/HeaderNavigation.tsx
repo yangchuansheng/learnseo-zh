@@ -6,9 +6,18 @@ import { useEffect, useState } from "react";
 
 import { LearningSeoLogo } from "@/components/sites/learningseo-io-071dae18/shared/Brand";
 import { localHref } from "@/components/sites/learningseo-io-071dae18/shared/links";
-import content from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/content.json";
 
 const assetRoot = "/sites/learningseo-io-071dae18/shared";
+
+export type HeaderContent = {
+  menuTitle: string;
+  navigation: ReadonlyArray<{
+    children: ReadonlyArray<{ href: string; label: string }>;
+    href: string;
+    label: string;
+  }>;
+  social: ReadonlyArray<{ href: string; label: string }>;
+};
 
 const socialIcons: Record<string, string> = {
   facebook: `${assetRoot}/facebook-circle.svg`,
@@ -18,7 +27,7 @@ const socialIcons: Record<string, string> = {
   youtube: `${assetRoot}/youtube-circle.svg`,
 };
 
-export function HeaderNavigation() {
+export function HeaderNavigation({ header }: { header: HeaderContent }) {
   const [activeSubmenu, setActiveSubmenu] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -55,7 +64,7 @@ export function HeaderNavigation() {
     setSearchOpen(false);
   };
 
-  const submenu = activeSubmenu === null ? null : content.header.navigation[activeSubmenu];
+  const submenu = activeSubmenu === null ? null : header.navigation[activeSubmenu];
 
   return (
     <header
@@ -115,7 +124,7 @@ export function HeaderNavigation() {
             >
               <div className="relative h-full">
                 <h2 className="px-5 pb-3 text-[16.8px] leading-[21px] text-[#a87be9] md:px-10 md:pb-[10px] md:text-[20.4px] md:leading-[24px]">
-                  {content.header.menuTitle}
+                  {header.menuTitle}
                 </h2>
 
                 {submenu ? (
@@ -127,7 +136,7 @@ export function HeaderNavigation() {
                 ) : (
                   <>
                     <ul>
-                      {content.header.navigation.map((item, index) => (
+                      {header.navigation.map((item, index) => (
                         <li key={item.href} className="relative m-0 p-0 hover:bg-[#fafafa]">
                           <a
                             href={localHref(item.href)}
@@ -154,7 +163,7 @@ export function HeaderNavigation() {
                         </li>
                       ))}
                     </ul>
-                    <SocialLinks />
+                    <SocialLinks items={header.social} />
                   </>
                 )}
               </div>
@@ -170,7 +179,7 @@ function SearchForm({ open, scrolled }: { open: boolean; scrolled: boolean }) {
   return (
     <form
       role="search"
-      action="/"
+      action="https://learningseo.io/"
       method="get"
       className={`absolute z-10 md:relative md:top-auto md:left-auto md:block md:w-[288px] ${
         scrolled ? "top-[10px] left-[10px] w-[calc(100%_-_70px)]" : "top-5 left-0 w-[calc(100%_-_44px)]"
@@ -252,10 +261,14 @@ function Submenu({
   );
 }
 
-function SocialLinks() {
+function SocialLinks({
+  items,
+}: {
+  items: HeaderContent["social"];
+}) {
   return (
     <ul className="flex gap-[10px] pt-4 pl-5 md:pt-5 md:pl-10">
-      {content.header.social.map((item) => (
+      {items.map((item) => (
         <li key={item.href} className="m-0 p-0">
           <a
             href={item.href}

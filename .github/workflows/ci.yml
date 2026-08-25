@@ -43,6 +43,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Validate generated content
+        run: npm run check:data
+
       - name: Lint
         run: npm run lint
 
@@ -51,3 +57,27 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Production smoke test
+        shell: bash
+        run: |
+          cp -R public .next/standalone/public
+          cp -R .next/static .next/standalone/.next/static
+
+          PORT=3107 HOSTNAME=127.0.0.1 node .next/standalone/server.js > /tmp/learningseo-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:3107/ > /dev/null; then
+              break
+            fi
+            if ! kill -0 "$server_pid" 2>/dev/null; then
+              cat /tmp/learningseo-server.log
+              exit 1
+            fi
+            sleep 1
+          done
+
+          curl --fail --silent http://127.0.0.1:3107/ > /dev/null
+          BASE_URL=http://127.0.0.1:3107 npm run test:smoke

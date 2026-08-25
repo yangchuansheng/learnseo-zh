@@ -1,21 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import content from "./content.json";
 import { localHtml } from "../shared/links";
 
-export function FaqSection() {
+type FaqSectionProps = {
+  items: ReadonlyArray<{ answerHtml: string; question: string }>;
+  title: string;
+};
+
+export function FaqSection({ items, title }: FaqSectionProps) {
   const [open, setOpen] = useState<boolean[]>(() =>
-    content.faq.items.map(() => false),
+    items.map(() => false),
   );
 
   return (
     <section className="mx-auto my-[25px] w-[calc(100%_-_40px)] max-w-[1224px] md:my-[50px] md:w-[88%]">
       <h2 className="pb-5 text-[30.8px] leading-[30.8px] font-extrabold text-[#000036] md:pb-10 md:text-[47.6px] md:leading-[47.6px]">
-        {content.faq.title}
+        {title}
       </h2>
       <div>
-        {content.faq.items.map((item, index) => {
+        {items.map((item, index) => {
           const answerId = `faq-answer-${index + 1}`;
           const isOpen = open[index];
 

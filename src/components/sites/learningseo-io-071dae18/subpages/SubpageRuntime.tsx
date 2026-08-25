@@ -9,28 +9,9 @@ type SubpageRuntimeProps = {
 };
 
 function addAutoplay(source: string): string {
-  const hashIndex = source.indexOf("#");
-  const hash = hashIndex === -1 ? "" : source.slice(hashIndex);
-  const base = hashIndex === -1 ? source : source.slice(0, hashIndex);
-  const existing = base.match(/[?&]autoplay=[^&]*/);
-
-  if (existing?.index !== undefined) {
-    return `${base.slice(0, existing.index)}${existing[0].split("=")[0]}=1${base.slice(existing.index + existing[0].length)}${hash}`;
-  }
-
-  return `${base}${base.includes("?") ? "&" : "?"}autoplay=1${hash}`;
-}
-
-function toggleRoadmap(toggle: Element): void {
-  const item = toggle.closest<HTMLElement>(".roadmap-item");
-  if (!item) return;
-
-  const active = item.classList.toggle("active");
-  const content = item.querySelector<HTMLElement>(".roadmap-item-content");
-  if (content) content.style.display = active ? "block" : "none";
-
-  toggle.setAttribute("aria-expanded", String(active));
-  content?.setAttribute("aria-hidden", String(!active));
+  const url = new URL(source, window.location.href);
+  url.searchParams.set("autoplay", "1");
+  return url.href;
 }
 
 function toggleFaq(title: Element): void {
@@ -65,6 +46,17 @@ function toggleShare(button: Element): void {
   if (!popover) return;
 
   const active = popover.classList.toggle("active");
+  button.setAttribute("aria-expanded", String(active));
+  popover.setAttribute("aria-hidden", String(!active));
+}
+
+function toggleSidebar(button: Element): void {
+  const wrapper = button.closest<HTMLElement>(".resources-with-sidebar");
+  const sidebar = wrapper?.querySelector<HTMLElement>(".resources-sidebar");
+  if (!sidebar) return;
+
+  const active = button.classList.toggle("active");
+  sidebar.style.display = active ? "block" : "none";
   button.setAttribute("aria-expanded", String(active));
 }
 
@@ -120,26 +112,23 @@ export function SubpageRuntime({
       const target = event.target;
       if (!(target instanceof Element)) return;
 
-      const roadmapToggle = target.closest(".roadmap-item .item-toggle");
-      if (roadmapToggle && root.contains(roadmapToggle)) {
-        toggleRoadmap(roadmapToggle);
-        return;
-      }
+      const control = target.closest<HTMLElement>("[data-subpage-action]");
+      if (!control || !root.contains(control)) return;
 
-      const faqTitle = target.closest(".accordion-title");
-      if (faqTitle && root.contains(faqTitle)) {
-        toggleFaq(faqTitle);
-        return;
+      switch (control.dataset.subpageAction) {
+        case "faq":
+          toggleFaq(control);
+          break;
+        case "share":
+          toggleShare(control);
+          break;
+        case "sidebar":
+          toggleSidebar(control);
+          break;
+        case "video":
+          playVideo(control);
+          break;
       }
-
-      const videoPlay = target.closest(".video .play");
-      if (videoPlay && root.contains(videoPlay)) {
-        playVideo(videoPlay);
-        return;
-      }
-
-      const shareButton = target.closest(".tip-share-btn");
-      if (shareButton && root.contains(shareButton)) toggleShare(shareButton);
     };
 
     root.addEventListener("click", handleClick);
@@ -150,7 +139,12 @@ export function SubpageRuntime({
   }, []);
 
   return (
-    <div ref={rootRef} data-learning-seo className={className}>
+    <div
+      ref={rootRef}
+      data-learning-seo
+      data-subpage-runtime
+      className={className}
+    >
       {children}
     </div>
   );

@@ -8,7 +8,7 @@
 
 ## DOM Structure
 
-The captured `main#content` HTML is rendered verbatim inside `.learningseo-subpage`. Direct children are:
+The captured `main#content` HTML is sanitized and rendered inside `.learningseo-subpage`. Direct children are:
 
 1. `header` with `.breadcrumbs` and a two-part `h1` (roadmap number/category link plus page title).
 2. `article.page-content-children` containing the page intro, resource sections, tables, lists and inline links.
@@ -17,11 +17,12 @@ The captured `main#content` HTML is rendered verbatim inside `.learningseo-subpa
 5. `.tips-wrapper.fullwidth` with masonry tips and independent share pills.
 6. `.faq` with independent accordion answers.
 7. `.related-wrapper.fullwidth` with purple related-resource cards.
-8. `#roadmap` with the shared twelve-stage roadmap.
+
+The shared React `#roadmap` follows the sanitized legacy content as a sibling section.
 
 ## Computed Styles
 
-- Source CSS is preserved in `src/app/[...slug]/subpage.css`, prefixed to `.learningseo-subpage`.
+- Source CSS is generated at `src/components/sites/learningseo-io-071dae18/subpages/generated/subpage.css`, prefixed to `.learningseo-subpage`.
 - Desktop content frame: 1224px wide, centered at x=108, beginning at y=238 below the 238px absolute header.
 - Detail article column: 768px wide with 20px top and 40px bottom padding.
 - Source typography uses Mukta 300/400/700/800 and the site colors `#000036`, `#a87be9`, `#2e73ea`, `#606060`, `#f2f2f2`.
@@ -29,7 +30,7 @@ The captured `main#content` HTML is rendered verbatim inside `.learningseo-subpa
 
 ## States & Behaviors
 
-- Roadmap items toggle their `.active` state independently.
+- Roadmap items use the shared React disclosure component and identify the current stage and resource.
 - Video cards replace the poster with a YouTube iframe and append `autoplay=1`.
 - FAQ items toggle their answer container independently.
 - Tip cards toggle a share popover with X, LinkedIn and Threads actions.

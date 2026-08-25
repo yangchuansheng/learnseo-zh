@@ -1,5 +1,3 @@
-"use client";
-
 import content from "./content.json";
 import { VideoCard } from "./VideoCard";
 

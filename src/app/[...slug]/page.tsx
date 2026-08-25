@@ -1,12 +1,37 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { SubpageDocument } from "@/components/sites/learningseo-io-071dae18/subpages/SubpageDocument";
+import subpageManifest from "@/components/sites/learningseo-io-071dae18/subpages/generated/manifest.json";
 import { localHref } from "@/components/sites/learningseo-io-071dae18/shared/links";
-import subpageData from "@/components/sites/learningseo-io-071dae18/subpages/data.json";
 
 type SubpageParams = Promise<{ slug: string[] }>;
-type SubpageRoute = (typeof subpageData.routes)[number];
+type SubpageRoute = {
+  bodyClass: string;
+  canonical: string;
+  contentFile: string | null;
+  description: string;
+  finalPath: string;
+  hasRoadmap: boolean;
+  mainClass: string;
+  redirectTo: string | null;
+  roadmapItemCurrent: boolean;
+  roadmapItemHref: string | null;
+  roadmapLinkHref: string | null;
+  sourcePath: string;
+  title: string;
+};
+
+const subpageRoutes: readonly SubpageRoute[] = subpageManifest.routes;
+const contentRoot = path.join(
+  process.cwd(),
+  "src/components/sites/learningseo-io-071dae18/subpages/generated/content",
+);
+
+export const dynamicParams = false;
 
 function normalizePath(pathname: string): string {
   const path = pathname.startsWith("/") ? pathname : `/${pathname}`;
@@ -19,7 +44,7 @@ function pathFromSlug(slug: string[]): string {
 
 function findRoute(pathname: string): SubpageRoute | undefined {
   const normalizedPath = normalizePath(pathname);
-  return subpageData.routes.find(
+  return subpageRoutes.find(
     (route) => normalizePath(route.sourcePath) === normalizedPath,
   );
 }
@@ -29,9 +54,16 @@ function pathSegments(pathname: string): string[] {
 }
 
 export function generateStaticParams(): Array<{ slug: string[] }> {
-  return subpageData.routes
+  return subpageRoutes
     .filter((route) => normalizePath(route.sourcePath) !== "/")
     .map((route) => ({ slug: pathSegments(route.sourcePath) }));
+}
+
+async function loadContent(contentFile: string | null): Promise<string> {
+  if (!contentFile || !/^[a-f0-9]{64}\.html$/.test(contentFile)) {
+    throw new Error(`Invalid generated content file: ${contentFile}`);
+  }
+  return readFile(path.join(contentRoot, contentFile), "utf8");
 }
 
 export async function generateMetadata({
@@ -66,14 +98,20 @@ export default async function SubpagePage({
   }
 
   if (route.redirectTo) {
-    redirect(route.redirectTo);
+    permanentRedirect(localHref(route.redirectTo));
   }
+
+  const html = await loadContent(route.contentFile);
 
   return (
     <SubpageDocument
       bodyClass={route.bodyClass}
+      hasRoadmap={route.hasRoadmap}
       mainClass={route.mainClass || ""}
-      html={route.html}
+      html={html}
+      roadmapItemCurrent={route.roadmapItemCurrent}
+      roadmapItemHref={route.roadmapItemHref}
+      roadmapLinkHref={route.roadmapLinkHref}
     />
   );
 }

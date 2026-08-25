@@ -1,10 +1,28 @@
 import content from "./content.json";
 import { RoadmapItem } from "./RoadmapItem";
+import { localHref } from "../shared/links";
 
-export function RoadmapSection() {
+type RoadmapSectionProps = {
+  activeItemCurrent?: boolean;
+  activeItemHref?: string | null;
+  activeLinkHref?: string | null;
+};
+
+function sameHref(left: string, right: string | null): boolean {
+  return right !== null && localHref(left) === localHref(right);
+}
+
+export function RoadmapSection({
+  activeItemCurrent = false,
+  activeItemHref,
+  activeLinkHref,
+}: RoadmapSectionProps = {}) {
+  const embedded = activeItemHref !== undefined;
+
   return (
     <section
       id="roadmap"
+      data-react-roadmap
       aria-labelledby="roadmap-title"
       className="relative my-[42px] -mx-[10px] w-[calc(100%+20px)] overflow-hidden rounded-t-xl md:my-[85px] md:mx-0 md:w-full"
     >
@@ -30,9 +48,18 @@ export function RoadmapSection() {
       </header>
 
       <div className="relative z-10 mt-[-17px] flex flex-col gap-2 pb-[14px] pl-[25px] md:gap-3 md:pb-3 md:pl-[4%]">
-        {content.roadmap.items.map((item) => (
-          <RoadmapItem key={item.href} {...item} />
-        ))}
+        {content.roadmap.items.map((item) => {
+          const active = sameHref(item.href, activeItemHref ?? null);
+          return (
+            <RoadmapItem
+              key={item.href}
+              {...item}
+              activeLinkHref={active ? activeLinkHref : null}
+              initiallyOpen={embedded ? active : item.initiallyOpen}
+              isCurrent={active && activeItemCurrent}
+            />
+          );
+        })}
       </div>
     </section>
   );
