@@ -6,7 +6,7 @@ export function ResourceBanner() {
 
   return (
     <section
-      className="relative mx-auto mt-10 mb-20 flex w-[calc(100%_-_48px)] max-w-[1100px] overflow-hidden rounded-2xl bg-[linear-gradient(90deg,#2e73ea_77.26%,#22ddd2_117.47%)] py-[7%] pr-[15%] pl-[6%] text-white before:absolute before:inset-0 before:bg-[linear-gradient(90deg,#2e73ea_57.26%,#22ddd2_117.47%)] before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-100 md:min-h-[325px] md:items-start md:py-[55px] md:pr-[184px] md:pl-[73px]"
+      className="relative mx-auto mt-10 mb-20 flex w-[calc(100%_-_48px)] max-w-[1100px] overflow-hidden rounded-2xl bg-[linear-gradient(90deg,#2e73ea_77.26%,#22ddd2_117.47%)] py-[7%] pr-[15%] pl-[6%] text-white md:min-h-[324.5px] md:items-start md:py-[55px] md:pr-[184px] md:pl-[73px]"
       aria-label="Google Sheets resources"
     >
       <img

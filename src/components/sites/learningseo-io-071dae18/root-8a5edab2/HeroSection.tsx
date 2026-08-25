@@ -27,14 +27,14 @@ export function HeroSection() {
           />
         </header>
 
-        <div className="my-[15px] block text-[12.6px] leading-5 font-semibold uppercase text-[#606060] md:mt-[25px] md:mb-[50px] md:text-[15.98px]">
+        <div className="my-[15px] block text-[12.6px] leading-5 font-semibold uppercase text-[#606060] md:mt-[25px] md:mb-[50px] md:h-5 md:text-[15.98px]">
           <span className="inline-block h-5 leading-[22px]">{content.hero.version}</span>
           <span className="ml-[5px] inline-block h-5 border-l-2 border-[#a87be9] pl-[5px] leading-[22px] text-[#9c9ba0] md:ml-[15px] md:border-l-[3px] md:pl-[15px]">
             {content.hero.updated}
           </span>
         </div>
 
-        <div className="-mx-[10px] max-w-[850px] rounded-[8px] bg-[#ededed] p-5 text-[14px] leading-[21.28px] [&_.inlinks]:text-[#0000ee] [&_p]:mb-[10px] [&_p:first-child]:mt-0 [&_p:first-child]:text-[16.38px] [&_p:first-child]:leading-[24.64px] md:mx-0 md:bg-transparent md:p-0 md:text-[17px] md:leading-[25.84px] md:[&_p]:mb-[25px] md:[&_p:first-child]:mt-[25px] md:[&_p:first-child]:text-[20.4px] md:[&_p:first-child]:leading-[28.9px]">
+        <div className="-mx-[10px] max-w-[850px] rounded-[8px] bg-[#ededed] p-5 text-[14px] leading-[21.28px] [&_.inlinks]:text-[#0000ee] [&_p]:mb-[10px] [&_p:first-child]:mt-0 [&_p:first-child]:text-[16.38px] [&_p:first-child]:leading-[24.64px] md:mx-0 md:bg-transparent md:p-0 md:text-[17px] md:leading-[25.84px] md:[&_p]:mb-[25px] md:[&_p:first-child]:mt-[25px] md:[&_p:first-child]:text-[19.89px] md:[&_p:first-child]:leading-[29.92px]">
           {content.hero.paragraphsHtml.map((paragraph) => (
             <p key={paragraph} dangerouslySetInnerHTML={{ __html: paragraph }} />
           ))}
