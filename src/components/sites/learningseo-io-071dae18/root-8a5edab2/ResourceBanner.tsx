@@ -1,3 +1,4 @@
+import Image from "next/image";
 import content from "./content.json";
 import { ArrowRightIcon } from "../shared/Icons";
 
@@ -9,7 +10,7 @@ export function ResourceBanner() {
       className="relative mx-auto mt-10 mb-20 flex w-[88%] max-w-[1100px] overflow-hidden rounded-2xl bg-[linear-gradient(90deg,#2e73ea_77.26%,#22ddd2_117.47%)] py-[24.5px] pr-[52.5px] pl-[21px] text-white md:min-h-[324.5px] md:items-start md:py-[55px] md:pr-[184px] md:pl-[73px]"
       aria-label="Google Sheets resources"
     >
-      <img
+      <Image
         className="absolute top-5 right-5 z-[1] h-[37px] w-10 md:static md:h-[66px] md:w-[71px] md:shrink-0"
         src="/sites/learningseo-io-071dae18/shared/google-sheets.svg"
         alt=""

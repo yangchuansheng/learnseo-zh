@@ -1,3 +1,4 @@
+import Image from "next/image";
 import content from "./content.json";
 import { LearningSeoLogo } from "../shared/Brand";
 
@@ -54,7 +55,7 @@ export function FooterSection() {
                     href={item.href}
                     aria-label={item.label}
                   >
-                    <img
+                    <Image
                       className="h-8 w-8"
                       src={`/sites/learningseo-io-071dae18/shared/${item.label}-circle.svg`}
                       alt=""

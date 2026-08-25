@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import content from "./content.json";
 
@@ -26,7 +27,7 @@ export function TipCard({ tip }: { tip: Tip }) {
           aria-controls={`${tip.id}-share`}
           onClick={() => setOpen((value) => !value)}
         >
-          <img
+          <Image
             className="h-5 w-5"
             src="/sites/learningseo-io-071dae18/shared/share-circle.svg"
             alt=""
@@ -53,7 +54,7 @@ export function TipCard({ tip }: { tip: Tip }) {
                 aria-label={`Share on ${label}`}
                 key={label}
               >
-                <img
+                <Image
                   className="h-5 w-5"
                   src={`/sites/learningseo-io-071dae18/shared/${icon}`}
                   alt=""
