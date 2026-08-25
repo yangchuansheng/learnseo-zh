@@ -3,8 +3,8 @@ import { TipCard } from "./TipCard";
 
 export function TipsSection() {
   return (
-    <section className="mt-[60px] overflow-hidden bg-[url('/sites/learningseo-io-071dae18/shared/tips.png')] bg-[length:60%_auto] bg-right-top bg-no-repeat py-[60px] md:mt-[100px] md:bg-auto md:py-[100px]">
-      <div className="mx-auto w-[88%] max-w-[1224px] md:w-[85%]">
+    <section className="relative mt-[60px] overflow-hidden bg-[url('/sites/learningseo-io-071dae18/shared/tips.png')] bg-[length:60%_auto] bg-right-top bg-no-repeat py-[60px] before:pointer-events-none before:absolute before:top-0 before:left-0 before:w-full before:pb-[70%] before:bg-[linear-gradient(180deg,rgba(46,115,234,.15)_0%,rgba(46,115,234,0)_79.81%)] md:mt-[100px] md:bg-auto md:py-[100px]">
+      <div className="relative mx-auto w-[88%] max-w-[1224px]">
         <h2 className="max-w-[740px] pb-5 text-[35px] leading-[35px] font-extrabold text-[#000036] md:pb-[50px] md:text-[59.5px] md:leading-[59.5px]">
           {content.tips.title}
         </h2>
@@ -14,7 +14,7 @@ export function TipsSection() {
         />
       </div>
 
-      <div className="mx-auto mt-[30px] w-[90%] max-w-[1224px] columns-1 gap-0 md:mt-[50px] md:columns-2 xl:columns-3">
+      <div className="relative mx-auto mt-[30px] w-[90%] max-w-[1224px] columns-1 gap-0 min-[600px]:columns-2 min-[960px]:columns-3 md:mt-[50px]">
         {content.tips.items.map((tip) => (
           <TipCard key={tip.id} tip={tip} />
         ))}
