@@ -41,6 +41,7 @@ const protectedTerms = [
   "SEMrush",
   "Ahrefs",
 ];
+const personNamePattern = /^\p{Lu}[\p{L}'’.-]*(?:\s+\p{Lu}[\p{L}'’.-]*){1,3}$/u;
 
 function sha256(value) {
   return crypto.createHash("sha256").update(value).digest("hex");
@@ -104,19 +105,48 @@ function numbersPreserved(source, localized) {
 }
 
 function personalNames(html) {
-  return [...html.matchAll(
+  const names = new Set();
+  const add = (value) => {
+    const normalized = value.replace(/&nbsp;/gi, " ").replace(/\s+/g, " ").trim();
+    if (personNamePattern.test(normalized)) names.add(normalized);
+  };
+  for (const match of html.matchAll(
     /<a\b[^>]*\bhref=(['"])(?:https?:\/\/(?:www\.)?linkedin\.com\/in\/|https?:\/\/(?:www\.)?aleydasolis\.com\/)[^'"]*\1[^>]*>([\s\S]*?)<\/a>/gi,
-  )]
-    .map((match) => match[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim())
-    .filter((value) =>
-      /^\p{Lu}[\p{L}'’.-]*(?:\s+\p{Lu}[\p{L}'’.-]*){1,3}$/u.test(value),
-    );
+  )) {
+    add(match[2].replace(/<[^>]+>/g, " "));
+  }
+  for (const match of html.matchAll(/<p\b[^>]*>\s*([^<]+?)\s*<\/p>/gi)) add(match[1]);
+  for (const paragraph of html.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)) {
+    let cursor = 0;
+    let attributionStarted = false;
+    for (const strong of paragraph[1].matchAll(/<strong\b[^>]*>([^<]+)<\/strong>/gi)) {
+      const between = paragraph[1]
+        .slice(cursor, strong.index)
+        .replace(/<[^>]+>/g, " ")
+        .replace(/&nbsp;/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+      const candidate = strong[1].replace(/&nbsp;/gi, " ").split(" / ")[0].trim();
+      const startsAttribution = /\b(?:from|by|via)\s*$/i.test(between);
+      const continuesAttribution = attributionStarted && /^(?:and|&|,)$/i.test(between);
+      if (startsAttribution || continuesAttribution) add(candidate);
+      attributionStarted = startsAttribution || continuesAttribution;
+      cursor = strong.index + strong[0].length;
+    }
+  }
+  for (const match of html.matchAll(/<strong\b[^>]*>([^<]+)<\/strong>/gi)) {
+    const text = match[1].replace(/&nbsp;/gi, " ").replace(/\s+/g, " ").trim();
+    const context = html.slice(Math.max(0, match.index - 180), match.index);
+    add((context.includes("tip-author") || text.includes(" / ")) ? text.split(" / ")[0] : "");
+  }
+  return [...names];
 }
 
 const sourceManifest = JSON.parse(await fs.readFile(sourceManifestPath, "utf8"));
 const chineseManifest = JSON.parse(await fs.readFile(chineseManifestPath, "utf8"));
 const translationManifest = JSON.parse(await fs.readFile(translationManifestPath, "utf8"));
 const sourceContent = await fs.readFile(sourceContentPath);
+const sourceContentJson = JSON.parse(sourceContent.toString());
 const chineseContent = JSON.parse(await fs.readFile(path.join(root, "root-8a5edab2", "content.zh-CN.json"), "utf8"));
 
 assert.equal(chineseManifest.locale, "zh-CN");
@@ -185,7 +215,28 @@ function collectLinks(value, links = []) {
   return links;
 }
 
-assert.deepEqual(collectLinks(chineseContent), collectLinks(JSON.parse(sourceContent.toString())), "Homepage URLs changed");
+function collectStringValues(value, strings = []) {
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectStringValues(item, strings));
+  } else if (value && typeof value === "object") {
+    Object.values(value).forEach((child) => collectStringValues(child, strings));
+  } else if (typeof value === "string") {
+    strings.push(value);
+  }
+  return strings;
+}
+
+const homepageNames = new Set();
+for (const value of collectStringValues(sourceContentJson)) {
+  personalNames(value).forEach((name) => homepageNames.add(name));
+}
+const localizedHomepageValues = collectStringValues(chineseContent);
+assert.ok(
+  [...homepageNames].every((name) => localizedHomepageValues.some((value) => value.includes(name))),
+  "Homepage personal names changed",
+);
+
+assert.deepEqual(collectLinks(chineseContent), collectLinks(sourceContentJson), "Homepage URLs changed");
 
 console.log(
   `Validated ${chineseRoutes.length} Chinese routes, ${chineseFiles.size} translated HTML pages, and ${localizedTitles} localized metadata titles.`,

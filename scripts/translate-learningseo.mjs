@@ -42,6 +42,27 @@ function collectProtectedPeople(markup) {
     const text = normalizeText(match[2].replace(/<[^>]+>/g, ""));
     if (personNamePattern.test(text)) protectedPeople.add(text);
   }
+  for (const match of markup.matchAll(/<p\b[^>]*>\s*([^<]+?)\s*<\/p>/gi)) {
+    const text = normalizeText(match[1]);
+    if (personNamePattern.test(text)) protectedPeople.add(text);
+  }
+  for (const paragraph of markup.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)) {
+    let cursor = 0;
+    let attributionStarted = false;
+    for (const strong of paragraph[1].matchAll(/<strong\b[^>]*>([^<]+)<\/strong>/gi)) {
+      const between = normalizeText(
+        paragraph[1].slice(cursor, strong.index).replace(/<[^>]+>/g, " "),
+      );
+      const candidate = normalizeText(strong[1]).split(" / ")[0].trim();
+      const startsAttribution = /\b(?:from|by|via)\s*$/i.test(between);
+      const continuesAttribution = attributionStarted && /^(?:and|&|,)$/i.test(between);
+      if ((startsAttribution || continuesAttribution) && personNamePattern.test(candidate)) {
+        protectedPeople.add(candidate);
+      }
+      attributionStarted = startsAttribution || continuesAttribution;
+      cursor = strong.index + strong[0].length;
+    }
+  }
   for (const match of markup.matchAll(/<strong\b[^>]*>([^<]+)<\/strong>/gi)) {
     const text = normalizeText(match[1]);
     const context = markup.slice(Math.max(0, match.index - 180), match.index);
@@ -88,13 +109,50 @@ function preserveNamedStrongText(sourceMarkup, localizedMarkup) {
   );
 }
 
+function preserveStandaloneNames(sourceMarkup, localizedMarkup) {
+  const sourceParagraphs = [...sourceMarkup.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)];
+  if (!sourceParagraphs.some((match) => personNamePattern.test(normalizeText(match[1])))) {
+    return localizedMarkup;
+  }
+  let index = 0;
+  return localizedMarkup.replace(
+    /(<p\b[^>]*>)([\s\S]*?)(<\/p>)/gi,
+    (match, open, _inner, close) => {
+      const sourceInner = sourceParagraphs[index++]?.[1] || "";
+      const candidate = normalizeText(sourceInner);
+      if (!personNamePattern.test(candidate) || /</.test(sourceInner)) return match;
+      const whitespace = sourceInner.match(/^(\s*)[\s\S]*?(\s*)$/);
+      return `${open}${whitespace?.[1] || ""}${candidate}${whitespace?.[2] || ""}${close}`;
+    },
+  );
+}
+
 function normalizeLocalizedMarkup(markup, sourceMarkup = "") {
   const normalized = markup.replace(/[ \t]+$/gm, "");
   if (!sourceMarkup) return normalized;
-  return preserveNamedStrongText(
+  const preserved = preserveNamedStrongText(
     sourceMarkup,
     preserveProfileAnchorNames(sourceMarkup, normalized),
-  ).replace(/[ \t]+$/gm, "");
+  );
+  return preserveStandaloneNames(sourceMarkup, preserved).replace(/[ \t]+$/gm, "");
+}
+
+function normalizeLocalizedJson(value, source) {
+  if (Array.isArray(value) && Array.isArray(source)) {
+    return value.map((item, index) => normalizeLocalizedJson(item, source[index]));
+  }
+  if (value && typeof value === "object" && source && typeof source === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, child]) => [
+        key,
+        normalizeLocalizedJson(child, source[key]),
+      ]),
+    );
+  }
+  if (typeof value === "string" && typeof source === "string" && source.includes("<")) {
+    return normalizeLocalizedMarkup(value, source);
+  }
+  return value;
 }
 
 function sha256(value) {
@@ -1133,7 +1191,7 @@ async function main() {
   const trustedCache = await readTrustedCache();
   const sourceContentHash = sha256(sourceContentBytes);
   const translatedHomepage = translateJson(sourceContent, cache, "", previousSegments);
-  const localizedHomepage =
+  let localizedHomepage =
     !process.env.FORCE_TRANSLATION &&
     previousHomepage &&
     previousTranslationManifest?.sourceContentSha256 === sourceContentHash
@@ -1141,6 +1199,7 @@ async function main() {
       : previousHomepage && !process.env.FORCE_TRANSLATION && previousTranslationManifest?.segments
         ? translatedHomepage
         : applyEditorialHomepage(translatedHomepage);
+  localizedHomepage = normalizeLocalizedJson(localizedHomepage, sourceContent);
   await fs.writeFile(chineseContentPath, JSON.stringify(localizedHomepage, null, 2) + "\n");
 
   const translatedRoutes = sourceManifest.routes.map((route) => {
