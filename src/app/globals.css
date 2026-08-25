@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-mukta), Arial, sans-serif;
+  --font-sans: var(--font-mukta), "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -133,7 +133,7 @@
   [data-learning-seo] {
     color: #606060;
     background: #f2f2f2;
-    font-family: var(--font-mukta), Arial, sans-serif;
+    font-family: var(--font-mukta), "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
     font-size: 17px;
     font-weight: 400;
     line-height: 1.25;
@@ -150,4 +150,8 @@
       font-size: 14px;
     }
   }
+}
+
+html[lang="zh-CN"] .learningseo-subpage {
+  font-family: var(--font-mukta), "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
 }

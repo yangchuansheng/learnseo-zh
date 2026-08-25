@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import type { Locale } from "@/lib/localization";
 
 type Tip = {
   author: string;
@@ -13,7 +14,7 @@ type Tip = {
   text: string;
 };
 
-export function TipCard({ source, tip }: { source: string; tip: Tip }) {
+export function TipCard({ source, tip, locale = "zh-CN" }: { source: string; tip: Tip; locale?: Locale }) {
   const [open, setOpen] = useState(false);
   const linkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
     `${source}#${tip.id}`,
@@ -41,7 +42,7 @@ export function TipCard({ source, tip }: { source: string; tip: Tip }) {
             width="20"
             height="20"
           />
-          Share
+          {locale === "en" ? "Share" : "分享"}
         </button>
         {open ? (
           <div
@@ -58,7 +59,7 @@ export function TipCard({ source, tip }: { source: string; tip: Tip }) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Share on ${label}`}
+                aria-label={locale === "en" ? `Share on ${label}` : `分享到${label}`}
                 key={label}
               >
                 <Image

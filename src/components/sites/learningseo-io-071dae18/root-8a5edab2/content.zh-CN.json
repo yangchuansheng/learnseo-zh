@@ -1,0 +1,1546 @@
+{
+  "source": "/",
+  "extractedAt": "2026-08-25T05:50:56.114Z",
+  "header": {
+    "menuTitle": "路线图",
+    "navigation": [
+      {
+        "label": "搜索引擎优化基础知识",
+        "href": "/seo_roadmap/seo-fundamentals/",
+        "children": [
+          {
+            "label": "搜索引擎优化简介",
+            "href": "/seo_roadmap/seo-fundamentals/introduction-to-seo/"
+          },
+          {
+            "label": "关键词研究",
+            "href": "/seo_roadmap/seo-fundamentals/keyword-research/"
+          },
+          {
+            "label": "竞争分析",
+            "href": "/seo_roadmap/seo-fundamentals/competition-analysis/"
+          },
+          {
+            "label": "技术优化",
+            "href": "/seo_roadmap/seo-fundamentals/technical-seo/"
+          },
+          {
+            "label": "内容优化",
+            "href": "/seo_roadmap/seo-fundamentals/content-optimization/"
+          },
+          {
+            "label": "链接建设",
+            "href": "/seo_roadmap/seo-fundamentals/link-building/"
+          }
+        ]
+      },
+      {
+        "label": "执行 SEO 流程",
+        "href": "/seo_roadmap/execute-seo/",
+        "children": [
+          {
+            "label": "开展 SEO 审核",
+            "href": "/seo_roadmap/execute-seo/seo-audits-recommendations/"
+          },
+          {
+            "label": "衡量搜索引擎优化",
+            "href": "/seo_roadmap/execute-seo/seo-measurement/"
+          },
+          {
+            "label": "报告搜索引擎优化",
+            "href": "/seo_roadmap/execute-seo/seo-reporting/"
+          }
+        ]
+      },
+      {
+        "label": "CMS 中的 SEO",
+        "href": "/seo_roadmap/implement-in-cms/",
+        "children": []
+      },
+      {
+        "label": "加深您的 SEO 知识",
+        "href": "/seo_roadmap/deepen-knowledge/",
+        "children": []
+      },
+      {
+        "label": "专注于 SEO",
+        "href": "/seo_roadmap/specialize/",
+        "children": []
+      },
+      {
+        "label": "自动化 SEO 任务",
+        "href": "/seo_roadmap/automate-tasks/",
+        "children": []
+      },
+      {
+        "label": "其他搜索引擎中的 SEO",
+        "href": "/seo_roadmap/other-search-engines/",
+        "children": []
+      },
+      {
+        "label": "及时了解 SEO 新闻",
+        "href": "/seo_roadmap/keep-up-with-news/",
+        "children": []
+      },
+      {
+        "label": "免费使用的 SEO 工具",
+        "href": "/seo_roadmap/seo-tools/",
+        "children": []
+      },
+      {
+        "label": "补充您的搜索引擎优化",
+        "href": "/seo_roadmap/complement-knowledge/",
+        "children": []
+      },
+      {
+        "label": "进一步培训、测试您的 SEO 并排除故障",
+        "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+        "children": []
+      },
+      {
+        "label": "搜索引擎优化通讯",
+        "href": "https://hub.seofomo.co/",
+        "children": []
+      },
+      {
+        "label": "SEO 新闻聚合器",
+        "href": "https://news.seofomo.co/",
+        "children": []
+      }
+    ],
+    "social": [
+      {
+        "label": "Facebook",
+        "href": "https://www.facebook.com/aleydaseotips"
+      },
+      {
+        "label": "X",
+        "href": "https://x.com/aleyda"
+      },
+      {
+        "label": "Instagram",
+        "href": "https://www.instagram.com/crawlingmondays/"
+      },
+      {
+        "label": "YouTube",
+        "href": "https://www.youtube.com/c/crawlingmondaysbyaleyda"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/aleyda/"
+      }
+    ]
+  },
+  "hero": {
+    "titleHtml": "SEO 学习路线图：<span class=\"color-violeta\">免费</span><span class=\"color-violeta\">资源</span>与<span class=\"color-violeta\">工具</span>",
+    "version": "版本 28",
+    "updated": "更新于 2025 年 6 月 9 日",
+    "paragraphsHtml": [
+      "开始学习搜索引擎优化（SEO），或继续深化 SEO 能力，理解<a class=\"inlinks\" href=\"/seo_roadmap/other-search-engines/\">搜索引擎</a>优化流程的每个环节，提升网站自然搜索流量，成长为更专业的 SEO 从业者。",
+      "LearningSEO.io 是一份完整的 SEO 学习路线图，涵盖主要领域与阶段，并为每个主题整理可靠的免费指南、实用建议、常见问题和<a class=\"inlinks\" href=\"/seo_roadmap/seo-tools/\">学习工具</a>，包括 AI 搜索相关内容。",
+      "从关键词研究、<a class=\"inlinks\" href=\"/seo_roadmap/deepen-knowledge/backlinks/\">链接建设</a>等 SEO 基础，到<a class=\"inlinks\" href=\"/seo_roadmap/deepen-knowledge/content/content-pruning/\">内容</a>优化、技术 SEO、指标监测、策略制定，以及应对搜索算法更新的实战方法，这里汇集 SEO 社区提供的可靠博客、指南、在线课程、资源和工具，帮助你系统掌握 SEO。"
+    ]
+  },
+  "roadmap": {
+    "title": "SEO 学习路线图",
+    "intro": "下面这份 SEO 学习路线图覆盖从基础知识到 SEO 流程中常见活动与阶段的完整学习路径：",
+    "items": [
+      {
+        "number": "1",
+        "title": "搜索引擎优化基础知识",
+        "href": "/seo_roadmap/seo-fundamentals/",
+        "descriptionHtml": "从基本概念和领域开始学习 SEO，它们为什么重要，以及执行它们的基础知识：关键词研究、内容优化分析、技术优化和链接建设。",
+        "links": [
+          {
+            "label": "搜索引擎优化简介",
+            "href": "/seo_roadmap/seo-fundamentals/introduction-to-seo/"
+          },
+          {
+            "label": "关键词研究",
+            "href": "/seo_roadmap/seo-fundamentals/keyword-research/"
+          },
+          {
+            "label": "竞争分析",
+            "href": "/seo_roadmap/seo-fundamentals/competition-analysis/"
+          },
+          {
+            "label": "内容优化",
+            "href": "/seo_roadmap/seo-fundamentals/content-optimization/"
+          },
+          {
+            "label": "技术优化",
+            "href": "/seo_roadmap/seo-fundamentals/technical-seo/"
+          },
+          {
+            "label": "链接建设",
+            "href": "/seo_roadmap/seo-fundamentals/link-building/"
+          }
+        ],
+        "initiallyOpen": true
+      },
+      {
+        "number": "2",
+        "title": "执行 SEO 流程",
+        "href": "/seo_roadmap/execute-seo/",
+        "descriptionHtml": "一旦您了解了主要的 SEO 概念，就可以通过学习开发 SEO 流程（从建立策略和设定目标到管理、衡量和报告）将它们付诸实践。",
+        "links": [
+          {
+            "label": "制定 SEO 策略",
+            "href": "/seo_roadmap/execute-seo/#establishing-an-seo-strategy"
+          },
+          {
+            "label": "设定 SEO 目标",
+            "href": "/seo_roadmap/execute-seo/setting-seo-goals/"
+          },
+          {
+            "label": "衡量搜索引擎优化",
+            "href": "/seo_roadmap/execute-seo/seo-measurement/"
+          },
+          {
+            "label": "报告搜索引擎优化",
+            "href": "/seo_roadmap/execute-seo/seo-reporting/"
+          },
+          {
+            "label": "开展 SEO 审核",
+            "href": "/seo_roadmap/execute-seo/seo-audits-recommendations/"
+          },
+          {
+            "label": "获得 SEO 认可",
+            "href": "/seo_roadmap/execute-seo/seo-buy-in/"
+          },
+          {
+            "label": "SEO流程管理",
+            "href": "/seo_roadmap/execute-seo/#seo-process-management"
+          },
+          {
+            "label": "要避免的常见 SEO 执行错误",
+            "href": "/seo_roadmap/execute-seo/seo-execution-mistakes/"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "3",
+        "title": "CMS 中的 SEO",
+        "href": "/seo_roadmap/implement-in-cms/",
+        "descriptionHtml": "了解如何在市场顶级 Web 平台上实施最重要的 SEO 配置，以及需要考虑的事项。",
+        "links": [
+          {
+            "label": "Shopify SEO 指南",
+            "href": "/seo_roadmap/implement-in-cms/#shopify-seo-guidelines"
+          },
+          {
+            "label": "Magento SEO 指南",
+            "href": "/seo_roadmap/implement-in-cms/#magento-seo-guidelines"
+          },
+          {
+            "label": "Webflow SEO 指南",
+            "href": "/seo_roadmap/implement-in-cms/#webflow-seo-guidelines"
+          },
+          {
+            "label": "Squarespace SEO 指南",
+            "href": "/seo_roadmap/implement-in-cms/#squarespace-seo-guidelines"
+          },
+          {
+            "label": "WordPress SEO 指南",
+            "href": "/seo_roadmap/implement-in-cms/#wordpress-seo-guidelines"
+          },
+          {
+            "label": "Wix SEO 指南",
+            "href": "/seo_roadmap/implement-in-cms/#wix-seo-guidelines"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "4",
+        "title": "加深您的 SEO 知识",
+        "href": "/seo_roadmap/deepen-knowledge/",
+        "descriptionHtml": "现在是时候对您更感兴趣或需要解决的特定领域和常见场景进行 SEO 深入研究了。",
+        "links": [
+          {
+            "label": "JavaScript SEO 指南",
+            "href": "/seo_roadmap/deepen-knowledge/#javascript-seo-guidelines"
+          },
+          {
+            "label": "内部链接优化",
+            "href": "/seo_roadmap/deepen-knowledge/#internal-linking-optimization"
+          },
+          {
+            "label": "SEO 日志文件分析",
+            "href": "/seo_roadmap/deepen-knowledge/#logfile-analysis-for-seo"
+          },
+          {
+            "label": "抓取预算优化",
+            "href": "/seo_roadmap/deepen-knowledge/#crawl-budget-optimization"
+          },
+          {
+            "label": "移动优化",
+            "href": "/seo_roadmap/deepen-knowledge/#mobile-optimization"
+          },
+          {
+            "label": "网页速度优化",
+            "href": "/seo_roadmap/deepen-knowledge/#web-speed-optimization"
+          },
+          {
+            "label": "边缘搜索引擎优化",
+            "href": "/seo_roadmap/deepen-knowledge/#edge-seo"
+          },
+          {
+            "label": "XML 站点地图优化",
+            "href": "/seo_roadmap/deepen-knowledge/#xml-sitemaps-optimization"
+          },
+          {
+            "label": "Robots.txt优化",
+            "href": "/seo_roadmap/deepen-knowledge/#robots-txt-optimization"
+          },
+          {
+            "label": "分页优化",
+            "href": "/seo_roadmap/deepen-knowledge/#paginations-optimization"
+          },
+          {
+            "label": "开发主题集群",
+            "href": "/seo_roadmap/deepen-knowledge/#developing-topic-clusters"
+          },
+          {
+            "label": "关键词映射",
+            "href": "/seo_roadmap/deepen-knowledge/#keyword-mapping"
+          },
+          {
+            "label": "内容质量和 E-E-A-T",
+            "href": "/seo_roadmap/deepen-knowledge/content/quality-eeat/"
+          },
+          {
+            "label": "关键词蚕食分析",
+            "href": "/seo_roadmap/deepen-knowledge/#keyword-cannibalization-analysis"
+          },
+          {
+            "label": "图像优化",
+            "href": "/seo_roadmap/deepen-knowledge/#image-optimization"
+          },
+          {
+            "label": "视频优化",
+            "href": "/seo_roadmap/deepen-knowledge/#video-optimization"
+          },
+          {
+            "label": "结构化数据",
+            "href": "/seo_roadmap/deepen-knowledge/#structured-data"
+          },
+          {
+            "label": "SEO 内容修剪",
+            "href": "/seo_roadmap/deepen-knowledge/content/content-pruning/"
+          },
+          {
+            "label": "避免重复内容",
+            "href": "/seo_roadmap/deepen-knowledge/content/avoiding-duplicate-content/"
+          },
+          {
+            "label": "程序化搜索引擎优化",
+            "href": "/seo_roadmap/deepen-knowledge/content/programmatic-seo/"
+          },
+          {
+            "label": "反向链接分析",
+            "href": "/seo_roadmap/deepen-knowledge/#backlinks-analysis"
+          },
+          {
+            "label": "外展链接建设",
+            "href": "/seo_roadmap/deepen-knowledge/#outreach-for-link-building"
+          },
+          {
+            "label": "拒绝反向链接",
+            "href": "/seo_roadmap/deepen-knowledge/#disavowing-backlinks"
+          },
+          {
+            "label": "数字公关和链接建设",
+            "href": "/seo_roadmap/deepen-knowledge/#digital-pr-link-building"
+          },
+          {
+            "label": "链接建设失效",
+            "href": "/seo_roadmap/deepen-knowledge/#broken-link-building"
+          },
+          {
+            "label": "SEO预测",
+            "href": "/seo_roadmap/deepen-knowledge/management/seo-forecasting/"
+          },
+          {
+            "label": "计算 SEO 投资回报率",
+            "href": "/seo_roadmap/deepen-knowledge/#calculate-seo-roi"
+          },
+          {
+            "label": "向非 SEO 人员展示 SEO 价值",
+            "href": "/seo_roadmap/deepen-knowledge/#show-seo-value-to-non-seos"
+          },
+          {
+            "label": "预算搜索引擎优化",
+            "href": "/seo_roadmap/deepen-knowledge/#budgeting-seo"
+          },
+          {
+            "label": "搜索引擎优化神话",
+            "href": "/seo_roadmap/deepen-knowledge/#seo-myths"
+          },
+          {
+            "label": "建立SEO团队",
+            "href": "/seo_roadmap/deepen-knowledge/#building-an-seo-team"
+          },
+          {
+            "label": "SEO产品管理",
+            "href": "/seo_roadmap/deepen-knowledge/#seo-product-management"
+          },
+          {
+            "label": "与SEO利益相关者的沟通",
+            "href": "/seo_roadmap/deepen-knowledge/#communication-with-seo-stakeholders"
+          },
+          {
+            "label": "创建 SEO 合同",
+            "href": "/seo_roadmap/deepen-knowledge/#creating-seo-contracts"
+          },
+          {
+            "label": "SEO 工作面试",
+            "href": "/seo_roadmap/deepen-knowledge/#seo-jobs-interviews"
+          },
+          {
+            "label": "SERP 功能优化",
+            "href": "/seo_roadmap/deepen-knowledge/#serp-features-optimization"
+          },
+          {
+            "label": "搜索引擎优化测试",
+            "href": "/seo_roadmap/deepen-knowledge/#seo-testing"
+          },
+          {
+            "label": "网络故事",
+            "href": "/seo_roadmap/deepen-knowledge/#web-stories"
+          },
+          {
+            "label": "谷歌发现",
+            "href": "/seo_roadmap/deepen-knowledge/#google-discover"
+          },
+          {
+            "label": "知识面板优化",
+            "href": "/seo_roadmap/deepen-knowledge/#knowledge-panel-optimization"
+          },
+          {
+            "label": "Google AIO、AI 模式和 LLM 优化",
+            "href": "/seo_roadmap/deepen-knowledge/opportunities/google-ai-overviews/"
+          },
+          {
+            "label": "搜索排名下降分析",
+            "href": "/seo_roadmap/deepen-knowledge/#search-rankings-drop-analysis"
+          },
+          {
+            "label": "网站迁移的 SEO",
+            "href": "/seo_roadmap/deepen-knowledge/#seo-for-web-migrations"
+          },
+          {
+            "label": "网站重新设计的 SEO",
+            "href": "/seo_roadmap/deepen-knowledge/#seo-for-web-redesigns"
+          },
+          {
+            "label": "新网站发布的 SEO",
+            "href": "/seo_roadmap/deepen-knowledge/#seo-for-new-web-launch"
+          },
+          {
+            "label": "Google 核心搜索更新分析与恢复",
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/google-core-updates-recovery/"
+          },
+          {
+            "label": "处理 Google 处罚",
+            "href": "/seo_roadmap/deepen-knowledge/#dealing-with-google-penalties"
+          },
+          {
+            "label": "从 Google 中删除网址",
+            "href": "/seo_roadmap/deepen-knowledge/#removing-urls-from-google"
+          },
+          {
+            "label": "优化产品页面",
+            "href": "/seo_roadmap/deepen-knowledge/#optimizing-product-pages"
+          },
+          {
+            "label": "优化分面导航",
+            "href": "/seo_roadmap/deepen-knowledge/#optimizing-faceted-navigation"
+          },
+          {
+            "label": "检测并防止负面 SEO",
+            "href": "/seo_roadmap/deepen-knowledge/#detect-protect-from-negative-seo"
+          },
+          {
+            "label": "黑色星期五、网络星期一和假日季节优惠的 SEO",
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/black-friday-cyber-monday-holiday-seo-season/"
+          },
+          {
+            "label": "2025 年 SEO 预测、趋势和技巧",
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/seo-predictions-trends-tips/"
+          },
+          {
+            "label": "SEO 提高品牌知名度和知名度",
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/seo-branding/"
+          },
+          {
+            "label": "伟大的解耦或如何优化零点击搜索",
+            "href": "/seo_roadmap/deepen-knowledge/scenarios/great-decoupling/"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "5.1",
+        "title": "专注于 SEO",
+        "href": "/seo_roadmap/specialize/",
+        "descriptionHtml": "学习并专注于最流行的 SEO 垂直领域之一。",
+        "links": [
+          {
+            "label": "国际搜索引擎优化",
+            "href": "/seo_roadmap/specialize/#international-seo"
+          },
+          {
+            "label": "电子商务搜索引擎优化",
+            "href": "/seo_roadmap/specialize/#e-commerce-seo"
+          },
+          {
+            "label": "本地搜索引擎优化",
+            "href": "/seo_roadmap/specialize/#local-seo"
+          },
+          {
+            "label": "企业搜索引擎优化",
+            "href": "/seo_roadmap/specialize/#enterprise-seo"
+          },
+          {
+            "label": "新闻搜索引擎优化",
+            "href": "/seo_roadmap/specialize/#news-seo"
+          },
+          {
+            "label": "SaaS 搜索引擎优化",
+            "href": "/seo_roadmap/specialize/#saas-seo"
+          },
+          {
+            "label": "旅游搜索引擎优化",
+            "href": "/seo_roadmap/specialize/#travel-seo"
+          },
+          {
+            "label": "小型企业搜索引擎优化",
+            "href": "/seo_roadmap/specialize/#small-business-seo"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "5.2",
+        "title": "自动化 SEO 任务",
+        "href": "/seo_roadmap/automate-tasks/",
+        "descriptionHtml": "了解自动化您的 SEO 任务并加速您的 SEO 流程执行。",
+        "links": [
+          {
+            "label": "用于 SEO 的 Python",
+            "href": "/seo_roadmap/automate-tasks/#python-for-seo"
+          },
+          {
+            "label": "用于 SEO 的 BigQuery 和 SQL",
+            "href": "/seo_roadmap/automate-tasks/#bigquery-sql-for-seo"
+          },
+          {
+            "label": "R 搜索引擎优化",
+            "href": "/seo_roadmap/automate-tasks/#r-for-seo"
+          },
+          {
+            "label": "用于 SEO 的应用程序脚本",
+            "href": "/seo_roadmap/automate-tasks/#app-scripts-for-seo"
+          },
+          {
+            "label": "SEO 正则表达式",
+            "href": "/seo_roadmap/automate-tasks/#regex-for-seo"
+          },
+          {
+            "label": "用于 SEO 的 JS",
+            "href": "/seo_roadmap/automate-tasks/#js-for-seo"
+          },
+          {
+            "label": "用于 SEO 的人工智能法学硕士和聊天机器人",
+            "href": "/seo_roadmap/automate-tasks/#ai-llms-chatbots-for-seo"
+          },
+          {
+            "label": "SEO 机器学习",
+            "href": "/seo_roadmap/automate-tasks/machine-learning-seo/"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "6",
+        "title": "其他搜索引擎中的 SEO",
+        "href": "/seo_roadmap/other-search-engines/",
+        "descriptionHtml": "了解如何在 Google 之外的其他搜索引擎中排名。",
+        "links": [
+          {
+            "label": "Bing SEO 指南和技巧",
+            "href": "/seo_roadmap/other-search-engines/#bing-seo-guidelines-tips"
+          },
+          {
+            "label": "Yandex SEO 指南和技巧",
+            "href": "/seo_roadmap/other-search-engines/#yandex-seo-guidelines-tips"
+          },
+          {
+            "label": "百度 SEO 指南和技巧",
+            "href": "/seo_roadmap/other-search-engines/#baidu-seo-guidelines-tips"
+          },
+          {
+            "label": "Naver SEO 指南和技巧",
+            "href": "/seo_roadmap/other-search-engines/#naver-seo-guidelines-tips"
+          },
+          {
+            "label": "亚马逊 SEO 指南和技巧",
+            "href": "/seo_roadmap/other-search-engines/#amazon-seo-guidelines-tips"
+          },
+          {
+            "label": "YouTube SEO 指南和技巧",
+            "href": "/seo_roadmap/other-search-engines/#youtube-seo-guidelines-tips"
+          },
+          {
+            "label": "TikTok SEO 指南和技巧",
+            "href": "/seo_roadmap/other-search-engines/tiktok-seo-guidelines/"
+          },
+          {
+            "label": "Reddit 搜索引擎优化 (SEO) 指南和技巧",
+            "href": "/seo_roadmap/other-search-engines/reddit-seo-guidelines/"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "7",
+        "title": "及时了解 SEO 新闻",
+        "href": "/seo_roadmap/keep-up-with-news/",
+        "descriptionHtml": "随时了解 SEO 的最新新闻、更新和资源。",
+        "links": [
+          {
+            "label": "搜索引擎的官方出版物",
+            "href": "/seo_roadmap/keep-up-with-news/#search-engines-official-publications"
+          },
+          {
+            "label": "搜索新闻出版物",
+            "href": "/seo_roadmap/keep-up-with-news/#search-news-publications"
+          },
+          {
+            "label": "搜索新闻聚合器",
+            "href": "/seo_roadmap/keep-up-with-news/#search-news-aggregators"
+          },
+          {
+            "label": "搜索引擎优化播客",
+            "href": "/seo_roadmap/keep-up-with-news/#seo-podcasts"
+          },
+          {
+            "label": "搜索引擎优化通讯",
+            "href": "/seo_roadmap/keep-up-with-news/#seo-newsletters"
+          },
+          {
+            "label": "线上活动",
+            "href": "/seo_roadmap/keep-up-with-news/#online-events"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "9",
+        "title": "针对 AI 搜索进行优化（GEO、AEO、LLMO）",
+        "href": "/seo_roadmap/optimize-ai-search/",
+        "descriptionHtml": "通过免费、可靠的指南和资源了解人工智能搜索优化。",
+        "links": [
+          {
+            "label": "人工智能搜索格局",
+            "href": "/seo_roadmap/optimize-ai-search/ai-search-landscape/"
+          },
+          {
+            "label": "AI 搜索优化基础知识",
+            "href": "/seo_roadmap/optimize-ai-search/fundamentals-ai-search-optimization/"
+          },
+          {
+            "label": "优化 AI 搜索内容",
+            "href": "/seo_roadmap/optimize-ai-search/ai-search-content-optimization/"
+          },
+          {
+            "label": "AI搜索技术优化",
+            "href": "/seo_roadmap/optimize-ai-search/ai-search-technical-optimization/"
+          },
+          {
+            "label": "衡量人工智能搜索可见性和流量",
+            "href": "/seo_roadmap/optimize-ai-search/measuring-ai-search/"
+          },
+          {
+            "label": "人工智能搜索跟踪和优化工具",
+            "href": "/seo_roadmap/optimize-ai-search/tools/"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "8",
+        "title": "补充您的搜索引擎优化",
+        "href": "/seo_roadmap/complement-knowledge/",
+        "descriptionHtml": "了解可以帮助您作为 SEO 的互补领域。",
+        "links": [
+          {
+            "label": "HTML 和 CSS",
+            "href": "/seo_roadmap/complement-knowledge/#html-css"
+          },
+          {
+            "label": "Looker Studio [Google 数据工作室]",
+            "href": "/seo_roadmap/complement-knowledge/#javascript"
+          },
+          {
+            "label": "软技能",
+            "href": "/seo_roadmap/complement-knowledge/#soft-skills"
+          },
+          {
+            "label": "开展 SEO 业务",
+            "href": "/seo_roadmap/complement-knowledge/#start-an-seo-business"
+          },
+          {
+            "label": "应用商店优化",
+            "href": "/seo_roadmap/complement-knowledge/#app-store-optimization"
+          },
+          {
+            "label": "谷歌分析",
+            "href": "/seo_roadmap/complement-knowledge/#google-analytics"
+          },
+          {
+            "label": "Looker Studio [Google 数据工作室]",
+            "href": "/seo_roadmap/complement-knowledge/#looker-studio-google-data-studio"
+          },
+          {
+            "label": "谷歌标签管理器",
+            "href": "/seo_roadmap/complement-knowledge/#google-tag-manager"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "9",
+        "title": "免费使用的 SEO 工具",
+        "href": "/seo_roadmap/seo-tools/",
+        "descriptionHtml": "访问免费的 SEO 工具来执行您的 SEO 任务。",
+        "links": [
+          {
+            "label": "关键词研究工具",
+            "href": "/seo_roadmap/seo-tools/#keyword-research-tools"
+          },
+          {
+            "label": "页面搜索引擎优化工具",
+            "href": "/seo_roadmap/seo-tools/#on-page-seo-tools"
+          },
+          {
+            "label": "链接构建工具",
+            "href": "/seo_roadmap/seo-tools/#link-building-tools"
+          },
+          {
+            "label": "监控和排名跟踪工具",
+            "href": "/seo_roadmap/seo-tools/#monitoring-rank-tracking-tools"
+          },
+          {
+            "label": "SEO 仪表板和报告工具",
+            "href": "/seo_roadmap/seo-tools/#seo-dashboard-reporting-tools"
+          },
+          {
+            "label": "网络速度优化工具",
+            "href": "/seo_roadmap/seo-tools/#web-speed-optimization-tools"
+          },
+          {
+            "label": "结构化数据工具",
+            "href": "/seo_roadmap/seo-tools/#structured-data-tools"
+          },
+          {
+            "label": "移动搜索引擎优化工具",
+            "href": "/seo_roadmap/seo-tools/#mobile-seo-tools"
+          },
+          {
+            "label": "本地搜索引擎优化工具",
+            "href": "/seo_roadmap/seo-tools/#local-seo-tools"
+          },
+          {
+            "label": "国际搜索引擎优化工具",
+            "href": "/seo_roadmap/seo-tools/#international-seo-tools"
+          },
+          {
+            "label": "JavaScript SEO 工具",
+            "href": "/seo_roadmap/seo-tools/#javascript-seo-tools"
+          },
+          {
+            "label": "SEO 预测工具",
+            "href": "/seo_roadmap/seo-tools/#seo-forecastings-tools"
+          },
+          {
+            "label": "SEO审核模板",
+            "href": "/seo_roadmap/seo-tools/#seo-audit-templates"
+          },
+          {
+            "label": "WordPress SEO 插件",
+            "href": "/seo_roadmap/seo-tools/#wordpress-seo-plugins"
+          },
+          {
+            "label": "Google 搜索控制台指南",
+            "href": "/seo_roadmap/seo-tools/#google-search-console-guidelines"
+          }
+        ],
+        "initiallyOpen": false
+      },
+      {
+        "number": "10",
+        "title": "进一步培训、测试您的 SEO 并排除故障",
+        "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+        "descriptionHtml": "是时候进一步了解 SEO 知识了。",
+        "links": [
+          {
+            "label": "搜索引擎优化课程和培训",
+            "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/online-seo-courses/"
+          },
+          {
+            "label": "SEO 测试和测验",
+            "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/free-seo-tests-quizzes/"
+          },
+          {
+            "label": "为什么我的网页没有在 Google 清单中排名",
+            "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/"
+          },
+          {
+            "label": "学习 SEO 免费加速器",
+            "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/the-learningseo-accelerator/"
+          }
+        ],
+        "initiallyOpen": false
+      }
+    ]
+  },
+  "resourceBanner": {
+    "title": "在 Google 表格中访问、复制和分享免费的 SEO 指南、资源与工具",
+    "bodyHtml": "<p>我整理了一份 Google 表格，方便你复制和分享路线图覆盖的可靠 SEO 资源，也可以在学习 SEO 时作为参考。</p>",
+    "cta": "复制 Google 表格",
+    "href": "https://docs.google.com/spreadsheets/d/16zgkN6jw35X-6NDsYU1gZMbhxF5Sj0gLqgv9VSPmlT0/copy",
+    "icon": "/wp-content/themes/learningseo/imgs/google-sheets.svg"
+  },
+  "videos": [
+    {
+      "title": "欢迎来到 LearningSEO.io 新版本",
+      "description": "不要错过并订阅网站底部的电子邮件提醒。",
+      "thumbnail": "/wp-content/uploads/2023/05/learningseo_thumbnail-1024x570.jpg",
+      "embed": "https://www.youtube.com/embed/b260u37x7EA",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "SEO 简介：概念 + 问答 - 学习 SEO 加速器 [第一节]",
+      "description": "通过学习 SEO 加速器计划的 SEO 介绍课程了解 SEO 工作原理的基础知识，该课程是多个版本中的第一个，介绍了 SEO 不同领域的概念和问答。",
+      "thumbnail": "https://img.youtube.com/vi/UwgodddzsmY/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/UwgodddzsmY",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "关键词研究：概念 + 问答 - 学习 SEO 加速器 [第二次会议]",
+      "description": "在本次学习 SEO 加速器计划中，与来自 Snippet Digital 和 Keyword Insights 的 Andy Chadwick 一起学习有效关键词研究流程的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/ht-v0gPVTpE/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/ht-v0gPVTpE",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "SEO 竞争研究：概念与问答 - 学习 SEO 加速器 [第 3 次会议]",
+      "description": "在 Jo Turnbull 的学习 SEO 加速器计划课程中，了解有效 SEO 竞争研究的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/ldzXH7mo5r4/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/ldzXH7mo5r4",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "SEO 内容优化：概念与问答 - 学习 SEO 加速器 [第四节]",
+      "description": "在来自 Wix 的 Crystal Carter 的学习 SEO 加速器计划的富有洞察力的问答环节中，了解 SEO 过程中有效内容优化的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/5dvfT4Jn4Ko/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/5dvfT4Jn4Ko",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "SEO 技术优化：概念与问答 - 学习 SEO 加速器 [第 5 次会议]",
+      "description": "在 SEO 顾问 Geoff Kennedy 的学习 SEO 加速器计划的富有洞察力的问答环节中，了解 SEO 流程中有效技术优化的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/nzEySnh20mw/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/nzEySnh20mw",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "链接建设：概念与问答 - 学习 SEO 加速器 [第六次会议]",
+      "description": "在学习 SEO 加速器计划的富有洞察力的问答环节中，与链接构建专家和机构创始人 Bibi Raven 一起了解 SEO 过程中链接构建策略的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/um6vyaXtAqw/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/um6vyaXtAqw",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "SEO 审核：概念与问答 - 学习 SEO 加速器 [第七次会议]",
+      "description": "在来自 Torque Partners 的 Chris Green 的学习 SEO 加速器计划的富有洞察力的问答环节中，了解 SEO 流程中 SEO 审核的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/wk1aTXC2fZ4/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/wk1aTXC2fZ4",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "如何制定 SEO 策略：概念与问答 - 学习 SEO 加速器 [第 8 节]",
+      "description": "在来自 The Gray Dot Company 的 Tory Gray 学习 SEO 加速器计划的富有洞察力的问答环节中，了解在 SEO 流程中制定 SEO 策略的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/oGdp7KCnmCA/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/oGdp7KCnmCA",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "如何设定 SEO 目标 - 学习 SEO 加速器 [第九期]",
+      "description": "在 Re:Signal 的 Kevin Gibbons 的学习 SEO 加速器计划的富有洞察力的问答环节中，了解在 SEO 过程中设置搜索引擎优化目标的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/wPouOKyYPa8/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/wPouOKyYPa8",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "如何衡量 SEO - 学习 SEO 加速器 [第 10 次会议]",
+      "description": "在 Zippy 的 SEO 顾问兼创始人 Cyrus Shepard 的学习 SEO 加速器计划的富有洞察力的问答环节中，了解衡量 SEO 过程的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/B_p3Rwaaxas/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/B_p3Rwaaxas",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "如何报告 SEO - 学习 SEO 加速器 [第 11 期]",
+      "description": "在学习 SEO 加速器计划的富有洞察力的问答环节中，与经验丰富的 SEO 专家、SEO RushOrderTees 总监 Sophie Brannon 一起，了解 SEO 报告的首要标准、主要挑战和建议。",
+      "thumbnail": "https://img.youtube.com/vi/mUWR4LpbKQk/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/mUWR4LpbKQk",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "SEO 流程管理 - 学习 SEO 加速器 [第 12 期]",
+      "description": "在学习 SEO 加速器计划的富有洞察力的问答环节中，与经验丰富的 SEO 和数字营销顾问 Judith Lewis 一起学习如何管理 SEO 流程。",
+      "thumbnail": "https://img.youtube.com/vi/5qfMa5Guhcw/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/5qfMa5Guhcw",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "WordPress SEO - 学习 SEO 加速器 [第 13 期]",
+      "description": "在这个富有洞察力的学习 SEO 加速器课程中，与经验丰富的技术 SEO 顾问和 WordPress 专家 Jono Alderson 一起学习如何优化基于 WordPress 的网站。",
+      "thumbnail": "https://img.youtube.com/vi/WS1yDoLUEcQ/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/WS1yDoLUEcQ",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "SEO For Wix - 学习 SEO 加速器 [第 14 期]",
+      "description": "在来自 Wix 的 Mordy Oberstein 的富有洞察力的学习 SEO 加速器会议中，了解如何优化基于 Wix 的网站。",
+      "thumbnail": "https://img.youtube.com/vi/tdxoly2Q1p8/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/tdxoly2Q1p8",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "Shopify 的 SEO - 学习 SEO 加速器 [第 15 期]",
+      "description": "在这个富有洞察力的学习 SEO 加速器会议中，与 SEO 顾问和 Shopify 前 SEO 凯文·英迪格 (Kevin Indig) 一起学习如何优化基于 Shopify 的电子商务网站。",
+      "thumbnail": "https://img.youtube.com/vi/aoFmavJmknw/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/aoFmavJmknw",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "SEO 过程中的网络速度优化 - 学习 SEO 加速器 [第 16 次会议]",
+      "description": "在 eBay 技术 SEO 顾问 Jamie Indigo 的富有洞察力的学习 SEO 加速器会议中，了解如何在 SEO 过程中优化网站速度。",
+      "thumbnail": "https://img.youtube.com/vi/DURD8zWo0PM/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/DURD8zWo0PM",
+      "iframeTitle": "YouTube 视频播放器"
+    },
+    {
+      "title": "内部链接优化 - 学习 SEO 加速器 [第 17 期]",
+      "description": "在 LearningSEO.io 加速器问答环节中，与 SEO 顾问 Mike Ginley 一起了解如何优化网站内部链接以实现 SEO。",
+      "thumbnail": "https://img.youtube.com/vi/xV9jlyPdcIE/hqdefault.jpg",
+      "embed": "https://www.youtube.com/embed/xV9jlyPdcIE",
+      "iframeTitle": "YouTube 视频播放器"
+    }
+  ],
+  "faq": {
+    "title": "SEO 学习路线图常见问题",
+    "items": [
+      {
+        "question": "什么是 SEO？",
+        "answerHtml": "<p>SEO（搜索引擎优化）通过改进网站的<a class=\"inlinks\" href=\"/seo_roadmap/deepen-knowledge/advanced-technical/\">技术配置</a>、内容和反向链接等方面，提升网站在搜索结果页中的可见度、排名、流量与转化。</p>"
+      },
+      {
+        "question": "可以自学 SEO 吗？",
+        "answerHtml": "<p>可以。LearningSEO.io 通过可靠的免费资源帮助初学者按合理顺序学习 SEO。学习过程中建议在自己的网站上实践，即使使用无代码工具搭建简单网站也能积累经验。</p>"
+      },
+      {
+        "question": "SEO 有需求吗？",
+        "answerHtml": "<p>SEO 仍然有稳定需求。大量在线体验从搜索开始，企业持续需要提升自然搜索流量，因此 SEO 服务与相关岗位长期存在。</p>"
+      },
+      {
+        "question": "SEO 需要编程吗？",
+        "answerHtml": "<p>SEO 入门无需编程。了解 HTML、CSS 和 JavaScript 等 Web 基础，有助于处理技术 SEO，相关资源见<a href=\"/seo_roadmap/complement-knowledge/#html-css\">HTML 与 CSS</a>和<a href=\"/seo_roadmap/complement-knowledge/#javascript\">JavaScript</a>指南。</p>"
+      },
+      {
+        "question": "Google 提供 SEO 认证吗？",
+        "answerHtml": "<p>Google 没有官方 SEO 认证，Google 提供 SEO 指南与最佳实践。</p>"
+      },
+      {
+        "question": "做 SEO 能赚钱吗？",
+        "answerHtml": "<p>可以。SEO 既有企业内部岗位，也有顾问、代理机构和内容网站等职业路径。市场对能提升自然搜索表现的专业人才持续有需求。</p>"
+      },
+      {
+        "question": "应该按什么顺序学习 SEO 路线图？",
+        "answerHtml": "<p>建议先学习<a href=\"/seo_roadmap/seo-fundamentals/\"><strong>SEO 基础知识</strong></a>，再学习<a href=\"/seo_roadmap/execute-seo/\"><strong>执行 SEO 流程</strong></a>，之后根据工作场景学习免费工具、CMS 实施、深入知识、专业方向、自动化、行业新闻和相关数字营销能力。</p>"
+      },
+      {
+        "question": "需要学习路线图中的所有领域吗？",
+        "answerHtml": "<p>完整浏览路线图有助于建立全局视角。你可以先覆盖每个领域的基础，再根据职业目标深入技术 SEO、内容 SEO、链接建设或其他方向。</p>"
+      },
+      {
+        "question": "如何判断页面为什么没有排名？",
+        "answerHtml": "<p>可以使用<a href=\"/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/\">页面排名诊断清单</a>，从搜索意图、内容、技术配置、内部链接和外部信号等方面逐项排查。</p>"
+      },
+      {
+        "question": "学习 SEO 时要避免哪些问题？",
+        "answerHtml": "<p>重点防范过时信息、只看理论不实践、盲目复制所谓排名技巧，以及忽视内容、技术 SEO 和其他营销渠道之间的协作。优先选择可靠来源并用小范围测试验证结论。</p>"
+      },
+      {
+        "question": "如何及时了解 SEO 新闻？",
+        "answerHtml": "<p>可以订阅<a href=\"https://hub.seofomo.co/\">SEOFOMO 通讯</a>，持续获取 SEO 新闻、更新、指南、活动与工作机会。</p>"
+      },
+      {
+        "question": "如何找到 SEO 工作？",
+        "answerHtml": "<p>可以查看免费的<a href=\"https://hub.seofomo.co/seofomo-jobs/\">SEOFOMO 求职板</a>，了解全球 SEO 岗位。</p>"
+      }
+    ]
+  },
+  "tips": {
+    "title": "经验丰富的专家提供 SEO 学习技巧",
+    "introHtml": "从行业专家的经验中提炼方法，选择你当前最需要的主题。",
+    "items": [
+      {
+        "id": "tip_1",
+        "text": "“没有哪个 SEO 是所有事情的专家，这就是为什么无论你在这个行业呆了多久，就某个主题征求意见或想法都是可以的。”",
+        "author": "泰莎·博纳奇·纳迪克",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=There%20is%20no%20SEO%20that%20is%20an%20expert%20in%20everything,%20and%20that%E2%80%99s%20why%20it%E2%80%99s%20more%20than%20okay%20to%20ask%20for%20opinions%20or%20thoughts%20on%20a%20subject%20no%20matter%20how%20long%20you%20have%20been%20in%20the%20game.%20Tessa%20Bonacci%20Nadik.%20/%23tip_1",
+          "threads": "https://www.threads.net/intent/post?text=There%20is%20no%20SEO%20that%20is%20an%20expert%20in%20everything,%20and%20that%E2%80%99s%20why%20it%E2%80%99s%20more%20than%20okay%20to%20ask%20for%20opinions%20or%20thoughts%20on%20a%20subject%20no%20matter%20how%20long%20you%20have%20been%20in%20the%20game.%20%0D%0DTessa%20Bonacci%20Nadik.%20/%23tip_1",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_2",
+        "text": "“尝试一切，然后找到并坚持你的利基。SEO 是一个太广泛的领域，无法在每个方面都擅长。可以公开地与你的经理谈论这个问题并请求“允许”专门化。”",
+        "author": "阿内特·波尔",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Try%20everything%20and%20then%20find%20and%20stick%20to%20your%20niche.%20Seo%20is%20too%20broad%20a%20field%20to%20be%20good%20at%20every%20aspect%20of%20it.%20Its%20okay%20to%20openly%20talk%20to%20your%20manager%20about%20this%20and%20ask%20to%20be%20allowed%20to%20specialise.%20Anett%20Pohl.%20/%23tip_2",
+          "threads": "https://www.threads.net/intent/post?text=Try%20everything%20and%20then%20find%20and%20stick%20to%20your%20niche.%20Seo%20is%20too%20broad%20a%20field%20to%20be%20good%20at%20every%20aspect%20of%20it.%20Its%20okay%20to%20openly%20talk%20to%20your%20manager%20about%20this%20and%20ask%20to%20be%20allowed%20to%20specialise.%20%0D%0DAnett%20Pohl.%20/%23tip_2",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_3",
+        "text": "“关注原则而不仅仅是策略。Google 希望为客户提供什么服务？结果是……有价值、相关、可索引、积极的用户体验。当有疑问时，这应该可以很好地引导你。”",
+        "author": "马克约翰斯通",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Focus%20on%20the%20principles%20rather%20than%20just%20the%20tactics.%20What%20do%20Google%20want%20to%20serve%20their%20customers?%20Results%20that%20are..%20Valuable,%20Relevant,%20Indexable,%20A%20positive%20User%20Experience.%20When%20in%20doubt,%20that%20should%20steer%20you%20well.%20Mark%20Johnstone.%20/%23tip_3",
+          "threads": "https://www.threads.net/intent/post?text=Focus%20on%20the%20principles%20rather%20than%20just%20the%20tactics.%20What%20do%20Google%20want%20to%20serve%20their%20customers?%20Results%20that%20are..%20Valuable,%20Relevant,%20Indexable,%20A%20positive%20User%20Experience.%20When%20in%20doubt,%20that%20should%20steer%20you%20well.%20%0D%0DMark%20Johnstone.%20/%23tip_3",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_4",
+        "text": "“我会告诉自己要亲自尝试，建立一个网站，这个网站除了作为你的试验场之外什么都不需要。此外，与行业内外的其他人交谈。提出问题——保持好奇心，质疑自己的假设，以走出自己的泡沫。”",
+        "author": "杰西·乔伊斯",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=I%20would%20tell%20myself%20to%20try%20things%20for%20yourself,%20build%20a%20site%20that%20doesnt%20have%20to%20be%20anything%20but%20a%20testing%20ground%20for%20you.%20Also,%20talk%20to%20others%20in%20the%20industry%20and%20outside%20it.%20Ask%20questions%20-%20stay%20curious%20and%20question%20your%20own%20assumptions%20to%20get%20outside%20your%20bubbles.%20Jess%20Joyce.%20/%23tip_4",
+          "threads": "https://www.threads.net/intent/post?text=I%20would%20tell%20myself%20to%20try%20things%20for%20yourself,%20build%20a%20site%20that%20doesnt%20have%20to%20be%20anything%20but%20a%20testing%20ground%20for%20you.%20Also,%20talk%20to%20others%20in%20the%20industry%20and%20outside%20it.%20Ask%20questions%20-%20stay%20curious%20and%20question%20your%20own%20assumptions%20to%20get%20outside%20your%20bubbles.%20%0D%0DJess%20Joyce.%20/%23tip_4",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_5",
+        "text": "“SEO 是一种媒介，而不是最终目标。作为 SEO，我们倾向于参与完成有时与业务/营销目标不一致的事情，从而导致差异！这就是为什么我们应该使用 SEO 作为媒介来专注于最终目标。”",
+        "author": "排名机",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=SEO%20is%20a%20medium%20and%20not%20the%20ultimate%20goal.%20We%20as%20SEOs%20tend%20to%20get%20involved%20in%20getting%20things%20done%20that%20are%20sometimes%20not%20aligned%20with%20the%20business/marketing%20goals%20which%20leads%20to%20disparity!%20Thats%20why%20we%20should%20focus%20on%20the%20ultimate%20goal%20using%20SEO%20as%20a%20medium.%20The%20Rank%20Machine.%20/%23tip_5",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20is%20a%20medium%20and%20not%20the%20ultimate%20goal.%20We%20as%20SEOs%20tend%20to%20get%20involved%20in%20getting%20things%20done%20that%20are%20sometimes%20not%20aligned%20with%20the%20business/marketing%20goals%20which%20leads%20to%20disparity!%20Thats%20why%20we%20should%20focus%20on%20the%20ultimate%20goal%20using%20SEO%20as%20a%20medium.%20%0D%0DThe%20Rank%20Machine.%20/%23tip_5",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_6",
+        "text": "“成功的一半在于建立关系、赢得认可并确保您处于循环中。如果您想在 SEO 方面取得成功，您需要推销自己和推荐的价值。与您的作家、开发人员（内部或外部），甚至非营销人员交朋友！”",
+        "author": "萨拉·纳兹",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Half%20the%20battle%20is%20building%20relationships,%20earning%20buy-in%20and%20making%20sure%20youre%20in%20the%20loop.%20You%20need%20to%20sell%20yourself%20and%20the%20value%20of%20your%20recommendations%20if%20you%20want%20to%20succeed%20in%20SEO.%20Make%20friends%20with%20your%20writers,%20developers%20(in%20house%20or%20not),%20and%20even%20non%20marketing%20folks!%20Sara%20Naatz.%20/%23tip_6",
+          "threads": "https://www.threads.net/intent/post?text=Half%20the%20battle%20is%20building%20relationships,%20earning%20buy-in%20and%20making%20sure%20youre%20in%20the%20loop.%20You%20need%20to%20sell%20yourself%20and%20the%20value%20of%20your%20recommendations%20if%20you%20want%20to%20succeed%20in%20SEO.%20Make%20friends%20with%20your%20writers,%20developers%20(in%20house%20or%20not),%20and%20even%20non%20marketing%20folks!%20%0D%0DSara%20Naatz.%20/%23tip_6",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_7",
+        "text": "“几乎你所做的一切都应该从搜索者的思想和经验开始。可以拒绝客户，可以让客户承担责任，可以对客户说不，可以解雇客户。”",
+        "author": "萨姆·麦克罗伯茨",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Almost%20everything%20you%20do%20should%20begin%20in%20the%20mind%20and%20experience%20of%20the%20searcher.%20It%E2%80%99s%20ok%20to%20push%20back%20on%20a%20client,%20it%E2%80%99s%20ok%20to%20hold%20a%20client%20accountable,%20it%E2%80%99s%20ok%20to%20say%20no%20to%20a%20client,%20it%E2%80%99s%20ok%20to%20fire%20a%20client.%20Sam%20McRoberts.%20/%23tip_7",
+          "threads": "https://www.threads.net/intent/post?text=Almost%20everything%20you%20do%20should%20begin%20in%20the%20mind%20and%20experience%20of%20the%20searcher.%20It%E2%80%99s%20ok%20to%20push%20back%20on%20a%20client,%20it%E2%80%99s%20ok%20to%20hold%20a%20client%20accountable,%20it%E2%80%99s%20ok%20to%20say%20no%20to%20a%20client,%20it%E2%80%99s%20ok%20to%20fire%20a%20client.%20%0D%0DSam%20McRoberts.%20/%23tip_7",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_8",
+        "text": "“让自己周围都是聪明人，但要对自己有信心。在会议上与人们交谈，这是我学到最好东西的地方！嘴和耳朵之间的比例是有原因的，听的次数是说的两倍。”",
+        "author": "格里·怀特",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Surround%20yourself%20with%20smart%20people,%20but%20be%20confident%20in%20yourself.%20Talk%20to%20people%20at%20conferences,%20thats%20where%20Ive%20learnt%20the%20best%20things!%20Theres%20a%20ratio%20between%20mouths%20and%20ears%20for%20a%20reason%20tho,%20listen%20twice%20as%20much%20as%20you%20speak.%20Gerry%20White.%20/%23tip_8",
+          "threads": "https://www.threads.net/intent/post?text=Surround%20yourself%20with%20smart%20people,%20but%20be%20confident%20in%20yourself.%20Talk%20to%20people%20at%20conferences,%20thats%20where%20Ive%20learnt%20the%20best%20things!%20Theres%20a%20ratio%20between%20mouths%20and%20ears%20for%20a%20reason%20tho,%20listen%20twice%20as%20much%20as%20you%20speak.%20%0D%0DGerry%20White.%20/%23tip_8",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_9",
+        "text": "“永远不要认为你知道一切。事情变化得太快，你不可能知道一切，即使是在你的利基市场！此外，与人交谈，建立人际网络，让自己周围都是和你一样热衷于 SEO 的人。这就是你成长的方式。”",
+        "author": "苏菲·布兰农",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Don%E2%80%99t%20ever%20think%20that%20you%20know%20everything.%20Things%20change%20far%20too%20quickly%20for%20you%20to%20ever%20possibly%20know%20EVERYTHING,%20even%20in%20your%20niche!%20Plus%20talk%20to%20people,%20network,%20surround%20yourself%20with%20people%20who%20are%20just%20as%20passionate%20about%20SEO%20as%20you%20are.%20That%E2%80%99s%20how%20you%E2%80%99ll%20grow.%20Sophie%20Brannon.%20/%23tip_9",
+          "threads": "https://www.threads.net/intent/post?text=Don%E2%80%99t%20ever%20think%20that%20you%20know%20everything.%20Things%20change%20far%20too%20quickly%20for%20you%20to%20ever%20possibly%20know%20EVERYTHING,%20even%20in%20your%20niche!%20Plus%20talk%20to%20people,%20network,%20surround%20yourself%20with%20people%20who%20are%20just%20as%20passionate%20about%20SEO%20as%20you%20are.%20That%E2%80%99s%20how%20you%E2%80%99ll%20grow.%20%0D%0DSophie%20Brannon.%20/%23tip_9",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_10",
+        "text": "“我希望我早点知道的一件事是始终牢记商业目标。无论你的技术如何，如果你无法跟踪你的策略和策略到金钱并将这种联系传达给你的利益相关者、你的项目，最终，职业生涯就会停滞不前。”",
+        "author": "尼克·威尔斯顿",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=The%20one%20thing%20I%20wish%20Id%20known%20earlier%20is%20to%20always%20be%20mindful%20of%20commercial%20goals.%20It%20doesnt%20matter%20how%20technical%20you%20are,%20if%20you%20cant%20track%20your%20tactics%20and%20strategy%20to%20the%20money%20and%20convey%20that%20connection%20to%20your%20stakeholders,%20your%20projects%20and%20ultimately,%20career%20will%20stall.%20Nick%20Wilsdon.%20/%23tip_10",
+          "threads": "https://www.threads.net/intent/post?text=The%20one%20thing%20I%20wish%20Id%20known%20earlier%20is%20to%20always%20be%20mindful%20of%20commercial%20goals.%20It%20doesnt%20matter%20how%20technical%20you%20are,%20if%20you%20cant%20track%20your%20tactics%20and%20strategy%20to%20the%20money%20and%20convey%20that%20connection%20to%20your%20stakeholders,%20your%20projects%20and%20ultimately,%20career%20will%20stall.%20%0D%0DNick%20Wilsdon.%20/%23tip_10",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_11",
+        "text": "“我希望我在职业生涯的早期就发现，说‘我不知道’并寻求帮助是很好的，而不是试图假装我一直在做这件事，尤其是在我与发展的关系方面。”",
+        "author": "罗克珊娜·斯廷古",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=I%20wish%20I%20found%20out%20earlier%20in%20my%20career%20that%20its%20fine%20to%20say%20I%20dont%20know%20and%20to%20ask%20for%20help%20rather%20than%20trying%20to%20pretend%20Im%20always%20on%20it,%20especially%20in%20my%20relationship%20with%20development.%20Roxana%20Stingu.%20/%23tip_11",
+          "threads": "https://www.threads.net/intent/post?text=I%20wish%20I%20found%20out%20earlier%20in%20my%20career%20that%20its%20fine%20to%20say%20I%20dont%20know%20and%20to%20ask%20for%20help%20rather%20than%20trying%20to%20pretend%20Im%20always%20on%20it,%20especially%20in%20my%20relationship%20with%20development.%20%0D%0DRoxana%20Stingu.%20/%23tip_11",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_12",
+        "text": "“..不要因为其他人“作弊”而陷入困境。你能做的并不多，也不要指望 G 采取行动。相反 - 寻找他们正在做/得到的任何“好”东西，并复制/模仿，然后继续前进。目标不是排名 - 这只是一个指标..”",
+        "author": "林登纳",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=..%20Dont%20get%20caught%20up%20about%20other%20people%20cheating.%20Theres%20not%20a%20lot%20you%20can%20do,%20and%20dont%20expect%20G%20to%20take%20action.%20Instead%20-%20look%20for%20anything%20good%20they%20are%20doing/getting,%20and%20replicate/emulate%20that,%20and%20then%20move%20on.%20The%20goal%20is%20Not%20Rankings%20-%20thats%20only%20a%20metric..%20Lyndon%20NA.%20/%23tip_12",
+          "threads": "https://www.threads.net/intent/post?text=..%20Dont%20get%20caught%20up%20about%20other%20people%20cheating.%20Theres%20not%20a%20lot%20you%20can%20do,%20and%20dont%20expect%20G%20to%20take%20action.%20Instead%20-%20look%20for%20anything%20good%20they%20are%20doing/getting,%20and%20replicate/emulate%20that,%20and%20then%20move%20on.%20The%20goal%20is%20Not%20Rankings%20-%20thats%20only%20a%20metric..%20%0D%0DLyndon%20NA.%20/%23tip_12",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_13",
+        "text": "“保持简单。当你刚开始时，这个行业可能看起来极其复杂，但随着你获得更多经验，你会意识到，简单的事情，SEO 的基础，如果你愿意的话，才是最有影响力的。”",
+        "author": "安德鲁·查尔顿",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Keep%20it%20simple.%20The%20industry%20can%20seem%20overwhelmingly%20overcomplicated%20when%20you%20start%20but%20as%20you%20gain%20more%20experience%20you%20realise%20it%E2%80%99s%20the%20simple%20things,%20the%20foundations%20of%20SEO%20if%20you%20will,%20that%20have%20the%20most%20impact.%20Andrew%20Charlton.%20/%23tip_13",
+          "threads": "https://www.threads.net/intent/post?text=Keep%20it%20simple.%20The%20industry%20can%20seem%20overwhelmingly%20overcomplicated%20when%20you%20start%20but%20as%20you%20gain%20more%20experience%20you%20realise%20it%E2%80%99s%20the%20simple%20things,%20the%20foundations%20of%20SEO%20if%20you%20will,%20that%20have%20the%20most%20impact.%20%0D%0DAndrew%20Charlton.%20/%23tip_13",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_14",
+        "text": "“做 X 不会给网站 B 带来与网站 A 相同的改进。这不是因为你失败了，而是因为你无法控制所有变量，没有两个网站是完全相同的。因此，要保持灵活性，并调整你的方法。这也是一个很好的理由，不要查看成功网站正在做什么，效仿并期望获得相同的成功。无论你采取什么策略，这些网站很可能都会排名。 正在计划复制。”",
+        "author": "戴夫·斯马特",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Doing%20X%20wont%20lead%20to%20the%20same%20amount%20of%20improvement%20for%20site%20B,%20as%20when%20you%20did%20it%20for%20site%20A.%20Thats%20not%20because%20you%20failed,%20its%20because%20you%20cannot%20control%20all%20the%20variables,%20no%20two%20sites%20are%20exactly%20the%20same%20this%20way.%20So%20be%20prepared%20to%20be%20flexible,%20and%20adjust%20your%20approach.%20Also%20a%20good%20reason%20not%20to%20look%20what%20successful%20sites%20are%20doing,%20emulate%20that%20and%20expect%20the%20same%20success.%20Those%20sites%20may%20well%20be%20ranking%20in%20spite%20of%20whatever%20tactic%20you%20are%20planning%20on%20replicating.%20Dave%20Smart.%20/%23tip_14",
+          "threads": "https://www.threads.net/intent/post?text=Doing%20X%20wont%20lead%20to%20the%20same%20amount%20of%20improvement%20for%20site%20B,%20as%20when%20you%20did%20it%20for%20site%20A.%20Thats%20not%20because%20you%20failed,%20its%20because%20you%20cannot%20control%20all%20the%20variables,%20no%20two%20sites%20are%20exactly%20the%20same%20this%20way.%20So%20be%20prepared%20to%20be%20flexible,%20and%20adjust%20your%20approach.%20Also%20a%20good%20reason%20not%20to%20look%20what%20successful%20sites%20are%20doing,%20emulate%20that%20and%20expect%20the%20same%20success.%20Those%20sites%20may%20well%20be%20ranking%20in%20spite%20of%20whatever%20tactic%20you%20are%20planning%20on%20replicating.%20%0D%0DDave%20Smart.%20/%23tip_14",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_15",
+        "text": "“明智地选择你的工具。深入学习和理解一套核心的专业级 SEO 工具远比追逐每一个新的闪亮事物更有价值。如果你的工具能够很好地配合使用，那就加分，但如果不是只是温习操作电子表格以获得你需要的答案！”",
+        "author": "米歇尔·波旁尼埃",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Choose%20your%20tools%20wisely.%20Deeply%20learning%20and%20understanding%20a%20core%20set%20of%20pro-level%20SEO%20tools%20is%20far%20more%20valuable%20than%20chasing%20each%20new%20shiny%20thing.%20Bonus%20points%20if%20your%20tools%20play%20well%20together,%20but%20if%20not%20just%20brush%20up%20on%20manipulating%20spreadsheets%20to%20get%20the%20answers%20you%20need!%20Michelle%20Bourbonniere.%20/%23tip_15",
+          "threads": "https://www.threads.net/intent/post?text=Choose%20your%20tools%20wisely.%20Deeply%20learning%20and%20understanding%20a%20core%20set%20of%20pro-level%20SEO%20tools%20is%20far%20more%20valuable%20than%20chasing%20each%20new%20shiny%20thing.%20Bonus%20points%20if%20your%20tools%20play%20well%20together,%20but%20if%20not%20just%20brush%20up%20on%20manipulating%20spreadsheets%20to%20get%20the%20answers%20you%20need!%20%0D%0DMichelle%20Bourbonniere.%20/%23tip_15",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_16",
+        "text": "“我会回去告诉自己，如果你只是在页面上推动像素（进行小的调整），你就不能指望性能发生深刻的变化。而且，并不是每个人都像我一样关心 SEO。在通信中拥抱 TL;DR。”",
+        "author": "克里斯·格林",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=I%20would%20go%20back%20and%20tell%20myself%20that%20if%20youre%20just%20pushing%20pixels%20around%20the%20page%20(making%20small%20adjustments),%20you%20cant%20expect%20profound%20changes%20in%20performance.%20Also,%20not%20everyone%20cares%20about%20SEO%20as%20much%20as%20I%20do/did.%20Embrace%20TL;DR%20in%20communications.%20Chris%20Green.%20/%23tip_16",
+          "threads": "https://www.threads.net/intent/post?text=I%20would%20go%20back%20and%20tell%20myself%20that%20if%20youre%20just%20pushing%20pixels%20around%20the%20page%20(making%20small%20adjustments),%20you%20cant%20expect%20profound%20changes%20in%20performance.%20Also,%20not%20everyone%20cares%20about%20SEO%20as%20much%20as%20I%20do/did.%20Embrace%20TL;DR%20in%20communications.%20%0D%0DChris%20Green.%20/%23tip_16",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_17",
+        "text": "“使用并尝试所有可以使用的工具。倾听全球 SEO 社区的声音并学习，让您周围的每个人都了解这一点。永远不要以为您了解如何使用搜索引擎的所有内容。当对老板的诚实回答是“视情况而定”时，要学会坦然面对。”",
+        "author": "艾莉",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Use%20and%20try%20all%20the%20tools%20you%20can.%20Listen%20and%20learn%20from%20the%20global%20SEO%20community%20and%20let%20everyone%20around%20you%20know%20about%20it.%20Never%20assume%20you%20know%20everything%20about%20how%20to%20use%20a%20search%20engine.%20Learn%20to%20be%20comfortable%20when%20the%20honest%20answer%20to%20your%20bosses%20is%20*It%20Depends*%20Ellie.%20/%23tip_17",
+          "threads": "https://www.threads.net/intent/post?text=Use%20and%20try%20all%20the%20tools%20you%20can.%20Listen%20and%20learn%20from%20the%20global%20SEO%20community%20and%20let%20everyone%20around%20you%20know%20about%20it.%20Never%20assume%20you%20know%20everything%20about%20how%20to%20use%20a%20search%20engine.%20Learn%20to%20be%20comfortable%20when%20the%20honest%20answer%20to%20your%20bosses%20is%20*It%20Depends*%20%0D%0DEllie.%20/%23tip_17",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_18",
+        "text": "“SEO 不是非黑即白的，学习永远不会停止。了解哪些来源值得信赖：杂志、专业人士、SEO 博客、时事通讯。以研究人员的方式建立您的观点 - 收集不同的角度、案例研究、测试自己，然后准备实施。”",
+        "author": "斯韦特兰娜·斯坦科维奇",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=SEO%20is%20no%20black%20and%20white,%20and%20learning%20never%20stops.%20Learn%20what%20sources%20to%20trust:%20magazines,%20professionals,%20seo%20blogs,%20newsletters.%20Build%20your%20opinion%20the%20way%20researchers%20would%20to-%20collect%20different%20angles,%20case%20studies,%20test%20yourself%20and%20then%20be%20ready%20to%20implement.%20Svetlana%20Stankovic.%20/%23tip_18",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20is%20no%20black%20and%20white,%20and%20learning%20never%20stops.%20Learn%20what%20sources%20to%20trust:%20magazines,%20professionals,%20seo%20blogs,%20newsletters.%20Build%20your%20opinion%20the%20way%20researchers%20would%20to-%20collect%20different%20angles,%20case%20studies,%20test%20yourself%20and%20then%20be%20ready%20to%20implement.%20%0D%0DSvetlana%20Stankovic.%20/%23tip_18",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_19",
+        "text": "“SEO 工具很棒，而且正在变得越来越好。但很容易被它们蒙蔽。有时您只需要浏览一下网站，而不是等待工具标记出错误。退后一步看看网站，而不是将您的成功建立在通过工具获得最高分的基础上。”",
+        "author": "迈克·理查森",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=SEO%20tools%20are%20great%20and%20they%20are%20getting%20better.%20But%20its%20easy%20to%20get%20blinded%20by%20them.%20Sometimes%20you%20just%20need%20to%20look%20through%20a%20website%20-%20not%20wait%20for%20an%20error%20to%20be%20flagged%20by%20a%20tool.%20Step%20back%20and%20look%20at%20a%20website,%20not%20base%20your%20success%20on%20getting%20top%20marks%20by%20a%20tool.%20Mike%20Richardson.%20/%23tip_19",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20tools%20are%20great%20and%20they%20are%20getting%20better.%20But%20its%20easy%20to%20get%20blinded%20by%20them.%20Sometimes%20you%20just%20need%20to%20look%20through%20a%20website%20-%20not%20wait%20for%20an%20error%20to%20be%20flagged%20by%20a%20tool.%20Step%20back%20and%20look%20at%20a%20website,%20not%20base%20your%20success%20on%20getting%20top%20marks%20by%20a%20tool.%20%0D%0DMike%20Richardson.%20/%23tip_19",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_20",
+        "text": "“就像营销中的许多事情一样，它应该从一个目标和策略开始。我们不能通过对算法更新做出反应来推动变革。除了页面内和页面外技术之外 - 最好提供高质量的内容，建立您的品牌并使您的网站用户友好！”",
+        "author": "JJ纳托-帕斯卡西奥",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Like%20many%20things%20in%20marketing,%20it%20should%20start%20with%20a%20goal%20and%20strategy%20in%20mind.%20We%20cannot%20be%20pushing%20changes%20by%20being%20reactive%20to%20algo%20updates.%20Beyond%20on%20page%20and%20off%20page%20techniques%20-%20best%20serve%20quality%20content,%20build%20your%20brand%20and%20make%20your%20site%20user%20friendly!%20JJ%20Nato-Pascasio.%20/%23tip_20",
+          "threads": "https://www.threads.net/intent/post?text=Like%20many%20things%20in%20marketing,%20it%20should%20start%20with%20a%20goal%20and%20strategy%20in%20mind.%20We%20cannot%20be%20pushing%20changes%20by%20being%20reactive%20to%20algo%20updates.%20Beyond%20on%20page%20and%20off%20page%20techniques%20-%20best%20serve%20quality%20content,%20build%20your%20brand%20and%20make%20your%20site%20user%20friendly!%20%0D%0DJJ%20Nato-Pascasio.%20/%23tip_20",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_21",
+        "text": "“一开始，我总是尝试只勾选许多已知排名因素的框。现在，我们首先把用户看到、消费和互动的所有内容放在首位，然后再研究技术和合作。因此，第一个问题始终是我们是否为用户提供良好的体验。”",
+        "author": "何兹基德",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=At%20start%20I%20always%20tried%20to%20just%20check%20a%20lot%20of%20boxes%20with%20known%20ranking%20factors%20in%20mind.%20Now%20we%20put%20everything%20that%20is%20seen,%20consumed%20and%20interacted%20with%20by%20the%20users%20first%20and%20work%20on%20the%20tech%20and%20co.%20after%20that.%20So%20the%20first%20question%20is%20always%20are%20we%20providing%20a%20good%20exp.%20for%20users%20Whyzkid.%20/%23tip_21",
+          "threads": "https://www.threads.net/intent/post?text=At%20start%20I%20always%20tried%20to%20just%20check%20a%20lot%20of%20boxes%20with%20known%20ranking%20factors%20in%20mind.%20Now%20we%20put%20everything%20that%20is%20seen,%20consumed%20and%20interacted%20with%20by%20the%20users%20first%20and%20work%20on%20the%20tech%20and%20co.%20after%20that.%20So%20the%20first%20question%20is%20always%20are%20we%20providing%20a%20good%20exp.%20for%20users%20%0D%0DWhyzkid.%20/%23tip_21",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_22",
+        "text": "“为用户构建，但要牢记 Google。（干杯@SEOMalc）。简单的短语引导我正确。这和商业原因 > SEO 原因。它是子域而不是子文件夹可能有充分的理由。询问或冒着被董事会中的客户撕裂的风险......”",
+        "author": "约翰·杰克逊",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Build%20for%20users,%20but%20with%20Google%20in%20mind.%20(Cheers%20@SEOMalc).%20Simple%20phrase%20that%20steered%20me%20right.%20That%20and%20Business%20Reasons%20%3E%20SEO%20reasons.%20There%20may%20be%20a%20good%20reason%20it%E2%80%99s%20a%20sub%20domain%20rather%20than%20a%20subfolder.%20Ask%20or%20risk%20getting%20ripped%20apart%20by%20a%20client%20in%20a%20boardroom...%20John%20Jackson.%20/%23tip_22",
+          "threads": "https://www.threads.net/intent/post?text=Build%20for%20users,%20but%20with%20Google%20in%20mind.%20(Cheers%20@SEOMalc).%20Simple%20phrase%20that%20steered%20me%20right.%20That%20and%20Business%20Reasons%20%3E%20SEO%20reasons.%20There%20may%20be%20a%20good%20reason%20it%E2%80%99s%20a%20sub%20domain%20rather%20than%20a%20subfolder.%20Ask%20or%20risk%20getting%20ripped%20apart%20by%20a%20client%20in%20a%20boardroom...%20%0D%0DJohn%20Jackson.%20/%23tip_22",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_23",
+        "text": "“一份良好的以成本/效益为优先顺序的行动清单比 100 页的脑力审查更有价值。”",
+        "author": "吉安卢卡·菲奥雷利",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=A%20good%20checklist%20of%20actions%20prioritized%20for%20cost/effectiveness%20is%20more%20valuable%20than%20a%20cerebral%20audit%20of%20100%20pages.%20Gianluca%20Fiorelli.%20/%23tip_23",
+          "threads": "https://www.threads.net/intent/post?text=A%20good%20checklist%20of%20actions%20prioritized%20for%20cost/effectiveness%20is%20more%20valuable%20than%20a%20cerebral%20audit%20of%20100%20pages.%20%0D%0DGianluca%20Fiorelli.%20/%23tip_23",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_24",
+        "text": "“不要将 SEO 和 SEO 工作视为一个孤立的渠道。SEO 从一开始就应该成为 360 度全方位战略的一部分，无论是技术/网站基础还是与整个公司的在线营销战略相关”",
+        "author": "埃德加·桑切斯",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Dont%20treat%20SEO%20and%20SEO%20efforts%20as%20an%20isolated%20channel.%20SEO%20should%20be%20part%20of%20a%20more%20360%20strategy%20from%20the%20begining%20both%20technical/website%20foundations%20and%20overall%20companys%20online%20marketing%20strategy%20related%20Edgar%20S%C3%A1nchez.%20/%23tip_24",
+          "threads": "https://www.threads.net/intent/post?text=Dont%20treat%20SEO%20and%20SEO%20efforts%20as%20an%20isolated%20channel.%20SEO%20should%20be%20part%20of%20a%20more%20360%20strategy%20from%20the%20begining%20both%20technical/website%20foundations%20and%20overall%20companys%20online%20marketing%20strategy%20related%20%0D%0DEdgar%20S%C3%A1nchez.%20/%23tip_24",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_25",
+        "text": "“最佳实践是好的，但不要在没有首先考虑 CMS、预算、员工、时间和内部/政治/品牌压力的限制的情况下就随意说出它们。最终的最佳实践是那些能够提高利润的实践。”",
+        "author": "马克·阿尔维斯",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Best%20practices%20are%20good%20but%20don%E2%80%99t%20just%20spout%20them%20without%20first%20looking%20at%20the%20constraints%20of%20the%20CMS,%20budget,%20staff,%20time,%20and%20internal/political/brand%20pressure.%20The%20ultimate%20best%20practices%20are%20the%20ones%20that%20improve%20the%20bottom%20line.%20Mark%20Alves.%20/%23tip_25",
+          "threads": "https://www.threads.net/intent/post?text=Best%20practices%20are%20good%20but%20don%E2%80%99t%20just%20spout%20them%20without%20first%20looking%20at%20the%20constraints%20of%20the%20CMS,%20budget,%20staff,%20time,%20and%20internal/political/brand%20pressure.%20The%20ultimate%20best%20practices%20are%20the%20ones%20that%20improve%20the%20bottom%20line.%20%0D%0DMark%20Alves.%20/%23tip_25",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_26",
+        "text": "“不要再关注图表的上升或下降；关注票据的完成情况。如果你的策略是专注于以尽可能最好的方式服务于用户意图，而不是阴暗的短期做法，那么就专注于这一点，而不是匆忙分析每一个可疑的谷歌更新。”",
+        "author": "吉安娜·布拉凯蒂-特鲁斯卡瓦",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Stop%20watching%20graphs%20going%20up%20or%20down;%20watch%20the%20tickets%20getting%20done.%20If%20your%20strategy%20is%20focusing%20on%20serving%20user%20intent%20the%20best%20way%20possible,%20instead%20of%20shady%20short-term%20practices,%20focus%20on%20that%20instead%20of%20hastily%20analysing%20every%20single%20suspected%20Google%20update.%20Gianna%20Brachetti-Truskawa.%20/%23tip_26",
+          "threads": "https://www.threads.net/intent/post?text=Stop%20watching%20graphs%20going%20up%20or%20down;%20watch%20the%20tickets%20getting%20done.%20If%20your%20strategy%20is%20focusing%20on%20serving%20user%20intent%20the%20best%20way%20possible,%20instead%20of%20shady%20short-term%20practices,%20focus%20on%20that%20instead%20of%20hastily%20analysing%20every%20single%20suspected%20Google%20update.%20%0D%0DGianna%20Brachetti-Truskawa.%20/%23tip_26",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_27",
+        "text": "“了解业务目标，并记住，这并不全与流量有关，流量需要花钱……正确的流量可以让你赚钱……”",
+        "author": "阿诺特·赫勒曼斯",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Understand%20the%20business%20goals,%20and%20remember%20that%20it%20not%20all%20about%20traffic,%20traffic%20costs%20money...the%20right%20traffic%20makes%20you%20money...%20Arnout%20Hellemans.%20/%23tip_27",
+          "threads": "https://www.threads.net/intent/post?text=Understand%20the%20business%20goals,%20and%20remember%20that%20it%20not%20all%20about%20traffic,%20traffic%20costs%20money...the%20right%20traffic%20makes%20you%20money...%20%0D%0DArnout%20Hellemans.%20/%23tip_27",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_28",
+        "text": "“当我在公司内部时，我希望我知道如何表达如果没有策略，我们所做的所有搜索引擎优化和博客都是毫无意义的。”",
+        "author": "莉迪亚·因方特",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=When%20I%20was%20in-house%20I%20wished%20I%20had%20known%20how%20to%20express%20that%20all%20the%20SEO%20and%20blogging%20we%20were%20doing%20was%20pointless%20without%20a%20strategy.%20Lidia%20Infante.%20/%23tip_28",
+          "threads": "https://www.threads.net/intent/post?text=When%20I%20was%20in-house%20I%20wished%20I%20had%20known%20how%20to%20express%20that%20all%20the%20SEO%20and%20blogging%20we%20were%20doing%20was%20pointless%20without%20a%20strategy.%20%0D%0DLidia%20Infante.%20/%23tip_28",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_29",
+        "text": "“你可以专注于一个领域，也可以聘请其他领域的专家，你不需要自己了解一切。”",
+        "author": "马丁·麦克加里",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=You%20can%20specialise%20in%20one%20area%20and%20you%20can%20hire%20expertise%20in%20the%20other%20areas,%20you%20dont%20need%20to%20know%20everything%20on%20your%20own.%20Martin%20McGarry.%20/%23tip_29",
+          "threads": "https://www.threads.net/intent/post?text=You%20can%20specialise%20in%20one%20area%20and%20you%20can%20hire%20expertise%20in%20the%20other%20areas,%20you%20dont%20need%20to%20know%20everything%20on%20your%20own.%20%0D%0DMartin%20McGarry.%20/%23tip_29",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_30",
+        "text": "“让你的 SEO 面向未来：不要浪费时间去追逐炒作 - 让你的努力集中在搜索引擎的长期需求上，即使目前有一个小漏洞被某些人利用。”",
+        "author": "达斯汀·伍达德",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Future-proof%20your%20SEO:%20dont%20waste%20your%20time%20chasing%20hype%20-%20keep%20your%20efforts%20focused%20on%20what%20search%20engines%20want%20long-term,%20even%20if%20theres%20a%20small%20loophole%20being%20exploited%20by%20some%20at%20the%20moment.%20Dustin%20Woodard.%20/%23tip_30",
+          "threads": "https://www.threads.net/intent/post?text=Future-proof%20your%20SEO:%20dont%20waste%20your%20time%20chasing%20hype%20-%20keep%20your%20efforts%20focused%20on%20what%20search%20engines%20want%20long-term,%20even%20if%20theres%20a%20small%20loophole%20being%20exploited%20by%20some%20at%20the%20moment.%20%0D%0DDustin%20Woodard.%20/%23tip_30",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_31",
+        "text": "“SEO 确实需要抵制完美主义。你不可能解决所有问题 - 不存在“完美”的网站。随着时间的推移，我学会了关注更大的图景。清楚地了解客户的目标，并解决可以帮助他们实现目标的 3-5 个最高优先级的项目。”",
+        "author": "艾比雷默",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=SEO%20really%20requires%20pushing%20back%20against%20perfectionism.%20You%20can%E2%80%99t%20fix%20everything%20-%20there%E2%80%99s%20no%20%E2%80%9Cperfect%E2%80%9D%20site.%20Over%20time%20I%E2%80%99ve%20learned%20to%20focus%20on%20the%20bigger%20picture.%20Get%20crystal%20clear%20on%20your%20client%E2%80%99s%20goals%20and%20tackle%20the%203-5%20highest%20priority%20items%20that%20can%20get%20them%20there.%20Abby%20Reimer.%20/%23tip_31",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20really%20requires%20pushing%20back%20against%20perfectionism.%20You%20can%E2%80%99t%20fix%20everything%20-%20there%E2%80%99s%20no%20%E2%80%9Cperfect%E2%80%9D%20site.%20Over%20time%20I%E2%80%99ve%20learned%20to%20focus%20on%20the%20bigger%20picture.%20Get%20crystal%20clear%20on%20your%20client%E2%80%99s%20goals%20and%20tackle%20the%203-5%20highest%20priority%20items%20that%20can%20get%20them%20there.%20%0D%0DAbby%20Reimer.%20/%23tip_31",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_32",
+        "text": "“三件事：考虑你的目标受众及其需求，尽力为他们提供所需的服务。这正是 Google 为其受众所做的事情。不要担心 Google 更新，SEO 原则将保持不变。”",
+        "author": "普拉文·夏尔马",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=3%20Things:%20Think%20about%20your%20target%20audience%20and%20their%20needs,%20try%20to%20serve%20them%20what%20they%20are%20looking%20for.%20This%20is%20exactly%20what%20Google%20is%20doing%20for%20its%20audience.%20Dont%20fear%20Google%20updates,%20SEO%20principles%20will%20remain%20same.%20Praveen%20Sharma.%20/%23tip_32",
+          "threads": "https://www.threads.net/intent/post?text=3%20Things:%20Think%20about%20your%20target%20audience%20and%20their%20needs,%20try%20to%20serve%20them%20what%20they%20are%20looking%20for.%20This%20is%20exactly%20what%20Google%20is%20doing%20for%20its%20audience.%20Dont%20fear%20Google%20updates,%20SEO%20principles%20will%20remain%20same.%20%0D%0DPraveen%20Sharma.%20/%23tip_32",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_33",
+        "text": "“不要追逐错误的事情。当你使用指标跟踪进度时，有时你会忘记该指标会带来什么结果。最终你会专注于没有真正价值的成功和失败，并失去了有助于成功的机会。”",
+        "author": "比比·雷文",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Dont%20chase%20the%20wrong%20thing.%20When%20youre%20tracking%20your%20progress%20using%20metrics%20-%20sometimes%20you%20forget%20what%20that%20metric%20leads%20back%20to.%20And%20you%20end%20up%20focusing%20on%20wins%20and%20fails%20that%20have%20no%20real%20value,%20and%20lose%20opportunities%20that%20would%20have%20contributed%20to%20success.%20Bibi%20Raven.%20/%23tip_33",
+          "threads": "https://www.threads.net/intent/post?text=Dont%20chase%20the%20wrong%20thing.%20When%20youre%20tracking%20your%20progress%20using%20metrics%20-%20sometimes%20you%20forget%20what%20that%20metric%20leads%20back%20to.%20And%20you%20end%20up%20focusing%20on%20wins%20and%20fails%20that%20have%20no%20real%20value,%20and%20lose%20opportunities%20that%20would%20have%20contributed%20to%20success.%20%0D%0DBibi%20Raven.%20/%23tip_33",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_34",
+        "text": "“最佳实践并不总是最好的答案……您可能会花费大量时间去追求它们，但永远不会成功。虽然实施最佳实践总是一个好主意，但学习如何识别和设置最佳优先级应该是您的主要关注点。”",
+        "author": "杰克·博霍尔",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Best%20practices%20aren%E2%80%99t%20always%20the%20best%20answer...%20you%20can%20spend%20a%20lot%20of%20time%20chasing%20them%20and%20never%20find%20success.%20While%20it%E2%80%99s%20always%20a%20good%20idea%20to%20implement%20best%20practices,%20learning%20how%20to%20identify%20and%20set%20the%20best%20priorities%20should%20be%20your%20main%20focus.%20Jake%20Bohall.%20/%23tip_34",
+          "threads": "https://www.threads.net/intent/post?text=Best%20practices%20aren%E2%80%99t%20always%20the%20best%20answer...%20you%20can%20spend%20a%20lot%20of%20time%20chasing%20them%20and%20never%20find%20success.%20While%20it%E2%80%99s%20always%20a%20good%20idea%20to%20implement%20best%20practices,%20learning%20how%20to%20identify%20and%20set%20the%20best%20priorities%20should%20be%20your%20main%20focus.%20%0D%0DJake%20Bohall.%20/%23tip_34",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_35",
+        "text": "“如何更好地确定优先级。我开始从事电子商务业务，并被到处拉扯 - 当我被迫做大量不会影响 SEO 的工作时，我很想说“这不是优先事项””",
+        "author": "植物和搜索引擎优化",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=How%20to%20prioritise%20better.%20I%20started%20in%20an%20ecom%20business%20and%20was%20being%20pulled%20all%20over%20the%20place%20-%20wouldve%20loved%20to%20say%20this%20isnt%20a%20priority%20when%20I%20was%20being%20pushed%20to%20do%20a%20load%20of%20work%20that%20wouldnt%20move%20the%20SEO%20needle%20Plants%20and%20SEO.%20/%23tip_35",
+          "threads": "https://www.threads.net/intent/post?text=How%20to%20prioritise%20better.%20I%20started%20in%20an%20ecom%20business%20and%20was%20being%20pulled%20all%20over%20the%20place%20-%20wouldve%20loved%20to%20say%20this%20isnt%20a%20priority%20when%20I%20was%20being%20pushed%20to%20do%20a%20load%20of%20work%20that%20wouldnt%20move%20the%20SEO%20needle%20%0D%0DPlants%20and%20SEO.%20/%23tip_35",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_36",
+        "text": "“- 你并不孤单：有一个很棒的 SEO 社区，所以请为它做出贡献。如果你没有看到，就建立它。- 尽量不要压力太大。对你正在做的事情保持健康的看法。学习如何谈判。成为解决方案的一部分并听取其他部门的意见”",
+        "author": "凯莉·托伊拉",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=-%20You%20are%20not%20alone:%20there%20is%20an%20awesome%20SEO%20community%20out%20there,%20so%20contribute%20to%20it.%20And%20if%20you%20dont%20see%20one,%20build%20it.%20-%20Try%20not%20to%20stress%20out%20so%20much.%20Keep%20a%20healthy%20perspective%20on%20what%20you%20are%20doing.%20Learn%20how%20to%20negotiate.%20Be%20part%20of%20the%20solution%20and%20listen%20to%20other%20depts%20Kayleigh%20Toyra.%20/%23tip_36",
+          "threads": "https://www.threads.net/intent/post?text=-%20You%20are%20not%20alone:%20there%20is%20an%20awesome%20SEO%20community%20out%20there,%20so%20contribute%20to%20it.%20And%20if%20you%20dont%20see%20one,%20build%20it.%20-%20Try%20not%20to%20stress%20out%20so%20much.%20Keep%20a%20healthy%20perspective%20on%20what%20you%20are%20doing.%20Learn%20how%20to%20negotiate.%20Be%20part%20of%20the%20solution%20and%20listen%20to%20other%20depts%20%0D%0DKayleigh%20Toyra.%20/%23tip_36",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_37",
+        "text": "“SEO 如何适应您所在特定业务的更大格局。与其他渠道的互动，如何将其纳入总体策略以及给予多少权重，以及基于此将推动 SEO 的哪些领域的发展。”",
+        "author": "本·伯默",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=How%20SEO%20fits%20into%20the%20larger%20landscape%20of%20the%20particular%20business%20youre%20in.%20Interaction%20with%20other%20channels,%20how%20to%20place%20it%20in%20an%20overall%20strategy%20and%20how%20much%20weight%20to%20give%20it,%20and%20what%20area%20of%20SEO%20that%20will%20move%20the%20needle%20based%20on%20that.%3Cbr%20/%3E%20Ben%20B%C3%B6hmer.%20/%23tip_37",
+          "threads": "https://www.threads.net/intent/post?text=How%20SEO%20fits%20into%20the%20larger%20landscape%20of%20the%20particular%20business%20youre%20in.%20Interaction%20with%20other%20channels,%20how%20to%20place%20it%20in%20an%20overall%20strategy%20and%20how%20much%20weight%20to%20give%20it,%20and%20what%20area%20of%20SEO%20that%20will%20move%20the%20needle%20based%20on%20that.%3Cbr%20/%3E%20%0D%0DBen%20B%C3%B6hmer.%20/%23tip_37",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_38",
+        "text": "“我希望我知道从构建自己的项目网站中学习是多么有价值。您可以在自己的网站上按照自己的意愿进行实验，而不需要其他人的支持！”",
+        "author": "亚当·杜兰特",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=I%20wish%20I%20had%20known%20how%20valuable%20it%20was%20learning%20from%20building%20my%20own%20project%20websites.%20You%20can%20experiment%20to%20your%20hearts%20desire%20with%20your%20own%20site%20and%20you%20dont%20need%20anyone%20elses%20buy%20in!%20Adam%20Durrant.%20/%23tip_38",
+          "threads": "https://www.threads.net/intent/post?text=I%20wish%20I%20had%20known%20how%20valuable%20it%20was%20learning%20from%20building%20my%20own%20project%20websites.%20You%20can%20experiment%20to%20your%20hearts%20desire%20with%20your%20own%20site%20and%20you%20dont%20need%20anyone%20elses%20buy%20in!%20%0D%0DAdam%20Durrant.%20/%23tip_38",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_39",
+        "text": "“构建、测试、网站。很多 SEO 从来没有做过购买域名、设置托管和测试自己策略的简单过程。您将学到更多的知识，让网站从 0 美元/月到 50 美元/月，几乎比其他任何事情都多。”",
+        "author": "克里斯·罗德拉克",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=Build.%20A.%20Test.%20Site.%20So%20many%20SEOs%20have%20never%20done%20the%20simple%20process%20of%20buying%20a%20domain,%20setting%20up%20hosting,%20and%20dogfooding%20their%20own%20tactics.%20Youll%20learn%20more%20getting%20a%20site%20from%20zero%20to%20$50/mo%20than%20nearly%20anything%20else.%20Kris%20Roadruck.%20/%23tip_39",
+          "threads": "https://www.threads.net/intent/post?text=Build.%20A.%20Test.%20Site.%20So%20many%20SEOs%20have%20never%20done%20the%20simple%20process%20of%20buying%20a%20domain,%20setting%20up%20hosting,%20and%20dogfooding%20their%20own%20tactics.%20Youll%20learn%20more%20getting%20a%20site%20from%20zero%20to%20$50/mo%20than%20nearly%20anything%20else.%20%0D%0DKris%20Roadruck.%20/%23tip_39",
+          "linkedIn": ""
+        }
+      },
+      {
+        "id": "tip_40",
+        "text": "“理论上的 SEO 与实践中的 SEO 有很大不同。很少有‘一个’答案，只有很多不同的灰色阴影。在一种情况下有效的方法，在另一种情况下可能不起作用。此外，如果没有商业视角，这一切都毫无意义。”",
+        "author": "杰夫·肯尼迪",
+        "share": {
+          "x": "https://twitter.com/intent/tweet?text=SEO%20in%20theory,%20is%20very%20different%20to%20SEO%20in%20practice.%20Theres%20very%20rarely%20an%20answer,%20just%20lots%20of%20different%20shades%20of%20grey.%20What%20works%20in%20one%20scenario,%20might%20not%20work%20in%20another.%20Plus,%20its%20all%20meaningless%20without%20business%20perspective.%20Geoff%20Kennedy.%20/%23tip_40",
+          "threads": "https://www.threads.net/intent/post?text=SEO%20in%20theory,%20is%20very%20different%20to%20SEO%20in%20practice.%20Theres%20very%20rarely%20an%20answer,%20just%20lots%20of%20different%20shades%20of%20grey.%20What%20works%20in%20one%20scenario,%20might%20not%20work%20in%20another.%20Plus,%20its%20all%20meaningless%20without%20business%20perspective.%20%0D%0DGeoff%20Kennedy.%20/%23tip_40",
+          "linkedIn": ""
+        }
+      }
+    ]
+  },
+  "newsletter": {
+    "html": "<p>随时了解最新的 SEO 更新和新闻 <a href=\"https://hub.seofomo.co/\" target=\"_blank\" rel=\"noopener\">立即订阅 SEOFOMO。</a></p>\n    <svg width=\"33\" height=\"26\" viewBox=\"0 0 33 26\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M32.0233 2.36696L27.1943 24.4305C26.83 25.9877 25.8799 26.3753 24.5298 25.6417L17.172 20.3888L13.6217 23.6969C13.2288 24.0776 12.9002 24.3959 12.143 24.3959L12.6716 17.136L26.3085 5.19757C26.9014 4.68543 26.1799 4.40168 25.387 4.91382L8.52837 15.1982L1.27058 12.9973C-0.308131 12.5198 -0.336705 11.4678 1.59918 10.7342L29.9874 0.138458C31.3018 -0.339079 32.4519 0.422211 32.0233 2.36696Z\" fill=\"#000036\"></path>\n    </svg>",
+    "text": "订阅 SEOFOMO，及时获取最新 SEO 更新与新闻。",
+    "linkLabel": "立即订阅 SEOFOMO",
+    "href": "https://hub.seofomo.co/"
+  },
+  "footer": {
+    "navigation": [
+      {
+        "label": "搜索引擎优化基础知识",
+        "href": "/seo_roadmap/seo-fundamentals/",
+        "children": [
+          {
+            "label": "搜索引擎优化简介",
+            "href": "/seo_roadmap/seo-fundamentals/introduction-to-seo/"
+          },
+          {
+            "label": "关键词研究",
+            "href": "/seo_roadmap/seo-fundamentals/keyword-research/"
+          },
+          {
+            "label": "竞争分析",
+            "href": "/seo_roadmap/seo-fundamentals/competition-analysis/"
+          },
+          {
+            "label": "技术优化",
+            "href": "/seo_roadmap/seo-fundamentals/technical-seo/"
+          },
+          {
+            "label": "内容优化",
+            "href": "/seo_roadmap/seo-fundamentals/content-optimization/"
+          },
+          {
+            "label": "链接建设",
+            "href": "/seo_roadmap/seo-fundamentals/link-building/"
+          }
+        ]
+      },
+      {
+        "label": "执行 SEO 流程",
+        "href": "/seo_roadmap/execute-seo/",
+        "children": [
+          {
+            "label": "开展 SEO 审核",
+            "href": "/seo_roadmap/execute-seo/seo-audits-recommendations/"
+          },
+          {
+            "label": "衡量搜索引擎优化",
+            "href": "/seo_roadmap/execute-seo/seo-measurement/"
+          },
+          {
+            "label": "报告搜索引擎优化",
+            "href": "/seo_roadmap/execute-seo/seo-reporting/"
+          }
+        ]
+      },
+      {
+        "label": "CMS 中的 SEO",
+        "href": "/seo_roadmap/implement-in-cms/",
+        "children": []
+      },
+      {
+        "label": "加深您的 SEO 知识",
+        "href": "/seo_roadmap/deepen-knowledge/",
+        "children": []
+      },
+      {
+        "label": "专注于 SEO",
+        "href": "/seo_roadmap/specialize/",
+        "children": []
+      },
+      {
+        "label": "自动化 SEO 任务",
+        "href": "/seo_roadmap/automate-tasks/",
+        "children": []
+      },
+      {
+        "label": "其他搜索引擎中的 SEO",
+        "href": "/seo_roadmap/other-search-engines/",
+        "children": []
+      },
+      {
+        "label": "及时了解 SEO 新闻",
+        "href": "/seo_roadmap/keep-up-with-news/",
+        "children": []
+      },
+      {
+        "label": "免费使用的 SEO 工具",
+        "href": "/seo_roadmap/seo-tools/",
+        "children": []
+      },
+      {
+        "label": "补充您的搜索引擎优化",
+        "href": "/seo_roadmap/complement-knowledge/",
+        "children": []
+      },
+      {
+        "label": "进一步培训、测试您的 SEO 并排除故障",
+        "href": "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+        "children": []
+      },
+      {
+        "label": "搜索引擎优化通讯",
+        "href": "https://hub.seofomo.co/",
+        "children": []
+      },
+      {
+        "label": "SEO 新闻聚合器",
+        "href": "https://news.seofomo.co/",
+        "children": []
+      }
+    ],
+    "legal": [
+      {
+        "label": "隐私政策和使用条款",
+        "href": "/privacy-policy-terms-of-use/"
+      }
+    ],
+    "social": [
+      {
+        "label": "Facebook",
+        "href": "https://www.facebook.com/aleydaseotips"
+      },
+      {
+        "label": "X",
+        "href": "https://x.com/aleyda"
+      },
+      {
+        "label": "Instagram",
+        "href": "https://www.instagram.com/crawlingmondays/"
+      },
+      {
+        "label": "YouTube",
+        "href": "https://www.youtube.com/c/crawlingmondaysbyaleyda"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/aleyda/"
+      }
+    ],
+    "copyrightHtml": "Copyright © 2026. All rights reserved. \n        <p>了解更多 <a href=\"/about/\">关于 LearningSEO.io</a>，开发者 <a title=\"阿莱达·索利斯 (Aleyda Solis)，SEO 顾问。\" href=\"https://www.aleydasolis.com/en/\" target=\"_blank\" rel=\"noopener\">阿莱达·索利斯</a>, SEO 顾问。</p>\n \n        <div class=\"creditos\">\n            制作与\n            <svg width=\"16\" height=\"13\" viewBox=\"0 0 16 13\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M0.23882 3.15412C1.87935 -1.20352 7.21106 0.744602 7.69809 2.92343C8.36455 0.616435 13.5681 -1.10099 15.1574 3.15412C16.9261 7.89627 8.31329 12.1514 7.69809 12.8435C7.08289 12.2796 -1.52987 7.81937 0.23882 3.15412Z\" fill=\"#F2F2F2\"></path>\n            </svg>\n            通过\n            <a href=\"https://www.missmarketing.es/\" title=\"市场营销小姐。Desarrollo Web\">营销小姐</a>\n        </div>"
+  }
+}

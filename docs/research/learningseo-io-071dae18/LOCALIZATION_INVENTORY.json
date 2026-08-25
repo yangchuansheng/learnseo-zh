@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-08-25T18:28:55.285Z",
+  "routeCount": 161,
+  "generatedHtmlPages": 158,
+  "homepageJsonStrings": 492,
+  "generatedHtmlEnglishTextNodes": 17082,
+  "generatedHtmlEnglishCharacters": 752484,
+  "generatedHtmlTranslatableAttributes": 6793,
+  "attributeCounts": {
+    "title": 5473,
+    "aria-label": 29,
+    "alt": 1291
+  },
+  "surfaces": [
+    "homepage JSON and React props",
+    "generated subpage HTML text nodes",
+    "generated metadata title and description",
+    "document language and locale switcher",
+    "navigation, footer, forms, buttons, and accessibility labels",
+    "canonical, hreflang, sitemap, robots, and redirects",
+    "internal links and generated media references"
+  ]
+}

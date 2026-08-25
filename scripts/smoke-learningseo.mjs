@@ -33,7 +33,7 @@ try {
   });
   assert.equal(
     await page.locator('link[rel="canonical"]').getAttribute("href"),
-    "/updates/",
+    "https://learningseo.io/updates/",
   );
   assert.match(
     await page.locator("iframe").getAttribute("src"),
@@ -86,7 +86,7 @@ try {
         .first()
         .textContent()
     ) || "",
-    /Optimize for AI Search/,
+    /Optimize for AI Search|AI 搜索/,
   );
 
   await page.goto(
@@ -103,12 +103,26 @@ try {
   );
 
   await page.goto(baseUrl + "/", { waitUntil: "domcontentloaded" });
-  const search = page.locator('form[role="search"]').first();
+  assert.equal(await page.locator("html").getAttribute("lang"), "zh-CN");
   assert.equal(
-    await search.getAttribute("action"),
-    "https://learningseo.io/",
+    await page.locator('a[aria-label="Switch to English"]').getAttribute("href"),
+    "/en/",
   );
+  const search = page.locator('form[role="search"]').first();
+  assert.equal(await search.getAttribute("action"), "/");
   assert.equal(await search.locator('input[name="s"]').count(), 1);
+
+  await page.goto(baseUrl + "/en/", { waitUntil: "domcontentloaded" });
+  assert.equal(await page.locator("html").getAttribute("lang"), "en");
+  assert.equal(
+    await page.locator('a[aria-label="切换到简体中文"]').getAttribute("href"),
+    "/",
+  );
+  assert.equal(await page.locator('form[role="search"]').first().getAttribute("action"), "/en/");
+  assert.equal(
+    await page.locator('link[rel="canonical"]').getAttribute("href"),
+    "https://learningseo.io/en/",
+  );
   assert.deepEqual(browserErrors, []);
 
   console.log("LearningSEO production smoke test passed.");

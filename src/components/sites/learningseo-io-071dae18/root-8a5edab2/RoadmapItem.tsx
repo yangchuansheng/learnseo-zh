@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 
 import { ArrowRightIcon } from "../shared/Icons";
 import { localHref, localHtml } from "../shared/links";
+import type { Locale } from "@/lib/localization";
 
 type RoadmapLink = {
   label: string;
@@ -19,10 +20,11 @@ type RoadmapItemProps = {
   links: RoadmapLink[];
   initiallyOpen: boolean;
   isCurrent?: boolean;
+  locale?: Locale;
 };
 
-function sameHref(left: string, right: string | null): boolean {
-  return right !== null && localHref(left) === localHref(right);
+function sameHref(left: string, right: string | null, locale: Locale): boolean {
+  return right !== null && localHref(left, locale) === localHref(right, locale);
 }
 
 export function RoadmapItem({
@@ -34,6 +36,7 @@ export function RoadmapItem({
   links,
   initiallyOpen,
   isCurrent = false,
+  locale = "zh-CN",
 }: RoadmapItemProps) {
   const [isOpen, setIsOpen] = useState(initiallyOpen);
   const contentId = useId();
@@ -49,14 +52,14 @@ export function RoadmapItem({
 
       {isCurrent ? (
         <span className="mb-2 inline-flex rounded-full bg-[#a87be9] px-2 py-1 text-[11px] leading-none font-bold text-white">
-          You are here
+          {locale === "en" ? "You are here" : "当前位置"}
         </span>
       ) : null}
 
       <h3
         className={`pr-8 text-[15.4px] leading-[16.1px] font-bold text-[#000036] uppercase md:pr-10 md:text-[18.7px] md:leading-[21.25px] ${isOpen ? "md:mb-2.5 xl:mb-0" : ""}`}
       >
-        <a href={localHref(href)} aria-current={isCurrent ? "page" : undefined}>
+        <a href={localHref(href, locale)} aria-current={isCurrent ? "page" : undefined}>
           {title}
         </a>
       </h3>
@@ -65,7 +68,7 @@ export function RoadmapItem({
         type="button"
         aria-controls={contentId}
         aria-expanded={isOpen}
-        aria-label={`${isOpen ? "Collapse" : "Expand"} ${title}`}
+        aria-label={`${isOpen ? (locale === "en" ? "Collapse" : "收起") : locale === "en" ? "Expand" : "展开"} ${title}`}
         className="absolute top-[8px] right-[8px] flex size-10 cursor-pointer items-center justify-center text-[#9c63ef]"
         onClick={() => setIsOpen((open) => !open)}
       >
@@ -85,16 +88,16 @@ export function RoadmapItem({
         <div className="min-h-0 overflow-hidden">
           <div
             className="py-[10px] text-[14px] leading-[17.5px] text-[#606060] md:text-[17px] md:leading-[21.25px] [&_a]:text-[#2e73ea] [&_a]:underline"
-            dangerouslySetInnerHTML={{ __html: localHtml(descriptionHtml) }}
+            dangerouslySetInnerHTML={{ __html: localHtml(descriptionHtml, locale) }}
           />
 
           <div className="grid grid-cols-2 gap-x-[10px] md:grid-cols-3">
             {links.map((link) => {
-              const active = sameHref(link.href, activeLinkHref);
+              const active = sameHref(link.href, activeLinkHref, locale);
               return (
               <a
                 key={link.href}
-                href={localHref(link.href)}
+                href={localHref(link.href, locale)}
                 aria-current={active ? "page" : undefined}
                 tabIndex={isOpen ? undefined : -1}
                 className={`group mt-[5px] flex min-w-0 items-center justify-between gap-2 rounded border border-[#a87be9] px-3 py-2 text-[12.6px] leading-[14.7px] duration-100 hover:bg-[#a87be9] hover:text-white md:mt-[15px] md:self-start md:justify-self-start md:gap-[13.4px] md:text-[15.3px] md:leading-[21.25px] ${
