@@ -22,7 +22,7 @@ export function HeroSection() {
       <article className="relative z-10 mx-auto w-[calc(100%_-_40px)] md:w-[88%] md:max-w-[1224px] min-[1368px]:pl-20">
         <header className="max-w-[850px]">
           <h1
-            className="mt-[25px] mb-[15px] max-w-[255px] text-[24.5px] leading-[32.9px] font-extrabold text-[#000036] [&_.color-violeta]:text-[#a87be9] md:mt-0 md:mb-[25px] md:max-w-none md:text-[72px] md:leading-[84px] min-[768px]:max-[980px]:max-w-[70%] min-[768px]:max-[980px]:text-[57.8px] min-[768px]:max-[980px]:leading-[63.75px] xl:text-[76.5px] xl:leading-[89.25px]"
+            className="mt-[25px] mb-[15px] max-w-[255px] text-[24.5px] leading-[32.9px] font-extrabold text-[#000036] [&_.color-violeta]:text-[#a87be9] md:mt-0 md:mb-[25px] md:max-w-[70%] md:text-[57.8px] md:leading-[63.75px] lg:max-w-none lg:text-[72px] lg:leading-[84px] xl:text-[76.5px] xl:leading-[89.25px]"
             dangerouslySetInnerHTML={{ __html: content.hero.titleHtml }}
           />
         </header>

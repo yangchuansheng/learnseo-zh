@@ -7,17 +7,17 @@ export function ResourceBanner() {
 
   return (
     <section
-      className="relative mx-auto mt-10 mb-20 flex w-[88%] max-w-[1100px] overflow-hidden rounded-2xl bg-[linear-gradient(90deg,#2e73ea_77.26%,#22ddd2_117.47%)] py-[24.5px] pr-[52.5px] pl-[21px] text-white md:min-h-[324.5px] md:items-start md:py-[55px] md:pr-[184px] md:pl-[73px]"
+      className="relative mx-auto mt-10 mb-20 flex w-[98%] overflow-hidden rounded-2xl bg-[linear-gradient(90deg,#2e73ea_77.26%,#22ddd2_117.47%)] py-[7%] pr-[15%] pl-[6%] text-white md:py-[4.5%] xl:min-h-[324.5px] xl:w-full xl:max-w-[1100px] xl:items-start xl:py-[55px] xl:pr-[184px] xl:pl-[73px]"
       aria-label="Google Sheets resources"
     >
       <Image
-        className="absolute top-5 right-5 z-[1] h-[37px] w-10 md:static md:h-[66px] md:w-[71px] md:shrink-0"
+        className="absolute top-5 right-5 z-[1] h-[37px] w-10 xl:static xl:h-[66px] xl:w-[71px] xl:shrink-0"
         src="/sites/learningseo-io-071dae18/shared/google-sheets.svg"
         alt=""
         width="71"
         height="66"
       />
-      <div className="relative z-[1] grow pl-[13.47px] md:pl-[42px]">
+      <div className="relative z-[1] grow pl-[5%] xl:pl-[42px]">
         <h2 className="pr-5 text-[17.92px] leading-[21px] font-extrabold md:pr-0 md:text-[34px] md:leading-[38.25px]">
           {banner.title}
         </h2>

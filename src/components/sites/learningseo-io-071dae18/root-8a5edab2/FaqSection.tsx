@@ -9,7 +9,7 @@ export function FaqSection() {
   );
 
   return (
-    <section className="mx-auto my-[25px] w-[calc(100%_-_40px)] max-w-[1224px] md:my-[50px]">
+    <section className="mx-auto my-[25px] w-[calc(100%_-_40px)] max-w-[1224px] md:my-[50px] md:w-[88%]">
       <h2 className="pb-5 text-[30.8px] leading-[30.8px] font-extrabold text-[#000036] md:pb-10 md:text-[47.6px] md:leading-[47.6px]">
         {content.faq.title}
       </h2>
@@ -20,11 +20,11 @@ export function FaqSection() {
 
           return (
             <article
-              className="mb-2.5 overflow-hidden rounded-lg bg-white md:rounded-2xl"
+              className="mb-2.5 overflow-hidden rounded-lg bg-white md:rounded-[16px]"
               key={item.question}
             >
               <button
-                className="relative flex min-h-[45.5px] w-full items-center px-3.5 py-3.5 pr-[35px] text-left text-[15.4px] leading-[17.5px] text-[#2e73ea] md:min-h-[77.5px] md:px-[36.7px] md:py-[28px] md:text-[18.7px] md:leading-[21.25px]"
+                className="relative flex min-h-[45.5px] w-full items-center px-3.5 py-3.5 pr-[35px] text-left text-[15.4px] leading-[17.5px] text-[#2e73ea] md:min-h-0 md:px-[3%] md:py-[2.3%] md:text-[18.7px] md:leading-[21.25px]"
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={answerId}

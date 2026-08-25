@@ -13,11 +13,13 @@ export default function Home() {
       <HeaderNavigation />
       <main className="relative">
         <HeroSection />
-        <div className="mx-auto w-[calc(100%-40px)] max-w-[1224px]">
+        <div className="mx-auto w-[calc(100%-40px)] max-w-[1224px] md:w-[88%]">
           <RoadmapSection />
         </div>
-        <ResourceBanner />
-        <div className="mx-auto w-[calc(100%-40px)] max-w-[1224px]">
+        <div className="mx-auto w-[calc(100%-40px)] max-w-[1224px] md:w-[88%]">
+          <ResourceBanner />
+        </div>
+        <div className="mx-auto w-[calc(100%-40px)] max-w-[1224px] md:w-[88%]">
           <VideoGallery />
         </div>
         <FaqSection />

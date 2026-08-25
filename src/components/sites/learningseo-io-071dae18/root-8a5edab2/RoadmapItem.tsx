@@ -38,7 +38,9 @@ export function RoadmapItem({
         {number}
       </span>
 
-      <h3 className="pr-8 text-[15.4px] leading-[16.1px] font-bold text-[#000036] uppercase md:pr-10 md:text-[18.7px] md:leading-[21.25px]">
+      <h3
+        className={`pr-8 text-[15.4px] leading-[16.1px] font-bold text-[#000036] uppercase md:pr-10 md:text-[18.7px] md:leading-[21.25px] ${isOpen ? "md:mb-2.5 xl:mb-0" : ""}`}
+      >
         <a href={href}>{title}</a>
       </h3>
 
@@ -75,7 +77,7 @@ export function RoadmapItem({
                 key={link.href}
                 href={link.href}
                 tabIndex={isOpen ? undefined : -1}
-                className="group mt-[5px] flex min-w-0 items-center justify-between gap-2 rounded border border-[#a87be9] px-3 py-2 text-[12.6px] leading-[14.7px] text-[#303030] duration-100 hover:bg-[#a87be9] hover:text-white md:mt-[15px] md:text-[15.3px] md:leading-[21.25px]"
+                className="group mt-[5px] flex min-w-0 items-center justify-between gap-2 rounded border border-[#a87be9] px-3 py-2 text-[12.6px] leading-[14.7px] text-[#303030] duration-100 hover:bg-[#a87be9] hover:text-white md:mt-[15px] md:self-start md:justify-self-start md:gap-[13.4px] md:text-[15.3px] md:leading-[21.25px]"
               >
                 <span>{link.label}</span>
                 <ArrowRightIcon className="shrink-0 text-[#a87be9] group-hover:text-white" />
