@@ -16,6 +16,7 @@
 - 原站主题资源与页面媒体资源存放于 `public/sites/learningseo-io-071dae18/subpages/`，共 17 个主题资源和 50 个媒体资源。
 - `SubpageRuntime` 保留 roadmap 折叠、FAQ 折叠、视频播放、分享弹层和 tips 瀑布流布局行为。
 - `SubpageFooter` 复刻子页面的 newsletter、站点地图、社交链接和版权区域，并将内部链接映射到本地路由。
+- 首页与子页面共享的 Header、Footer、正文 HTML、搜索表单和 canonical 均使用本地路径；第三方资源与社交分享链接保持外部目标。
 
 ## 代表性模板
 
