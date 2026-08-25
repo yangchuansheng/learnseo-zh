@@ -119,6 +119,10 @@ assert.equal(
   sha256(await fs.readFile(sourceManifestPath)),
   translationManifest.sourceManifestSha256,
 );
+assert.ok(
+  translationManifest.segments && Object.keys(translationManifest.segments).length > 0,
+  "Translation manifest must contain reusable localized segments",
+);
 
 const sourceRoutes = sourceManifest.routes.map((route) => normalizePath(route.sourcePath));
 const chineseRoutes = chineseManifest.routes.map((route) => normalizePath(route.sourcePath));

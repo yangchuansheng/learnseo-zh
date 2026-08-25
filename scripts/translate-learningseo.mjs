@@ -162,14 +162,16 @@ async function translateStrings(strings) {
   return cache;
 }
 
-function translateText(value, cache) {
+function translateText(value, cache, previousSegments = {}) {
   const leading = value.match(/^\s*/)?.[0] || "";
   const trailing = value.match(/\s*$/)?.[0] || "";
   const normalized = normalizeText(value);
   if (!shouldTranslate(normalized)) return value;
-  const translated = splitText(normalized)
-    .map((part) => cache[part] || part)
-    .join(" ");
+  const translated =
+    previousSegments[normalized] ||
+    splitText(normalized)
+      .map((part) => previousSegments[part] || cache[part] || part)
+      .join(" ");
   const restored = preserveProperNames(normalized, restoreProtectedTerms(normalized, translated));
   if (!preservesSourceFacts(normalized, restored)) return value;
   return leading + restored + trailing;
@@ -363,16 +365,18 @@ const markupPhraseTranslations = new Map([
   ["YouTube video player", "YouTube 视频播放器"],
 ]);
 
-function translateMarkupText(value, cache, preserveStrong = false) {
+function translateMarkupText(value, cache, preserveStrong = false, previousSegments = {}) {
   const leading = value.match(/^\s*/)?.[0] || "";
   const trailing = value.match(/\s*$/)?.[0] || "";
   const normalized = normalizeText(value);
   if (!shouldTranslate(normalized)) return value;
+  const preserved = previousSegments[normalized];
+  if (preserved && preserved !== normalized) return leading + preserved + trailing;
   const direct = markupPhraseTranslations.get(normalized);
   if (direct) return leading + direct + trailing;
   if (preserveStrong) return value;
   const translatedParts = splitText(normalized).map((part) => {
-    const cachedPart = cache[part];
+    const cachedPart = previousSegments[part] || cache[part];
     const restoredPart = cachedPart
       ? preserveProperNames(part, restoreProtectedTerms(part, cachedPart))
       : cachedPart;
@@ -394,7 +398,7 @@ function translateMarkupText(value, cache, preserveStrong = false) {
   ) {
     return leading + translated + trailing;
   }
-  const cached = cache[normalized];
+  const cached = previousSegments[normalized] || cache[normalized];
   const restoredCached = cached
     ? preserveProperNames(normalized, restoreProtectedTerms(normalized, cached))
     : cached;
@@ -429,7 +433,7 @@ function shouldPreserveStrongText(value, context) {
   return context.includes(`title="${normalized}"`) || context.includes(`title='${normalized}'`);
 }
 
-function translateMarkup(markup, cache) {
+function translateMarkup(markup, cache, previousSegments = {}) {
   let translated = markup.replace(
     /(<strong\b[^>]*>)([^<]*)(<\/strong>)|(?<=>)([^<]+)(?=<)/gi,
     (_match, open, strongText, close, text, offset, sourceMarkup) =>
@@ -438,18 +442,19 @@ function translateMarkup(markup, cache) {
             strongText,
             cache,
             shouldPreserveStrongText(strongText, sourceMarkup.slice(Math.max(0, offset - 120), offset)),
+            previousSegments,
           )}${close}`
-        : translateMarkupText(text, cache),
+        : translateMarkupText(text, cache, false, previousSegments),
   );
   translated = translated.replace(
     /\b(title|alt|aria-label|placeholder)=(['"])(.*?)\2/gi,
     (_match, attribute, quote, value) =>
-      `${attribute}=${quote}${translateAttributeText(attribute, value, cache)}${quote}`,
+      `${attribute}=${quote}${translateAttributeText(attribute, value, cache, previousSegments)}${quote}`,
   );
   return translated;
 }
 
-function translateAttributeText(attribute, value, cache) {
+function translateAttributeText(attribute, value, cache, previousSegments = {}) {
   const normalized = normalizeText(value);
   if (
     attribute.toLowerCase() === "title" &&
@@ -457,21 +462,27 @@ function translateAttributeText(attribute, value, cache) {
   ) {
     return value;
   }
-  return translateMarkupText(value, cache);
+  return translateMarkupText(value, cache, false, previousSegments);
 }
 
-function translateJson(value, cache, key = "") {
-  if (Array.isArray(value)) return value.map((item) => translateJson(item, cache, key));
+function translateJson(value, cache, key = "", previousSegments = {}) {
+  if (Array.isArray(value)) {
+    return value.map((item) => translateJson(item, cache, key, previousSegments));
+  }
   if (value && typeof value === "object") {
     return Object.fromEntries(
       Object.entries(value).map(([childKey, child]) => [
         childKey,
-        skipKeys.has(childKey) ? child : translateJson(child, cache, childKey),
+        skipKeys.has(childKey)
+          ? child
+          : translateJson(child, cache, childKey, previousSegments),
       ]),
     );
   }
   if (typeof value !== "string" || skipKeys.has(key)) return value;
-  return value.includes("<") ? translateMarkup(value, cache) : translateText(value, cache);
+  return value.includes("<")
+    ? translateMarkup(value, cache, previousSegments)
+    : translateText(value, cache, previousSegments);
 }
 
 const routeTitlePhrases = [
@@ -610,7 +621,225 @@ function editorialRouteTitle(title) {
   return `${core}${brand}`;
 }
 
-function editorialRouteDescription(route) {
+const routeTitleOverrides = new Map([
+  ["/seo_roadmap/complement-knowledge/google-analytics/", "Google Analytics - LearningSEO.io"],
+  ["/seo_roadmap/seo-tools/wordpress-seo-plugins/", "WordPress SEO 插件 - LearningSEO.io"],
+  [
+    "/seo_roadmap/seo-tools/google-search-console-guidelines/",
+    "Google Search Console 指南 - LearningSEO.io",
+  ],
+  [
+    "/seo_roadmap/keep-up-with-news/search-engine-official-publications/",
+    "及时了解 SEO 新闻与搜索引擎官方出版物",
+  ],
+  [
+    "/seo_roadmap/deepen-knowledge/management/communication-with-seo-stakeholders/",
+    "与 SEO 利益相关者沟通 - LearningSEO.io",
+  ],
+  ["/seo_roadmap/complement-knowledge/google-tag-manager/", "Google Tag Manager - LearningSEO.io"],
+  [
+    "/seo_roadmap/automate-tasks/chatgpt-for-seo/",
+    "使用 AI、LLM 与聊天机器人自动化 SEO 任务",
+  ],
+  ["/seo_roadmap/execute-seo/establishing-an-seo-strategy/", "如何制定 SEO 策略"],
+  [
+    "/seo_roadmap/implement-in-cms/wordpress-seo-guidelines/",
+    "WordPress SEO 指南、技巧与工具",
+  ],
+  ["/seo_roadmap/deepen-knowledge/content/structured-data/", "如何使用结构化数据优化 SEO"],
+  [
+    "/seo_roadmap/train-test-troubleshoot-your-seo-further/the-learningseo-accelerator/",
+    "Learning SEO 加速器：免费问答与 SEO 专家",
+  ],
+  ["/seo_roadmap/execute-seo/setting-seo-goals/", "如何设定 SEO 目标：免费指南、课程与技巧"],
+  ["/seo_roadmap/execute-seo/seo-buy-in/", "如何获得 SEO 支持"],
+  ["/seo_roadmap/optimize-ai-search/ai-search-landscape/", "AI 搜索全景"],
+  [
+    "/seo_roadmap/optimize-ai-search/ai-search-technical-optimization/",
+    "AI 搜索技术优化：配置网站技术",
+  ],
+  ["/seo_roadmap/optimize-ai-search/measuring-ai-search/", "衡量 AI 搜索可见度与流量"],
+  ["/seo_roadmap/optimize-ai-search/ai-search-content-optimization/", "AI 搜索内容优化"],
+  ["/seo_roadmap/optimize-ai-search/fundamentals-ai-search-optimization/", "AI 搜索优化基础知识"],
+  ["/seo_roadmap/optimize-ai-search/tools/", "AI 搜索跟踪与优化工具"],
+  ["/seo_roadmap/deepen-knowledge/content/programmatic-seo/", "程序化 SEO 与 Learning SEO"],
+  ["/seo_roadmap/deepen-knowledge/content/quality-eeat/", "内容质量与 EEAT：SEO 指南"],
+  ["/seo_roadmap/deepen-knowledge/content/content-pruning/", "如何在 SEO 流程中进行内容精简"],
+  [
+    "/seo_roadmap/deepen-knowledge/content/avoiding-duplicate-content/",
+    "避免并修复重复内容与规范化问题",
+  ],
+  ["/seo_roadmap/deepen-knowledge/advanced-technical/robots-txt-optimization/", "robots.txt 优化 - LearningSEO.io"],
+  ["/seo_roadmap/deepen-knowledge/advanced-technical/internal-linking/", "如何优化 SEO 内部链接"],
+  [
+    "/seo_roadmap/deepen-knowledge/scenarios/google-core-updates-recovery/",
+    "如何从 Google 搜索核心更新中恢复",
+  ],
+  ["/seo_roadmap/complement-knowledge/", "补充 SEO 知识：免费指南与资源"],
+  ["/seo_roadmap/deepen-knowledge/", "加深 SEO 知识：可靠免费指南"],
+  ["/seo_roadmap/execute-seo/", "如何执行 SEO 流程：免费可靠指南与工具"],
+  ["/seo_roadmap/implement-in-cms/", "如何实施 SEO：CMS 免费指南、技巧与工具"],
+  [
+    "/seo_roadmap/keep-up-with-news/",
+    "及时了解 SEO 新闻：免费出版物、通讯与播客",
+  ],
+  ["/seo_roadmap/other-search-engines/", "其他搜索引擎 SEO 指南"],
+  ["/seo_roadmap/seo-tools/", "最佳免费 SEO 工具与使用技巧"],
+  [
+    "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+    "训练、测试与排查 SEO 问题",
+  ],
+  ["/seo_roadmap/automate-tasks/machine-learning-seo/", "如何使用机器学习自动化 SEO"],
+  ["/seo_roadmap/deepen-knowledge/management/seo-forecasting/", "如何创建 SEO 预测：可靠资源"],
+  [
+    "/seo_roadmap/deepen-knowledge/scenarios/detect-protect-from-negative-seo/",
+    "检测并防止负面 SEO - LearningSEO.io",
+  ],
+  [
+    "/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/",
+    "为什么我的页面在 Google 中排名不佳（或没有排名）？",
+  ],
+  ["/seo_roadmap/deepen-knowledge/opportunities/", "如何发现进阶 SEO 机会：免费指南与工具"],
+  [
+    "/seo_roadmap/deepen-knowledge/scenarios/optimizing-faceted-navigation/",
+    "如何优化分面导航：免费 SEO 指南",
+  ],
+  [
+    "/seo_roadmap/train-test-troubleshoot-your-seo-further/online-seo-courses/",
+    "免费可靠的 SEO 在线课程与培训",
+  ],
+  ["/seo_roadmap/execute-seo/seo-measurement/", "如何衡量 SEO：免费指南、工具与技巧"],
+  ["/seo_roadmap/implement-in-cms/shopify-seo-guidelines/", "Shopify SEO 指南、技巧与工具"],
+  [
+    "/seo_roadmap/execute-seo/seo-audits-recommendations/",
+    "如何制定 SEO 审计方案：免费指南、模板与工具",
+  ],
+  ["/seo_roadmap/execute-seo/seo-reporting/", "如何报告 SEO：免费指南、工具与技巧"],
+  [
+    "/seo_roadmap/deepen-knowledge/scenarios/ranking-drop-analysis/",
+    "如何分析 Google 搜索排名下降",
+  ],
+  [
+    "/seo_roadmap/train-test-troubleshoot-your-seo-further/free-seo-tests-quizzes/",
+    "免费 SEO 测试与测验：评估你的知识",
+  ],
+  [
+    "/seo_roadmap/other-search-engines/reddit-seo-guidelines/",
+    "如何使用 Reddit 做 SEO：免费指南与技巧",
+  ],
+  [
+    "/seo_roadmap/deepen-knowledge/scenarios/seo-branding/",
+    "SEO 品牌建设：如何提升 SERP 中的品牌",
+  ],
+  ["/seo_roadmap/deepen-knowledge/opportunities/google-ai-overviews/", "Google AIO、AI 模式与 LLM 优化"],
+  ["/seo_roadmap/automate-tasks/r-for-seo/", "使用 R 自动化 SEO 任务：可靠的免费指南"],
+  [
+    "/seo_roadmap/deepen-knowledge/scenarios/seo-predictions-trends-tips/",
+    "2025 年顶级 SEO 预测、趋势与制胜技巧",
+  ],
+  ["/seo_roadmap/deepen-knowledge/scenarios/great-decoupling/", "大解耦与零点击搜索时代的优化"],
+  ["/seo_roadmap/deepen-knowledge/scenarios/", "如何在 SEO 场景中进行优化：免费可靠指南"],
+  ["/seo_roadmap/automate-tasks/", "SEO 任务自动化：免费指南与工具"],
+  ["/seo_roadmap/deepen-knowledge/content/", "进阶内容优化：免费可靠指南"],
+  ["/seo_roadmap/deepen-knowledge/backlinks/", "进阶链接建设：免费可靠指南"],
+  [
+    "/seo_roadmap/deepen-knowledge/advanced-technical/",
+    "进阶技术 SEO：免费可靠指南与工具",
+  ],
+  ["/seo_roadmap/deepen-knowledge/management/", "进阶 SEO 管理：免费可靠指南与工具"],
+  ["/seo_roadmap/specialize/", "SEO 专项：免费可靠指南与工具"],
+  ["/seo_roadmap/seo-fundamentals/", "SEO 基础知识：免费可靠指南、技巧与工具"],
+  [
+    "/seo_roadmap/seo-fundamentals/introduction-to-seo/",
+    "SEO 基础知识：免费可靠指南、技巧与工具 - LearningSEO.io",
+  ],
+  [
+    "/seo_roadmap/seo-fundamentals/keyword-research/",
+    "如何进行关键词研究：SEO 免费指南与工具",
+  ],
+  [
+    "/seo_roadmap/seo-fundamentals/competition-analysis/",
+    "如何进行竞争分析：SEO 免费指南与工具",
+  ],
+  ["/seo_roadmap/seo-fundamentals/content-optimization/", "内容优化：免费指南、课程、工具与技巧"],
+  ["/seo_roadmap/seo-fundamentals/link-building/", "链接建设：免费指南、工具与技巧"],
+  ["/seo_roadmap/seo-fundamentals/technical-seo/", "技术 SEO：可靠的免费指南与技巧"],
+  ["/seo_roadmap/execute-seo/seo-process-management/", "SEO 流程管理 - LearningSEO.io"],
+  ["/seo_roadmap/seo-tools/seo-audit-templates/", "SEO 审计模板 - LearningSEO.io"],
+  [
+    "/seo_roadmap/deepen-knowledge/management/seo-product-management/",
+    "SEO 产品管理 - LearningSEO.io",
+  ],
+  [
+    "/seo_roadmap/optimize-ai-search/",
+    "AI 搜索平台优化（GEO、AEO、LLMO）",
+  ],
+]);
+
+function localizedRouteTitle(route, cache, previousSegments = {}) {
+  const override = routeTitleOverrides.get(route.sourcePath);
+  if (override) return override;
+  const preserved = previousSegments[normalizeText(route.title)];
+  if (preserved && preserved !== normalizeText(route.title)) return preserved;
+  const title = route.title;
+  const suffix = /\s+-\s+LearningSEO\.io$/.test(title) ? " - LearningSEO.io" : "";
+  const core = title.replace(/\s+-\s+LearningSEO\.io$/, "");
+  const translated = translateMarkupText(core, cache).trim();
+  if (translated !== core && /[\u3400-\u9fff]/.test(translated)) {
+    return `${translated}${suffix}`;
+  }
+  return editorialRouteTitle(title);
+}
+
+function localizedRouteDescription(route, previousSegments = {}, localizedTitle = "") {
+  const source = normalizeText(route.description);
+  const preserved = source && previousSegments[source];
+  const generated = editorialRouteDescription(route);
+  if (preserved && preserved !== source && preserved !== generated) return preserved;
+  return editorialRouteDescription(route, localizedTitle);
+}
+
+function markupSegmentValues(markup) {
+  const textValues = [...markup.matchAll(/(?<=>)([^<]+)(?=<)/g)].map((match) =>
+    normalizeText(match[1]),
+  );
+  const attributeValues = [
+    ...markup.matchAll(/\b(?:title|alt|aria-label|placeholder)=(['"])(.*?)\1/gi),
+  ].map((match) => normalizeText(match[2]));
+  return [...textValues, ...attributeValues].filter(Boolean);
+}
+
+function collectMarkupSegments(sourceMarkup, localizedMarkup, segments) {
+  const sourceValues = markupSegmentValues(sourceMarkup);
+  const localizedValues = markupSegmentValues(localizedMarkup);
+  if (sourceValues.length !== localizedValues.length) return;
+  sourceValues.forEach((source, index) => {
+    segments[source] = localizedValues[index];
+  });
+}
+
+function collectJsonSegments(source, localized, segments, key = "") {
+  if (Array.isArray(source) && Array.isArray(localized)) {
+    source.forEach((item, index) => collectJsonSegments(item, localized[index], segments, key));
+    return;
+  }
+  if (source && typeof source === "object" && localized && typeof localized === "object") {
+    Object.entries(source).forEach(([childKey, child]) => {
+      if (!skipKeys.has(childKey)) {
+        collectJsonSegments(child, localized[childKey], segments, childKey);
+      }
+    });
+    return;
+  }
+  if (typeof source !== "string" || typeof localized !== "string" || skipKeys.has(key)) return;
+  if (source.includes("<") && localized.includes("<")) {
+    collectMarkupSegments(source, localized, segments);
+  } else {
+    segments[normalizeText(source)] = normalizeText(localized);
+  }
+}
+
+function editorialRouteDescription(route, localizedTitle = "") {
   if (route.finalPath === "/") {
     return "LearningSEO.io 提供覆盖 SEO 基础、流程、工具与 AI 搜索的免费可靠学习路线图。";
   }
@@ -623,7 +852,10 @@ function editorialRouteDescription(route) {
   if (route.finalPath === "/about/") {
     return "了解 LearningSEO.io 的目标、愿景，以及 SEO 资源的编选标准。";
   }
-  const title = editorialRouteTitle(route.title).replace(/\s+-\s+LearningSEO\.io$/, "");
+  const title = (localizedTitle || editorialRouteTitle(route.title)).replace(
+    /\s+-\s+LearningSEO\.io$/,
+    "",
+  );
   return `学习“${title}”，获取与该主题相关的 SEO 指南、资源与实操建议。`;
 }
 
@@ -809,6 +1041,9 @@ async function main() {
   const sourceContentBytes = await fs.readFile(rootContentPath);
   const previousTranslationManifest = await readJsonIfExists(translationManifestPath);
   const previousHomepage = await readJsonIfExists(chineseContentPath);
+  const previousSegments = process.env.FORCE_TRANSLATION
+    ? {}
+    : previousTranslationManifest?.segments || {};
   const strings = new Set();
   collectJsonStrings(sourceContent, strings);
 
@@ -833,14 +1068,17 @@ async function main() {
     previousHomepage &&
     previousTranslationManifest?.sourceContentSha256 === sourceContentHash
       ? previousHomepage
-      : applyEditorialHomepage(translateJson(sourceContent, cache));
+      : applyEditorialHomepage(translateJson(sourceContent, cache, "", previousSegments));
   await fs.writeFile(chineseContentPath, JSON.stringify(localizedHomepage, null, 2) + "\n");
 
-  const translatedRoutes = sourceManifest.routes.map((route) => ({
-    ...route,
-    title: editorialRouteTitle(route.title),
-    description: editorialRouteDescription(route),
-  }));
+  const translatedRoutes = sourceManifest.routes.map((route) => {
+    const title = localizedRouteTitle(route, trustedCache, previousSegments);
+    return {
+      ...route,
+      title,
+      description: localizedRouteDescription(route, previousSegments, title),
+    };
+  });
   await fs.writeFile(
     chineseManifestPath,
     JSON.stringify({ ...sourceManifest, routes: translatedRoutes, locale: "zh-CN" }, null, 2) + "\n",
@@ -860,17 +1098,27 @@ async function main() {
       !process.env.FORCE_TRANSLATION &&
       previousSourceHash === sha256(html) && (await fs.stat(targetPath).catch(() => null))
         ? await fs.readFile(targetPath, "utf8")
-        : translateMarkup(html, trustedCache);
+        : translateMarkup(html, trustedCache, previousSegments);
     await fs.writeFile(targetPath, normalizeLocalizedMarkup(localized));
   }
   const pageHashes = {};
+  const segments = {};
   for (const [file, html] of htmlByFile) {
     const localized = await fs.readFile(path.join(chineseContentRoot, file), "utf8");
+    collectMarkupSegments(html, localized, segments);
     pageHashes[file] = {
       sourceSha256: sha256(html),
       localizedSha256: sha256(localized),
     };
   }
+  collectJsonSegments(sourceContent, localizedHomepage, segments);
+  sourceManifest.routes.forEach((route, index) => {
+    const localized = translatedRoutes[index];
+    if (route.title && localized.title) segments[normalizeText(route.title)] = normalizeText(localized.title);
+    if (route.description && localized.description) {
+      segments[normalizeText(route.description)] = normalizeText(localized.description);
+    }
+  });
   await fs.writeFile(
     translationManifestPath,
     JSON.stringify(
@@ -879,6 +1127,7 @@ async function main() {
         sourceContentSha256: sourceContentHash,
         localizedContentSha256: sha256(await fs.readFile(chineseContentPath)),
         sourceManifestSha256: sha256(await fs.readFile(englishManifestPath)),
+        segments,
         pages: pageHashes,
       },
       null,
