@@ -13,11 +13,11 @@ export function TipCard({ tip }: { tip: Tip }) {
 
   return (
     <article
-      className="relative mb-5 inline-block w-[calc(100%-7px)] break-inside-avoid rounded-2xl bg-white px-6 pt-6 pb-[50px] text-[12.6px] leading-[17.5px] md:w-[calc(100%-20px)] md:text-[15.3px] md:leading-[21.25px]"
+      className="relative mb-5 inline-block w-[98%] break-inside-avoid rounded-2xl bg-white px-6 pt-6 pb-[50px] align-top text-[12.6px] leading-[17.5px] min-[600px]:w-[calc(100%_-_20px)] md:text-[15.3px] md:leading-[21.25px]"
       id={tip.id}
     >
       <p>{tip.text}</p>
-      <p className="mt-2.5 text-[#000036]">{tip.author}</p>
+      <p className="mt-2.5 font-extrabold text-[#000036]">{tip.author}</p>
       <div className="absolute right-5 bottom-5 z-10">
         <button
           className="flex h-8 items-center gap-1.5 rounded-full bg-[#000036] py-1.5 pr-2.5 pl-1.5 font-bold text-white"
@@ -37,7 +37,7 @@ export function TipCard({ tip }: { tip: Tip }) {
         </button>
         {open ? (
           <div
-            className="absolute top-[45px] right-0 flex w-[120px] flex-col items-start justify-center gap-[5px] rounded-[10px] bg-white py-2.5 pr-[25px] pl-2.5 text-[#303030] shadow-[0_0_5px_rgba(0,0,0,.15)]"
+            className="absolute top-[45px] right-0 flex min-h-[92px] w-[120px] flex-col items-start justify-center gap-[5px] rounded-[10px] bg-white py-2.5 pr-[25px] pl-2.5 leading-5 text-[#000036] shadow-[0_0_5px_rgba(0,0,0,.15)]"
             id={`${tip.id}-share`}
           >
             {[
@@ -46,7 +46,7 @@ export function TipCard({ tip }: { tip: Tip }) {
               ["Threads", tip.share.threads, "threads-circle-black.svg"],
             ].map(([label, href, icon]) => (
               <a
-                className="flex items-center gap-1.5 whitespace-nowrap"
+                className="flex items-center gap-2.5 whitespace-nowrap"
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -54,11 +54,11 @@ export function TipCard({ tip }: { tip: Tip }) {
                 key={label}
               >
                 <img
-                  className="h-[18px] w-[18px]"
+                  className="h-5 w-5"
                   src={`/sites/learningseo-io-071dae18/shared/${icon}`}
                   alt=""
-                  width="18"
-                  height="18"
+                  width="20"
+                  height="20"
                 />
                 {label}
               </a>

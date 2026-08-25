@@ -6,26 +6,26 @@ export function ResourceBanner() {
 
   return (
     <section
-      className="relative mx-auto my-10 flex min-h-72 w-[calc(100%-48px)] max-w-[1100px] overflow-hidden rounded-2xl bg-[linear-gradient(90deg,#2e73ea_77.26%,#22ddd2_117.47%)] px-[13px] py-11 text-white md:mt-10 md:mb-20 md:min-h-[325px] md:items-start md:px-[73px] md:py-[55px]"
+      className="relative mx-auto mt-10 mb-20 flex w-[calc(100%_-_48px)] max-w-[1100px] overflow-hidden rounded-2xl bg-[linear-gradient(90deg,#2e73ea_77.26%,#22ddd2_117.47%)] py-[7%] pr-[15%] pl-[6%] text-white before:absolute before:inset-0 before:bg-[linear-gradient(90deg,#2e73ea_57.26%,#22ddd2_117.47%)] before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-100 md:min-h-[325px] md:items-start md:py-[55px] md:pr-[184px] md:pl-[73px]"
       aria-label="Google Sheets resources"
     >
       <img
-        className="absolute top-5 right-5 h-[37px] w-10 md:static md:h-[66px] md:w-[71px] md:shrink-0"
+        className="absolute top-5 right-5 z-[1] h-[37px] w-10 md:static md:h-[66px] md:w-[71px] md:shrink-0"
         src="/sites/learningseo-io-071dae18/shared/google-sheets.svg"
         alt=""
         width="71"
         height="66"
       />
-      <div className="pl-[13px] md:max-w-[760px] md:pl-[42px]">
+      <div className="relative z-[1] grow pl-[5%] md:pl-[42px]">
         <h2 className="pr-12 text-[17.92px] leading-[21px] font-extrabold md:pr-0 md:text-[34px] md:leading-[38.25px]">
           {banner.title}
         </h2>
         <div
-          className="mt-4 text-sm leading-[18.9px] md:text-[17px] md:leading-[22.95px]"
+          className="mt-2.5 text-sm leading-[18.9px] md:text-[17px] md:leading-[22.95px]"
           dangerouslySetInnerHTML={{ __html: banner.bodyHtml }}
         />
         <a
-          className="mt-[15px] inline-flex items-center gap-3 rounded bg-white px-3 py-3 text-sm font-bold text-[#2e73ea] hover:shadow-[0_0_8px_rgba(17,58,128,.35)] md:px-4 md:py-3.5 md:text-base"
+          className="mt-[15px] inline-flex items-center gap-2.5 rounded bg-white p-3 text-sm leading-[14px] text-[#2e73ea] hover:shadow-[0_0_8px_rgba(17,58,128,.35)] md:px-4 md:py-3.5 md:text-base md:leading-4"
           href={banner.href}
           target="_blank"
           rel="noopener noreferrer"
