@@ -68,6 +68,39 @@ function toggleShare(button: Element): void {
   button.setAttribute("aria-expanded", String(active));
 }
 
+function layoutFullwidthTips(root: HTMLElement): void {
+  root.querySelectorAll<HTMLElement>(".tips-wrapper.fullwidth .tips.grid").forEach((grid) => {
+    const items = Array.from(grid.querySelectorAll<HTMLElement>(":scope > .grid-item"));
+    if (!items.length) return;
+
+    grid.style.display = "block";
+    grid.style.position = "relative";
+    grid.style.height = "auto";
+    items.forEach((item) => {
+      item.style.position = "";
+      item.style.left = "";
+      item.style.top = "";
+    });
+
+    const sizer = grid.querySelector<HTMLElement>(":scope > .grid-sizer");
+    const columnWidth = sizer?.getBoundingClientRect().width || grid.clientWidth;
+    const gutter = 20;
+    const columns = Math.max(1, Math.round((grid.clientWidth + gutter) / (columnWidth + gutter)));
+    const heights = Array.from({ length: columns }, () => 0);
+    sizer?.style.setProperty("position", "absolute");
+
+    items.forEach((item) => {
+      const column = heights.indexOf(Math.min(...heights));
+      item.style.position = "absolute";
+      item.style.left = `${column * (columnWidth + gutter)}px`;
+      item.style.top = `${heights[column]}px`;
+      heights[column] += item.getBoundingClientRect().height + gutter;
+    });
+
+    grid.style.height = `${Math.max(0, Math.max(...heights))}px`;
+  });
+}
+
 export function SubpageRuntime({
   children,
   className,
@@ -77,6 +110,11 @@ export function SubpageRuntime({
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
+
+    const relayout = () => layoutFullwidthTips(root);
+    relayout();
+    document.fonts?.ready.then(relayout);
+    window.addEventListener("resize", relayout, { passive: true });
 
     const handleClick = (event: MouseEvent) => {
       const target = event.target;
@@ -105,11 +143,14 @@ export function SubpageRuntime({
     };
 
     root.addEventListener("click", handleClick);
-    return () => root.removeEventListener("click", handleClick);
+    return () => {
+      root.removeEventListener("click", handleClick);
+      window.removeEventListener("resize", relayout);
+    };
   }, []);
 
   return (
-    <div ref={rootRef} className={className}>
+    <div ref={rootRef} data-learning-seo className={className}>
       {children}
     </div>
   );

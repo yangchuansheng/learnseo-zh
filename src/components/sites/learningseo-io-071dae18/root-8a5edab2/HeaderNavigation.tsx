@@ -57,6 +57,7 @@ export function HeaderNavigation() {
 
   return (
     <header
+      id="header"
       className={`left-0 right-0 top-0 z-[100] mx-auto flex items-center justify-between ${
         scrolled
           ? "fixed w-full max-w-none bg-[#f2f2f2] px-3 py-[10px] shadow-[0_1px_10px_rgba(0,0,0,0.07)]"

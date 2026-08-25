@@ -1,0 +1,1295 @@
+{
+  "source": "https://learningseo.io",
+  "sitemapEntries": 161,
+  "finalRoutes": 159,
+  "routes": [
+    {
+      "sourcePath": "/",
+      "finalPath": "/",
+      "redirectTo": null,
+      "title": "Learn SEO with a Free Roadmap of Reliable Guides & Tools",
+      "canonical": "https://learningseo.io/",
+      "error": null
+    },
+    {
+      "sourcePath": "/the-seo-learning-roadmap/",
+      "finalPath": "/",
+      "redirectTo": "/",
+      "title": "Learn SEO with a Free Roadmap of Reliable Guides & Tools",
+      "canonical": "https://learningseo.io/",
+      "error": null
+    },
+    {
+      "sourcePath": "/privacy-policy-terms-of-use/",
+      "finalPath": "/privacy-policy-terms-of-use/",
+      "redirectTo": null,
+      "title": "Privacy Policy & Terms of Use - LearningSEO.io",
+      "canonical": "https://learningseo.io/privacy-policy-terms-of-use/",
+      "error": null
+    },
+    {
+      "sourcePath": "/updates/",
+      "finalPath": "/updates/",
+      "redirectTo": null,
+      "title": "Subscribe to our Email alerts - LearningSEO.io",
+      "canonical": "https://learningseo.io/updates/",
+      "error": null
+    },
+    {
+      "sourcePath": "/about/",
+      "finalPath": "/about/",
+      "redirectTo": null,
+      "title": "About LearningSEO.io",
+      "canonical": "https://learningseo.io/about/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/implement-in-cms/webflow-seo-guidelines/",
+      "finalPath": "/seo_roadmap/implement-in-cms/webflow-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Webflow SEO Guidelines - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/implement-in-cms/webflow-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/seo-for-new-web-launch/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/seo-for-new-web-launch/",
+      "redirectTo": null,
+      "title": "SEO for New Web Launch - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/seo-for-new-web-launch/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/bigquery-sql-for-seo/",
+      "finalPath": "/seo_roadmap/automate-tasks/bigquery-sql-for-seo/",
+      "redirectTo": null,
+      "title": "BigQuery & SQL for SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/bigquery-sql-for-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/js-for-seo/",
+      "finalPath": "/seo_roadmap/automate-tasks/js-for-seo/",
+      "redirectTo": null,
+      "title": "JS for SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/js-for-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/e-commerce-seo/",
+      "finalPath": "/seo_roadmap/specialize/e-commerce-seo/",
+      "redirectTo": null,
+      "title": "E-commerce SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/e-commerce-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/keep-up-with-news/search-news-publications/",
+      "finalPath": "/seo_roadmap/keep-up-with-news/search-news-publications/",
+      "redirectTo": null,
+      "title": "Search News Publications - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/keep-up-with-news/search-news-publications/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/html-css/",
+      "finalPath": "/seo_roadmap/complement-knowledge/html-css/",
+      "redirectTo": null,
+      "title": "HTML & CSS - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/html-css/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/start-an-seo-business/",
+      "finalPath": "/seo_roadmap/complement-knowledge/start-an-seo-business/",
+      "redirectTo": null,
+      "title": "Start an SEO Business - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/start-an-seo-business/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/app-store-optimization/",
+      "finalPath": "/seo_roadmap/complement-knowledge/app-store-optimization/",
+      "redirectTo": null,
+      "title": "App Store Optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/app-store-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/google-analytics/",
+      "finalPath": "/seo_roadmap/complement-knowledge/google-analytics/",
+      "redirectTo": null,
+      "title": "Google Analytics - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/google-analytics/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/link-building-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/link-building-tools/",
+      "redirectTo": null,
+      "title": "Link Building Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/link-building-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/monitoring-rank-tracking-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/monitoring-rank-tracking-tools/",
+      "redirectTo": null,
+      "title": "Monitoring & Rank Tracking Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/monitoring-rank-tracking-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/seo-dashboard-reporting-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/seo-dashboard-reporting-tools/",
+      "redirectTo": null,
+      "title": "SEO Dashboard & Reporting Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/seo-dashboard-reporting-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/seo-forecastings-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/seo-forecastings-tools/",
+      "redirectTo": null,
+      "title": "SEO Forecastings Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/seo-forecastings-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/wordpress-seo-plugins/",
+      "finalPath": "/seo_roadmap/seo-tools/wordpress-seo-plugins/",
+      "redirectTo": null,
+      "title": "Wordpress SEO Plugins - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/wordpress-seo-plugins/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/google-search-console-guidelines/",
+      "finalPath": "/seo_roadmap/seo-tools/google-search-console-guidelines/",
+      "redirectTo": null,
+      "title": "Google Search Console Guidelines - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/google-search-console-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/logfile-analysis-for-seo/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/logfile-analysis-for-seo/",
+      "redirectTo": null,
+      "title": "Logfile Analysis for SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/logfile-analysis-for-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-fundamentals/introduction-to-seo/",
+      "finalPath": "/seo_roadmap/seo-fundamentals/",
+      "redirectTo": "/seo_roadmap/seo-fundamentals/",
+      "title": "Learn SEO Fundamentals: Free Reliable Guides, Tips & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-fundamentals/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/keep-up-with-news/search-engine-official-publications/",
+      "finalPath": "/seo_roadmap/keep-up-with-news/search-engine-official-publications/",
+      "redirectTo": null,
+      "title": "Keep up with SEO news with Search Engines Official Publications",
+      "canonical": "https://learningseo.io/seo_roadmap/keep-up-with-news/search-engine-official-publications/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/seo-process-management/",
+      "finalPath": "/seo_roadmap/execute-seo/seo-process-management/",
+      "redirectTo": null,
+      "title": "SEO Process Management - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/seo-process-management/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/implement-in-cms/magento-seo-guidelines/",
+      "finalPath": "/seo_roadmap/implement-in-cms/magento-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Magento SEO Guidelines - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/implement-in-cms/magento-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/implement-in-cms/squarespace-seo-guidelines/",
+      "finalPath": "/seo_roadmap/implement-in-cms/squarespace-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Squarespace SEO Guidelines - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/implement-in-cms/squarespace-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/javascript-seo-guidelines/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/javascript-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Javascript SEO Guidelines - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/javascript-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/backlinks/backlinks-analysis/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/backlinks/backlinks-analysis/",
+      "redirectTo": null,
+      "title": "Backlinks analysis - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/backlinks/backlinks-analysis/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/backlinks/disavowing-backlinks/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/backlinks/disavowing-backlinks/",
+      "redirectTo": null,
+      "title": "Disavowing backlinks - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/backlinks/disavowing-backlinks/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/mobile-seo-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/mobile-seo-tools/",
+      "redirectTo": null,
+      "title": "Mobile SEO Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/mobile-seo-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/enterprise-seo/",
+      "finalPath": "/seo_roadmap/specialize/enterprise-seo/",
+      "redirectTo": null,
+      "title": "Enterprise SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/enterprise-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/travel-seo/",
+      "finalPath": "/seo_roadmap/specialize/travel-seo/",
+      "redirectTo": null,
+      "title": "Travel SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/travel-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/saas-seo/",
+      "finalPath": "/seo_roadmap/specialize/saas-seo/",
+      "redirectTo": null,
+      "title": "Saas SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/saas-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/local-seo-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/local-seo-tools/",
+      "redirectTo": null,
+      "title": "Local SEO Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/local-seo-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/web-speed-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/web-speed-optimization/",
+      "redirectTo": null,
+      "title": "Web speed optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/web-speed-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/structured-data-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/structured-data-tools/",
+      "redirectTo": null,
+      "title": "Structured Data Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/structured-data-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/keep-up-with-news/online-events/",
+      "finalPath": "/seo_roadmap/keep-up-with-news/online-events/",
+      "redirectTo": null,
+      "title": "Online Events - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/keep-up-with-news/online-events/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/keep-up-with-news/seo-podcasts/",
+      "finalPath": "/seo_roadmap/keep-up-with-news/seo-podcasts/",
+      "redirectTo": null,
+      "title": "SEO Podcasts - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/keep-up-with-news/seo-podcasts/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/implement-in-cms/wix-seo-guidelines/",
+      "finalPath": "/seo_roadmap/implement-in-cms/wix-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Wix SEO Guidelines - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/implement-in-cms/wix-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/backlinks/outreach-for-link-building/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/backlinks/outreach-for-link-building/",
+      "redirectTo": null,
+      "title": "Outreach for link building - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/backlinks/outreach-for-link-building/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/seo-myths/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/seo-myths/",
+      "redirectTo": null,
+      "title": "SEO Myths - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/seo-myths/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/opportunities/knowledge-panel-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/opportunities/knowledge-panel-optimization/",
+      "redirectTo": null,
+      "title": "Knowledge Panel optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/opportunities/knowledge-panel-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/budgeting-seo/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/budgeting-seo/",
+      "redirectTo": null,
+      "title": "Budgeting SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/budgeting-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/edge-seo/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/edge-seo/",
+      "redirectTo": null,
+      "title": "Edge SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/edge-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/paginations-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/paginations-optimization/",
+      "redirectTo": null,
+      "title": "Paginations optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/paginations-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/optimizing-product-pages/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/optimizing-product-pages/",
+      "redirectTo": null,
+      "title": "Optimizing Product Pages - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/optimizing-product-pages/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/seo-for-web-redesigns/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/seo-for-web-redesigns/",
+      "redirectTo": null,
+      "title": "SEO for Web Redesigns - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/seo-for-web-redesigns/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/communication-with-seo-stakeholders/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/communication-with-seo-stakeholders/",
+      "redirectTo": null,
+      "title": "Communication with SEO Stakeholders - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/communication-with-seo-stakeholders/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/dealing-with-google-penalties/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/dealing-with-google-penalties/",
+      "redirectTo": null,
+      "title": "Dealing with Google Penalties - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/dealing-with-google-penalties/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/opportunities/web-stories/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/opportunities/web-stories/",
+      "redirectTo": null,
+      "title": "Web Stories - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/opportunities/web-stories/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/crawl-budget-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/crawl-budget-optimization/",
+      "redirectTo": null,
+      "title": "Crawl budget optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/crawl-budget-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/seo-jobs-interviews/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/seo-jobs-interviews/",
+      "redirectTo": null,
+      "title": "SEO Jobs Interviews - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/seo-jobs-interviews/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/opportunities/serp-features-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/opportunities/serp-features-optimization/",
+      "redirectTo": null,
+      "title": "SERP Features optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/opportunities/serp-features-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/mobile-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/mobile-optimization/",
+      "redirectTo": null,
+      "title": "Mobile optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/mobile-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/xml-sitemaps-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/xml-sitemaps-optimization/",
+      "redirectTo": null,
+      "title": "XML Sitemaps optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/xml-sitemaps-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/image-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/image-optimization/",
+      "redirectTo": null,
+      "title": "Image optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/image-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/video-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/video-optimization/",
+      "redirectTo": null,
+      "title": "Video optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/video-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/removing-urls-from-google/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/removing-urls-from-google/",
+      "redirectTo": null,
+      "title": "Removing URLs from Google - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/removing-urls-from-google/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/backlinks/digital-pr-link-building/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/backlinks/digital-pr-link-building/",
+      "redirectTo": null,
+      "title": "Digital PR & Link Building - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/backlinks/digital-pr-link-building/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/google-tag-manager/",
+      "finalPath": "/seo_roadmap/complement-knowledge/google-tag-manager/",
+      "redirectTo": null,
+      "title": "Google Tag Manager - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/google-tag-manager/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/javascript/",
+      "finalPath": "/seo_roadmap/complement-knowledge/javascript/",
+      "redirectTo": null,
+      "title": "Javascript - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/javascript/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/soft-skills/",
+      "finalPath": "/seo_roadmap/complement-knowledge/soft-skills/",
+      "redirectTo": null,
+      "title": "Soft Skills - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/soft-skills/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/r-for-seo/",
+      "finalPath": "/seo_roadmap/automate-tasks/r-for-seo/",
+      "redirectTo": null,
+      "title": "Learn R to Automate SEO Tasks with Reliable Free Guides",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/r-for-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/chatgpt-for-seo/",
+      "finalPath": "/seo_roadmap/automate-tasks/chatgpt-for-seo/",
+      "redirectTo": null,
+      "title": "Automate your SEO Tasks by Using AI LLMs & Chatbots for SEO",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/chatgpt-for-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/establishing-an-seo-strategy/",
+      "finalPath": "/seo_roadmap/execute-seo/establishing-an-seo-strategy/",
+      "redirectTo": null,
+      "title": "Learn to Establish an SEO Strategy",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/establishing-an-seo-strategy/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/keyword-research-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/keyword-research-tools/",
+      "redirectTo": null,
+      "title": "Keyword Research Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/keyword-research-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/implement-in-cms/wordpress-seo-guidelines/",
+      "finalPath": "/seo_roadmap/implement-in-cms/wordpress-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Learn SEO For WordPress - Free Guidelines, Tips and Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/implement-in-cms/wordpress-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/structured-data/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/structured-data/",
+      "redirectTo": null,
+      "title": "Learn to Use Structured Data for SEO",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/structured-data/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/the-learningseo-accelerator/",
+      "finalPath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/the-learningseo-accelerator/",
+      "redirectTo": null,
+      "title": "The Learning SEO Accelerator: Free Q&As with SEO Experts",
+      "canonical": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/the-learningseo-accelerator/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/setting-seo-goals/",
+      "finalPath": "/seo_roadmap/execute-seo/setting-seo-goals/",
+      "redirectTo": null,
+      "title": "Learn How to Set SEO Goals with Free Guides, Courses & Tips",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/setting-seo-goals/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/seo-execution-mistakes/",
+      "finalPath": "/seo_roadmap/execute-seo/seo-execution-mistakes/",
+      "redirectTo": null,
+      "title": "Common SEO Execution Mistakes To Avoid",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/seo-execution-mistakes/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/seo-buy-in/",
+      "finalPath": "/seo_roadmap/execute-seo/seo-buy-in/",
+      "redirectTo": null,
+      "title": "Learn How to Get SEO Buy-In",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/seo-buy-in/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/black-friday-cyber-monday-holiday-seo-season/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/black-friday-cyber-monday-holiday-seo-season/",
+      "redirectTo": null,
+      "title": "SEO for Black Friday, Cyber Monday and Holiday Season Deals",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/black-friday-cyber-monday-holiday-seo-season/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/on-page-seo-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/on-page-seo-tools/",
+      "redirectTo": null,
+      "title": "On-Page SEO Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/on-page-seo-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/international-seo-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/international-seo-tools/",
+      "redirectTo": null,
+      "title": "International SEO Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/international-seo-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/web-speed-optimization-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/web-speed-optimization-tools/",
+      "redirectTo": null,
+      "title": "Web Speed Optimization Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/web-speed-optimization-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/keep-up-with-news/search-news-aggregators/",
+      "finalPath": "/seo_roadmap/keep-up-with-news/search-news-aggregators/",
+      "redirectTo": null,
+      "title": "Search News Aggregators - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/keep-up-with-news/search-news-aggregators/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/seo-predictions-trends-tips/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/seo-predictions-trends-tips/",
+      "redirectTo": null,
+      "title": "The Top SEO Predictions, Trends & Tips To Win in 2025",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/seo-predictions-trends-tips/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/bing-seo-guidelines/",
+      "finalPath": "/seo_roadmap/other-search-engines/bing-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Bing SEO Guidelines & Tips - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/bing-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/yandex-seo-guidelines/",
+      "finalPath": "/seo_roadmap/other-search-engines/yandex-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Yandex SEO Guidelines & Tips - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/yandex-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/baidu-seo-guidelines/",
+      "finalPath": "/seo_roadmap/other-search-engines/baidu-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Baidu SEO Guidelines & Tips - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/baidu-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/naver-seo-guidelines/",
+      "finalPath": "/seo_roadmap/other-search-engines/naver-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Naver SEO Guidelines & Tips - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/naver-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/amazon-seo-guidelines/",
+      "finalPath": "/seo_roadmap/other-search-engines/amazon-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Amazon SEO Guidelines & Tips - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/amazon-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/youtube-seo-guidelines/",
+      "finalPath": "/seo_roadmap/other-search-engines/youtube-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Youtube SEO Guidelines & Tips - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/youtube-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/optimize-ai-search/ai-search-landscape/",
+      "finalPath": "/seo_roadmap/optimize-ai-search/ai-search-landscape/",
+      "redirectTo": null,
+      "title": "Learn about the AI Search Landscape",
+      "canonical": "https://learningseo.io/seo_roadmap/optimize-ai-search/ai-search-landscape/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/optimize-ai-search/ai-search-technical-optimization/",
+      "finalPath": "/seo_roadmap/optimize-ai-search/ai-search-technical-optimization/",
+      "redirectTo": null,
+      "title": "Learn to Optimize your Site Technical Configurations for AI Search",
+      "canonical": "https://learningseo.io/seo_roadmap/optimize-ai-search/ai-search-technical-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/optimize-ai-search/measuring-ai-search/",
+      "finalPath": "/seo_roadmap/optimize-ai-search/measuring-ai-search/",
+      "redirectTo": null,
+      "title": "Learn how to Measure your AI Search Visibility and Traffic",
+      "canonical": "https://learningseo.io/seo_roadmap/optimize-ai-search/measuring-ai-search/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/optimize-ai-search/ai-search-content-optimization/",
+      "finalPath": "/seo_roadmap/optimize-ai-search/ai-search-content-optimization/",
+      "redirectTo": null,
+      "title": "Learn how to Optimize your Content for AI Search",
+      "canonical": "https://learningseo.io/seo_roadmap/optimize-ai-search/ai-search-content-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/optimize-ai-search/fundamentals-ai-search-optimization/",
+      "finalPath": "/seo_roadmap/optimize-ai-search/fundamentals-ai-search-optimization/",
+      "redirectTo": null,
+      "title": "Learn about the AI Search Optimization Fundamentals",
+      "canonical": "https://learningseo.io/seo_roadmap/optimize-ai-search/fundamentals-ai-search-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/optimize-ai-search/",
+      "finalPath": "/seo_roadmap/optimize-ai-search/",
+      "redirectTo": null,
+      "title": "Learn How to Optimize for AI Search Platforms (GEO, AEO, LLMO)",
+      "canonical": "https://learningseo.io/seo_roadmap/optimize-ai-search/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/optimize-ai-search/tools/",
+      "finalPath": "/seo_roadmap/optimize-ai-search/tools/",
+      "redirectTo": null,
+      "title": "Learn about the best AI Search Tracking and Optimization Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/optimize-ai-search/tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/developing-topic-clusters/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/developing-topic-clusters/",
+      "redirectTo": null,
+      "title": "Developing topic clusters - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/developing-topic-clusters/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/keyword-mapping/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/keyword-mapping/",
+      "redirectTo": null,
+      "title": "Keyword mapping - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/keyword-mapping/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/programmatic-seo/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/programmatic-seo/",
+      "redirectTo": null,
+      "title": "Learn Programmatic SEO with Learning SEO",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/programmatic-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/quality-eeat/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/quality-eeat/",
+      "redirectTo": null,
+      "title": "Learn about Content Quality and EEAT for SEO",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/quality-eeat/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/content-pruning/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/content-pruning/",
+      "redirectTo": null,
+      "title": "How to Prune your Content in an SEO Process",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/content-pruning/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/keyword-cannibalization-analysis/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/keyword-cannibalization-analysis/",
+      "redirectTo": null,
+      "title": "Keyword cannibalization analysis - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/keyword-cannibalization-analysis/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/avoiding-duplicate-content/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/avoiding-duplicate-content/",
+      "redirectTo": null,
+      "title": "Avoid and Fix Duplicate Content with Canonicalization",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/avoiding-duplicate-content/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/content/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/content/",
+      "redirectTo": null,
+      "title": "Learn Advanced Content Optimization with Free Reliable Guides",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/content/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/backlinks/broken-link-building/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/backlinks/broken-link-building/",
+      "redirectTo": null,
+      "title": "Broken link building - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/backlinks/broken-link-building/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/backlinks/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/backlinks/",
+      "redirectTo": null,
+      "title": "Learn Advanced Link Building with Free Reliable Guides",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/backlinks/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/robots-txt-optimization/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/robots-txt-optimization/",
+      "redirectTo": null,
+      "title": "Robots.txt optimization - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/robots-txt-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/internal-linking/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/internal-linking/",
+      "redirectTo": null,
+      "title": "How to Optimize your Internal Links for SEO",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/internal-linking/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/advanced-technical/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/advanced-technical/",
+      "redirectTo": null,
+      "title": "Learn Advanced Technical SEO: Free Reliable Guides & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/advanced-technical/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/google-core-updates-recovery/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/google-core-updates-recovery/",
+      "redirectTo": null,
+      "title": "Learn how to Recover from Google Search Core Updates",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/google-core-updates-recovery/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/",
+      "finalPath": "/seo_roadmap/automate-tasks/",
+      "redirectTo": null,
+      "title": "Automate your SEO Tasks with Free Guides & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/python-for-seo/",
+      "finalPath": "/seo_roadmap/automate-tasks/python-for-seo/",
+      "redirectTo": null,
+      "title": "Python for SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/python-for-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/",
+      "finalPath": "/seo_roadmap/complement-knowledge/",
+      "redirectTo": null,
+      "title": "Complement your SEO Knowledge with Free Guides & Resources",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/",
+      "redirectTo": null,
+      "title": "Deepen Your SEO Knowledge with Reliable Free Guides",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/",
+      "redirectTo": null,
+      "title": "Learn Advanced SEO Management: Free Reliable Guides & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/",
+      "finalPath": "/seo_roadmap/execute-seo/",
+      "redirectTo": null,
+      "title": "Learn to Execute an SEO Process: Free Reliable Guides & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/implement-in-cms/",
+      "finalPath": "/seo_roadmap/implement-in-cms/",
+      "redirectTo": null,
+      "title": "Learn to Implement SEO in Your CMS: Free Guides, Tips & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/implement-in-cms/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/keep-up-with-news/",
+      "finalPath": "/seo_roadmap/keep-up-with-news/",
+      "redirectTo": null,
+      "title": "Keep Up With SEO News with Free Publications, Newsletters, Podcasts",
+      "canonical": "https://learningseo.io/seo_roadmap/keep-up-with-news/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/",
+      "finalPath": "/seo_roadmap/other-search-engines/",
+      "redirectTo": null,
+      "title": "Learn about SEO in Other (Non-Google) Search Engines",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/",
+      "redirectTo": null,
+      "title": "The Best Free SEO Tools & Tips to Use them LearningSEO",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/",
+      "finalPath": "/seo_roadmap/specialize/",
+      "redirectTo": null,
+      "title": "Specialize Within SEO: Free Reliable Guides & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+      "finalPath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+      "redirectTo": null,
+      "title": "Learn to Train, test & troubleshoot your SEO further",
+      "canonical": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/app-scripts-for-seo/",
+      "finalPath": "/seo_roadmap/automate-tasks/app-scripts-for-seo/",
+      "redirectTo": null,
+      "title": "App Scripts for SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/app-scripts-for-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/machine-learning-seo/",
+      "finalPath": "/seo_roadmap/automate-tasks/machine-learning-seo/",
+      "redirectTo": null,
+      "title": "Learn How to Use Machine Learning for SEO",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/machine-learning-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/automate-tasks/regex-for-seo/",
+      "finalPath": "/seo_roadmap/automate-tasks/regex-for-seo/",
+      "redirectTo": null,
+      "title": "RegEx for SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/automate-tasks/regex-for-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/complement-knowledge/google-data-studio/",
+      "finalPath": "/seo_roadmap/complement-knowledge/google-data-studio/",
+      "redirectTo": null,
+      "title": "Looker Studio [Google Data Studio] - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/complement-knowledge/google-data-studio/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/building-an-seo-team/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/building-an-seo-team/",
+      "redirectTo": null,
+      "title": "Building an SEO Team - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/building-an-seo-team/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/calculate-seo-roi/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/calculate-seo-roi/",
+      "redirectTo": null,
+      "title": "Calculate SEO ROI - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/calculate-seo-roi/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/creating-seo-contracts/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/creating-seo-contracts/",
+      "redirectTo": null,
+      "title": "Creating SEO Contracts - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/creating-seo-contracts/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/seo-forecasting/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/seo-forecasting/",
+      "redirectTo": null,
+      "title": "Learn To Create SEO Forecasts with Reliable Resources",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/seo-forecasting/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/show-seo-value-to-non-seos/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/show-seo-value-to-non-seos/",
+      "redirectTo": null,
+      "title": "Show SEO Value to Non-SEOs - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/show-seo-value-to-non-seos/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/management/seo-product-management/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/management/seo-product-management/",
+      "redirectTo": null,
+      "title": "SEO Product Management - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/management/seo-product-management/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/seo-for-web-migrations/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/seo-for-web-migrations/",
+      "redirectTo": null,
+      "title": "SEO for Web Migrations - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/seo-for-web-migrations/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/detect-protect-from-negative-seo/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/detect-protect-from-negative-seo/",
+      "redirectTo": null,
+      "title": "Detect & Protect from Negative SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/detect-protect-from-negative-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/opportunities/seo-testing/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/opportunities/seo-testing/",
+      "redirectTo": null,
+      "title": "SEO Testing - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/opportunities/seo-testing/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/news-seo/",
+      "finalPath": "/seo_roadmap/specialize/news-seo/",
+      "redirectTo": null,
+      "title": "News SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/news-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/small-business-seo/",
+      "finalPath": "/seo_roadmap/specialize/small-business-seo/",
+      "redirectTo": null,
+      "title": "Small Business SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/small-business-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/international-seo/",
+      "finalPath": "/seo_roadmap/specialize/international-seo/",
+      "redirectTo": null,
+      "title": "International SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/international-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/specialize/local-seo/",
+      "finalPath": "/seo_roadmap/specialize/local-seo/",
+      "redirectTo": null,
+      "title": "Local SEO - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/specialize/local-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/great-decoupling/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/great-decoupling/",
+      "redirectTo": null,
+      "title": "Optimize for The Great Decoupling (or in an Zero Click Search Era)",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/great-decoupling/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/javascript-seo-tools/",
+      "finalPath": "/seo_roadmap/seo-tools/javascript-seo-tools/",
+      "redirectTo": null,
+      "title": "Javascript SEO Tools - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/javascript-seo-tools/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-tools/seo-audit-templates/",
+      "finalPath": "/seo_roadmap/seo-tools/seo-audit-templates/",
+      "redirectTo": null,
+      "title": "SEO Audit Templates - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-tools/seo-audit-templates/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/",
+      "finalPath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/",
+      "redirectTo": null,
+      "title": "Why my Page Doesn't Rank [Better or At All] in Google?",
+      "canonical": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/why-my-page-doesnt-rank/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/opportunities/google-discover/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/opportunities/google-discover/",
+      "redirectTo": null,
+      "title": "Google Discover - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/opportunities/google-discover/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/opportunities/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/opportunities/",
+      "redirectTo": null,
+      "title": "Learn To Spot Advanced SEO Opportunities: Free Guides & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/opportunities/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/",
+      "redirectTo": null,
+      "title": "Learn to Optimize in SEO Scenarios with Free Reliable Guides",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/optimizing-faceted-navigation/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/optimizing-faceted-navigation/",
+      "redirectTo": null,
+      "title": "Learn to Optimize Faceted Navigation with Free SEO Guides",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/optimizing-faceted-navigation/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/online-seo-courses/",
+      "finalPath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/online-seo-courses/",
+      "redirectTo": null,
+      "title": "Free Reliable Online SEO Courses & Training To Learn",
+      "canonical": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/online-seo-courses/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-fundamentals/keyword-research/",
+      "finalPath": "/seo_roadmap/seo-fundamentals/keyword-research/",
+      "redirectTo": null,
+      "title": "Learn To Do a Keyword Research for SEO: Free Guides & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-fundamentals/keyword-research/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-fundamentals/competition-analysis/",
+      "finalPath": "/seo_roadmap/seo-fundamentals/competition-analysis/",
+      "redirectTo": null,
+      "title": "Learn to do a Competition Analysis for SEO: Free Guides & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-fundamentals/competition-analysis/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-fundamentals/content-optimization/",
+      "finalPath": "/seo_roadmap/seo-fundamentals/content-optimization/",
+      "redirectTo": null,
+      "title": "Learn Content Optimization with Free Guides, Courses Tools & Tips",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-fundamentals/content-optimization/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-fundamentals/link-building/",
+      "finalPath": "/seo_roadmap/seo-fundamentals/link-building/",
+      "redirectTo": null,
+      "title": "Learn Link Building with Free Guides, Tools & Tips",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-fundamentals/link-building/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/seo-measurement/",
+      "finalPath": "/seo_roadmap/execute-seo/seo-measurement/",
+      "redirectTo": null,
+      "title": "Learn to Measure SEO with Free Guides, Tools & Tips",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/seo-measurement/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-fundamentals/technical-seo/",
+      "finalPath": "/seo_roadmap/seo-fundamentals/technical-seo/",
+      "redirectTo": null,
+      "title": "Learn Technical SEO with Reliable Free Guides & Tips",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-fundamentals/technical-seo/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/implement-in-cms/shopify-seo-guidelines/",
+      "finalPath": "/seo_roadmap/implement-in-cms/shopify-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Learn SEO For Shopify - Free Guidelines, Tips and Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/implement-in-cms/shopify-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/seo-audits-recommendations/",
+      "finalPath": "/seo_roadmap/execute-seo/seo-audits-recommendations/",
+      "redirectTo": null,
+      "title": "Learn to Develop SEO Audits with Free Guides, Templates & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/seo-audits-recommendations/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/execute-seo/seo-reporting/",
+      "finalPath": "/seo_roadmap/execute-seo/seo-reporting/",
+      "redirectTo": null,
+      "title": "Learn to Report SEO with Free Guides, Tools & Tips",
+      "canonical": "https://learningseo.io/seo_roadmap/execute-seo/seo-reporting/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/ranking-drop-analysis/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/ranking-drop-analysis/",
+      "redirectTo": null,
+      "title": "How to do a Google Search Rankings Drop Analysis",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/ranking-drop-analysis/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/tiktok-seo-guidelines/",
+      "finalPath": "/seo_roadmap/other-search-engines/tiktok-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Learn SEO for TikTok with Free Guides and Tips",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/tiktok-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/keep-up-with-news/seo-newsletters/",
+      "finalPath": "/seo_roadmap/keep-up-with-news/seo-newsletters/",
+      "redirectTo": null,
+      "title": "SEO Newsletters - LearningSEO.io",
+      "canonical": "https://learningseo.io/seo_roadmap/keep-up-with-news/seo-newsletters/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/free-seo-tests-quizzes/",
+      "finalPath": "/seo_roadmap/train-test-troubleshoot-your-seo-further/free-seo-tests-quizzes/",
+      "redirectTo": null,
+      "title": "Free SEO Tests & Quizzes To Assess your Knowledge",
+      "canonical": "https://learningseo.io/seo_roadmap/train-test-troubleshoot-your-seo-further/free-seo-tests-quizzes/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/other-search-engines/reddit-seo-guidelines/",
+      "finalPath": "/seo_roadmap/other-search-engines/reddit-seo-guidelines/",
+      "redirectTo": null,
+      "title": "Learn to use Reddit for SEO with Free Guides and Tips",
+      "canonical": "https://learningseo.io/seo_roadmap/other-search-engines/reddit-seo-guidelines/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/scenarios/seo-branding/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/scenarios/seo-branding/",
+      "redirectTo": null,
+      "title": "SEO for Branding: Learn to develop your Brand in SERPs",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/scenarios/seo-branding/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/deepen-knowledge/opportunities/google-ai-overviews/",
+      "finalPath": "/seo_roadmap/deepen-knowledge/opportunities/google-ai-overviews/",
+      "redirectTo": null,
+      "title": "Google AIO's, AI Mode and LLMs Optimization",
+      "canonical": "https://learningseo.io/seo_roadmap/deepen-knowledge/opportunities/google-ai-overviews/",
+      "error": null
+    },
+    {
+      "sourcePath": "/seo_roadmap/seo-fundamentals/",
+      "finalPath": "/seo_roadmap/seo-fundamentals/",
+      "redirectTo": null,
+      "title": "Learn SEO Fundamentals: Free Reliable Guides, Tips & Tools",
+      "canonical": "https://learningseo.io/seo_roadmap/seo-fundamentals/",
+      "error": null
+    }
+  ]
+}

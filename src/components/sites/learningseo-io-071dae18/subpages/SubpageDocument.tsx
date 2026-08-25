@@ -1,5 +1,6 @@
-import { FooterSection } from "../root-8a5edab2/FooterSection";
 import { HeaderNavigation } from "../root-8a5edab2/HeaderNavigation";
+import { SubpageFooter } from "./SubpageFooter";
+import { SubpageRuntime } from "./SubpageRuntime";
 
 export type SubpageDocumentProps = Readonly<{
   bodyClass: string;
@@ -18,11 +19,11 @@ export function SubpageDocument({ bodyClass, mainClass, html }: SubpageDocumentP
   );
 
   return (
-    <div data-learning-seo className={["learningseo-subpage", bodyClass].filter(Boolean).join(" ")}>
+    <SubpageRuntime className={["learningseo-subpage", bodyClass].filter(Boolean).join(" ")}>
       <div className="gradient-header" aria-hidden="true" />
       <HeaderNavigation />
       {pageContent}
-      <FooterSection />
-    </div>
+      <SubpageFooter />
+    </SubpageRuntime>
   );
 }

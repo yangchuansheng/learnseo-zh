@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
-import { FooterSection } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/FooterSection";
-import { HeaderNavigation } from "@/components/sites/learningseo-io-071dae18/root-8a5edab2/HeaderNavigation";
+import { SubpageDocument } from "@/components/sites/learningseo-io-071dae18/subpages/SubpageDocument";
 import subpageData from "@/components/sites/learningseo-io-071dae18/subpages/data.json";
 
 type SubpageParams = Promise<{ slug: string[] }>;
@@ -53,10 +52,6 @@ export async function generateMetadata({
   };
 }
 
-function SubpageDocument({ html }: { html: string }) {
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
-}
-
 export default async function SubpagePage({
   params,
 }: {
@@ -73,18 +68,11 @@ export default async function SubpagePage({
     redirect(route.redirectTo);
   }
 
-  const className = ["learningseo-subpage", route.bodyClass]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <div className={className}>
-      <HeaderNavigation />
-      <div className="gradient-header" aria-hidden="true" />
-      <main id="content" className={route.mainClass || undefined}>
-        <SubpageDocument html={route.html} />
-      </main>
-      <FooterSection />
-    </div>
+    <SubpageDocument
+      bodyClass={route.bodyClass}
+      mainClass={route.mainClass || ""}
+      html={route.html}
+    />
   );
 }
