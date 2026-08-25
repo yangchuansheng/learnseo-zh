@@ -64,7 +64,7 @@ export function VideoCard({
           </>
         )}
       </div>
-      <p className="bg-[#000036] px-[27.3px] py-[19.5px] text-[14px]/[18.9px] text-white min-[1025px]:hidden">
+      <p className="bg-[#000036] px-[27.3px] py-[19.5px] text-[14px]/[17.5px] text-white min-[1025px]:hidden">
         {description}
       </p>
     </article>

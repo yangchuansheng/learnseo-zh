@@ -29,7 +29,7 @@ export function RoadmapSection() {
         </p>
       </header>
 
-      <div className="relative z-10 mt-[-17px] flex flex-col gap-2 pb-2 pl-[25px] md:gap-3 md:pb-3 md:pl-[49px]">
+      <div className="relative z-10 mt-[-17px] flex flex-col gap-2 pb-[14px] pl-[25px] md:gap-3 md:pb-3 md:pl-[49px]">
         {content.roadmap.items.map((item) => (
           <RoadmapItem key={item.href} {...item} />
         ))}

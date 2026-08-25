@@ -20,11 +20,11 @@ export function FooterSection() {
           </a>
 
           <div className="mt-5 md:mt-0 md:w-1/2">
-            <h2 className="text-[17.5px] font-bold tracking-[.425px] md:text-[17px]">
+            <h2 className="text-[17.5px] leading-[17.5px] font-bold tracking-[.425px] md:text-[17px] md:leading-[21.25px]">
               Roadmap
             </h2>
             <nav
-              className="mt-2.5 grid grid-cols-1 gap-y-3 text-sm font-light leading-[15px] md:gap-y-2.5 md:text-[14.45px] md:leading-[15.3px] lg:grid-cols-2"
+              className="mt-3 grid grid-cols-1 gap-y-3 text-sm leading-[14px] font-light md:mt-2.5 md:gap-y-2.5 md:text-[14.45px] md:leading-[15.3px] lg:grid-cols-2"
               aria-label="Footer roadmap"
             >
               {content.footer.navigation.map((item) => (
@@ -33,7 +33,7 @@ export function FooterSection() {
                 </a>
               ))}
             </nav>
-            <div className="mt-2.5 border-t border-white pt-[5px] text-sm font-light md:text-[14.45px]">
+            <div className="mt-3 h-8 border-t border-white pt-[5px] text-sm leading-[14px] font-light md:mt-2.5 md:h-auto md:text-[14.45px] md:leading-[21.25px]">
               {content.footer.legal.map((item) => (
                 <a href={item.href} key={item.label}>
                   {item.label}
@@ -43,7 +43,7 @@ export function FooterSection() {
           </div>
 
           <nav
-            className="mt-6 h-[66px] md:mt-0 md:w-1/4 md:pl-10"
+            className="mt-5 h-[66px] md:mt-0 md:w-1/4 md:pl-10"
             aria-label="Social media"
           >
             <ul className="max-w-[275px] text-left md:text-right">
@@ -69,7 +69,7 @@ export function FooterSection() {
         </div>
 
         <div
-          className="relative mx-auto mt-5 w-full max-w-[1224px] overflow-hidden text-[11.2px] leading-[15.4px] font-semibold tracking-[.4px] [&_.creditos]:mt-2.5 [&_.creditos]:text-white [&_a]:font-bold [&_p]:font-normal [&_svg]:mx-[5px] [&_svg]:inline-block [&_svg]:translate-y-[3px] md:mt-20 md:w-[88%] md:text-[13.6px] md:leading-[17px] md:[&_.creditos]:absolute md:[&_.creditos]:right-0 md:[&_.creditos]:bottom-1 md:[&_.creditos]:mt-0"
+          className="relative mx-auto mt-5 min-h-[73.625px] w-full max-w-[1224px] overflow-hidden text-[11.2px] leading-[15.4px] font-semibold tracking-[.4px] [&_.creditos]:mt-2.5 [&_.creditos]:text-white [&_a]:font-bold [&_p]:font-normal [&_svg]:mx-[5px] [&_svg]:inline-block [&_svg]:translate-y-[3px] md:mt-20 md:min-h-0 md:w-[88%] md:text-[13.6px] md:leading-[17px] md:[&_.creditos]:absolute md:[&_.creditos]:right-0 md:[&_.creditos]:bottom-1 md:[&_.creditos]:mt-0"
           dangerouslySetInnerHTML={{ __html: content.footer.copyrightHtml }}
         />
       </footer>

@@ -27,7 +27,7 @@ export function HeroSection() {
           />
         </header>
 
-        <div className="my-[15px] block text-[12.6px] leading-5 font-semibold uppercase text-[#606060] md:mt-[25px] md:mb-[50px] md:h-5 md:text-[15.98px]">
+        <div className="mt-[15px] mb-5 block h-5 text-[12.6px] leading-5 font-semibold uppercase text-[#606060] md:mt-[25px] md:mb-[50px] md:text-[15.98px]">
           <span className="inline-block h-5 leading-[22px]">{content.hero.version}</span>
           <span className="ml-[5px] inline-block h-5 border-l-2 border-[#a87be9] pl-[5px] leading-[22px] text-[#9c9ba0] md:ml-[15px] md:border-l-[3px] md:pl-[15px]">
             {content.hero.updated}
