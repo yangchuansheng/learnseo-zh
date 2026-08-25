@@ -955,7 +955,7 @@
       },
       {
         "question": "SEO 有需求吗？",
-        "answerHtml": "<p>SEO 仍然有稳定需求。大量在线体验从搜索开始，企业持续需要提升自然搜索流量，因此 SEO 服务与相关岗位长期存在。</p>"
+        "answerHtml": "<p>SEO 在 2023 年有需求。68% 的在线体验从搜索引擎开始（<a href=\"https://videos.brightedge.com/research-report/BrightEdge_ChannelReport2019_FINAL.pdf\">1</a>），SEO 行业预计在 2023 年达到 $77.6 billion（<a href=\"https://www.gotchseo.com/is-seo-a-good\">2</a>），对 SEO 服务的需求也持续增长。美国市场的需求在 2022 年 12 月达到峰值，增长明显的关键词包括“seo local”“seo agency”“seo content”“seo consultant”和“seo analytics”（<a href=\"https://searchengineland.com/seo-is-alive-392901\">3</a>）。</p>"
       },
       {
         "question": "SEO 需要编程吗？",
@@ -967,11 +967,11 @@
       },
       {
         "question": "做 SEO 能赚钱吗？",
-        "answerHtml": "<p>可以。SEO 既有企业内部岗位，也有顾问、代理机构和内容网站等职业路径。市场对能提升自然搜索表现的专业人才持续有需求。</p>"
+        "answerHtml": "<p>可以。SEO 提供多种职业机会，你可以在企业内部工作、承接客户，或创建并发展自己的网站。专业 SEO 人才也有重要市场需求：截至 2023 年，美国 Glassdoor 上列出了 7430 个<a href=\"https://www.glassdoor.com/Job/united-states-seo-jobs-SRCH_IL.0,13_IN1_KO14,17.htm\"> SEO 职位</a>，体现出市场对相关技能的需求。<a href=\"https://www.ziprecruiter.com/Salaries/SEO-Salary\">根据 ZipRecruiter</a>，截至 2023 年 5 月，美国 SEO 专家的平均年薪为 $64,172。</p>"
       },
       {
         "question": "应该按什么顺序学习 SEO 路线图？",
-        "answerHtml": "<p>建议先学习<a href=\"/seo_roadmap/seo-fundamentals/\"><strong>SEO 基础知识</strong></a>，再学习<a href=\"/seo_roadmap/execute-seo/\"><strong>执行 SEO 流程</strong></a>，之后根据工作场景学习免费工具、CMS 实施、深入知识、专业方向、自动化、行业新闻和相关数字营销能力。</p>"
+        "answerHtml": "<h3><strong>适合开始学习的 SEO 初学者：</strong></h3>\n<p>如果你刚开始学习 SEO，先从第一阶段<a href=\"/seo_roadmap/seo-fundamentals/\"><strong>学习 SEO 基础知识</strong></a>开始，掌握影响 SEO 的主要概念与领域、搜索引擎抓取与工作方式、标题标签、内部链接、搜索排名影响因素、关键词研究、内容优化和链接建设等。</p>\n<p>接着学习第二阶段<a href=\"/seo_roadmap/execute-seo/\"><strong>执行 SEO 流程</strong></a>，了解如何进行页面 SEO 审计、制定链接建设策略、监测搜索排名与网站可见度。</p>\n<p>如果你希望在自己的网站上以较低成本实践 SEO，可以查看<a href=\"/seo_roadmap/seo-tools/\"><strong>使用免费 SEO 工具实施</strong></a>，了解页面优化、页面速度和关键词工具。</p>\n<p>如果你使用 WordPress、Shopify、Magento 或 Webflow，可以查看<a href=\"/seo_roadmap/implement-in-cms/\"><strong>在 CMS 中实施 SEO</strong></a>，获取适配常用平台的实操建议。</p>\n<p>&nbsp;</p>\n<h3><strong>适合拓展知识的 SEO 从业者：</strong></h3>\n<p>通过<a href=\"/seo_roadmap/deepen-knowledge/\"><strong>加深 SEO 知识</strong></a>，从网站速度、内容策略、技术 SEO、链接建设和管理等方面建立更深入的理解。</p>\n<p>根据所在公司或行业，从<a href=\"/seo_roadmap/specialize/\"><strong>专注 SEO 专项</strong></a>中选择希望深入的方向。</p>\n<p>当你发现某些 SEO 任务适合自动化，并愿意学习编程或脚本语言时，可以查看<a href=\"/seo_roadmap/automate-tasks/\"><strong>自动化 SEO 任务</strong></a>。</p>\n<p>同步关注最新的 SEO 更新与搜索引擎新闻，查看<a href=\"/seo_roadmap/keep-up-with-news/\"><strong>及时了解 SEO 新闻</strong></a>中的可靠出版物、播客和通讯。</p>\n<p>最后，通过<a href=\"/seo_roadmap/complement-knowledge/\"><strong>补充 SEO 知识</strong></a>学习 Google Analytics、前端 Web 开发等相关数字营销能力。</p>"
       },
       {
         "question": "需要学习路线图中的所有领域吗？",
@@ -983,7 +983,7 @@
       },
       {
         "question": "学习 SEO 时要避免哪些问题？",
-        "answerHtml": "<p>重点防范过时信息、只看理论不实践、盲目复制所谓排名技巧，以及忽视内容、技术 SEO 和其他营销渠道之间的协作。优先选择可靠来源并用小范围测试验证结论。</p>"
+        "answerHtml": "<p>学习 SEO 时存在一些常见挑战，需要提前了解。以下是经验丰富的 SEO 专家分享的主要问题：</p>\n<ul>\n<li>“错误信息或过时信息。在互联网上，从排名研究到黑帽论坛，有人说了一些话就被当作事实，这种情况很奇怪。” –&nbsp;<a href=\"https://twitter.com/dergal\">Gerry White</a>，SEO 总监兼 TakeItOffiline 联合组织者。</li>\n<li>“因为学习新知识而感到不知所措。我认为这种情况很常见，尤其是学习技术 SEO 时，面对新知识会感到非常不知所措。重要的是给自己时间、寻求帮助，并相信自己最终会掌握它。” –&nbsp;<a href=\"https://twitter.com/areej_abuali\">Areej AbuAli</a>，SEO 顾问兼 Women in Tech SEO 创始人。</li>\n<li>“认为‘在&lt;6 小时内教会我或我的团队所有 SEO 知识’可行，这注定会失败。你需要学习原则，先用自己的需求审视这些原则，再应用它们积累经验。这需要时间，每个人都需要保持现实的预期。” –&nbsp;<a href=\"https://twitter.com/chrisgreenseo\">Chris Green</a>，Torque Partnership 高级 SEO 顾问。</li>\n<li>“我认为边学边不实践是个问题。来自可靠来源的课程和指南是学习 SEO 的好方法，但它们只是其中一面。如果不尝试所学内容，你永远不会知道什么有效、什么无效。条件允许时，可以搭建网站，或向家人和亲友请求访问权限，谨慎实践所学内容。这样既能学习，也能取得哪怕很小的成果，为获得第一份 SEO 工作提供帮助。这对我有效。” –&nbsp;<a href=\"https://twitter.com/Ka3rne\">Katherine Nwanorue</a>，技术 SEO 专家。</li>\n<li>“错误：相信网上发布的每一条信息。解决方案：阅读他人的观点或展示内容，同时保持独立判断。测试、分析后再做决定。进行全站更改前，始终先在少量页面上测试。” –&nbsp;<a href=\"https://twitter.com/MusingPraveen\">Praveen Sharma</a>，SEO 顾问兼策略师。</li>\n<li>“对我而言，最重要的是了解到内容、技术 SEO 和其他数字渠道必须协同工作才能成功。” –&nbsp;<a href=\"https://twitter.com/HollerVeronika\">Veronika Hoeller</a>，高级 SEO 经理。</li>\n<li>“对于初学者而言，学习 SEO 最大的痛点是错误信息。初学者难免感到不知所措，也不知道如何辨别事实与虚假信息（尤其是在搜索结果中）。理想的做法是加入论坛或 Slack 频道，例如 Tech SEO Women 的频道，在健康的交流环境中获得可靠反馈。加入免费，反馈来自专业人士。” –&nbsp;<a href=\"https://twitter.com/clorinda__\">Iman</a>，SEO 专家。</li>\n</ul>"
       },
       {
         "question": "如何及时了解 SEO 新闻？",

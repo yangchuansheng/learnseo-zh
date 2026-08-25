@@ -1,7 +1,7 @@
 {
   "locale": "zh-CN",
   "sourceContentSha256": "5acd71d3c08dc443b6d51a95f7a065118561a17b52d03cbf097a9a75b9e7d02e",
-  "localizedContentSha256": "5e465d6a10bd2f1c1cc36b682a5e7cd9cc3694e4447df769d4bbd492a6520177",
+  "localizedContentSha256": "3e065fa4278323db82a5f099015c0b5aff5d1ebaaea24e897fe0ff8ceb19b2a6",
   "sourceManifestSha256": "c22162f9ebb95bafb7a9519cc512a1ee511b9bc579a27a90afee2fb9e3d21b1d",
   "segments": {
     "1": "1",
@@ -4362,6 +4362,10 @@
     "Can I learn SEO on my own?": "可以自学 SEO 吗？",
     "Although it’s always easier to learn anything when someone with experience is guiding you, it’s feasible to learn SEO on your own and that is the reason why LearningSEO.io was created: to facilitate the self-learning SEO journey of newcomers through reliable free resources that can be read or watched in a logical order to better understand the concepts and putting them into practice. It’s also highly advisable to test while learning, by putting into practice what you learn on your own site, even if you build a simple one with no-code tools for this purpose.&nbsp;": "可以。LearningSEO.io 通过可靠的免费资源帮助初学者按合理顺序学习 SEO。学习过程中建议在自己的网站上实践，即使使用无代码工具搭建简单网站也能积累经验。",
     "Is SEO in demand?": "SEO 有需求吗？",
+    "Yes, SEO is in demand in 2023. This demand is evident in several ways: 68% of online experiences begin with a search engine (": "SEO 在 2023 年有需求。68% 的在线体验从搜索引擎开始（",
+    "), the SEO industry was predicted to reach $77.6 billion in 2023 (": "），SEO 行业预计在 2023 年达到 $77.6 billion（",
+    ") and demand for SEO services continues to grow. In the US, the demand peaked in December 2022, and key search phrases showing significant growth include “seo local,” “seo agency,” “seo content,” “seo consultant,” and “seo analytics” (": "），对 SEO 服务的需求也持续增长。美国市场的需求在 2022 年 12 月达到峰值，增长明显的关键词包括“seo local”“seo agency”“seo content”“seo consultant”和“seo analytics”（",
+    ").&nbsp;": "）。",
     "Does SEO require coding?": "SEO 需要编程吗？",
     "SEO doesn’t require coding, but understanding some basic elements of Web coding -HTML and JS- that affect the capacity of search engines to access your content and rank it, can certainly help you, especially when doing technical SEO. You have reliable": "SEO 入门无需编程。了解 HTML、CSS 和 JavaScript 等 Web 基础，有助于处理技术 SEO，相关资源见",
     "resources, as well as": "和",
@@ -4370,13 +4374,60 @@
     "Does Google offer an SEO Certification?": "Google 提供 SEO 认证吗？",
     "No, Google doesn’t have an official SEO certification. They offer guides and best practices but don’t provide SEO certifications.&nbsp;": "Google 没有官方 SEO 认证，Google 提供 SEO 指南与最佳实践。",
     "Can you make money doing SEO?": "做 SEO 能赚钱吗？",
+    "Yes. SEO offers diverse career opportunities, from working in-house to taking on clients or starting and growing your own websites. There is an important demand for SEO specialists too: As of 2023, there are 7430": "可以。SEO 提供多种职业机会，你可以在企业内部工作、承接客户，或创建并发展自己的网站。专业 SEO 人才也有重要市场需求：截至 2023 年，美国 Glassdoor 上列出了 7430 个",
+    "SEO jobs listed in the United States on Glassdoor": "SEO 职位",
+    ", indicating substantial demand for these skills in the job market.": "，体现出市场对相关技能的需求。",
+    "According to ZipRecruiter": "根据 ZipRecruiter",
+    ", as of May 2023, the average annual pay for an SEO Specialist in the United States is $64,172.&nbsp;": "，截至 2023 年 5 月，美国 SEO 专家的平均年薪为 $64,172。",
     "In what order should you go through the SEO roadmap?": "应该按什么顺序学习 SEO 路线图？",
+    "For SEO Beginners Looking to Start Learning:&nbsp;": "适合开始学习的 SEO 初学者：",
+    "If you’re just starting to learn SEO, begin with the first phase “": "如果你刚开始学习 SEO，先从第一阶段",
+    "Learn SEO Basics": "学习 SEO 基础知识",
+    "” which teaches about the main concepts and areas that influence SEO, what are search engine crawlers and how they work, what are title tags, what is an internal link, what impact search rankings, what doesn’t affect search results, how to identify relevant keywords with keyword research tools, how to optimize relevant content, what is link building and what link metrics to pay attention to, and more start with your understanding of SEO and most common SEO issues.&nbsp;": "开始，掌握影响 SEO 的主要概念与领域、搜索引擎抓取与工作方式、标题标签、内部链接、搜索排名影响因素、关键词研究、内容优化和链接建设等。",
+    "Then follow with the second phase “": "接着学习第二阶段",
+    "Learn to Execute an SEO Process": "执行 SEO 流程",
+    "” which covers what SEO needs to be implemented, fundamental to have an “overview” of how the SEO process actually works from a strategical standpoint to attract the desired relevant traffic: How to develop an on page SEO audit, how to establish a link building strategy or how to monitor your search engine rankings or Website’s visibility.&nbsp;": "，了解如何进行页面 SEO 审计、制定链接建设策略、监测搜索排名与网站可见度。",
+    "If you want to start executing an SEO campaign for hands-on experience for free or very little resources in your own sites, take a look at the “": "如果你希望在自己的网站上以较低成本实践 SEO，可以查看",
+    "Implement with Free SEO tools": "使用免费 SEO 工具实施",
+    "” section to obtain reliable handy free tools to use in your first SEO processes: from on page optimization to page speed, and keyword tools, with tips from SEO experts about how to use them.": "，了解页面优化、页面速度和关键词工具。",
+    "Have a WordPress site? Or a Website using Shopify, Magento or Webflow? If the site you’re working on is using one of the most popular Web platforms, take a look at the “": "如果你使用 WordPress、Shopify、Magento 或 Webflow，可以查看",
+    "Implement SEO in your CMS": "在 CMS 中实施 SEO",
+    "“, to get hands-on advice to effectively implement SEO related best practices in them, leveraging these platforms functionalities and plug-ins.&nbsp;&nbsp;": "，获取适配常用平台的实操建议。",
+    "For SEOs Looking to Expand Knowledge:&nbsp;": "适合拓展知识的 SEO 从业者：",
+    "Expand your SEO knowledge beyond the fundamentals, to take your organic search results to the next level with the “": "通过",
+    "” to get more in-depth SEO understanding: from site speed to content strategy, this section covers the different technical, content, backlinks, management and opportunities across different day to day SEO scenarios.&nbsp;": "，从网站速度、内容策略、技术 SEO、链接建设和管理等方面建立更深入的理解。",
+    "Depending on the type of company or industry you’re working for (or want to work at) you might want to decide to specialize, and for that you can pick the specialization you’re interested about from the “": "根据所在公司或行业，从",
+    "” area.&nbsp;": "中选择希望深入的方向。",
+    "At this point, you would have already started with your SEO process implementation and seen there are very time-consuming tasks that within your context they should be viable to automate and you already know (or willing to learn) some of the most popular programming/scripting languages to automate them. For that take a look at the “": "当你发现某些 SEO 任务适合自动化，并愿意学习编程或脚本语言时，可以查看",
+    "” section.": "。",
+    "In parallel, I would recommend you to start following the latest SEO related updates and search engine news, to keep up with all what you’ve started to learn. Check out the “": "同步关注最新的 SEO 更新与搜索引擎新闻，查看",
+    "” for that, listing reliable SEO publications, podcasts, newsletters, etc. that you can subscribe to.&nbsp;": "中的可靠出版物、播客和通讯。",
+    "Finally, to complement your SEO journey and support your efforts through the execution of the SEO process, you can take a look at the “": "最后，通过",
+    "Complement your SEO Knowledge": "补充 SEO 知识",
+    "” section, listing broader digital marketing&nbsp; resources of connected areas known to be useful for SEO projects success, although not SEO specific, like using Google Analytics, or the building blocks of Front-End Web Development.&nbsp;": "学习 Google Analytics、前端 Web 开发等相关数字营销能力。",
     "Should you go through all the areas and resources of the SEO Roadmap to learn SEO?": "需要学习路线图中的所有领域吗？",
     "Can you help me to sort out why a page doesn’t rank better (or at all)?": "如何判断页面为什么没有排名？",
     "Sure thing! “Why a page is not ranking for a relevant query in Google Search results” is one of the most common questions you’ll get asked as an SEO. To help you,&nbsp;": "可以使用",
     "here’s a checklist with basic SEO diagnostics questions to ask,": "页面排名诊断清单",
     "&nbsp;as well as areas to analyze and types of tools to use, including a Google Sheets resource too.&nbsp;": "，从搜索意图、内容、技术配置、内部链接和外部信号等方面逐项排查。",
     "What are the top issues, challenges and mistakes to avoid when learning SEO?": "学习 SEO 时要避免哪些问题？",
+    "There are common challenges when learning SEO that would be important to be aware of to avoid. Here are top ones shared by experienced SEO specialists:&nbsp;": "学习 SEO 时存在一些常见挑战，需要提前了解。以下是经验丰富的 SEO 专家分享的主要问题：",
+    "“Misinformation or out of date information. It’s strange how many people have read things on the internet, from ranking studies to black hat forums where someone has said something and it has been treated as factual.” –&nbsp;": "“错误信息或过时信息。在互联网上，从排名研究到黑帽论坛，有人说了一些话就被当作事实，这种情况很奇怪。” –&nbsp;",
+    ", SEO Director and co-organizer of TakeItOffiline.&nbsp;": "，SEO 总监兼 TakeItOffiline 联合组织者。",
+    "“Feeling overwhelmed because I’m learning something new. I think that’s very common, especially with Tech SEO, to feel extremely overwhelmed by what you’re learning. It’s important to take your time, ask for help and to believe that you’ll eventually ‘get’ it.” –&nbsp;": "“因为学习新知识而感到不知所措。我认为这种情况很常见，尤其是学习技术 SEO 时，面对新知识会感到非常不知所措。重要的是给自己时间、寻求帮助，并相信自己最终会掌握它。” –&nbsp;",
+    ", SEO Consultant &amp; Founder of Women in Tech SEO.&nbsp;": "，SEO 顾问兼 Women in Tech SEO 创始人。",
+    "“The idea that *Teach me/my team everything about SEO in &lt;6hr* works – is a recipe for failure. You need to learn principles, you view them 1st with a lens to your own needs &amp; then you apply them to gain experience. This takes time, everyone needs realistic expectations here.” –&nbsp;": "“认为‘在&lt;6 小时内教会我或我的团队所有 SEO 知识’可行，这注定会失败。你需要学习原则，先用自己的需求审视这些原则，再应用它们积累经验。这需要时间，每个人都需要保持现实的预期。” –&nbsp;",
+    ", Senior SEO Consultant at Torque Partnership.": "，Torque Partnership 高级 SEO 顾问。",
+    "“I’d say learning without practicing. Courses and guides from the right sources are good ways to learn SEO, but they are just one side of it. If you don’t try out what you’re learning, you’ll never know what works and what doesn’t. If possible, build a website or ask family &amp; close friends for access to theirs and practice what you learn (cautiously). This way, you not only learn but can get results, no matter how small, that’ll come in handy in landing your first SEO job. It worked for me.” –&nbsp;": "“我认为边学边不实践是个问题。来自可靠来源的课程和指南是学习 SEO 的好方法，但它们只是其中一面。如果不尝试所学内容，你永远不会知道什么有效、什么无效。条件允许时，可以搭建网站，或向家人和亲友请求访问权限，谨慎实践所学内容。这样既能学习，也能取得哪怕很小的成果，为获得第一份 SEO 工作提供帮助。这对我有效。” –&nbsp;",
+    "Katherine Nwanorue": "Katherine Nwanorue",
+    ", Technical SEO Specialist": "，技术 SEO 专家。",
+    "“Mistake: Believing every piece of information published online. Solution: Do read what others have to say or present but don’t believe it blindly. Test and analyse it, then make your decisions. Always test on a small sample of pages first before making sitewide changes.” –&nbsp;": "“错误：相信网上发布的每一条信息。解决方案：阅读他人的观点或展示内容，同时保持独立判断。测试、分析后再做决定。进行全站更改前，始终先在少量页面上测试。” –&nbsp;",
+    ", SEO Consultant &amp; Strategist&nbsp;": "，SEO 顾问兼策略师。",
+    "“For me it was to learn that content, technical SEO and other digital channels have to work together to be successful” –&nbsp;": "“对我而言，最重要的是了解到内容、技术 SEO 和其他数字渠道必须协同工作才能成功。” –&nbsp;",
+    ", Senior SEO Manager&nbsp;": "，高级 SEO 经理。",
+    "“In SEO the biggest pain point in learning it as a beginner is misinformation. Beginners will inevitably feel overwhelmed and would not know how to discern fact from disinformation (esp. SERP searches). Ideally the best way to go would be to join a forum or slack channel, like the one for tech seo women, where you can get legitimate feedback in a healthy manner. It’s free and the feedback is from professionals.” –&nbsp;": "“对于初学者而言，学习 SEO 最大的痛点是错误信息。初学者难免感到不知所措，也不知道如何辨别事实与虚假信息（尤其是在搜索结果中）。理想的做法是加入论坛或 Slack 频道，例如 Tech SEO Women 的频道，在健康的交流环境中获得可靠反馈。加入免费，反馈来自专业人士。” –&nbsp;",
+    "Iman": "Iman",
+    ", SEO Specialist": "，SEO 专家。",
     "How can I stay updated with the latest SEO updates and news?": "如何及时了解 SEO 新闻？",
     "Subscribe to the": "可以订阅",
     "SEOFOMO newsletter,": "SEOFOMO 通讯",
@@ -4906,7 +4957,7 @@
     },
     "5403f1ab90285065f3dfa1f5989103658265ad192132de9f64f993a8273c0044.html": {
       "sourceSha256": "5403f1ab90285065f3dfa1f5989103658265ad192132de9f64f993a8273c0044",
-      "localizedSha256": "a372661ea08aa37359e70a00fbeff00d0400580548ffb68f719e778fe6505bdb"
+      "localizedSha256": "9212161a6f7defc98efb690b580411ba729350b8b8554feb49da0fd197e4926f"
     },
     "5559be6759beb191dd7a22ef3e358a81bfa0eedbbecdb79b096bbec3a616c41b.html": {
       "sourceSha256": "5559be6759beb191dd7a22ef3e358a81bfa0eedbbecdb79b096bbec3a616c41b",
@@ -4950,7 +5001,7 @@
     },
     "64e3292e1f8a380f97626b5fa15a2f45f76cc5517a843be7b1cd54bf1aac4322.html": {
       "sourceSha256": "64e3292e1f8a380f97626b5fa15a2f45f76cc5517a843be7b1cd54bf1aac4322",
-      "localizedSha256": "b8862e82eed780de065b1a243820fa3092b1bb3db133556cecff6a6ddaa58250"
+      "localizedSha256": "c542346930586e808117440083d3945b0f44781ab01bfc1e1660883ef64134bf"
     },
     "693d2f9d84b0b7677be7c328927a3639e980b5a747fb2d02578cf5a2899c6fdf.html": {
       "sourceSha256": "693d2f9d84b0b7677be7c328927a3639e980b5a747fb2d02578cf5a2899c6fdf",
@@ -5062,7 +5113,7 @@
     },
     "978eacf621067e6078f16f4c26fd98abce89d9db5aeae7fe38855d385a729fd4.html": {
       "sourceSha256": "978eacf621067e6078f16f4c26fd98abce89d9db5aeae7fe38855d385a729fd4",
-      "localizedSha256": "d954ef357303fa21fc1056fb141b715d81998a3c920f16819db424f2b98ed435"
+      "localizedSha256": "caa103daa7362964390e1eab3b997277051187912ec24efca88ba0845d34d395"
     },
     "98e29c725df82e4e92e49e19f8085d51e7651f6bf9b848af9abf428065a3f624.html": {
       "sourceSha256": "98e29c725df82e4e92e49e19f8085d51e7651f6bf9b848af9abf428065a3f624",
@@ -5274,7 +5325,7 @@
     },
     "e978222c8bc5d76a343255349fda13b7a932b96ff72f1166715d1fa7cb786d2b.html": {
       "sourceSha256": "e978222c8bc5d76a343255349fda13b7a932b96ff72f1166715d1fa7cb786d2b",
-      "localizedSha256": "15ad2e6aec284f49a51fe07a9565ff2e466b3bd8337186d54d0f703df4cea6de"
+      "localizedSha256": "e55e4f025b224062d937ddbd23e41175d2279eea27cd2a268c2e0f7b14d4e8c4"
     },
     "e97f153336fcfb4760bf9918d90781620c3d93552eb2ad1e77b3c62b22d334d7.html": {
       "sourceSha256": "e97f153336fcfb4760bf9918d90781620c3d93552eb2ad1e77b3c62b22d334d7",
@@ -5318,7 +5369,7 @@
     },
     "fab78e45f7aa22b81a45fa71e0aca617a4ab574bbd3d486a2e4acbb8387ed711.html": {
       "sourceSha256": "fab78e45f7aa22b81a45fa71e0aca617a4ab574bbd3d486a2e4acbb8387ed711",
-      "localizedSha256": "cced00afb0d8fa7c53f200030d270aaac36ed2533ca9f44a7911377e1414a746"
+      "localizedSha256": "7021564775290f74660478395809637fdf91673ba38eb2f3ed720513f5afe724"
     },
     "faceab8d2021420963cf577ca86be3194c5f0e4864b34fbefe1e8d2a8adf85ce.html": {
       "sourceSha256": "faceab8d2021420963cf577ca86be3194c5f0e4864b34fbefe1e8d2a8adf85ce",

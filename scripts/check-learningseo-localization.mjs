@@ -42,6 +42,7 @@ const protectedTerms = [
   "Ahrefs",
 ];
 const personNamePattern = /^\p{Lu}[\p{L}'’.-]*(?:\s+\p{Lu}[\p{L}'’.-]*){1,3}$/u;
+const singleNamePattern = /^\p{Lu}[\p{L}'’.-]*(?:\s+\p{Lu}[\p{L}'’.-]*){0,3}$/u;
 
 function sha256(value) {
   return crypto.createHash("sha256").update(value).digest("hex");
@@ -114,6 +115,12 @@ function personalNames(html) {
     /<a\b[^>]*\bhref=(['"])(?:https?:\/\/(?:www\.)?linkedin\.com\/in\/|https?:\/\/(?:www\.)?aleydasolis\.com\/)[^'"]*\1[^>]*>([\s\S]*?)<\/a>/gi,
   )) {
     add(match[2].replace(/<[^>]+>/g, " "));
+  }
+  for (const match of html.matchAll(
+    /<a\b[^>]*\bhref=(['"])https?:\/\/(?:www\.)?twitter\.com\/(?!intent(?:\/|$))[^'"]*\1[^>]*>([\s\S]*?)<\/a>/gi,
+  )) {
+    const name = match[2].replace(/<[^>]+>/g, " ").replace(/&nbsp;/gi, " ").replace(/\s+/g, " ").trim();
+    if (singleNamePattern.test(name)) names.add(name);
   }
   for (const match of html.matchAll(/<p\b[^>]*>\s*([^<]+?)\s*<\/p>/gi)) add(match[1]);
   for (const paragraph of html.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)) {
@@ -215,6 +222,23 @@ function collectLinks(value, links = []) {
   return links;
 }
 
+function collectHtmlUrls(value, path = "", urls = []) {
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectHtmlUrls(item, `${path}[${index}]`, urls));
+  } else if (value && typeof value === "object") {
+    Object.entries(value).forEach(([key, child]) =>
+      collectHtmlUrls(child, path ? `${path}.${key}` : key, urls),
+    );
+  } else if (typeof value === "string" && value.includes("<")) {
+    for (const match of value.matchAll(
+      /\b(?:href|src|data-src|data-cookieblock-src)=(['"])(.*?)\1/gi,
+    )) {
+      urls.push({ path, value: match[2] });
+    }
+  }
+  return urls;
+}
+
 function collectStringValues(value, strings = []) {
   if (Array.isArray(value)) {
     value.forEach((item) => collectStringValues(item, strings));
@@ -256,6 +280,12 @@ assert.ok(
     ({ path, value }) => localizedAuthors.get(path) === value,
   ),
   "Homepage author names changed",
+);
+
+assert.deepEqual(
+  collectHtmlUrls(chineseContent),
+  collectHtmlUrls(sourceContentJson),
+  "Homepage embedded HTML URLs changed",
 );
 
 assert.deepEqual(collectLinks(chineseContent), collectLinks(sourceContentJson), "Homepage URLs changed");
