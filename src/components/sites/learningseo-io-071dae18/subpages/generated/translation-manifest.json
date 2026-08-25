@@ -122,7 +122,7 @@
     "SEO for Shopify FAQs": "Shopify SEO 常见问题解答",
     "Is Shopify an SEO friendly platform?": "Shopify 是一个 SEO 友好的平台吗？",
     "Yes, Shopify is generally considered an SEO-friendly platform. It offers a range of built-in features and tools that facilitate the implementation of essential SEO best practices. However, like any platform, there are both strengths and limitations to its SEO capabilities. Among the strengths: User-Friendly Interface, Mobile Responsiveness, good site speed, SSL Certificate, Basic SEO Features, and Integration with SEO Apps. However, it also has some limitations:": "是的，Shopify 通常被认为是一个 SEO 友好的平台。它提供了一系列内置功能和工具，有助于实施基本的 SEO 最佳实践。然而，与任何平台一样，其 SEO 功能既有优点也有局限性。优点包括：用户友好的界面、移动响应能力、良好的网站速度、SSL 证书、基本 SEO 功能以及与 SEO 应用程序集成。不过，它也有（SEO Apps） 一些限制：",
-    "* URL Structure:": "* 网址结构：",
+    "* URL Structure:": "Sally Raymer",
     "Shopify has a fixed URL structure for products and pages that may not be ideal for all SEO strategies, especially since it adds extra terms like /products/ or /collections/.": "Shopify 对产品和页面有固定的 URL 结构，这可能并不适合所有 SEO 策略，特别是因为它添加了额外的术语，如 /products/ 或 /collections/。",
     "* Limited Redirect Capabilities:": "* 有限的重定向功能：",
     "While Shopify does allow 301 redirects, managing large numbers of redirects can be cumbersome, especially during site migrations.": "虽然 Shopify 确实允许 301 重定向，但管理大量重定向可能很麻烦，尤其是在网站迁移期间。",
@@ -272,7 +272,7 @@
     "SEO FUNDAMENTALS": "搜索引擎优化基础知识",
     "Introduction to SEO": "搜索引擎优化简介",
     "Keyword Research": "关键词研究",
-    "Andy Chadwick": "安迪·查德威克",
+    "Andy Chadwick": "Andy Chadwick",
     "Competition Analysis": "竞争分析",
     "Jo Turnbull": "Jo Turnbull",
     "Content Optimization": "内容优化",
@@ -286,9 +286,9 @@
     "Establishing an SEO Strategy": "制定 SEO 策略",
     "Tory Gray": "Tory Gray",
     "Setting SEO Goals": "设定 SEO 目标",
-    "Kevin Gibbons": "凯文·吉本斯",
+    "Kevin Gibbons": "Kevin Gibbons",
     "Measuring SEO": "衡量搜索引擎优化",
-    "Cyrus Shepard": "赛勒斯·谢泼德",
+    "Cyrus Shepard": "Cyrus Shepard",
     "Reporting SEO": "报告搜索引擎优化",
     "SEO Process Management": "SEO流程管理",
     "Judith Lewis": "Judith Lewis",
@@ -301,31 +301,31 @@
     "Gerry White": "格里·怀特",
     "Internal Linking": "内部链接",
     "Web Speed Optimization": "网络速度优化",
-    "Jamie Indigo": "杰米·靛蓝",
+    "Jamie Indigo": "Jamie Indigo",
     "Mobile Optimization": "移动优化",
-    "Cindy Krum": "辛迪·克鲁姆",
+    "Cindy Krum": "Cindy Krum",
     "Structured Data": "结构化数据",
     "Andrea Volpini": "Andrea Volpini",
     "Developing Topic Clusters": "开发主题集群",
     "Suganthan Mohanadasan": "Suganthan Mohanadasan",
     "Keyword Mapping": "关键词映射",
-    "Chima Mmeje": "奇马·姆梅杰",
+    "Chima Mmeje": "Chima Mmeje",
     "EEAT": "EEAT",
     "Lily Ray": "Lily Ray",
     "Content Pruning": "内容修剪",
     "Itamar Blauer": "Itamar Blauer",
     "Image Optimization": "图像优化",
-    "Brodie Clark": "布罗迪·克拉克",
+    "Brodie Clark": "Brodie Clark",
     "Video Optimization": "视频优化",
     "Izzi Smith": "Izzi Smith",
     "SERP Features Optimization": "SERP 功能优化",
-    "Aymen Loukil": "艾门·卢基尔",
+    "Aymen Loukil": "Aymen Loukil",
     "SEO Forecasting": "SEO预测",
     "Daniel K Cheung": "张丹尼尔",
     "Calculate SEO ROI": "计算 SEO 投资回报率",
-    "Miracle Inameti-Archibong": "奇迹伊纳梅蒂-阿奇邦",
+    "Miracle Inameti-Archibong": "Miracle Inameti-Archibong",
     "Show SEO value to Non-SEOs": "向非 SEO 人员展示 SEO 价值",
-    "Eli Schwartz": "伊莱·施瓦茨",
+    "Eli Schwartz": "Eli Schwartz",
     "Creating SEO Contracts": "创建 SEO 合同",
     "Mike King": "Mike King",
     "SEO Jobs Interviews": "SEO 工作面试",
@@ -333,13 +333,13 @@
     "Budgeting SEO": "预算搜索引擎优化",
     "Chris Simmance": "Chris Simmance",
     "Building an SEO Team": "建立SEO团队",
-    "Ulrika Viberg": "乌尔丽卡·维伯格",
+    "Ulrika Viberg": "Ulrika Viberg",
     "Communication with SEO Stakeholders": "与 SEO 利益相关者的沟通",
     "Silvia Martin": "Silvia Martin",
     "SEO Product Management": "SEO产品管理",
     "Gus Pelogia": "Gus Pelogia",
     "SEO Myths": "搜索引擎优化神话",
-    "Azeem Ahmad": "阿齐姆艾哈迈德",
+    "Azeem Ahmad": "Azeem Ahmad",
     "XML Sitemaps Optimization": "XML 站点地图优化",
     "Olga Zarr": "Olga Zarr",
     "Robots.txt Optimization": "Robots.txt优化",
@@ -347,21 +347,21 @@
     "Edge SEO": "边缘搜索引擎优化",
     "Nick Wilsdon": "尼克·威尔斯顿",
     "Outreach for Link Building": "外展链接建设",
-    "Gareth Hoyle": "加雷斯·霍伊尔",
+    "Gareth Hoyle": "Gareth Hoyle",
     "Backlinks Analysis": "反向链接分析",
     "Alexandra Tachalova": "Alexandra Tachalova",
     "Keyword Cannibalization Analysis": "关键词蚕食分析",
-    "Martin McDonald": "马丁·麦克唐纳",
+    "Martin McDonald": "Martin McDonald",
     "Crawl Budget Optimization": "抓取预算优化",
     "Roxana Stingu": "罗克珊娜·斯廷古",
     "SEO for Web Redesigns": "网站重新设计的 SEO",
     "Simon Cox": "Simon Cox",
     "SEO for New Web Launch": "新网站发布的 SEO",
-    "Jackie Chu": "朱杰基",
+    "Jackie Chu": "Jackie Chu",
     "Google Core Updates Recovery": "Google 核心更新恢复",
     "Glenn Gabe": "Glenn Gabe",
     "SEO For Web Migrations": "网站迁移的 SEO",
-    "Andrew Cock-Starkey": "安德鲁·科克-斯塔基",
+    "Andrew Cock-Starkey": "Andrew Cock-Starkey",
     "Optimizing Faceted Navigation": "优化分面导航",
     "Areej AbuAli": "Areej AbuAli",
     "Google Discover Optimization": "Google发现优化",
@@ -378,9 +378,9 @@
     "SaaS SEO": "SaaS 搜索引擎优化",
     "Patrick Stox": "Patrick Stox",
     "Enterprise SEO": "企业搜索引擎优化",
-    "Orit Mutznik": "奥里特·穆茨尼克",
+    "Orit Mutznik": "Orit Mutznik",
     "Small Business SEO": "小型企业搜索引擎优化",
-    "Blake Denman": "布莱克·丹曼",
+    "Blake Denman": "Blake Denman",
     "Local SEO": "本地搜索引擎优化",
     "Claire Carlile": "Claire Carlile",
     "AUTOMATE SEO TASKS": "自动化 SEO 任务",
@@ -756,11 +756,11 @@
     "Instead, AI search engines provide a direct answer synthesized from multiple sources – sometimes without the user clicking anything. In this case,&nbsp;your goal is to be cited in or contribute to the AI-generated response, with possible inline mentions or linked attribution (but often not a ranked link). LLM-powered systems synthesize information by issuing multiple subqueries (query fan-out) and extract relevant content spans from multiple documents. In this case, optimization efforts shift to structured content for easy chunking, entity optimization,&nbsp;citation-worthiness, etc.&nbsp;": "相反，人工智能搜索引擎提供从多个来源合成的直接答案——有时无需用户单击任何内容。在这种情况下，您的目标是在人工智能生成的响应中被引用或做出贡献，并可能有内联提及或链接归因（但通常不是排名链接）。 LLM 支持的系统通过发出多个子查询（查询扇出）来合成信息，并从多个子查询中提取相关内容跨度 文件。在这种情况下，优化工作转向结构化内容，以方便分块、实体优化、引用价值等。",
     "How should I structure my content to be more discoverable by AI search engines?": "我应该如何构建我的内容以便更容易被人工智能搜索引擎发现？",
     "To structure your content for maximum discoverability by AI search engines (Google AI Overviews, Bing Copilot, and Perplexity), you need to optimize not just for indexing, but for chunk-level retrieval, answer synthesis, and citation-worthiness.": "为了构建您的内容以最大程度地被 AI 搜索引擎（Google AI Overviews、Bing Copilot 和 Perplexity）发现，您不仅需要优化索引，还需要优化块级检索、答案合成和引文价值。",
-    "Optimize for Chunk-Level Retrieval:": "优化块级检索：",
+    "Optimize for Chunk-Level Retrieval:": "David Hunter",
     "Keep each passage tightly focused on a single concept (One idea per section), keep passages semantically tight and self-contained, each chunk should be independently understandable (rather than needing the whole page for context).&nbsp;": "让每个段落紧密关注一个概念（每个部分一个想法），保持段落语义紧凑且独立，每个块都应该是独立可理解的（而不是需要整个页面的上下文）。",
-    "Optimize for Answer Synthesis:": "优化答案合成：",
+    "Optimize for Answer Synthesis:": "Simon Vreeman",
     "your content must be easy to extract and logically structured to fit into a multi-source answer, start answers with a direct, concise sentence, use natural language Q&amp;A format, use plain, factual, non-promotional tone, summarize complex ideas clearly, then expand.&nbsp;": "您的内容必须易于提取且逻辑结构适合多源答案，以直接、简洁的句子开始答案，使用自然语言问答格式，使用简单、事实、非促销的语气，清楚地总结复杂的想法，然后进行扩展。",
-    "Optimize for Citation-Worthiness:": "优化引文价值：",
+    "Optimize for Citation-Worthiness:": "Ben Goodey",
     "AI engines will cite content when it’s perceived as factually accurate, well-structured, and authoritative. To earn attribution, your content must meet higher trust and clarity. Write neutral, fact-based statements, include source citations (link to studies, stats, or experts), show authorship and credentials (EEAT signals), use specific, verifiable claims.&nbsp;": "当人工智能引擎认为内容准确、结构良好且具有权威性时，就会引用内容。为了获得归属，您的内容必须满足更高的信任度和清晰度。撰写中立的、基于事实的陈述，包括来源引用（链接到研究、统计数据或专家），显示作者身份和凭据（EEAT 信号），使用具体的、可验证的声明。",
     "Besides the above, organize your content into topical clusters, use structured data and regularly update your content to keep it up-to-date.&nbsp;": "除此之外，将您的内容组织到主题集群中，使用结构化数据并定期更新您的内容以保持最新。",
     "What role do citations and source credibility play in AI search optimization?": "引用和来源可信度在人工智能搜索优化中发挥什么作用？",
@@ -2816,7 +2816,7 @@
     "“When writing schema markups – don’t follow the herd. try and test, go crazy, don’t be scare of errors and warnings. keep adjusting, try different structures, it’s not just about the types, it’s also the structure and connections, keep testing!”": "“编写模式标记时，不要随大流。尝试和测试，疯狂，不要害怕错误和警告。不断调整，尝试不同的结构，这不仅仅是类型，还有结构和连接，继续测试！”",
     "Shay Ohayon": "Shay Ohayon",
     "“Create your own site and don’t be afraid to break things. And of course use your GDS templates.”": "“创建您自己的网站，不要害怕破坏东西。当然还要使用您的 GDS 模板。”",
-    "Anne Hennegar": "安妮·亨尼格",
+    "Anne Hennegar": "Anne Hennegar",
     "“Learn how to learn. We work in an industry where we are constantly on new territory. This means that you need to learn the most effective way for you to develop learn new optimisations. Whether it’s videos, forums, courses, events or hands on tutorials, learning how to up-skill yourself is an incredible asset.”": "“了解如何学习。我们所处的行业不断涉足新领域。这意味着您需要学习最有效的方法来开发新的优化。无论是视频、论坛、课程、活动还是实践教程，学习如何提高自己的技能都是一笔令人难以置信的财富。”",
     "“Really study and learn the differences between JS crawling and rendering, as well as when to use server side delivery vs. client side delivery vs. hybrid delivery. Understand how Google crawls sites first, renders later and how important it is to fully present all of the critical signals upon crawl.”": "“真正研究和了解 JS 抓取和渲染之间的差异，以及何时使用服务器端交付、客户端交付和混合交付。了解 Google 如何先抓取网站，然后再渲染，以及在抓取时充分呈现所有关键信号的重要性。”",
     "Jenny Halasz": "Jenny Halasz",
@@ -2861,7 +2861,7 @@
     "It’s important to note, that as part of its goal and vision, LearningSEO.io is completely free and doesn’t accept or feature any adverts or paid inclusions into the site, to ensure a good, non-biased user experience, and is completely supported by Aleyda Solis resources as a way to give back to the SEO community.": "值得注意的是，作为其目标和愿景的一部分，LearningSEO.io 是完全免费的，不接受或在网站中包含任何广告或付费内容，以确保良好、无偏见的用户体验，并且完全得到 Aleyda Solis 资源的支持，作为回馈 SEO 社区的一种方式。",
     "Do you want to get in touch with Aleyda?": "您想与 Aleyda 取得联系吗？",
     "If you have any questions or doubts, want to submit a resource to the site or have feedback, feel free to": "如果您有任何问题或疑问，想要向网站提交资源或有反馈，请随时",
-    "reach Aleyda here": "在这里到达阿莱达",
+    "reach Aleyda here": "在这里联系 Aleyda",
     "Aleyda Solis - SEO Consultant &amp; Founder": "Aleyda Solis - SEO 顾问创始人",
     "Discover SEO implementation across various CMS platforms with our comprehensive collection of expert-backed guides and actionable resources. Whether you’re working with WordPress, Shopify, Wix, Magento, Webflow, or Squarespace, implementing effective SEO strategies in your content management system is crucial for organic growth.": "通过我们全面的专家支持指南和可操作资源集合，探索跨各种 CMS 平台的 SEO 实施。无论您使用的是 WordPress、Shopify、Wix、Magento、Webflow 还是 Squarespace，在内容管理系统中实施有效的 SEO 策略对于有机增长至关重要。",
     "Each CMS handles SEO differently—from URL structures and metadata management to technical configurations and plugin ecosystems. That’s why we’ve curated the most reliable, up-to-date SEO resources tailored specifically for each platform. You’ll discover step-by-step tutorials, best practices, and proven optimization techniques that help you leverage your CMS’s full SEO potential.": "每个 CMS 处理 SEO 的方式都不同——从 URL 结构和元数据管理到技术配置和插件生态系统。这就是为什么我们专门为每个平台定制了最可靠、最新的 SEO 资源。您将发现分步教程、最佳实践和经过验证的优化技术，帮助您充分利用 CMS 的 SEO 潜力。",
@@ -2886,7 +2886,7 @@
     "The 50-Step WordPress SEO Checklist To Boost Your Organic Traffic in 2023": "2023 年提高自然流量的 50 步 WordPress SEO 清单",
     "RankMath": "排名数学",
     "Wix SEO: How to Rank Better with Your Wix Website": "Wix SEO：如何使您的 Wix 网站排名更好（Your Wix Website）",
-    "Vlado Pavlik": "弗拉多·帕夫利克",
+    "Vlado Pavlik": "Vlado Pavlik",
     "The complete Wix SEO guide: Everything you need to know": "完整的 Wix SEO 指南：您需要了解的一切",
     "Mordy Oberstein /&nbsp; Wix": "Mordy Oberstein /&nbsp; Wix",
     "The Wix SEO Learning Hub": "Wix SEO 学习中心",
@@ -4710,15 +4710,15 @@
     },
     "03ed7c3bf0a90d1f38f17bcfc6e5068879444f91070f4f910d68cccaa06a2ab3.html": {
       "sourceSha256": "03ed7c3bf0a90d1f38f17bcfc6e5068879444f91070f4f910d68cccaa06a2ab3",
-      "localizedSha256": "2689f32b3e2aac0c805d6b6f3ed732677fbc24e359ccae9490cb2220353952f0"
+      "localizedSha256": "546c72c50e316faec03eba18768e88d60813d0e357c860ade1716d59c9a39174"
     },
     "052edbf1e3d50b2a89a59f3efe5f37f83ab5c5e73582568e2cb5317725b157ad.html": {
       "sourceSha256": "052edbf1e3d50b2a89a59f3efe5f37f83ab5c5e73582568e2cb5317725b157ad",
-      "localizedSha256": "842019c9905143573741b24251b66e81af16a0cd5f6aa733246c7d6390391983"
+      "localizedSha256": "506f4fd3338edd4e3115894d512cfa637bc1ece393c2b79c1e97854946c780ea"
     },
     "0656b294e108f307c520be78b4217c41c1948bebddd9cc33e52ccf062ce02a3b.html": {
       "sourceSha256": "0656b294e108f307c520be78b4217c41c1948bebddd9cc33e52ccf062ce02a3b",
-      "localizedSha256": "a4fb46fad1e0b70dd2af8b486935378f9b901afc1ffe26d1c7c275a97f4a9fb6"
+      "localizedSha256": "5f84045446232896a425ed783b6433494fe07636dcb547a4a0ad926ff59438e9"
     },
     "080f8cde98c941f03c827cea5ac76acb93e3d14bf29bf1b23b925f323eff0a0b.html": {
       "sourceSha256": "080f8cde98c941f03c827cea5ac76acb93e3d14bf29bf1b23b925f323eff0a0b",
@@ -4750,7 +4750,7 @@
     },
     "137a2f482c5d4cc7d05020365c8d200cf003d249b1cc72389fad873f0022c685.html": {
       "sourceSha256": "137a2f482c5d4cc7d05020365c8d200cf003d249b1cc72389fad873f0022c685",
-      "localizedSha256": "5dd8d395864538251703729af91e5009d9a11a21ad226dcd447441897eed0a58"
+      "localizedSha256": "1cb7b71826a7fca4aa50604bf8630b0d798d15cea7f59f4204ff8308ce8d92bb"
     },
     "13f1ed17faddad97d05b680a7488270891693e4583bb9ef35f7075be049b90da.html": {
       "sourceSha256": "13f1ed17faddad97d05b680a7488270891693e4583bb9ef35f7075be049b90da",
@@ -4794,7 +4794,7 @@
     },
     "1f2c313c46d1fc3f74d948d0d2b37c40e01cb84ab6e7aedafe9245a65f619979.html": {
       "sourceSha256": "1f2c313c46d1fc3f74d948d0d2b37c40e01cb84ab6e7aedafe9245a65f619979",
-      "localizedSha256": "4589529fab2453387b33066dac914a73a6ca14efd1da17e2f9c2bd47db8c01af"
+      "localizedSha256": "57b54dfe27a4575a088e8d43c6be6b27d40d2960772f1cbfc783d8581c7d4db2"
     },
     "2045e745add968aedcb0d4667286f457e5195824235faabd11ee63db9800d564.html": {
       "sourceSha256": "2045e745add968aedcb0d4667286f457e5195824235faabd11ee63db9800d564",
@@ -4802,7 +4802,7 @@
     },
     "24c3bc252f5af677d2855078ff9b4abd5bc065f01efded89c98f7063045f1bd8.html": {
       "sourceSha256": "24c3bc252f5af677d2855078ff9b4abd5bc065f01efded89c98f7063045f1bd8",
-      "localizedSha256": "ba255990dd2236c93db2029b801d691c67d24362748af781a01177af14cfa611"
+      "localizedSha256": "3fb5f87cc54df34c3d78fe7b8a105e81458b4b7d59078f7493896d59d1d2f544"
     },
     "27364a45e7a99feb83df1723d5aa82460394350dc49d217b7407b98e82a35cfb.html": {
       "sourceSha256": "27364a45e7a99feb83df1723d5aa82460394350dc49d217b7407b98e82a35cfb",
@@ -4822,7 +4822,7 @@
     },
     "3227a2e944aea5b4a131f0b118a027819d276dd62d4e782b0d8a31c52c686d63.html": {
       "sourceSha256": "3227a2e944aea5b4a131f0b118a027819d276dd62d4e782b0d8a31c52c686d63",
-      "localizedSha256": "5e1d16586d4f1f96062405a9bddb904d7cef98245a30296ccf1dc46fe51fe823"
+      "localizedSha256": "8009b681735242ec3a0a98615f4d79cf69673bf98f2c1b3db2a6a262c1fe3af9"
     },
     "33575d385cdf59c4e7eae529058eeaa66521bfa2896cc903deffab18774d9dd6.html": {
       "sourceSha256": "33575d385cdf59c4e7eae529058eeaa66521bfa2896cc903deffab18774d9dd6",
@@ -4830,7 +4830,7 @@
     },
     "363d0a1c88f6e00af2a4088dfe8d75d50d8099fab67483ae51fe77efd71c3a0b.html": {
       "sourceSha256": "363d0a1c88f6e00af2a4088dfe8d75d50d8099fab67483ae51fe77efd71c3a0b",
-      "localizedSha256": "2cb6a5d34e3c1b3ff114b44d1c883b4752e7547f77eb74e9d9f50a1692167199"
+      "localizedSha256": "ef489f035390438b0e951c00bd26f0b7562ee7d637f91ebb557f6aa9c4642ae4"
     },
     "382c35b7aae990a29f057079c0c800f5df008dbe649eeef3e1a5490f805b279e.html": {
       "sourceSha256": "382c35b7aae990a29f057079c0c800f5df008dbe649eeef3e1a5490f805b279e",
@@ -4842,7 +4842,7 @@
     },
     "393c8d940f3ededac0f4edbbcaefcf7d90292a08475bdb91f245ff69e39cc604.html": {
       "sourceSha256": "393c8d940f3ededac0f4edbbcaefcf7d90292a08475bdb91f245ff69e39cc604",
-      "localizedSha256": "fd4689b6de6413d424602c1182701ae5c2e5ba9983df75022ca078a778b10332"
+      "localizedSha256": "3b45c986d24658a927665b061f38574c92290657cf830f3cf0ca8cb7f6db9c8c"
     },
     "3e3f1b365184a364dcdb392cb309b8f36f82f4e9fac3ac6cfdb4d6a38f03c7a4.html": {
       "sourceSha256": "3e3f1b365184a364dcdb392cb309b8f36f82f4e9fac3ac6cfdb4d6a38f03c7a4",
@@ -4906,7 +4906,7 @@
     },
     "5403f1ab90285065f3dfa1f5989103658265ad192132de9f64f993a8273c0044.html": {
       "sourceSha256": "5403f1ab90285065f3dfa1f5989103658265ad192132de9f64f993a8273c0044",
-      "localizedSha256": "3bd610635ab34ec1dea97d17a782e48a49550e2a76a16d06be21a4c38779c564"
+      "localizedSha256": "f3d439ca44384d076ad37241bb5a7ef5468269e7f4bc3bf2627f110e401b98b0"
     },
     "5559be6759beb191dd7a22ef3e358a81bfa0eedbbecdb79b096bbec3a616c41b.html": {
       "sourceSha256": "5559be6759beb191dd7a22ef3e358a81bfa0eedbbecdb79b096bbec3a616c41b",
@@ -4930,7 +4930,7 @@
     },
     "5aea6c74e811b53d428d134a3848b73793bceaf7d86952b063bbdd8728bc84d1.html": {
       "sourceSha256": "5aea6c74e811b53d428d134a3848b73793bceaf7d86952b063bbdd8728bc84d1",
-      "localizedSha256": "32b04b5a8413a68a0f62d23ba2baf507e76e09d294c273443a6410588c4f1215"
+      "localizedSha256": "4a3c0ae5d750592ed711a5ab807a1e347c4d197d859a6bf7221814a927c1a1b0"
     },
     "5ced2693300798ad540aead344bd9f98d5fb4f9f4aaf948848039daeb4c3e673.html": {
       "sourceSha256": "5ced2693300798ad540aead344bd9f98d5fb4f9f4aaf948848039daeb4c3e673",
@@ -4950,7 +4950,7 @@
     },
     "64e3292e1f8a380f97626b5fa15a2f45f76cc5517a843be7b1cd54bf1aac4322.html": {
       "sourceSha256": "64e3292e1f8a380f97626b5fa15a2f45f76cc5517a843be7b1cd54bf1aac4322",
-      "localizedSha256": "fc43775610d247fa03fe5dbdd17b2e67535aea3893f9a0147183525eee09185f"
+      "localizedSha256": "b8862e82eed780de065b1a243820fa3092b1bb3db133556cecff6a6ddaa58250"
     },
     "693d2f9d84b0b7677be7c328927a3639e980b5a747fb2d02578cf5a2899c6fdf.html": {
       "sourceSha256": "693d2f9d84b0b7677be7c328927a3639e980b5a747fb2d02578cf5a2899c6fdf",
@@ -4958,7 +4958,7 @@
     },
     "697dcec2342ced805bf921bd35a3dddc120386336f1d95a136cf4e9960112eda.html": {
       "sourceSha256": "697dcec2342ced805bf921bd35a3dddc120386336f1d95a136cf4e9960112eda",
-      "localizedSha256": "ecbec22521b7cfec014ac5a2048c3330231092fa931fe98eddcb007c0360321f"
+      "localizedSha256": "a35c5159bc207eae8df6cea2f499dfb9f0be44b2fcf53a79cfe24c2c2d756f7e"
     },
     "69f9c0a3c6917f161a9f8b6cb41f53267ffda0e94fe5aef1c8789c67057a3377.html": {
       "sourceSha256": "69f9c0a3c6917f161a9f8b6cb41f53267ffda0e94fe5aef1c8789c67057a3377",
@@ -4966,7 +4966,7 @@
     },
     "6c79947ddac778652189e25170afdc7e7f49aa2a19705d9f6ab04e12657d50c2.html": {
       "sourceSha256": "6c79947ddac778652189e25170afdc7e7f49aa2a19705d9f6ab04e12657d50c2",
-      "localizedSha256": "ff45c3e4e7bfefa3ee5405909f741fae7ed08e64803c26f70bd3bdc054029c3e"
+      "localizedSha256": "34b1ead8716a464eb198c56902e9dfff6d7659512647ec067693710c489143be"
     },
     "6f6508993d65f4cd061f4123b0d8ac6a40691c24657dedbf49ccefa4ecf191e2.html": {
       "sourceSha256": "6f6508993d65f4cd061f4123b0d8ac6a40691c24657dedbf49ccefa4ecf191e2",
@@ -4982,11 +4982,11 @@
     },
     "726edbb0c6a79e5dee8b285d6934f0520624f3010ad095f04771bac0bceef15a.html": {
       "sourceSha256": "726edbb0c6a79e5dee8b285d6934f0520624f3010ad095f04771bac0bceef15a",
-      "localizedSha256": "873e0d469d9d51b6db5188cad48563efc5e60ba2cf2be76cf89ebe592470e07f"
+      "localizedSha256": "e985218690b9215efdebfd6f33bce0616ed941d240ac20bca2ce02c2ae761cca"
     },
     "72c9d90a86100ec285640672645122258c93aabf90e07d6a6b931efa379a9f58.html": {
       "sourceSha256": "72c9d90a86100ec285640672645122258c93aabf90e07d6a6b931efa379a9f58",
-      "localizedSha256": "3b34af5226b39eab583903c0edba214387db3831f36dfacdce7cf8a26d07b9f4"
+      "localizedSha256": "f42c97115b8e6503421a2bfe340171f9bf4959ff0d21f90369cadc9fc202c42a"
     },
     "76d6df922b09588175b3dc1f88399291549926fa35b1aea3d844cd27dc1e8754.html": {
       "sourceSha256": "76d6df922b09588175b3dc1f88399291549926fa35b1aea3d844cd27dc1e8754",
@@ -4994,11 +4994,11 @@
     },
     "7983103983d7fb4de69ddd0f06b418c34d4e11317dce69b8543d28ce68e9975c.html": {
       "sourceSha256": "7983103983d7fb4de69ddd0f06b418c34d4e11317dce69b8543d28ce68e9975c",
-      "localizedSha256": "371e098b99783c3a04b237036a8822d6703ac605f9d80b46f6e15915ccf8c0d0"
+      "localizedSha256": "adee249acb3744cdc37fa1c189c979c09cac89456fa845d6d23399120ae68f99"
     },
     "7df1671aabc41fdccde29088880b95a1894b00adf0927a0c4f1eab7e7e6598a8.html": {
       "sourceSha256": "7df1671aabc41fdccde29088880b95a1894b00adf0927a0c4f1eab7e7e6598a8",
-      "localizedSha256": "bcb81ade9fe9b09aaf525a887586a92297a1666f8f7a710351432a57d5f1af6b"
+      "localizedSha256": "6bda13cc8f29dc1a28d26fa715d529d69ea6b29a6ec711803600688d1bae24a2"
     },
     "7e3c61f5f840f3ad97aefc5ee93c733e1d63af389154d3234d8a60306aeeea82.html": {
       "sourceSha256": "7e3c61f5f840f3ad97aefc5ee93c733e1d63af389154d3234d8a60306aeeea82",
@@ -5010,7 +5010,7 @@
     },
     "816ea25cd3c484be66645c03bd05bb6fcc99fe8ec5ac0f2e4a713a4f8eb7ea3f.html": {
       "sourceSha256": "816ea25cd3c484be66645c03bd05bb6fcc99fe8ec5ac0f2e4a713a4f8eb7ea3f",
-      "localizedSha256": "33362a491b2a383217e738a407c3f0b87520a693a55f2739d3dac1528cf36091"
+      "localizedSha256": "3f47bf0ac42f75106edae16550fde3ffc71ddf3295e8ae066886fd51c399c9d6"
     },
     "82682515fee2ddb2487640e0713d52b8f1d3a152d45a1a160e683369758196f8.html": {
       "sourceSha256": "82682515fee2ddb2487640e0713d52b8f1d3a152d45a1a160e683369758196f8",
@@ -5034,7 +5034,7 @@
     },
     "8b24abf798651c41e1f9d28e49e2aef74f6d59d641eaa830af4ffe1ec6746b68.html": {
       "sourceSha256": "8b24abf798651c41e1f9d28e49e2aef74f6d59d641eaa830af4ffe1ec6746b68",
-      "localizedSha256": "dc48dcd79babdd2023b76f6bc9f6ed48e0f0e61879237a22bd4f69d587507c9e"
+      "localizedSha256": "8d0b10ece3051a642afc867677fde274496d2f420440bbeec01197253d35b245"
     },
     "8b3f57db6116037ab20b65df87d85b56f009eef9c67ec46e7dfdf5a54a4c85b5.html": {
       "sourceSha256": "8b3f57db6116037ab20b65df87d85b56f009eef9c67ec46e7dfdf5a54a4c85b5",
@@ -5062,7 +5062,7 @@
     },
     "978eacf621067e6078f16f4c26fd98abce89d9db5aeae7fe38855d385a729fd4.html": {
       "sourceSha256": "978eacf621067e6078f16f4c26fd98abce89d9db5aeae7fe38855d385a729fd4",
-      "localizedSha256": "cb556b8091ead1bded94ed8fd35f2289b48c750d2d6beb73ef170b909f955c0f"
+      "localizedSha256": "c0758882ff5275cae0b4da5086ab22216fe9e8872f395c12ab3a6c3a68c2a36f"
     },
     "98e29c725df82e4e92e49e19f8085d51e7651f6bf9b848af9abf428065a3f624.html": {
       "sourceSha256": "98e29c725df82e4e92e49e19f8085d51e7651f6bf9b848af9abf428065a3f624",
@@ -5122,7 +5122,7 @@
     },
     "aa9ba1b68b76e495f93654b32b6a4ae5d9a54d51e5b6b2f53be93c70f72ab511.html": {
       "sourceSha256": "aa9ba1b68b76e495f93654b32b6a4ae5d9a54d51e5b6b2f53be93c70f72ab511",
-      "localizedSha256": "b5f93808fea7c95e39bebb9cfc414c245f6846501189fbbc35af28fb722a9c75"
+      "localizedSha256": "769ff07c798b5c32921c342363222cafac4c6d2ee9956d14c530b82b4450cdaf"
     },
     "ab2b94b172bd348c44def05becc5df4ed7b97151d5ec5f6c16eede71ac8d93ca.html": {
       "sourceSha256": "ab2b94b172bd348c44def05becc5df4ed7b97151d5ec5f6c16eede71ac8d93ca",
@@ -5138,7 +5138,7 @@
     },
     "af3ba9999e46967c9560a046ccfc66a821947942a28e22b90003fda4c7479aa9.html": {
       "sourceSha256": "af3ba9999e46967c9560a046ccfc66a821947942a28e22b90003fda4c7479aa9",
-      "localizedSha256": "fa877ab66014ea3556d29acc7751d75eed54a96ee99a702e1f3c1828ed9a640c"
+      "localizedSha256": "e66bb2984f55896215f444eb6a377904efb77bc8b8f154f834516fbeed357601"
     },
     "b090a7873595f6f36206291f83f56cec28cc7cb7a3342202282de0b95a457a8a.html": {
       "sourceSha256": "b090a7873595f6f36206291f83f56cec28cc7cb7a3342202282de0b95a457a8a",
@@ -5154,7 +5154,7 @@
     },
     "b446b6c55fe5ce50575bc10e903da68cfda8948543b69e8fa405cda1f814c368.html": {
       "sourceSha256": "b446b6c55fe5ce50575bc10e903da68cfda8948543b69e8fa405cda1f814c368",
-      "localizedSha256": "2a71db33fede94779d24af01635b1afc84b826af9e5753e6526308ff674c3ae0"
+      "localizedSha256": "5a14408dad455983aada4aa72f03484e176d7f02ef914fb9aaec6dea3be21220"
     },
     "b57cbced638cc38a1bb1675a9c4b74e0b064f481722dad4ce4098daaae1cf251.html": {
       "sourceSha256": "b57cbced638cc38a1bb1675a9c4b74e0b064f481722dad4ce4098daaae1cf251",
@@ -5190,7 +5190,7 @@
     },
     "c2d6f728fa39900533ba9680e80dfb1cbe09e5b783a9b49a80f5674e88b5844a.html": {
       "sourceSha256": "c2d6f728fa39900533ba9680e80dfb1cbe09e5b783a9b49a80f5674e88b5844a",
-      "localizedSha256": "30cb6582a6d7b6e15a1ce10974fffc9fab577b3487efa477dfd35fa593ddb5dc"
+      "localizedSha256": "f9159a3c0f8b4d17c52c267f87117c491ae3a61ebd0f2a4580ed26c28fe1a27f"
     },
     "c4f971d3b99fa4ded7939888aca86075ced84808710eb418f568fd02c3edd014.html": {
       "sourceSha256": "c4f971d3b99fa4ded7939888aca86075ced84808710eb418f568fd02c3edd014",
@@ -5226,7 +5226,7 @@
     },
     "d16a51ff3033107348df8efaad1f664ac52d0aec9c69219125d9be532eae588a.html": {
       "sourceSha256": "d16a51ff3033107348df8efaad1f664ac52d0aec9c69219125d9be532eae588a",
-      "localizedSha256": "208c61d6514db780a1fa7840e21e845458db80d972177461433cff7741689666"
+      "localizedSha256": "54ee8ca2908543d71b11997bbd9fefacc53c1c16a4a988ed69c8ad7fea18dc0f"
     },
     "d1924a87340162e11c2764d74620dcf78664659aed1a4ba76f4553f2ba34f3e4.html": {
       "sourceSha256": "d1924a87340162e11c2764d74620dcf78664659aed1a4ba76f4553f2ba34f3e4",
@@ -5318,7 +5318,7 @@
     },
     "fab78e45f7aa22b81a45fa71e0aca617a4ab574bbd3d486a2e4acbb8387ed711.html": {
       "sourceSha256": "fab78e45f7aa22b81a45fa71e0aca617a4ab574bbd3d486a2e4acbb8387ed711",
-      "localizedSha256": "3fa1fe09b52dc5f6810b9307f842b76f2f748adb2d06ac1385f13fc3d66e4949"
+      "localizedSha256": "cced00afb0d8fa7c53f200030d270aaac36ed2533ca9f44a7911377e1414a746"
     },
     "faceab8d2021420963cf577ca86be3194c5f0e4864b34fbefe1e8d2a8adf85ce.html": {
       "sourceSha256": "faceab8d2021420963cf577ca86be3194c5f0e4864b34fbefe1e8d2a8adf85ce",

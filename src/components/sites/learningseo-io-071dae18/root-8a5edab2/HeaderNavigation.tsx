@@ -114,7 +114,7 @@ export function HeaderNavigation({
 
         <button
           type="button"
-            aria-label={locale === "en" ? "Toggle search" : "切换搜索"}
+          aria-label={locale === "en" ? "Toggle search" : "切换搜索"}
           aria-expanded={searchOpen}
           onClick={() => {
             setSearchOpen((open) => !open);

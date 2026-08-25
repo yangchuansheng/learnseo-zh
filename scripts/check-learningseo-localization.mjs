@@ -103,6 +103,16 @@ function numbersPreserved(source, localized) {
   });
 }
 
+function personalNames(html) {
+  return [...html.matchAll(
+    /<a\b[^>]*\bhref=(['"])(?:https?:\/\/(?:www\.)?linkedin\.com\/in\/|https?:\/\/(?:www\.)?aleydasolis\.com\/)[^'"]*\1[^>]*>([\s\S]*?)<\/a>/gi,
+  )]
+    .map((match) => match[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim())
+    .filter((value) =>
+      /^\p{Lu}[\p{L}'’.-]*(?:\s+\p{Lu}[\p{L}'’.-]*){1,3}$/u.test(value),
+    );
+}
+
 const sourceManifest = JSON.parse(await fs.readFile(sourceManifestPath, "utf8"));
 const chineseManifest = JSON.parse(await fs.readFile(chineseManifestPath, "utf8"));
 const translationManifest = JSON.parse(await fs.readFile(translationManifestPath, "utf8"));
@@ -154,6 +164,10 @@ for (const file of sourceFiles) {
   assert.ok(
     protectedTerms.every((term) => !source.includes(term) || chinese.includes(term)),
     `Localized protected terms changed: ${file}`,
+  );
+  assert.ok(
+    personalNames(source).every((name) => chinese.includes(name)),
+    `Localized personal names changed: ${file}`,
   );
 }
 

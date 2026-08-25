@@ -32,8 +32,69 @@ function normalizeText(value) {
   return value.replace(/\s+/g, " ").trim();
 }
 
-function normalizeLocalizedMarkup(markup) {
-  return markup.replace(/[ \t]+$/gm, "");
+const protectedPeople = new Set(["Aleyda Solis"]);
+const personNamePattern = /^\p{Lu}[\p{L}'’.-]*(?:\s+\p{Lu}[\p{L}'’.-]*){1,3}$/u;
+
+function collectProtectedPeople(markup) {
+  const profileAnchorPattern =
+    /<a\b[^>]*\bhref=(['"])(?:https?:\/\/(?:www\.)?linkedin\.com\/in\/|https?:\/\/(?:www\.)?aleydasolis\.com\/)[^'"]*\1[^>]*>([\s\S]*?)<\/a>/gi;
+  for (const match of markup.matchAll(profileAnchorPattern)) {
+    const text = normalizeText(match[2].replace(/<[^>]+>/g, ""));
+    if (personNamePattern.test(text)) protectedPeople.add(text);
+  }
+  for (const match of markup.matchAll(/<strong\b[^>]*>([^<]+)<\/strong>/gi)) {
+    const text = normalizeText(match[1]);
+    const context = markup.slice(Math.max(0, match.index - 180), match.index);
+    const author = text.split(" / ")[0].trim();
+    if ((context.includes("tip-author") || text.includes(" / ")) && personNamePattern.test(author)) {
+      protectedPeople.add(author);
+    }
+  }
+}
+
+function escapedRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function preserveProfileAnchorNames(sourceMarkup, localizedMarkup) {
+  const profileAnchorPattern =
+    /<a\b[^>]*\bhref=(['"])((?:https?:\/\/(?:www\.)?linkedin\.com\/in\/|https?:\/\/(?:www\.)?aleydasolis\.com\/)[^'"]*)\1[^>]*>([\s\S]*?)<\/a>/gi;
+  let preserved = localizedMarkup;
+  for (const match of sourceMarkup.matchAll(profileAnchorPattern)) {
+    const name = normalizeText(match[3].replace(/<[^>]+>/g, ""));
+    if (!protectedPeople.has(name) || !personNamePattern.test(name)) continue;
+    const href = escapedRegExp(match[2]);
+    const target = new RegExp(
+      `(<a\\b[^>]*\\bhref=(['"])${href}\\2[^>]*>)[\\s\\S]*?(</a>)`,
+      "i",
+    );
+    preserved = preserved.replace(target, `$1${match[3]}$3`);
+  }
+  return preserved;
+}
+
+function preserveNamedStrongText(sourceMarkup, localizedMarkup) {
+  const sourceNames = [...sourceMarkup.matchAll(/<strong\b[^>]*>([^<]+)<\/strong>/gi)]
+    .map((match) => normalizeText(match[1]))
+    .map((value) => (protectedPeople.has(value) ? value : null));
+  if (!sourceNames.some(Boolean)) return localizedMarkup;
+  let index = 0;
+  return localizedMarkup.replace(
+    /(<strong\b[^>]*>)([^<]*)(<\/strong>)/gi,
+    (match, open, _text, close) => {
+      const name = sourceNames[index++];
+      return name ? `${open}${name}${close}` : match;
+    },
+  );
+}
+
+function normalizeLocalizedMarkup(markup, sourceMarkup = "") {
+  const normalized = markup.replace(/[ \t]+$/gm, "");
+  if (!sourceMarkup) return normalized;
+  return preserveNamedStrongText(
+    sourceMarkup,
+    preserveProfileAnchorNames(sourceMarkup, normalized),
+  ).replace(/[ \t]+$/gm, "");
 }
 
 function sha256(value) {
@@ -69,6 +130,7 @@ function splitText(value) {
 }
 
 function collectMarkupStrings(markup, strings) {
+  collectProtectedPeople(markup);
   for (const match of markup.matchAll(/>([^<]+)</g)) {
     for (const part of splitText(match[1])) strings.add(part);
   }
@@ -284,6 +346,9 @@ function preservesSourceFacts(source, translated) {
   if (protectedBrands.some((brand) => source.includes(brand) && !translated.includes(brand))) {
     return false;
   }
+  if ([...protectedPeople].some((person) => source.includes(person) && !translated.includes(person))) {
+    return false;
+  }
   for (const match of source.matchAll(/\b(?:from|by|with|via)\s+([A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+){1,3})/g)) {
     const firstNamePart = match[1].split(/\s+/)[0];
     if (protectedBrands.includes(firstNamePart) || ["A", "An", "The", "Learning"].includes(firstNamePart)) {
@@ -363,6 +428,7 @@ const markupPhraseTranslations = new Map([
   ["Deepen Your SEO Knowledge", "加深你的 SEO 知识"],
   ["Current", "当前"],
   ["YouTube video player", "YouTube 视频播放器"],
+  ["reach Aleyda here", "在这里联系 Aleyda"],
 ]);
 
 function translateMarkupText(value, cache, preserveStrong = false, previousSegments = {}) {
@@ -370,10 +436,12 @@ function translateMarkupText(value, cache, preserveStrong = false, previousSegme
   const trailing = value.match(/\s*$/)?.[0] || "";
   const normalized = normalizeText(value);
   if (!shouldTranslate(normalized)) return value;
-  const preserved = previousSegments[normalized];
-  if (preserved && preserved !== normalized) return leading + preserved + trailing;
   const direct = markupPhraseTranslations.get(normalized);
   if (direct) return leading + direct + trailing;
+  const preserved = previousSegments[normalized];
+  if (preserved && preserved !== normalized && preservesSourceFacts(normalized, preserved)) {
+    return leading + preserved + trailing;
+  }
   if (preserveStrong) return value;
   const translatedParts = splitText(normalized).map((part) => {
     const cachedPart = previousSegments[part] || cache[part];
@@ -427,6 +495,7 @@ function escapeTranslatedText(value) {
 function shouldPreserveStrongText(value, context) {
   const normalized = normalizeText(value).replace(/&nbsp;/gi, " ").trim();
   if (!normalized) return true;
+  if (protectedPeople.has(normalized)) return true;
   if (protectedBrands.includes(normalized) || normalized.includes(" / ")) return true;
   const surrounding = context.replace(/<[^>]+>/g, " ").replace(/&nbsp;/gi, " ").trim();
   if (/\b(?:from|by)\s*$/i.test(surrounding)) return true;
@@ -451,7 +520,7 @@ function translateMarkup(markup, cache, previousSegments = {}) {
     (_match, attribute, quote, value) =>
       `${attribute}=${quote}${translateAttributeText(attribute, value, cache, previousSegments)}${quote}`,
   );
-  return translated;
+  return normalizeLocalizedMarkup(translated, markup);
 }
 
 function translateAttributeText(attribute, value, cache, previousSegments = {}) {
@@ -1102,7 +1171,7 @@ async function main() {
       previousSourceHash === sha256(html) && (await fs.stat(targetPath).catch(() => null))
         ? await fs.readFile(targetPath, "utf8")
         : translateMarkup(html, trustedCache, previousSegments);
-    await fs.writeFile(targetPath, normalizeLocalizedMarkup(localized));
+    await fs.writeFile(targetPath, normalizeLocalizedMarkup(localized, html));
   }
   const pageHashes = {};
   const segments = {};
