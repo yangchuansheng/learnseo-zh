@@ -1,9 +1,37 @@
 import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import fs from "node:fs/promises";
 
 import { chromium } from "playwright";
 
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:3107";
-const executablePath = process.env.PLAYWRIGHT_EXECUTABLE_PATH;
+const systemChromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const executablePath =
+  process.env.PLAYWRIGHT_EXECUTABLE_PATH ||
+  (await fs.access(systemChromePath).then(() => systemChromePath).catch(() => undefined));
+let serverProcess;
+
+async function isReachable(url) {
+  try {
+    const response = await fetch(url);
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+if (!process.env.BASE_URL && !(await isReachable(baseUrl))) {
+  serverProcess = spawn(
+    process.execPath,
+    ["node_modules/next/dist/bin/next", "start", "--hostname", "127.0.0.1", "--port", "3107"],
+    { stdio: "ignore" },
+  );
+  process.on("exit", () => serverProcess?.kill("SIGTERM"));
+  for (let attempt = 0; attempt < 50 && !(await isReachable(baseUrl)); attempt += 1) {
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+  if (!(await isReachable(baseUrl))) throw new Error(`Smoke server did not start at ${baseUrl}`);
+}
 const browser = await chromium.launch({
   headless: true,
   ...(executablePath ? { executablePath } : {}),
@@ -128,4 +156,5 @@ try {
   console.log("LearningSEO production smoke test passed.");
 } finally {
   await browser.close();
+  serverProcess?.kill("SIGTERM");
 }

@@ -1,11 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { localeFromPathname } from "@/lib/localization";
 
 export function proxy(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set(
-    "x-learningseo-locale",
-    /^\/en(?:\/|$)/.test(request.nextUrl.pathname) ? "en" : "zh-CN",
-  );
+  requestHeaders.set("x-learningseo-locale", localeFromPathname(request.nextUrl.pathname));
 
   return NextResponse.next({ request: { headers: requestHeaders } });
 }

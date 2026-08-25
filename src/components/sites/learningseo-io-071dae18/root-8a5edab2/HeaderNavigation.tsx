@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 
 import { LearningSeoLogo } from "@/components/sites/learningseo-io-071dae18/shared/Brand";
 import { localHref } from "@/components/sites/learningseo-io-071dae18/shared/links";
-import { equivalentPath, type Locale } from "@/lib/localization";
+import { localizedPath, resolveLocalizedPath, type Locale } from "@/lib/localization";
 import { usePathname } from "next/navigation";
+import englishManifest from "../subpages/generated/manifest.json";
+import chineseManifest from "../subpages/generated/manifest.zh-CN.json";
 
 const assetRoot = "/sites/learningseo-io-071dae18/shared";
 
@@ -29,6 +31,10 @@ const socialIcons: Record<string, string> = {
   youtube: `${assetRoot}/youtube-circle.svg`,
 };
 const socialIconNames = ["facebook", "twitter", "instagram", "youtube", "linkedin"];
+const availableLocalizedPaths = new Set([
+  ...englishManifest.routes.map((route) => localizedPath(route.sourcePath, "en")),
+  ...chineseManifest.routes.map((route) => localizedPath(route.sourcePath, "zh-CN")),
+]);
 
 export function HeaderNavigation({
   header,
@@ -97,7 +103,7 @@ export function HeaderNavigation({
       <div className="flex items-center">
         <a
           className="mr-2 inline text-[12px] font-semibold text-[#303030] underline"
-          href={equivalentPath(pathname, alternateLocale)}
+          href={resolveLocalizedPath(pathname, alternateLocale, availableLocalizedPaths)}
           lang={alternateLocale}
           aria-label={alternateLocale === "en" ? "Switch to English" : "切换到简体中文"}
         >

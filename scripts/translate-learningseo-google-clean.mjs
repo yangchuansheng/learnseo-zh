@@ -1,47 +1,37 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { chromium } from "playwright";
-
 const cachePath = path.resolve("temp/learningseo-translation-cache.json");
 const cleanCachePath = path.resolve("temp/learningseo-translation-cache-google.json");
-const executablePath =
-  process.env.TRANSLATION_CHROME ||
-  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
-function buildBatches(values) {
-  const batches = [];
-  let current = [];
-  let length = 0;
-  for (const value of values) {
-    if (current.length && (current.length >= 30 || length + value.length + 1 > 2600)) {
-      batches.push(current);
-      current = [];
-      length = 0;
-    }
-    current.push(value);
-    length += value.length + 1;
-  }
-  if (current.length) batches.push(current);
-  return batches;
+function decodeHtml(value) {
+  return value
+    .replace(/<br\s*\/?>(?=.)/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#(?:39|x27);/gi, "'");
 }
 
-async function translateBatch(page, batch) {
+async function translateBatch(_page, batch) {
   const query = batch.join("\n");
-  const url =
-    "https://translate.google.com/?sl=en&tl=zh-CN&text=" +
-    encodeURIComponent(query) +
-    "&op=translate";
-  await page.goto("about:blank");
-  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
-  await page.waitForFunction(
-    (expected) => document.querySelectorAll(".ryNqvb").length === expected,
-    batch.length,
-    { timeout: 8000 },
-  );
-    return page.locator(".ryNqvb").allTextContents().then((values) =>
-    values.map((value) => value.trim()),
-  );
+  const url = `https://translate.google.com/m?sl=en&tl=zh-CN&q=${encodeURIComponent(query)}`;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Google Translate returned ${response.status}`);
+      const html = await response.text();
+      const result = html.match(/<div class="result-container">([\s\S]*?)<\/div>/)?.[1];
+      if (!result) throw new Error("Google Translate result was unavailable");
+      const translated = decodeHtml(result).split(/\r?\n/).map((value) => value.trim());
+      if (translated.length !== batch.length) throw new Error("Google Translate batch length changed");
+      return translated;
+    } catch (error) {
+      if (attempt === 2) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 250 * (attempt + 1)));
+    }
+  }
+  throw new Error("Google Translate request failed");
 }
 
 async function translateWithRetry(page, batch) {
@@ -59,17 +49,20 @@ async function translateWithRetry(page, batch) {
 }
 
 const sourceCache = JSON.parse(await fs.readFile(cachePath, "utf8"));
+const existingCache = await fs
+  .readFile(cleanCachePath, "utf8")
+  .then((value) => JSON.parse(value))
+  .catch(() => ({}));
+const forceRefresh = process.env.FORCE_GOOGLE_TRANSLATION === "1";
 // Long HTML paragraphs are preserved for manual editorial translation.
-const keys = Object.keys(sourceCache).filter((value) => value.length <= 450);
-const batchSafeKeys = keys.filter((value) => !/[<>&\n]/.test(value) && !/^[,.)]/.test(value));
-const individualKeys = keys.filter((value) => !batchSafeKeys.includes(value));
-const batches = [
-  ...buildBatches(batchSafeKeys),
-  ...individualKeys.map((value) => [value]),
-];
-const output = { ...sourceCache };
-const browser = await chromium.launch({ headless: true, executablePath });
-const pages = await Promise.all(Array.from({ length: 8 }, () => browser.newPage()));
+const keys = Object.keys(sourceCache).filter(
+  (value) =>
+    value.length <= 450 &&
+    (forceRefresh ? true : !existingCache[value] || existingCache[value] === value),
+);
+const batches = keys.map((value) => [value]);
+const output = { ...sourceCache, ...existingCache };
+const pages = Array.from({ length: 8 }, () => null);
 let cursor = 0;
 let completed = 0;
 
@@ -80,7 +73,8 @@ async function worker(page) {
     const batch = batches[index];
     const translated = await translateWithRetry(page, batch);
     batch.forEach((source, itemIndex) => {
-      output[source] = translated[itemIndex] || source;
+      const candidate = translated[itemIndex] || source;
+      if (candidate !== source || !output[source]) output[source] = candidate;
     });
     completed += batch.length;
     if (completed % 200 < batch.length || completed === keys.length) {
@@ -90,9 +84,5 @@ async function worker(page) {
   }
 }
 
-try {
-  await Promise.all(pages.map(worker));
-  await fs.writeFile(cleanCachePath, JSON.stringify(output, null, 2) + "\n");
-} finally {
-  await browser.close();
-}
+await Promise.all(pages.map(worker));
+await fs.writeFile(cleanCachePath, JSON.stringify(output, null, 2) + "\n");
