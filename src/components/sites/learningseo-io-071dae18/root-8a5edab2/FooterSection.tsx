@@ -21,7 +21,7 @@ export function FooterSection({ content, locale = "zh-CN" }: { content?: SiteCon
           <Link
             className="block text-[21px] leading-none text-white md:w-[28.77%] md:pr-10 md:text-[25.5px] xl:w-1/4"
             href={localHref("/", locale)}
-            aria-label="LearningSEO.io home"
+            aria-label={locale === "en" ? "LearningSEO.io home" : "LearningSEO.io 首页"}
           >
             <LearningSeoLogo />
           </Link>

@@ -130,6 +130,23 @@ try {
     /[?&]autoplay=1(?:&|$)/,
   );
 
+  await page.goto(baseUrl + "/en/seo_roadmap/optimize-ai-search/", {
+    waitUntil: "domcontentloaded",
+  });
+  assert.equal(await page.locator("html").getAttribute("lang"), "en");
+  assert.equal(
+    await page.locator('link[rel="canonical"]').getAttribute("href"),
+    "https://learningseo.io/en/seo_roadmap/optimize-ai-search/",
+  );
+  assert.equal(
+    await page.locator('link[rel="alternate"][hreflang="zh-CN"]').getAttribute("href"),
+    "https://learningseo.io/seo_roadmap/optimize-ai-search/",
+  );
+  assert.equal(
+    await page.locator('a[aria-label="切换到简体中文"]').getAttribute("href"),
+    "/seo_roadmap/optimize-ai-search/",
+  );
+
   await page.goto(baseUrl + "/", { waitUntil: "domcontentloaded" });
   assert.equal(await page.locator("html").getAttribute("lang"), "zh-CN");
   assert.equal(

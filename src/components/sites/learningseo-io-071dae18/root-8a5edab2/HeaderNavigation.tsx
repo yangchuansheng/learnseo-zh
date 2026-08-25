@@ -94,7 +94,7 @@ export function HeaderNavigation({
     >
       <Link
         href={localHref("/", locale)}
-        aria-label="LearningSEO.io home"
+        aria-label={locale === "en" ? "LearningSEO.io home" : "LearningSEO.io 首页"}
         className="relative z-0 block text-[#000036]"
       >
         <LearningSeoLogo className="block text-[21.7px] leading-[29px] tracking-[-0.4px] [&_small]:ml-px [&_small]:text-[11px] md:text-[29.75px] md:leading-[29.75px] md:[&_small]:text-[17px]" />

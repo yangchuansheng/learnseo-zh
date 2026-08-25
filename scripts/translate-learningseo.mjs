@@ -1063,12 +1063,15 @@ async function main() {
   const cache = await translateStrings(strings);
   const trustedCache = await readTrustedCache();
   const sourceContentHash = sha256(sourceContentBytes);
+  const translatedHomepage = translateJson(sourceContent, cache, "", previousSegments);
   const localizedHomepage =
     !process.env.FORCE_TRANSLATION &&
     previousHomepage &&
     previousTranslationManifest?.sourceContentSha256 === sourceContentHash
       ? previousHomepage
-      : applyEditorialHomepage(translateJson(sourceContent, cache, "", previousSegments));
+      : previousHomepage && !process.env.FORCE_TRANSLATION && previousTranslationManifest?.segments
+        ? translatedHomepage
+        : applyEditorialHomepage(translatedHomepage);
   await fs.writeFile(chineseContentPath, JSON.stringify(localizedHomepage, null, 2) + "\n");
 
   const translatedRoutes = sourceManifest.routes.map((route) => {
