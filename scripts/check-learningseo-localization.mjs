@@ -40,6 +40,11 @@ const protectedTerms = [
   "Moz",
   "SEMrush",
   "Ahrefs",
+  "Tweet",
+  "Threads",
+  "Linkedin",
+  "Javascript",
+  "GTmetrix",
 ];
 const personNamePattern = /^\p{Lu}[\p{L}'’.-]*(?:\s+\p{Lu}[\p{L}'’.-]*){1,3}$/u;
 const singleNamePattern = /^\p{Lu}[\p{L}'’.-]*(?:\s+\p{Lu}[\p{L}'’.-]*){0,3}$/u;
@@ -149,6 +154,46 @@ function personalNames(html) {
   return [...names];
 }
 
+function localizedAttributes(html) {
+  return [...html.matchAll(/\b(title|alt|aria-label|placeholder)=(['"])(.*?)\2/gi)].map(
+    (match) => ({ name: match[1].toLowerCase(), value: match[3] }),
+  );
+}
+
+function assertLocalizedAttributes(source, localized, file) {
+  const sourceAttributes = localizedAttributes(source);
+  const localizedPageAttributes = localizedAttributes(localized);
+  assert.equal(
+    localizedPageAttributes.length,
+    sourceAttributes.length,
+    `Localized attribute count changed: ${file}`,
+  );
+  sourceAttributes.forEach((attribute, index) => {
+    const localizedAttribute = localizedPageAttributes[index];
+    assert.equal(localizedAttribute.name, attribute.name, `Localized attribute order changed: ${file}`);
+    if (!/[A-Za-z]/.test(attribute.value) || attribute.value.startsWith("#")) return;
+    if (attribute.value === localizedAttribute.value) {
+      assert.ok(
+        protectedTerms.some((term) => attribute.value.includes(term)) ||
+          personNamePattern.test(attribute.value.replace(/&nbsp;/gi, " ").trim()),
+        `Unlocalized first-party attribute: ${file} ${attribute.name}=${attribute.value}`,
+      );
+    }
+    if (/^Play\b/i.test(attribute.value)) {
+      assert.match(localizedAttribute.value, /[\u3400-\u9fff]/, `Unlocalized play label: ${file}`);
+      assert.doesNotMatch(localizedAttribute.value, /^Play\b/i, `Unlocalized play label: ${file}`);
+    }
+    protectedTerms.forEach((term) => {
+      if (attribute.value.includes(term)) {
+        assert.ok(
+          localizedAttribute.value.includes(term),
+          `Protected attribute term changed: ${file} ${term}`,
+        );
+      }
+    });
+  });
+}
+
 const sourceManifest = JSON.parse(await fs.readFile(sourceManifestPath, "utf8"));
 const chineseManifest = JSON.parse(await fs.readFile(chineseManifestPath, "utf8"));
 const translationManifest = JSON.parse(await fs.readFile(translationManifestPath, "utf8"));
@@ -193,6 +238,8 @@ for (const file of sourceFiles) {
   if (localizedHash) assert.equal(sha256(chinese), localizedHash, `Localized page changed: ${file}`);
   assert.match(chinese, /[\u3400-\u9fff]/, `Page has no Simplified Chinese text: ${file}`);
   assert.doesNotMatch(chinese, /<script\b|\bon[a-z]+\s*=/i, `Unsafe localized HTML: ${file}`);
+  assert.doesNotMatch(chinese, /&nbsp;by&nbsp;|>\s*by\s*</i, `Unlocalized attribution: ${file}`);
+  assertLocalizedAttributes(source, chinese, file);
   const tags = (html) => [...html.matchAll(/<\/?([a-z][\w-]*)\b/gi)].map((match) => match[1].toLowerCase());
   assert.deepEqual(tags(chinese), tags(source), `Localized HTML tags changed: ${file}`);
   const urls = (html) => [...html.matchAll(/\b(?:href|src|data-src|data-cookieblock-src)=(['"])(.*?)\1/gi)].map((match) => match[2]);
@@ -210,6 +257,17 @@ for (const file of sourceFiles) {
 
 const localizedTitles = chineseManifest.routes.filter((route) => route.title).length;
 assert.ok(localizedTitles >= sourceManifest.routes.filter((route) => route.title).length - 1);
+for (const [index, route] of chineseManifest.routes.entries()) {
+  const sourceRoute = sourceManifest.routes[index];
+  for (const field of ["title", "description"]) {
+    const value = route[field];
+    if (!sourceRoute[field] || !value) continue;
+    assert.ok(
+      /[\u3400-\u9fff]/.test(value) || protectedTerms.some((term) => value.includes(term)),
+      `Unlocalized metadata ${field}: ${route.sourcePath}`,
+    );
+  }
+}
 
 function collectLinks(value, links = []) {
   if (Array.isArray(value)) return value.forEach((item) => collectLinks(item, links)), links;
@@ -294,6 +352,11 @@ assert.deepEqual(
 );
 
 assert.deepEqual(collectLinks(chineseContent), collectLinks(sourceContentJson), "Homepage URLs changed");
+assert.doesNotMatch(
+  chineseContent.footer.copyrightHtml,
+  /Copyright © \d+\. All rights reserved\.|\bby\b/i,
+  "Homepage footer contains untranslated copy",
+);
 
 console.log(
   `Validated ${chineseRoutes.length} Chinese routes, ${chineseFiles.size} translated HTML pages, and ${localizedTitles} localized metadata titles.`,

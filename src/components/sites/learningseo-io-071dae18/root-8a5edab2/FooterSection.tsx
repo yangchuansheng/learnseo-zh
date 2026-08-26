@@ -34,7 +34,7 @@ export function FooterSection({ content, locale = "zh-CN" }: { content?: SiteCon
               className="mt-3 grid grid-cols-1 gap-y-3 text-sm leading-[14px] font-light md:mt-2.5 md:gap-y-[5px] md:text-[17px] md:leading-[17px] lg:grid-cols-2 xl:gap-y-2.5 xl:text-[14.45px] xl:leading-[15.3px]"
               aria-label={locale === "en" ? "Footer roadmap" : "页脚路线图"}
             >
-                {siteContent.footer.navigation.map((item) => (
+              {siteContent.footer.navigation.map((item) => (
                 <a className="hover:text-[#a87be9]" href={localHref(item.href, locale)} key={item.label}>
                   {item.label}
                 </a>

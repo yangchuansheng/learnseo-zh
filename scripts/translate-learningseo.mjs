@@ -335,6 +335,11 @@ const protectedBrands = [
   "Moz",
   "SEMrush",
   "Ahrefs",
+  "Tweet",
+  "Threads",
+  "Linkedin",
+  "Javascript",
+  "GTmetrix",
 ];
 
 const protectedBrandAliases = new Map([
@@ -364,6 +369,10 @@ const protectedBrandAliases = new Map([
   ["Moz", ["莫兹"]],
   ["SEMrush", ["赛普"]],
   ["Ahrefs", ["阿雷夫斯"]],
+  ["Tweet", ["鸣叫"]],
+  ["Threads", ["线程数"]],
+  ["Linkedin", ["领英"]],
+  ["Javascript", ["JavaScript"]],
 ]);
 
 function restoreProtectedTerms(source, translated) {
@@ -496,6 +505,7 @@ const markupPhraseTranslations = new Map([
   ["Current", "当前"],
   ["YouTube video player", "YouTube 视频播放器"],
   ["reach Aleyda here", "在这里联系 Aleyda"],
+  ["by", "来自"],
 ]);
 
 function translateMarkupText(value, cache, preserveStrong = false, previousSegments = {}) {
@@ -594,11 +604,14 @@ function translateAttributeText(attribute, value, cache, previousSegments = {}) 
   const normalized = normalizeText(value);
   if (
     attribute.toLowerCase() === "title" &&
-    /^(?:[A-Z][A-Za-zÀ-ÖØ-öø-ÿ'-]+)(?:\s+[A-Z][A-Za-zÀ-ÖØ-öø-ÿ'-]+){1,3}$/.test(normalized)
+    (protectedPeople.has(normalized) || protectedBrands.includes(normalized))
   ) {
     return value;
   }
-  return translateMarkupText(value, cache, false, previousSegments);
+  const translated = translateMarkupText(value, cache, false, previousSegments);
+  return attribute.toLowerCase() === "aria-label"
+    ? translated.replace(/^Play\b/i, "播放")
+    : translated;
 }
 
 function translateJson(value, cache, key = "", previousSegments = {}) {

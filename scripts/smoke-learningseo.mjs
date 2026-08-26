@@ -123,12 +123,24 @@ try {
   );
   const playButton = page.locator('[data-subpage-action="video"]').first();
   assert.equal(await playButton.evaluate((element) => element.tagName), "BUTTON");
+  assert.match(await playButton.getAttribute("aria-label"), /^播放[\s\S]*[\u3400-\u9fff]/);
   await playButton.click();
   assert.equal(await page.locator(".video.playing").count(), 1);
   assert.match(
     await page.locator(".video.playing iframe").first().getAttribute("src"),
     /[?&]autoplay=1(?:&|$)/,
   );
+
+  await page.goto(baseUrl + "/seo_roadmap/implement-in-cms/shopify-seo-guidelines/", {
+    waitUntil: "domcontentloaded",
+  });
+  assert.match(
+    await page.locator('[data-subpage-action="video"]').first().getAttribute("aria-label"),
+    /^播放[\s\S]*Shopify[\s\S]*[\u3400-\u9fff]/,
+  );
+  assert.ok(await page.locator('img[alt="Tweet"]').count());
+  assert.ok(await page.locator('img[alt="Threads"]').count());
+  assert.ok(await page.locator('img[alt="Linkedin"]').count());
 
   await page.goto(baseUrl + "/en/seo_roadmap/optimize-ai-search/", {
     waitUntil: "domcontentloaded",

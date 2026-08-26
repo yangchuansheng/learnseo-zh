@@ -10,7 +10,7 @@ export function ResourceBanner({ content, locale = "zh-CN" }: { content?: SiteCo
   return (
     <section
       className="relative mx-auto mt-10 mb-20 flex w-[98%] overflow-hidden rounded-2xl bg-[linear-gradient(90deg,#2e73ea_77.26%,#22ddd2_117.47%)] py-[7%] pr-[15%] pl-[6%] text-white md:py-[4.5%] xl:min-h-[324.5px] xl:w-full xl:max-w-[1100px] xl:items-start xl:py-[55px] xl:pr-[184px] xl:pl-[73px]"
-        aria-label={locale === "en" ? "Google Sheets resources" : "Google Sheets 资源"}
+      aria-label={locale === "en" ? "Google Sheets resources" : "Google Sheets 资源"}
     >
       <Image
         className="absolute top-5 right-5 z-[1] h-[37px] w-10 xl:static xl:h-[66px] xl:w-[71px] xl:shrink-0"
