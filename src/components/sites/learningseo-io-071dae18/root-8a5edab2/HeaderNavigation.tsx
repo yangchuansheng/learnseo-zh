@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 
 import { LearningSeoLogo } from "@/components/sites/learningseo-io-071dae18/shared/Brand";
 import { localHref } from "@/components/sites/learningseo-io-071dae18/shared/links";
+import { localizedPath, resolveLocalizedPath, type Locale } from "@/lib/localization";
+import { usePathname } from "next/navigation";
+import englishManifest from "../subpages/generated/manifest.json";
+import chineseManifest from "../subpages/generated/manifest.zh-CN.json";
 
 const assetRoot = "/sites/learningseo-io-071dae18/shared";
 
@@ -26,12 +30,25 @@ const socialIcons: Record<string, string> = {
   twitter: `${assetRoot}/twitter-circle.svg`,
   youtube: `${assetRoot}/youtube-circle.svg`,
 };
+const socialIconNames = ["facebook", "twitter", "instagram", "youtube", "linkedin"];
+const availableLocalizedPaths = new Set([
+  ...englishManifest.routes.map((route) => localizedPath(route.sourcePath, "en")),
+  ...chineseManifest.routes.map((route) => localizedPath(route.sourcePath, "zh-CN")),
+]);
 
-export function HeaderNavigation({ header }: { header: HeaderContent }) {
+export function HeaderNavigation({
+  header,
+  locale = "zh-CN",
+}: {
+  header: HeaderContent;
+  locale?: Locale;
+}) {
   const [activeSubmenu, setActiveSubmenu] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname() || "/";
+  const alternateLocale: Locale = locale === "en" ? "zh-CN" : "en";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
@@ -76,19 +93,28 @@ export function HeaderNavigation({ header }: { header: HeaderContent }) {
       }`}
     >
       <Link
-        href="/"
-        aria-label="LearningSEO.io home"
+        href={localHref("/", locale)}
+        aria-label={locale === "en" ? "LearningSEO.io home" : "LearningSEO.io 首页"}
         className="relative z-0 block text-[#000036]"
       >
         <LearningSeoLogo className="block text-[21.7px] leading-[29px] tracking-[-0.4px] [&_small]:ml-px [&_small]:text-[11px] md:text-[29.75px] md:leading-[29.75px] md:[&_small]:text-[17px]" />
       </Link>
 
       <div className="flex items-center">
-        <SearchForm open={searchOpen} scrolled={scrolled} />
+        <a
+          className="mr-2 inline text-[12px] font-semibold text-[#303030] underline"
+          href={resolveLocalizedPath(pathname, alternateLocale, availableLocalizedPaths)}
+          lang={alternateLocale}
+          aria-label={alternateLocale === "en" ? "Switch to English" : "切换到简体中文"}
+        >
+          {alternateLocale === "en" ? "English" : "简体中文"}
+        </a>
+
+        <SearchForm open={searchOpen} scrolled={scrolled} locale={locale} />
 
         <button
           type="button"
-          aria-label="Toggle search"
+          aria-label={locale === "en" ? "Toggle search" : "切换搜索"}
           aria-expanded={searchOpen}
           onClick={() => {
             setSearchOpen((open) => !open);
@@ -104,7 +130,15 @@ export function HeaderNavigation({ header }: { header: HeaderContent }) {
         <div className="relative ml-[10px]">
           <button
             type="button"
-            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+            aria-label={
+              menuOpen
+                ? locale === "en"
+                  ? "Close navigation"
+                  : "关闭导航"
+                : locale === "en"
+                  ? "Open navigation"
+                  : "打开导航"
+            }
             aria-expanded={menuOpen}
             aria-controls="learning-seo-navigation"
             onClick={toggleMenu}
@@ -112,14 +146,14 @@ export function HeaderNavigation({ header }: { header: HeaderContent }) {
               menuOpen ? "bg-white shadow-[0_0_10px_rgba(0,0,0,0.07)]" : "bg-[#ededed] hover:bg-white"
             }`}
           >
-            <span className="hidden md:block">Menu</span>
+            <span className="hidden md:block">{locale === "en" ? "Menu" : "菜单"}</span>
             <MenuGlyph open={menuOpen} />
           </button>
 
           {menuOpen ? (
             <nav
               id="learning-seo-navigation"
-              aria-label="Learning SEO roadmap"
+              aria-label={locale === "en" ? "Learning SEO roadmap" : "SEO 学习路线图"}
               className="absolute right-0 top-[120%] h-[510px] w-[calc(100vw_-_40px)] overflow-hidden rounded-[4px] bg-white py-[25px] shadow-[0_0_10px_rgba(0,0,0,0.07)] md:h-[582px] md:w-[500px] md:py-10"
             >
               <div className="relative h-full">
@@ -131,6 +165,7 @@ export function HeaderNavigation({ header }: { header: HeaderContent }) {
                   <Submenu
                     label={submenu.label}
                     links={submenu.children}
+                    locale={locale}
                     onBack={() => setActiveSubmenu(null)}
                   />
                 ) : (
@@ -139,7 +174,7 @@ export function HeaderNavigation({ header }: { header: HeaderContent }) {
                       {header.navigation.map((item, index) => (
                         <li key={item.href} className="relative m-0 p-0 hover:bg-[#fafafa]">
                           <a
-                            href={localHref(item.href)}
+                            href={localHref(item.href, locale)}
                             className="block border-b border-[#ededed] py-2 pr-10 pl-5 text-[12.6px] leading-[14px] tracking-[0.7px] text-[#303030] md:px-10 md:text-[14.96px] md:leading-4 md:tracking-[0.85px]"
                           >
                             {item.label}
@@ -147,7 +182,7 @@ export function HeaderNavigation({ header }: { header: HeaderContent }) {
                           {item.children.length > 0 ? (
                             <button
                               type="button"
-                              aria-label={`Open ${item.label} submenu`}
+                              aria-label={locale === "en" ? `Open ${item.label} submenu` : `打开${item.label}子菜单`}
                               onClick={() => setActiveSubmenu(index)}
                               className="absolute top-0 right-0 flex h-full w-[30px] cursor-pointer items-center justify-center bg-[#fafafa]"
                             >
@@ -175,18 +210,26 @@ export function HeaderNavigation({ header }: { header: HeaderContent }) {
   );
 }
 
-function SearchForm({ open, scrolled }: { open: boolean; scrolled: boolean }) {
+function SearchForm({
+  open,
+  scrolled,
+  locale,
+}: {
+  open: boolean;
+  scrolled: boolean;
+  locale: Locale;
+}) {
   return (
     <form
       role="search"
-      action="https://learningseo.io/"
+      action={localHref("/", locale)}
       method="get"
       className={`absolute z-10 md:relative md:top-auto md:left-auto md:block md:w-[288px] ${
         scrolled ? "top-[10px] left-[10px] w-[calc(100%_-_70px)]" : "top-5 left-0 w-[calc(100%_-_44px)]"
       } ${open ? "block" : "hidden"}`}
     >
       <label className="sr-only" htmlFor="learning-seo-search">
-        Search LearningSEO.io
+        {locale === "en" ? "Search LearningSEO.io" : "搜索 LearningSEO.io"}
       </label>
       <input
         id="learning-seo-search"
@@ -196,7 +239,7 @@ function SearchForm({ open, scrolled }: { open: boolean; scrolled: boolean }) {
       />
       <button
         type="submit"
-        aria-label="Submit search"
+        aria-label={locale === "en" ? "Submit search" : "提交搜索"}
         className="absolute top-0 right-0 flex h-[38px] w-[46px] cursor-pointer items-center justify-center"
       >
         <Image src={`${assetRoot}/lupa.svg`} alt="" width={14} height={14} />
@@ -227,10 +270,12 @@ function MenuGlyph({ open }: { open: boolean }) {
 function Submenu({
   label,
   links,
+  locale,
   onBack,
 }: {
   label: string;
   links: ReadonlyArray<{ label: string; href: string }>;
+  locale: Locale;
   onBack: () => void;
 }) {
   return (
@@ -238,7 +283,7 @@ function Submenu({
       <button
         type="button"
         onClick={onBack}
-        aria-label={`Back from ${label}`}
+        aria-label={locale === "en" ? `Back from ${label}` : `返回${label}`}
         className="absolute top-[-25px] right-0 flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded-bl-[4px] bg-[#fafafa] md:top-[-40px]"
       >
         <span className="ml-2 block h-4 w-4 -rotate-45 border-t-2 border-l-2 border-[#9c9ba0]" aria-hidden="true" />
@@ -247,7 +292,7 @@ function Submenu({
         {links.map((link, index) => (
           <li key={link.href} className="m-0 p-0 hover:bg-[#fafafa]">
             <a
-              href={localHref(link.href)}
+              href={localHref(link.href, locale)}
               className={`block border-b border-[#ededed] py-2 pr-10 pl-10 text-[12.6px] leading-[14px] tracking-[0.7px] md:text-[14.96px] md:leading-4 md:tracking-[0.85px] ${
                 index === 0 ? "font-bold text-[#000036]" : "text-[#303030]"
               }`}
@@ -268,7 +313,7 @@ function SocialLinks({
 }) {
   return (
     <ul className="flex gap-[10px] pt-4 pl-5 md:pt-5 md:pl-10">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <li key={item.href} className="m-0 p-0">
           <a
             href={item.href}
@@ -276,7 +321,7 @@ function SocialLinks({
             className="block h-7 w-7 overflow-hidden rounded-full md:h-8 md:w-8"
           >
             <Image
-              src={socialIcons[item.label]}
+              src={socialIcons[item.label.toLowerCase()] || socialIcons[socialIconNames[index]]}
               alt=""
               width={32}
               height={32}

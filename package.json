@@ -31,11 +31,14 @@
     "build": "next build",
     "start": "next start",
     "generate:subpages": "node scripts/download-learningseo-subpages.mjs --refresh",
-    "check:data": "node scripts/check-learningseo-subpages.mjs",
+    "translate:localization": "node scripts/translate-learningseo.mjs",
+    "translate:localization:google": "node scripts/translate-learningseo-google.mjs && cp temp/learningseo-translation-cache-google.json temp/learningseo-translation-cache.json && node scripts/translate-learningseo.mjs",
+    "inventory:localization": "node scripts/inventory-learningseo-localization.mjs",
+    "check:data": "node scripts/check-learningseo-subpages.mjs && node scripts/check-learningseo-localization.mjs",
     "lint": "eslint",
     "test:smoke": "node scripts/smoke-learningseo.mjs",
     "typecheck": "tsc --noEmit",
-    "check": "npm run check:data && npm run lint && npm run typecheck && npm run build"
+    "check": "npm run check:data && npm run lint && npm run typecheck && npm run build && npm run test:smoke"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",

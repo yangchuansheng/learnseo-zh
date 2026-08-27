@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { PlayIcon } from "../shared/Icons";
+import type { Locale } from "@/lib/localization";
 
 type VideoCardProps = {
   description: string;
@@ -11,6 +12,7 @@ type VideoCardProps = {
   iframeTitle: string;
   index: number;
   title: string;
+  locale?: Locale;
 };
 
 export function VideoCard({
@@ -19,6 +21,7 @@ export function VideoCard({
   iframeTitle,
   index,
   title,
+  locale = "zh-CN",
 }: VideoCardProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const thumbnail = `/sites/learningseo-io-071dae18/root-8a5edab2/video-${String(index + 1).padStart(2, "0")}.jpg`;
@@ -56,7 +59,7 @@ export function VideoCard({
             <button
               className="absolute top-1/2 left-1/2 z-20 flex size-[60px] -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white text-[#000036] md:size-[80px] xl:top-[24px] xl:right-[30px] xl:left-auto xl:translate-x-0 xl:translate-y-0"
               type="button"
-              aria-label={`Play ${title}`}
+              aria-label={`${locale === "en" ? "Play" : "播放"} ${title}`}
               onClick={() => setIsPlaying(true)}
             >
               <PlayIcon className="ml-1 h-[23px] w-5 md:h-[27.6px] md:w-[19.2px] xl:h-[34px] xl:w-[30px]" />

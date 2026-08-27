@@ -1,23 +1,29 @@
-import content from "./content.json";
 import { RoadmapItem } from "./RoadmapItem";
 import { localHref } from "../shared/links";
+import type { Locale } from "@/lib/localization";
+import { getSiteContent, type SiteContent } from "./content";
 
 type RoadmapSectionProps = {
   activeItemCurrent?: boolean;
   activeItemHref?: string | null;
   activeLinkHref?: string | null;
+  content?: SiteContent;
+  locale?: Locale;
 };
 
-function sameHref(left: string, right: string | null): boolean {
-  return right !== null && localHref(left) === localHref(right);
+function sameHref(left: string, right: string | null, locale: Locale): boolean {
+  return right !== null && localHref(left, locale) === localHref(right, locale);
 }
 
 export function RoadmapSection({
   activeItemCurrent = false,
   activeItemHref,
   activeLinkHref,
-}: RoadmapSectionProps = {}) {
+  content,
+  locale = "zh-CN",
+}: RoadmapSectionProps) {
   const embedded = activeItemHref !== undefined;
+  const siteContent = content ?? getSiteContent(locale);
 
   return (
     <section
@@ -40,16 +46,16 @@ export function RoadmapSection({
           id="roadmap-title"
           className="mb-[15px] text-[19.6px] leading-[21px] font-bold text-[#303030] md:text-[39.95px] md:leading-[39.95px]"
         >
-          {content.roadmap.title}
+          {siteContent.roadmap.title}
         </h2>
         <p className="max-w-[632px] text-[14px] leading-[17.5px] text-[#606060] md:text-[17px] md:leading-[21.25px]">
-          {content.roadmap.intro}
+          {siteContent.roadmap.intro}
         </p>
       </header>
 
       <div className="relative z-10 mt-[-17px] flex flex-col gap-2 pb-[14px] pl-[25px] md:gap-3 md:pb-3 md:pl-[4%]">
-        {content.roadmap.items.map((item) => {
-          const active = sameHref(item.href, activeItemHref ?? null);
+        {siteContent.roadmap.items.map((item) => {
+          const active = sameHref(item.href, activeItemHref ?? null, locale);
           return (
             <RoadmapItem
               key={item.href}
@@ -57,6 +63,7 @@ export function RoadmapSection({
               activeLinkHref={active ? activeLinkHref : null}
               initiallyOpen={embedded ? active : item.initiallyOpen}
               isCurrent={active && activeItemCurrent}
+              locale={locale}
             />
           );
         })}
