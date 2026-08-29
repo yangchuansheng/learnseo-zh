@@ -8,228 +8,81 @@ import {
   isTutorialSlug,
   normalizeSourceKey,
   safeTutorialRedirect,
-  tutorialPath,
   tutorialSlugFromPath,
 } from "./url";
+import {
+  parseTutorialManifest,
+  validateTutorialRecord,
+  validateTutorialManifestPairOwnership as validateModelPairOwnership,
+} from "./model";
+import type {
+  TutorialManifest,
+  TutorialPublicationPair,
+  TutorialRecord,
+} from "./model";
 
-export type TutorialStatus = "draft" | "review" | "published" | "stale";
-
-export type TutorialSource = Readonly<{
-  title?: string;
-  provider?: string;
-  author?: string | null;
-  canonicalUrl: string;
-  sourcePath?: string;
-  license?: unknown;
-}>;
-
-export type TutorialSnapshot = Readonly<{
-  version: number;
-  capturedAt?: string;
-  sourceUpdatedAt?: string;
-  pageCanonicalUrl?: string;
-  canonicalMatched?: boolean;
-  sourceContentHash?: string;
-  contentHash?: string;
-  translationContentHash?: string;
-  history?: readonly unknown[];
-}>;
-
-export type TutorialSeo = Readonly<{
-  title?: string;
-  description?: string;
-  indexable?: boolean;
-  dateModified?: string;
-}>;
-
-export type TutorialRecord = Readonly<{
-  slug: string;
-  path: string;
-  title: string;
-  description: string;
-  provider: string;
-  status: TutorialStatus;
-  source: TutorialSource;
-  snapshot: TutorialSnapshot;
-  seo?: TutorialSeo;
-  contentFile?: string | null;
-  redirectTo?: string | null;
-}> & Readonly<Record<string, unknown>>;
-
-export type TutorialManifest = Readonly<{
-  locale: Locale;
-  generation: string | null;
-  available: boolean;
-  routes: readonly TutorialRecord[];
-}>;
-
-export type TutorialPublicationPair = Readonly<{
-  zh: TutorialRecord;
-  en: TutorialRecord;
-  generation: string;
-}>;
+export type {
+  Sha256,
+  TutorialContentFile,
+  TutorialContentBlock,
+  TutorialContentMetrics,
+  TutorialContentDocument,
+  TutorialHtmlValidation,
+  TutorialInlineNode,
+  TutorialLicense,
+  TutorialManifest,
+  TutorialManifestPair,
+  TutorialMedia,
+  TutorialPublicationPair,
+  TutorialQualification,
+  TutorialQualificationChecklist,
+  TutorialQualificationChecklistKey,
+  TutorialQualificationDecision,
+  TutorialRecord,
+  TutorialReview,
+  TutorialReviewChecklist,
+  TutorialReviewChecklistKey,
+  TutorialReviewDecision,
+  TutorialReviewHistoryEntry,
+  TutorialSeo,
+  TutorialSemanticTag,
+  TutorialSnapshot,
+  TutorialSnapshotHistory,
+  TutorialSource,
+  TutorialSourceAlias,
+  TutorialStatus,
+  TutorialTocEntry,
+  TutorialTranslation,
+} from "./model";
+export {
+  assertTutorialContentFile,
+  isSha256,
+  isTutorialRecord,
+  parseTutorialManifest,
+  sha256,
+  TUTORIAL_ALLOWED_EMBED_HOSTS,
+  TUTORIAL_MANIFEST_SCHEMA,
+  TUTORIAL_QUALIFICATION_CHECKLIST_KEYS,
+  TUTORIAL_REVIEW_CHECKLIST_KEYS,
+  TUTORIAL_SCHEMA_VERSION,
+  TUTORIAL_SEMANTIC_TAGS,
+  TUTORIAL_STATUSES,
+  tutorialManifestSchema,
+  validateContentHash,
+  validateTutorialHtml,
+  validateTutorialManifest,
+  validateTutorialManifestPair,
+} from "./model";
 
 export const TUTORIAL_CONTENT_ROOT = path.join(process.cwd(), "src/content/tutorials");
-
-type JsonRecord = Record<string, unknown>;
-
-function isRecord(value: unknown): value is JsonRecord {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function requiredString(value: unknown, label: string): string {
-  if (typeof value !== "string" || !value.trim()) {
-    throw new Error(`${label} must be a non-empty string`);
-  }
-  return value;
-}
-
-function optionalString(value: unknown): string | undefined {
-  return typeof value === "string" && value.trim() ? value : undefined;
-}
-
-function sourceCanonical(value: unknown, label: string): string {
-  const canonical = requiredString(value, label);
-  let parsed: URL;
-  try {
-    parsed = new URL(canonical);
-  } catch {
-    throw new Error(`${label} must be an absolute HTTPS URL`);
-  }
-  if (parsed.protocol !== "https:" || !parsed.hostname) {
-    throw new Error(`${label} must be an absolute HTTPS URL`);
-  }
-  normalizeSourceKey(canonical);
-  return canonical;
-}
-
-function tutorialStatus(value: unknown, label: string): TutorialStatus {
-  if (value === "draft" || value === "review" || value === "published" || value === "stale") {
-    return value;
-  }
-  throw new Error(`${label} must be draft, review, published, or stale`);
-}
 
 export function isTutorialRedirect(record: TutorialRecord): boolean {
   return record.redirectTo !== undefined && record.redirectTo !== null;
 }
 
-function normalizeRecord(value: unknown, locale: Locale, index: number): TutorialRecord {
-  if (!isRecord(value)) throw new Error(`Tutorial route ${index} must be an object`);
-
-  const slug = assertTutorialSlug(requiredString(value.slug, `Tutorial route ${index} slug`));
-  const expectedPath = tutorialPath(slug, locale);
-  const recordPath = optionalString(value.path) ?? expectedPath;
-  if (recordPath !== expectedPath) {
-    throw new Error(`Tutorial route ${slug} path must be ${expectedPath}`);
-  }
-
-  const source = isRecord(value.source) ? value.source : null;
-  if (!source) throw new Error(`Tutorial route ${slug} source must be an object`);
-  const canonicalUrl = sourceCanonical(
-    source.canonicalUrl,
-    `Tutorial route ${slug} source.canonicalUrl`,
-  );
-  const snapshot = isRecord(value.snapshot) ? value.snapshot : null;
-  if (!snapshot || !Number.isInteger(snapshot.version) || Number(snapshot.version) < 1) {
-    throw new Error(`Tutorial route ${slug} snapshot.version must be a positive integer`);
-  }
-
-  const normalizedSource: TutorialSource = {
-    ...source,
-    canonicalUrl,
-    title: optionalString(source.title),
-    provider: optionalString(source.provider),
-    author: source.author === null ? null : optionalString(source.author) ?? null,
-  };
-  const normalizedSnapshot: TutorialSnapshot = {
-    ...snapshot,
-    version: Number(snapshot.version),
-    capturedAt: optionalString(snapshot.capturedAt),
-    sourceUpdatedAt: optionalString(snapshot.sourceUpdatedAt),
-    pageCanonicalUrl: optionalString(snapshot.pageCanonicalUrl),
-    canonicalMatched: typeof snapshot.canonicalMatched === "boolean"
-      ? snapshot.canonicalMatched
-      : undefined,
-    sourceContentHash: optionalString(snapshot.sourceContentHash),
-    contentHash: optionalString(snapshot.contentHash),
-    translationContentHash: optionalString(snapshot.translationContentHash),
-    history: Array.isArray(snapshot.history) ? snapshot.history : undefined,
-  };
-  const seo = isRecord(value.seo)
-    ? {
-        ...value.seo,
-        title: optionalString(value.seo.title),
-        description: optionalString(value.seo.description),
-        indexable: typeof value.seo.indexable === "boolean" ? value.seo.indexable : undefined,
-        dateModified: optionalString(value.seo.dateModified),
-      }
-    : undefined;
-
-  const redirectTo = value.redirectTo;
-  if (redirectTo !== undefined && redirectTo !== null &&
-      (typeof redirectTo !== "string" || !redirectTo.trim())) {
-    throw new Error(`Tutorial route ${slug} redirectTo must be a non-empty string or null`);
-  }
-
-  return {
-    ...value,
-    slug,
-    path: expectedPath,
-    title: requiredString(value.title, `Tutorial route ${slug} title`),
-    description: requiredString(value.description, `Tutorial route ${slug} description`),
-    provider: requiredString(value.provider, `Tutorial route ${slug} provider`),
-    status: tutorialStatus(value.status, `Tutorial route ${slug} status`),
-    source: normalizedSource,
-    snapshot: normalizedSnapshot,
-    seo,
-    contentFile: typeof value.contentFile === "string" || value.contentFile === null
-      ? value.contentFile
-      : undefined,
-    redirectTo: typeof redirectTo === "string" || redirectTo === null
-      ? redirectTo
-      : undefined,
-  } as TutorialRecord;
-}
-
-function parseManifest(value: unknown, locale: Locale, filePath: string): TutorialManifest {
-  if (!isRecord(value)) throw new Error(`Tutorial manifest ${filePath} must be an object`);
-  if (value.locale !== undefined && value.locale !== locale) {
-    throw new Error(`Tutorial manifest ${filePath} locale must be ${locale}`);
-  }
-  const records = value.routes ?? value.records ?? value.tutorials;
-  if (!Array.isArray(records)) throw new Error(`Tutorial manifest ${filePath} must contain routes`);
-
-  const routes = records.map((record, index) => normalizeRecord(record, locale, index));
-  const slugs = new Set<string>();
-  const sourceKeyOwners = new Map<string, string>();
-  for (const route of routes) {
-    if (slugs.has(route.slug)) throw new Error(`Duplicate tutorial slug: ${route.slug}`);
-    slugs.add(route.slug);
-
-    const sourceKey = normalizeSourceKey(route.source.canonicalUrl);
-    const owner = sourceKeyOwners.get(sourceKey);
-    if (owner && owner !== route.slug) {
-      throw new Error(
-        `Tutorial source key ${sourceKey} is owned by both ${owner} and ${route.slug}`,
-      );
-    }
-    sourceKeyOwners.set(sourceKey, route.slug);
-  }
-
-  const routesBySlug = new Map(routes.map((route) => [route.slug, route]));
-  for (const route of routes) {
-    if (isTutorialRedirect(route)) {
-      resolveTutorialRedirectPath(locale, route, routesBySlug);
-    }
-  }
-
-  return {
-    locale,
-    generation: optionalString(value.generation) ?? optionalString(value.commitGeneration) ?? null,
-    available: true,
-    routes,
-  };
+function recordSourceKey(record: TutorialRecord): string {
+  if (typeof record.sourceKey === "string" && record.sourceKey) return record.sourceKey;
+  return normalizeSourceKey(record.source.canonicalUrl);
 }
 
 function manifestPath(locale: Locale): string {
@@ -243,13 +96,21 @@ export const readTutorialManifest = cache(async (locale: Locale): Promise<Tutori
     source = await readFile(filePath, "utf8");
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return { locale, generation: null, available: false, routes: [] };
+      return {
+        schemaVersion: 1,
+        locale,
+        generation: null,
+        activeVersion: null,
+        available: false,
+        routes: [],
+        aliases: [],
+      };
     }
     throw new Error(`Unable to read tutorial manifest ${filePath}: ${(error as Error).message}`);
   }
 
   try {
-    return parseManifest(JSON.parse(source) as unknown, locale, filePath);
+    return parseTutorialManifest(JSON.parse(source) as unknown, locale, filePath);
   } catch (error) {
     throw new Error(`Invalid tutorial manifest ${filePath}: ${(error as Error).message}`);
   }
@@ -309,7 +170,7 @@ export function isIndexableTutorialPair(
   if (zh.snapshot.version !== en.snapshot.version) return false;
   if (!tutorialDateModified(zh) || !tutorialDateModified(en)) return false;
   try {
-    return normalizeSourceKey(zh.source.canonicalUrl) === normalizeSourceKey(en.source.canonicalUrl);
+    return recordSourceKey(zh) === recordSourceKey(en);
   } catch {
     return false;
   }
@@ -319,9 +180,14 @@ export function validateTutorialManifestPairOwnership(
   zhManifest: TutorialManifest,
   enManifest: TutorialManifest,
 ): void {
+  const routes = [...zhManifest.routes, ...enManifest.routes];
+  if (routes.every((route) => typeof route.sourceKey === "string" && route.sourceKey)) {
+    validateModelPairOwnership(zhManifest, enManifest);
+    return;
+  }
   const owners = new Map<string, string>();
-  for (const route of [...zhManifest.routes, ...enManifest.routes]) {
-    const sourceKey = normalizeSourceKey(route.source.canonicalUrl);
+  for (const route of routes) {
+    const sourceKey = recordSourceKey(route);
     const owner = owners.get(sourceKey);
     if (owner && owner !== route.slug) {
       throw new Error(
@@ -360,9 +226,7 @@ export async function getPublishedTutorialPair(
   return pair;
 }
 
-export async function getPublishedTutorialPairs(): Promise<
-  TutorialPublicationPair[]
-> {
+export async function getPublishedTutorialPairs(): Promise<TutorialPublicationPair[]> {
   const [zhManifest, enManifest] = await Promise.all([
     readTutorialManifest("zh-CN"),
     readTutorialManifest("en"),
@@ -411,3 +275,9 @@ export async function resolveTutorialRedirect(
   );
   return resolveTutorialRedirectPath(locale, record, recordsBySlug);
 }
+
+// Backward-compatible parser names used by the first URL/SEO implementation.
+export const parseManifest = parseTutorialManifest;
+export const normalizeRecord = validateTutorialRecord;
+
+export { assertTutorialSlug };

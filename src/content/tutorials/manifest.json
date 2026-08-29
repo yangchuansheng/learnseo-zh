@@ -1,0 +1,9 @@
+{
+  "$schema": "https://learningseo.io/schemas/tutorial-manifest.json",
+  "schemaVersion": 1,
+  "locale": "zh-CN",
+  "generation": "tutorial-generation-0",
+  "activeVersion": null,
+  "routes": [],
+  "aliases": []
+}

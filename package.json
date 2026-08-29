@@ -36,6 +36,7 @@
     "inventory:localization": "node scripts/inventory-learningseo-localization.mjs",
     "check:data": "node scripts/check-learningseo-subpages.mjs && node scripts/check-learningseo-localization.mjs",
     "tutorials:check": "node scripts/check-learningseo-tutorial-pilot.mjs",
+    "tutorials:model": "node scripts/check-tutorial-model.mjs",
     "tutorials:seo": "node scripts/check-tutorial-seo.mjs",
     "lint": "eslint",
     "test:smoke": "node scripts/smoke-learningseo.mjs",
