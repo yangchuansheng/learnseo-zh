@@ -1,0 +1,9 @@
+
+> ai-website-clone-template@0.4.0 tutorials:check
+> node scripts/check-learningseo-tutorial-pilot.mjs
+
+Tutorial Pilot acceptance contract failed: /Users/longnv/.codex/worktrees/4968/learnseo-zh/src/content/tutorials/manifest.json must contain one pilot record
+
+0 !== 1
+
+tutorials:check exit code 1

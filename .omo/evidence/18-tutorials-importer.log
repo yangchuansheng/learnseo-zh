@@ -1,0 +1,5 @@
+
+> ai-website-clone-template@0.4.0 tutorials:importer
+> node scripts/check-tutorial-importer.mjs
+
+Tutorial importer contract passed: fixture collect/import, idempotency, failure taxonomy, duplicate ownership, and atomic rollback.
