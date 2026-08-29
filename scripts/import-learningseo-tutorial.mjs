@@ -9,7 +9,8 @@ import {
 } from "./lib/tutorial-importer.mjs";
 
 try {
-  const result = await importTutorialDraft(validateImportOptions(parseArgs(process.argv.slice(2))));
+  const options = validateImportOptions(parseArgs(process.argv.slice(2)));
+  const result = await importTutorialDraft(options);
   console.log(tutorialImportResultMessage(result));
   console.log(`[tutorial-importer] generation ${result.generation}`);
   console.log(`[tutorial-importer] content ${result.englishContentFile} ${result.chineseContentFile}`);

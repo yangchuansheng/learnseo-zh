@@ -25,6 +25,8 @@ export const importerDefaults = Object.freeze({
 
 const snapshotKind = "learningseo-tutorial-snapshot";
 const operationIdPattern = /^tutorial-import-[a-z0-9-]+$/;
+const actorPattern = /^[a-z0-9][a-z0-9._@-]{0,127}$/i;
+const defaultImportActor = "unspecified";
 const maxRedirects = 5;
 const htmlSizeLimit = 4 * 1024 * 1024;
 const mediaSizeLimit = 8 * 1024 * 1024;
@@ -121,11 +123,12 @@ const extensionContentType = new Map([
 ]);
 
 export class TutorialImportError extends Error {
-  constructor(code, message, operationId = null) {
+  constructor(code, message, operationId = null, actor = null) {
     super(message);
     this.name = "TutorialImportError";
     this.code = code;
     this.operationId = operationId;
+    this.actor = actor;
   }
 }
 
@@ -166,13 +169,13 @@ export function tutorialImportResultMessage(result) {
   return `[tutorial-importer] imported ${result.slug} as ${result.status}`;
 }
 
-function fail(code, message, operationId = null) {
-  throw new TutorialImportError(code, message, operationId);
+function fail(code, message, operationId = null, actor = null) {
+  throw new TutorialImportError(code, message, operationId, actor);
 }
 
-function requireOption(args, key) {
+function requireOption(args, key, operationId = null, actor = null) {
   const value = args[key];
-  if (typeof value !== "string" || !value.trim()) fail("usage", `Missing required --${key}`);
+  if (typeof value !== "string" || !value.trim()) fail("usage", `Missing required --${key}`, operationId, actor);
   return value.trim();
 }
 
@@ -181,6 +184,14 @@ function assertOperationId(value) {
     fail("usage", `Invalid operation id: ${value}`);
   }
   return value;
+}
+
+function optionalActor(value, operationId = null) {
+  if (value === undefined) return defaultImportActor;
+  if (typeof value !== "string" || !actorPattern.test(value.trim())) {
+    fail("usage", "--actor must be 1-128 characters of letters, numbers, dot, underscore, at, or dash", operationId);
+  }
+  return value.trim();
 }
 
 function importGenerationMarker(operationId, slug, sourceKey, committedAt = null) {
@@ -216,30 +227,34 @@ export function validateCollectOptions(args) {
 }
 
 export function validateImportOptions(args) {
+  const operationId = assertOperationId(args.operation ?? args["operation-id"] ?? `tutorial-import-${crypto.randomUUID()}`);
+  const actor = optionalActor(args.actor, operationId);
   if (args["content-root"] !== undefined || args["public-root"] !== undefined) {
-    fail("usage", "--content-root and --public-root are available through the programmatic fixture harness");
+    fail("usage", "--content-root and --public-root are available through the programmatic fixture harness", operationId, actor);
   }
-  const translatedAt = optionalIsoDateTime(args["translated-at"], "--translated-at");
+  const translatedAt = optionalIsoDateTime(args["translated-at"], "--translated-at", operationId, actor);
   return {
-    input: requireOption(args, "input"),
-    translation: requireOption(args, "translation"),
-    translator: optionalNonEmptyString(args.translator, "--translator"),
+    input: requireOption(args, "input", operationId, actor),
+    translation: requireOption(args, "translation", operationId, actor),
+    translator: optionalNonEmptyString(args.translator, "--translator", operationId, actor),
     translatedAt,
+    operationId,
+    actor,
     contentRoot: importerDefaults.contentRoot,
     publicRoot: importerDefaults.publicRoot,
   };
 }
 
-function optionalNonEmptyString(value, label) {
+function optionalNonEmptyString(value, label, operationId = null, actor = null) {
   if (value === undefined) return null;
-  if (typeof value !== "string" || !value.trim()) fail("usage", `${label} must be a non-empty string`);
+  if (typeof value !== "string" || !value.trim()) fail("usage", `${label} must be a non-empty string`, operationId, actor);
   return value.trim();
 }
 
-function optionalIsoDateTime(value, label) {
+function optionalIsoDateTime(value, label, operationId = null, actor = null) {
   if (value === undefined) return null;
   if (typeof value !== "string" || !isoDateTimePattern.test(value) || Number.isNaN(Date.parse(value))) {
-    fail("usage", `${label} must be an ISO-8601 timestamp`);
+    fail("usage", `${label} must be an ISO-8601 timestamp`, operationId, actor);
   }
   return new Date(value).toISOString();
 }
@@ -290,8 +305,8 @@ function isPrivateIpv4(value) {
 
 function isPrivateIpv6(value) {
   const lower = value.toLowerCase();
-  const mappedIpv4 = ipv4FromMappedIpv6(lower);
-  if (mappedIpv4) return isPrivateIpv4(mappedIpv4);
+  const embeddedIpv4 = ipv4FromEmbeddedIpv6(lower);
+  if (embeddedIpv4) return isPrivateIpv4(embeddedIpv4);
   const firstHextet = Number.parseInt(lower.split(":", 1)[0] || "0", 16);
   return lower === "::1" ||
     lower === "::" ||
@@ -302,13 +317,14 @@ function isPrivateIpv6(value) {
     lower.startsWith("2001:db8:");
 }
 
-function ipv4FromMappedIpv6(value) {
+function ipv4FromEmbeddedIpv6(value) {
   const normalized = normalizeIpv6(value);
   if (!normalized) return null;
   const parts = normalized.split(":");
-  if (parts.length !== 8 || parts.slice(0, 5).some((part) => part !== "0") || parts[5] !== "ffff") {
+  if (parts.length !== 8 || parts.slice(0, 5).some((part) => part !== "0")) {
     return null;
   }
+  if (parts[5] !== "0" && parts[5] !== "ffff") return null;
   const high = Number.parseInt(parts[6], 16);
   const low = Number.parseInt(parts[7], 16);
   if (!Number.isFinite(high) || !Number.isFinite(low) || high > 0xffff || low > 0xffff) return null;
@@ -1340,9 +1356,6 @@ async function replaceManifestsAtomic(manifestFiles, roots, operationId, updateP
     for (const file of manifestFiles) {
       const target = path.join(roots.contentRoot, file.relative);
       const backup = `${target}.backup-${operationId}`;
-      if (hooks.failBeforeManifestRelative === file.relative) {
-        throw new Error(`Injected commit failure before manifest replace for ${file.relative}`);
-      }
       await updatePhase("manifest-backup", file.relative);
       try {
         await fs.rename(target, backup);
@@ -1353,6 +1366,12 @@ async function replaceManifestsAtomic(manifestFiles, roots, operationId, updateP
       if (hooks.failAfterBackupRelative === file.relative) {
         throw new Error(`Injected commit failure after backup for ${file.relative}`);
       }
+    }
+    for (const file of manifestFiles) {
+      if (hooks.failBeforeManifestRelative === file.relative) {
+        throw new Error(`Injected commit failure before manifest replace for ${file.relative}`);
+      }
+      const target = path.join(roots.contentRoot, file.relative);
       await updatePhase("manifest-replace", file.relative);
       await fs.rename(file.target, target);
       replaced.push(target);
@@ -1573,6 +1592,43 @@ async function writeJsonFileAtomic(filePath, value) {
 async function updateJournal(contentRoot, operationId, value) {
   const target = path.join(contentRoot, ".import-journal", `${operationId}.json`);
   await writeJsonFileAtomic(target, value);
+}
+
+function errorWithOperation(error, operationId, actor = null) {
+  if (error instanceof TutorialImportError) {
+    if (!error.operationId) error.operationId = operationId;
+    if (!error.actor && actor) error.actor = actor;
+    return error;
+  }
+  return new TutorialImportError("unavailable", error.message, operationId, actor);
+}
+
+async function recordFailureJournal(contentRoot, operationId, actor, error, currentJournal = null) {
+  const failure = {
+    code: error instanceof TutorialImportError ? error.code : "unavailable",
+    message: error.message,
+    recordedAt: new Date().toISOString(),
+  };
+  const existing = currentJournal ?? await readJsonFileOrNull(
+    path.join(contentRoot, ".import-journal", `${operationId}.json`),
+  );
+  const previousPhases = Array.isArray(existing?.phases) ? existing.phases : [];
+  await updateJournal(contentRoot, operationId, {
+    ...(existing && typeof existing === "object" ? existing : {}),
+    operationId,
+    actor,
+    phase: "failed",
+    failedAt: failure.recordedAt,
+    failure,
+    failures: [
+      ...(Array.isArray(existing?.failures) ? existing.failures : []),
+      failure,
+    ],
+    phases: [
+      ...previousPhases,
+      { phase: "failed", code: failure.code, recordedAt: failure.recordedAt },
+    ],
+  });
 }
 
 async function readJournal(contentRoot, operationId) {
@@ -1938,12 +1994,37 @@ async function parseBackupManifest(roots, relative, locale, operationId) {
   }
 }
 
-async function restoreCommittedBackups(roots, operationId, reason) {
-  const zhBackup = await parseBackupManifest(roots, "manifest.json", "zh-CN", operationId);
-  const enBackup = await parseBackupManifest(roots, "manifest.en.json", "en", operationId);
-  if (!zhBackup || !enBackup) return null;
+async function parseLiveManifestForRestore(roots, relative, locale, operationId) {
+  const target = path.join(roots.contentRoot, relative);
+  let bytes;
   try {
-    model.validateTutorialManifestPair(zhBackup.manifest, enBackup.manifest);
+    bytes = await fs.readFile(target);
+  } catch {
+    return null;
+  }
+  try {
+    return {
+      backup: null,
+      bytes,
+      manifest: model.parseTutorialManifest(
+        parseRecoveryJson(bytes, `Live ${relative}`, operationId),
+        locale,
+        `live ${relative}`,
+      ),
+    };
+  } catch (error) {
+    fail("recovery-conflict", `Live ${relative} is invalid: ${error.message}`, operationId);
+  }
+}
+
+async function restoreCommittedBackups(roots, operationId, reason) {
+  const zhRestore = await parseBackupManifest(roots, "manifest.json", "zh-CN", operationId) ??
+    await parseLiveManifestForRestore(roots, "manifest.json", "zh-CN", operationId);
+  const enRestore = await parseBackupManifest(roots, "manifest.en.json", "en", operationId) ??
+    await parseLiveManifestForRestore(roots, "manifest.en.json", "en", operationId);
+  if (!zhRestore || !enRestore) return null;
+  try {
+    model.validateTutorialManifestPair(zhRestore.manifest, enRestore.manifest);
   } catch (error) {
     fail("recovery-conflict", `Backup locale pair is invalid: ${error.message}`, operationId);
   }
@@ -1954,13 +2035,13 @@ async function restoreCommittedBackups(roots, operationId, reason) {
   const liveMarkerBytes = await fs.readFile(markerPath).catch(() => null);
   const markerBytes = markerBackupBytes ?? liveMarkerBytes;
   const marker = markerBytes ? parseRecoveryJson(markerBytes, "Backup import-generation.json", operationId) : null;
-  const restoresBootstrap = isBootstrapManifest(zhBackup.manifest) && isBootstrapManifest(enBackup.manifest);
-  if (!markerMatchesManifestPair(marker, zhBackup.manifest, enBackup.manifest) && !restoresBootstrap) {
+  const restoresBootstrap = isBootstrapManifest(zhRestore.manifest) && isBootstrapManifest(enRestore.manifest);
+  if (!markerMatchesManifestPair(marker, zhRestore.manifest, enRestore.manifest) && !restoresBootstrap) {
     fail("recovery-conflict", `Backup marker is missing or does not match restored manifests: ${reason}`, operationId);
   }
 
-  await fs.copyFile(zhBackup.backup, path.join(roots.contentRoot, "manifest.json"));
-  await fs.copyFile(enBackup.backup, path.join(roots.contentRoot, "manifest.en.json"));
+  await fs.writeFile(path.join(roots.contentRoot, "manifest.json"), zhRestore.bytes);
+  await fs.writeFile(path.join(roots.contentRoot, "manifest.en.json"), enRestore.bytes);
   if (markerBackupBytes) {
     await fs.copyFile(markerBackupPath, markerPath);
   } else if (restoresBootstrap) {
@@ -2152,149 +2233,170 @@ function idempotentResult(snapshot, hashes, manifests) {
 }
 
 export async function importTutorialDraft(options) {
-  const snapshot = await readSnapshot(options.input);
-  model.assertTutorialSlug(snapshot.slug);
-  if (snapshot.canonicalMatched !== true || normalizeSourceKey(snapshot.canonicalUrl) !== normalizeSourceKey(snapshot.requestedUrl)) {
-    fail("canonical-mismatch", "Snapshot canonical does not match the requested source URL");
-  }
-  const translation = await readTranslation(options.translation);
-  const roots = {
-    contentRoot: path.resolve(options.contentRoot),
-    publicRoot: path.resolve(options.publicRoot),
-  };
-  const translationMeta = {
-    translator: options.translator ?? null,
-    translatedAt: options.translatedAt ?? null,
-  };
   const operationId = assertOperationId(options.operationId ?? `tutorial-import-${crypto.randomUUID()}`);
-  const generation = operationId;
-  const { entries: mediaEntries, map: mediaMap } = await localizeMedia(snapshot, roots.publicRoot, {
-    allowFixtureMedia: options.allowFixtureMedia === true,
-  });
-  const englishHtml = sanitizeTutorialHtml(snapshot.html, snapshot, mediaMap, "English source");
-  const chineseHtml = sanitizeTutorialHtml(translation, snapshot, mediaMap, "Chinese translation");
-  const enValidation = model.validateTutorialHtml(englishHtml, "English imported tutorial");
-  const zhValidation = model.validateTutorialHtml(chineseHtml, "Chinese imported tutorial");
-  assertTranslationHandoff(englishHtml, chineseHtml, enValidation, zhValidation);
-  const hashes = { english: sha256(englishHtml), chinese: sha256(chineseHtml) };
-  const validation = { en: enValidation, zh: zhValidation, enHtml: englishHtml, zhHtml: chineseHtml };
-  const sharedMedia = mediaEntries.map(({ manifest }) => manifest);
-  const stagingRoot = path.join(roots.contentRoot, ".import-staging", operationId);
-  return withImportLock(roots.contentRoot, async () => {
-    await options.testHooks?.afterLockAcquired?.(operationId);
-    const [zhManifest, enManifest] = await Promise.all([
-      readManifest(roots.contentRoot, "zh-CN"),
-      readManifest(roots.contentRoot, "en"),
-    ]);
-    const manifests = { "zh-CN": zhManifest, en: enManifest };
-    assertOwnership(snapshot, manifests);
-    const idempotent = idempotentResult(snapshot, hashes, manifests);
-    if (idempotent) return idempotent;
-    const enRecord = routeFromSnapshot(snapshot, "en", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
-    const zhRecord = routeFromSnapshot(snapshot, "zh-CN", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
-    const candidateVersion = zhRecord.refreshCandidate?.operationId === operationId
-      ? zhRecord.refreshCandidate.version
-      : zhRecord.snapshot.version;
-    const nextEnManifest = manifestJson(enManifest, replaceRoute(enManifest.routes, enRecord), generation);
-    const nextZhManifest = manifestJson(zhManifest, replaceRoute(zhManifest.routes, zhRecord), generation);
-    model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json");
-    model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json");
-    model.validateTutorialManifestPair(
-      model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json"),
-      model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json"),
-    );
-
-    const marker = importGenerationMarker(
-      operationId,
-      snapshot.slug,
-      snapshot.sourceKey,
-      new Date().toISOString(),
-    );
-    const staged = [
-      await stageText(stagingRoot, `content/${hashes.english}.html`, `${englishHtml}\n`),
-      await stageText(stagingRoot, `content/${hashes.chinese}.html`, `${chineseHtml}\n`),
-      await stageText(stagingRoot, "manifest.json", `${JSON.stringify(nextZhManifest, null, 2)}\n`),
-      await stageText(stagingRoot, "manifest.en.json", `${JSON.stringify(nextEnManifest, null, 2)}\n`),
-      await stageText(stagingRoot, "import-generation.json", `${JSON.stringify(marker, null, 2)}\n`),
-    ];
-    const stagedMedia = new Set();
-    for (const { target, bytes } of mediaEntries) {
-      const relative = `public/${path.relative(roots.publicRoot, target)}`;
-      if (stagedMedia.has(relative)) continue;
-      stagedMedia.add(relative);
-      staged.push(await stageBytes(stagingRoot, relative, bytes));
+  const actor = optionalActor(options.actor, operationId);
+  const roots = {
+    contentRoot: path.resolve(options.contentRoot ?? importerDefaults.contentRoot),
+    publicRoot: path.resolve(options.publicRoot ?? importerDefaults.publicRoot),
+  };
+  let currentJournal = null;
+  try {
+    const snapshot = await readSnapshot(options.input);
+    model.assertTutorialSlug(snapshot.slug);
+    if (snapshot.canonicalMatched !== true || normalizeSourceKey(snapshot.canonicalUrl) !== normalizeSourceKey(snapshot.requestedUrl)) {
+      fail("canonical-mismatch", "Snapshot canonical does not match the requested source URL", operationId, actor);
     }
-    const journal = {
-      operationId,
-      phase: "staged",
-      slug: snapshot.slug,
-      sourceKey: snapshot.sourceKey,
-      generation,
-      candidateVersion,
-      files: staged.map((file) => ({
-        relative: file.relative,
-        sha256: file.sha256,
-      })),
-      hashes: {
-        sourceContentHash: snapshot.sourceContentHash,
-        contentHash: hashes.english,
-        translationContentHash: hashes.chinese,
-      },
-      marker: importGenerationMarker(operationId, snapshot.slug, snapshot.sourceKey),
-      validation: {
-        en: enValidation,
-        zh: zhValidation,
-      },
-      phases: [],
+    const translation = await readTranslation(options.translation);
+    const translationMeta = {
+      translator: options.translator ?? null,
+      translatedAt: options.translatedAt ?? null,
     };
-    let currentJournal = journal;
-    const setPhase = async (phase, relative = null) => {
-      currentJournal = {
-        ...currentJournal,
-        phase,
-        phases: [
-          ...currentJournal.phases,
-          { phase, ...(relative ? { relative } : {}), recordedAt: new Date().toISOString() },
-        ],
-      };
-      await updateJournal(roots.contentRoot, operationId, currentJournal);
-    };
-    await updateJournal(roots.contentRoot, operationId, journal);
-    await stageText(stagingRoot, "journal.json", `${JSON.stringify(journal, null, 2)}\n`);
-
-    try {
-      await commitDraftFiles(staged, roots, operationId, setPhase, options.testHooks ?? {});
-    } catch (error) {
-      await setPhase("commit-failed");
-      fail("commit", `Commit failed for ${operationId}: ${error.message}`, operationId);
-    }
-    await updateJournal(roots.contentRoot, operationId, {
-      ...currentJournal,
-      phase: "committed",
-      committedAt: new Date().toISOString(),
+    const generation = operationId;
+    const { entries: mediaEntries, map: mediaMap } = await localizeMedia(snapshot, roots.publicRoot, {
+      allowFixtureMedia: options.allowFixtureMedia === true,
     });
+    const englishHtml = sanitizeTutorialHtml(snapshot.html, snapshot, mediaMap, "English source");
+    const chineseHtml = sanitizeTutorialHtml(translation, snapshot, mediaMap, "Chinese translation");
+    let enValidation;
+    let zhValidation;
     try {
-      await pruneCommittedBackups(roots.contentRoot);
+      enValidation = model.validateTutorialHtml(englishHtml, "English imported tutorial");
+      zhValidation = model.validateTutorialHtml(chineseHtml, "Chinese imported tutorial");
+      assertTranslationHandoff(englishHtml, chineseHtml, enValidation, zhValidation);
     } catch (error) {
-      console.warn(`[tutorial-importer] backup retention warning operation=${operationId}: ${error.message}`);
+      if (error instanceof TutorialImportError) throw error;
+      fail("validation", `Tutorial validation failed: ${error.message}`, operationId, actor);
     }
-    await fs.rm(stagingRoot, { recursive: true, force: true });
+    const hashes = { english: sha256(englishHtml), chinese: sha256(chineseHtml) };
+    const validation = { en: enValidation, zh: zhValidation, enHtml: englishHtml, zhHtml: chineseHtml };
+    const sharedMedia = mediaEntries.map(({ manifest }) => manifest);
+    const stagingRoot = path.join(roots.contentRoot, ".import-staging", operationId);
+    return await withImportLock(roots.contentRoot, async () => {
+      await options.testHooks?.afterLockAcquired?.(operationId);
+      const [zhManifest, enManifest] = await Promise.all([
+        readManifest(roots.contentRoot, "zh-CN"),
+        readManifest(roots.contentRoot, "en"),
+      ]);
+      const manifests = { "zh-CN": zhManifest, en: enManifest };
+      assertOwnership(snapshot, manifests);
+      const idempotent = idempotentResult(snapshot, hashes, manifests);
+      if (idempotent) return { ...idempotent, actor };
+      const enRecord = routeFromSnapshot(snapshot, "en", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
+      const zhRecord = routeFromSnapshot(snapshot, "zh-CN", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
+      const candidateVersion = zhRecord.refreshCandidate?.operationId === operationId
+        ? zhRecord.refreshCandidate.version
+        : zhRecord.snapshot.version;
+      const nextEnManifest = manifestJson(enManifest, replaceRoute(enManifest.routes, enRecord), generation);
+      const nextZhManifest = manifestJson(zhManifest, replaceRoute(zhManifest.routes, zhRecord), generation);
+      model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json");
+      model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json");
+      model.validateTutorialManifestPair(
+        model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json"),
+        model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json"),
+      );
 
-    const refreshCandidate = zhRecord.refreshCandidate?.operationId === operationId ? zhRecord.refreshCandidate : null;
-    return {
-      operationId,
-      generation,
-      slug: snapshot.slug,
-      sourceKey: snapshot.sourceKey,
-      englishContentFile: `content/${hashes.english}.html`,
-      chineseContentFile: `content/${hashes.chinese}.html`,
-      manifestFiles: ["manifest.json", "manifest.en.json"],
-      media: sharedMedia,
-      status: refreshCandidate?.status ?? zhRecord.status,
-      liveRouteStatus: zhRecord.status,
-      pendingReview: refreshCandidate ? true : zhRecord.status !== "published",
-      resultKind: refreshCandidate ? "refresh-candidate" : "route",
-      idempotent: false,
-    };
-  });
+      const marker = importGenerationMarker(
+        operationId,
+        snapshot.slug,
+        snapshot.sourceKey,
+        new Date().toISOString(),
+      );
+      const staged = [
+        await stageText(stagingRoot, `content/${hashes.english}.html`, `${englishHtml}\n`),
+        await stageText(stagingRoot, `content/${hashes.chinese}.html`, `${chineseHtml}\n`),
+        await stageText(stagingRoot, "manifest.json", `${JSON.stringify(nextZhManifest, null, 2)}\n`),
+        await stageText(stagingRoot, "manifest.en.json", `${JSON.stringify(nextEnManifest, null, 2)}\n`),
+        await stageText(stagingRoot, "import-generation.json", `${JSON.stringify(marker, null, 2)}\n`),
+      ];
+      const stagedMedia = new Set();
+      for (const { target, bytes } of mediaEntries) {
+        const relative = `public/${path.relative(roots.publicRoot, target)}`;
+        if (stagedMedia.has(relative)) continue;
+        stagedMedia.add(relative);
+        staged.push(await stageBytes(stagingRoot, relative, bytes));
+      }
+      const journal = {
+        operationId,
+        actor,
+        phase: "staged",
+        slug: snapshot.slug,
+        sourceKey: snapshot.sourceKey,
+        generation,
+        candidateVersion,
+        files: staged.map((file) => ({
+          relative: file.relative,
+          sha256: file.sha256,
+        })),
+        hashes: {
+          sourceContentHash: snapshot.sourceContentHash,
+          contentHash: hashes.english,
+          translationContentHash: hashes.chinese,
+        },
+        marker: importGenerationMarker(operationId, snapshot.slug, snapshot.sourceKey),
+        validation: {
+          en: enValidation,
+          zh: zhValidation,
+        },
+        phases: [],
+      };
+      currentJournal = journal;
+      const setPhase = async (phase, relative = null) => {
+        currentJournal = {
+          ...currentJournal,
+          phase,
+          phases: [
+            ...currentJournal.phases,
+            { phase, ...(relative ? { relative } : {}), recordedAt: new Date().toISOString() },
+          ],
+        };
+        await updateJournal(roots.contentRoot, operationId, currentJournal);
+      };
+      await updateJournal(roots.contentRoot, operationId, journal);
+      await stageText(stagingRoot, "journal.json", `${JSON.stringify(journal, null, 2)}\n`);
+
+      try {
+        await commitDraftFiles(staged, roots, operationId, setPhase, options.testHooks ?? {});
+      } catch (error) {
+        await setPhase("commit-failed");
+        fail("commit", `Commit failed for ${operationId}: ${error.message}`, operationId);
+      }
+      await updateJournal(roots.contentRoot, operationId, {
+        ...currentJournal,
+        phase: "committed",
+        committedAt: new Date().toISOString(),
+      });
+      try {
+        await pruneCommittedBackups(roots.contentRoot);
+      } catch (error) {
+        console.warn(`[tutorial-importer] backup retention warning operation=${operationId}: ${error.message}`);
+      }
+      await fs.rm(stagingRoot, { recursive: true, force: true });
+
+      const refreshCandidate = zhRecord.refreshCandidate?.operationId === operationId ? zhRecord.refreshCandidate : null;
+      return {
+        operationId,
+        actor,
+        generation,
+        slug: snapshot.slug,
+        sourceKey: snapshot.sourceKey,
+        englishContentFile: `content/${hashes.english}.html`,
+        chineseContentFile: `content/${hashes.chinese}.html`,
+        manifestFiles: ["manifest.json", "manifest.en.json"],
+        media: sharedMedia,
+        status: refreshCandidate?.status ?? zhRecord.status,
+        liveRouteStatus: zhRecord.status,
+        pendingReview: refreshCandidate ? true : zhRecord.status !== "published",
+        resultKind: refreshCandidate ? "refresh-candidate" : "route",
+        idempotent: false,
+      };
+    });
+  } catch (error) {
+    const importError = errorWithOperation(error, operationId, actor);
+    try {
+      await recordFailureJournal(roots.contentRoot, operationId, actor, importError, currentJournal);
+    } catch (journalError) {
+      console.warn(`[tutorial-importer] failure audit warning operation=${operationId}: ${journalError.message}`);
+    }
+    throw importError;
+  }
 }

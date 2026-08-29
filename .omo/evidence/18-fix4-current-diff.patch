@@ -1,0 +1,941 @@
+diff --git a/scripts/check-tutorial-importer.mjs b/scripts/check-tutorial-importer.mjs
+index e5736a4..38f177b 100644
+--- a/scripts/check-tutorial-importer.mjs
++++ b/scripts/check-tutorial-importer.mjs
+@@ -70,6 +70,31 @@ async function expectImportError(code, operationId, action) {
+   );
+ }
+
++async function runImportCli(args) {
++  const child = spawn(process.execPath, [path.join(repositoryRoot, "scripts/import-learningseo-tutorial.mjs"), ...args], {
++    stdio: ["ignore", "ignore", "pipe"],
++  });
++  let stderr = "";
++  child.stderr.on("data", (chunk) => {
++    stderr += chunk.toString();
++  });
++  const [code] = await once(child, "exit");
++  return { code, stderr };
++}
++
++async function assertFailureJournal(contentRoot, operationId, actor, code) {
++  const journal = JSON.parse(await fs.readFile(
++    path.join(contentRoot, ".import-journal", `${operationId}.json`),
++    "utf8",
++  ));
++  assert.equal(journal.operationId, operationId);
++  assert.equal(journal.actor, actor);
++  assert.equal(journal.phase, "failed");
++  assert.equal(journal.failure.code, code);
++  assert.ok(Array.isArray(journal.failures));
++  assert.ok(journal.failures.some((failure) => failure.code === code));
++}
++
+ async function exitedPid() {
+   const child = spawn(process.execPath, ["-e", ""], { stdio: "ignore" });
+   const pid = child.pid;
+@@ -226,6 +251,51 @@ async function main() {
+       () => validateImportOptions({ input: "snapshot.json", translation: "translation.html", "translated-at": "1" }),
+       (error) => error instanceof TutorialImportError && error.code === "usage",
+     );
++    assert.throws(
++      () => validateImportOptions({
++        input: "snapshot.json",
++        translation: "translation.html",
++        actor: "../operator",
++        "operation-id": "tutorial-import-invalid-actor-test",
++      }),
++      (error) =>
++        error instanceof TutorialImportError &&
++        error.code === "usage" &&
++        error.operationId === "tutorial-import-invalid-actor-test",
++    );
++    const missingInputCli = await runImportCli([
++      "--translation",
++      path.join(fixtureRoot, "google-devsite.zh-CN.html"),
++      "--operation-id",
++      "tutorial-import-cli-missing-input-test",
++      "--actor",
++      "cli.operator",
++    ]);
++    assert.equal(missingInputCli.code, 1);
++    assert.match(missingInputCli.stderr, /\[tutorial-importer\] usage operation=tutorial-import-cli-missing-input-test:/);
++    const contentRootCli = await runImportCli([
++      "--content-root",
++      "temp",
++      "--operation-id",
++      "tutorial-import-cli-content-root-test",
++      "--input",
++      "temp/missing.json",
++      "--translation",
++      "temp/missing.html",
++    ]);
++    assert.equal(contentRootCli.code, 1);
++    assert.match(contentRootCli.stderr, /\[tutorial-importer\] usage operation=tutorial-import-cli-content-root-test:/);
++    const translatorCli = await runImportCli([
++      "--translator",
++      "--operation-id",
++      "tutorial-import-cli-translator-test",
++      "--input",
++      "temp/missing.json",
++      "--translation",
++      "temp/missing.html",
++    ]);
++    assert.equal(translatorCli.code, 1);
++    assert.match(translatorCli.stderr, /\[tutorial-importer\] usage operation=tutorial-import-cli-translator-test:/);
+     const snapshot = await collectFixture();
+     assert.equal(snapshot.slug, slug);
+     assert.equal(snapshot.sourcePath, sourcePath);
+@@ -245,8 +315,10 @@ async function main() {
+     const result = await importFixture(tmpRoot, snapshot, {
+       translator: "Fixture Translator",
+       translatedAt: "2026-08-30T00:00:00.000Z",
++      actor: "importer.test",
+     });
+     assert.equal(result.status, "draft");
++    assert.equal(result.actor, "importer.test");
+     assert.equal(result.manifestFiles.length, 2);
+     assert.equal(result.media.length, 1);
+     assert.ok(result.media[0].path.startsWith(`${importerDefaults.mediaPathPrefix}${slug}/`));
+@@ -290,6 +362,7 @@ async function main() {
+     assert.equal(journal.phase, "committed");
+     assert.ok(journal.files.every((file) => typeof file.relative === "string" && /^[a-f0-9]{64}$/.test(file.sha256)));
+     assert.equal(journal.hashes.sourceContentHash, snapshot.sourceContentHash);
++    assert.equal(journal.actor, "importer.test");
+     assert.equal(journal.candidateVersion, zhManifest.routes[0].snapshot.version);
+     assert.equal(journal.marker.slug, slug);
+     assert.equal(journal.marker.sourceKey, snapshot.sourceKey);
+@@ -298,6 +371,7 @@ async function main() {
+     const generationBeforeSecondImport = zhManifest.generation;
+     const secondResult = await importFixture(tmpRoot, snapshot);
+     assert.equal(secondResult.idempotent, true);
++    assert.equal(secondResult.actor, "unspecified");
+     const secondZhManifest = JSON.parse(await fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"));
+     assert.equal(secondZhManifest.generation, generationBeforeSecondImport);
+     assert.equal(secondZhManifest.routes[0].snapshot.version, 1);
+@@ -325,20 +399,33 @@ async function main() {
+     assert.deepEqual(tamperedAfter, tamperedBefore);
+     await writeJsonFile(path.join(contentRoot, "import-generation.json"), marker);
+
+-    await expectCode("translation-missing", () =>
++    const translationAuditRoot = path.join(tmpRoot, "translation-audit-content");
++    await expectImportError("translation-missing", "tutorial-import-translation-audit-test", () =>
+       importTutorialDraft({
+         input: path.join(tmpRoot, "snapshot.json"),
+         translation: path.join(tmpRoot, "missing.zh-CN.html"),
+-        contentRoot,
++        contentRoot: translationAuditRoot,
+         publicRoot,
++        operationId: "tutorial-import-translation-audit-test",
++        actor: "audit.operator",
+       }),
+     );
+-    await expectCode("unsupported-media", () =>
++    await assertFailureJournal(
++      translationAuditRoot,
++      "tutorial-import-translation-audit-test",
++      "audit.operator",
++      "translation-missing",
++    );
++    const mediaAuditRoot = path.join(tmpRoot, "media-failure-content");
++    await expectImportError("unsupported-media", "tutorial-import-media-audit-test", () =>
+       importFixture(tmpRoot, { ...snapshot, media: [] }, {
+-        contentRoot: path.join(tmpRoot, "media-failure-content"),
++        contentRoot: mediaAuditRoot,
+         publicRoot: path.join(tmpRoot, "media-failure-public"),
++        operationId: "tutorial-import-media-audit-test",
++        actor: "audit.operator",
+       }),
+     );
++    await assertFailureJournal(mediaAuditRoot, "tutorial-import-media-audit-test", "audit.operator", "unsupported-media");
+     await writeJsonFile(path.join(tmpRoot, "snapshot.json"), snapshot);
+     const unsafeTranslation = path.join(tmpRoot, "unsafe.zh-CN.html");
+     const unsafeInput = path.join(tmpRoot, "unsafe-snapshot.json");
+@@ -348,15 +435,40 @@ async function main() {
+       snapshot.html.replace("Fixture SEO Starter Guide", "Fixture SEO 入门指南").replace("<p>", "<p onclick=\"alert(1)\">"),
+       "utf8",
+     );
+-    await expectCode("unsafe-markup", () =>
++    const sanitizerAuditRoot = path.join(tmpRoot, "unsafe-content");
++    await expectImportError("unsafe-markup", "tutorial-import-sanitizer-audit-test", () =>
+       importTutorialDraft({
+         input: unsafeInput,
+         translation: unsafeTranslation,
+-        contentRoot: path.join(tmpRoot, "unsafe-content"),
++        contentRoot: sanitizerAuditRoot,
+         publicRoot: path.join(tmpRoot, "unsafe-public"),
+         allowFixtureMedia: true,
++        operationId: "tutorial-import-sanitizer-audit-test",
++        actor: "audit.operator",
+       }),
+     );
++    await assertFailureJournal(sanitizerAuditRoot, "tutorial-import-sanitizer-audit-test", "audit.operator", "unsafe-markup");
++
++    const validationHtml = snapshot.html.replace('id="make-your-site-discoverable"', 'id="seo-starter-guide"');
++    const validationAuditInput = path.join(tmpRoot, "validation-audit-snapshot.json");
++    await writeJsonFile(validationAuditInput, {
++      ...snapshot,
++      html: validationHtml,
++      sourceContentHash: sha256(validationHtml),
++    });
++    const validationAuditRoot = path.join(tmpRoot, "validation-audit-content");
++    await expectImportError("validation", "tutorial-import-validation-audit-test", () =>
++      importTutorialDraft({
++        input: validationAuditInput,
++        translation: path.join(fixtureRoot, "google-devsite.zh-CN.html"),
++        contentRoot: validationAuditRoot,
++        publicRoot: path.join(tmpRoot, "validation-audit-public"),
++        allowFixtureMedia: true,
++        operationId: "tutorial-import-validation-audit-test",
++        actor: "audit.operator",
++      }),
++    );
++    await assertFailureJournal(validationAuditRoot, "tutorial-import-validation-audit-test", "audit.operator", "validation");
+
+     const canonicalMismatch = path.join(tmpRoot, "canonical-mismatch.html");
+     await fs.writeFile(
+@@ -432,6 +544,11 @@ async function main() {
+     }
+
+     for (const privateMappedAddress of [
++      "::127.0.0.1",
++      "::10.0.0.1",
++      "::192.168.0.1",
++      "0:0:0:0:0:0:7f00:1",
++      "0:0:0:0:0:0:a00:1",
+       "::ffff:7f00:1",
+       "0:0:0:0:0:ffff:7f00:1",
+       "::ffff:127.0.0.1",
+@@ -455,6 +572,31 @@ async function main() {
+         https.request = originalRequest;
+       }
+     }
++    try {
++      let mediaRequested = false;
++      dns.lookup = async () => [{ address: "::10.0.0.1", family: 6 }];
++      https.request = () => {
++        mediaRequested = true;
++        throw new Error("HTTPS request must not run for private media DNS answers");
++      };
++      await writeJsonFile(path.join(tmpRoot, "private-media-snapshot.json"), {
++        ...snapshot,
++        media: [{ ...snapshot.media[0], fixtureFile: undefined }],
++      });
++      await expectImportError("unavailable", "tutorial-import-private-media-dns-test", () =>
++        importTutorialDraft({
++          input: path.join(tmpRoot, "private-media-snapshot.json"),
++          translation: path.join(fixtureRoot, "google-devsite.zh-CN.html"),
++          contentRoot: path.join(tmpRoot, "private-media-content"),
++          publicRoot: path.join(tmpRoot, "private-media-public"),
++          operationId: "tutorial-import-private-media-dns-test",
++        }),
++      );
++      assert.equal(mediaRequested, false);
++    } finally {
++      dns.lookup = originalLookup;
++      https.request = originalRequest;
++    }
+     try {
+       dns.lookup = async () => [{ address: "::ffff:5db8:d822", family: 6 }];
+       https.request = (_options, callback) => {
+@@ -623,11 +765,12 @@ async function main() {
+       fs.readFile(path.join(transactionContentRoot, "manifest.json"), "utf8"),
+       fs.readFile(path.join(transactionContentRoot, "manifest.en.json"), "utf8"),
+     ]);
+-    await expectCode("commit", () =>
++    await expectImportError("commit", "tutorial-import-transaction-test", () =>
+       importFixture(tmpRoot, snapshot, {
+         contentRoot: transactionContentRoot,
+         publicRoot: path.join(tmpRoot, "transaction-public"),
+         operationId: "tutorial-import-transaction-test",
++        actor: "audit.operator",
+         testHooks: { failAfterBackupRelative: "manifest.en.json" },
+       }),
+     );
+@@ -640,7 +783,10 @@ async function main() {
+       path.join(transactionContentRoot, ".import-journal", "tutorial-import-transaction-test.json"),
+       "utf8",
+     ));
+-    assert.equal(failedJournal.phase, "commit-failed");
++    assert.equal(failedJournal.phase, "failed");
++    assert.equal(failedJournal.actor, "audit.operator");
++    assert.equal(failedJournal.failure.code, "commit");
++    assert.ok(failedJournal.phases.some((entry) => entry.phase === "commit-failed"));
+
+     const cleanupContentRoot = path.join(tmpRoot, "cleanup-content");
+     await seedManifests(cleanupContentRoot);
+@@ -825,7 +971,7 @@ async function main() {
+         contentRoot: validationContentRoot,
+         publicRoot: validationPublicRoot,
+         operationId: "tutorial-import-validation-test",
+-        testHooks: { failBeforeManifestRelative: "manifest.json" },
++        testHooks: { failBeforeFirstContent: true },
+       }),
+     );
+     const validationJournalPath = path.join(validationContentRoot, ".import-journal", "tutorial-import-validation-test.json");
+@@ -862,7 +1008,7 @@ async function main() {
+         contentRoot: versionContentRoot,
+         publicRoot: versionPublicRoot,
+         operationId: "tutorial-import-version-test",
+-        testHooks: { failBeforeManifestRelative: "manifest.json" },
++        testHooks: { failBeforeFirstContent: true },
+       }),
+     );
+     const versionJournalPath = path.join(versionContentRoot, ".import-journal", "tutorial-import-version-test.json");
+@@ -893,7 +1039,7 @@ async function main() {
+         contentRoot: extraRouteContentRoot,
+         publicRoot: extraRoutePublicRoot,
+         operationId: "tutorial-import-extra-route-test",
+-        testHooks: { failBeforeManifestRelative: "manifest.json" },
++        testHooks: { failBeforeFirstContent: true },
+       }),
+     );
+     const extraRouteStaging = path.join(extraRouteContentRoot, ".import-staging", "tutorial-import-extra-route-test");
+@@ -996,6 +1142,59 @@ async function main() {
+     await assert.rejects(() => fs.access(path.join(restoreContentRoot, "import-generation.json")), { code: "ENOENT" });
+     await fs.access(path.join(restoreContentRoot, `manifest.json.backup-${restoreOperation}`));
+
++    const partialBackupContentRoot = path.join(tmpRoot, "partial-backup-content");
++    const partialBackupPublicRoot = path.join(tmpRoot, "partial-backup-public");
++    await seedManifests(partialBackupContentRoot);
++    const partialBackupOperation = "tutorial-import-partial-backup-test";
++    const partialBackupBefore = await Promise.all([
++      fs.readFile(path.join(partialBackupContentRoot, "manifest.json"), "utf8"),
++      fs.readFile(path.join(partialBackupContentRoot, "manifest.en.json"), "utf8"),
++    ]);
++    await expectImportError("commit", partialBackupOperation, () =>
++      importFixture(tmpRoot, snapshot, {
++        contentRoot: partialBackupContentRoot,
++        publicRoot: partialBackupPublicRoot,
++        operationId: partialBackupOperation,
++        testHooks: { failBeforeManifestRelative: "manifest.json" },
++      }),
++    );
++    const partialBackupStaging = path.join(partialBackupContentRoot, ".import-staging", partialBackupOperation);
++    await fs.writeFile(
++      path.join(partialBackupContentRoot, `manifest.json.backup-${partialBackupOperation}`),
++      partialBackupBefore[0],
++      "utf8",
++    );
++    await fs.rm(path.join(partialBackupContentRoot, `manifest.en.json.backup-${partialBackupOperation}`), { force: true });
++    await fs.rm(path.join(partialBackupContentRoot, `import-generation.json.backup-${partialBackupOperation}`), { force: true });
++    await fs.copyFile(path.join(partialBackupStaging, "manifest.json"), path.join(partialBackupContentRoot, "manifest.json"));
++    await fs.rm(path.join(partialBackupStaging, "manifest.en.json"), { force: true });
++    const mixedBeforeRestore = await Promise.all([
++      fs.readFile(path.join(partialBackupContentRoot, "manifest.json"), "utf8").then(JSON.parse),
++      fs.readFile(path.join(partialBackupContentRoot, "manifest.en.json"), "utf8").then(JSON.parse),
++    ]);
++    assert.notEqual(mixedBeforeRestore[0].generation, mixedBeforeRestore[1].generation);
++    const partialRestored = await recoverTutorialImport({
++      contentRoot: partialBackupContentRoot,
++      publicRoot: partialBackupPublicRoot,
++      operationId: partialBackupOperation,
++    });
++    assert.equal(partialRestored.status, "restored");
++    const partialBackupAfter = await Promise.all([
++      fs.readFile(path.join(partialBackupContentRoot, "manifest.json"), "utf8"),
++      fs.readFile(path.join(partialBackupContentRoot, "manifest.en.json"), "utf8"),
++    ]);
++    assert.deepEqual(partialBackupAfter, partialBackupBefore);
++    const partialRestoredAgain = await recoverTutorialImport({
++      contentRoot: partialBackupContentRoot,
++      publicRoot: partialBackupPublicRoot,
++      operationId: partialBackupOperation,
++    });
++    assert.equal(partialRestoredAgain.status, "restored");
++    assert.deepEqual(await Promise.all([
++      fs.readFile(path.join(partialBackupContentRoot, "manifest.json"), "utf8"),
++      fs.readFile(path.join(partialBackupContentRoot, "manifest.en.json"), "utf8"),
++    ]), partialBackupBefore);
++
+     await publishImportedFixture(contentRoot);
+     const publishedBefore = JSON.parse(await fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"));
+     const refreshedHtml = snapshot.html.replace(
+@@ -1226,7 +1425,7 @@ async function main() {
+     assert.equal(staleEmptyLockResult.status, "draft");
+     await assert.rejects(() => fs.access(staleEmptyLockPath), { code: "ENOENT" });
+
+-    console.log("Tutorial importer contract passed: deterministic fixture collect/import, in-process recovery/restore coverage, marker gating, mapped IPv6 rejection, tuple idempotency, failure taxonomy, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-final-fix-tutorials-importer.log");
++    console.log("Tutorial importer contract passed: deterministic fixture collect/import, in-process recovery/restore coverage, marker gating, embedded IPv4-in-IPv6 rejection, tuple idempotency, failure audit, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix4-tutorials-importer.log");
+   } finally {
+     await fs.rm(tmpRoot, { recursive: true, force: true });
+   }
+diff --git a/scripts/import-learningseo-tutorial.mjs b/scripts/import-learningseo-tutorial.mjs
+index 6f6add5..13b5e67 100644
+--- a/scripts/import-learningseo-tutorial.mjs
++++ b/scripts/import-learningseo-tutorial.mjs
+@@ -9,7 +9,8 @@ import {
+ } from "./lib/tutorial-importer.mjs";
+
+ try {
+-  const result = await importTutorialDraft(validateImportOptions(parseArgs(process.argv.slice(2))));
++  const options = validateImportOptions(parseArgs(process.argv.slice(2)));
++  const result = await importTutorialDraft(options);
+   console.log(tutorialImportResultMessage(result));
+   console.log(`[tutorial-importer] generation ${result.generation}`);
+   console.log(`[tutorial-importer] content ${result.englishContentFile} ${result.chineseContentFile}`);
+diff --git a/scripts/lib/tutorial-importer.mjs b/scripts/lib/tutorial-importer.mjs
+index 79782f1..8761380 100644
+--- a/scripts/lib/tutorial-importer.mjs
++++ b/scripts/lib/tutorial-importer.mjs
+@@ -25,6 +25,8 @@ export const importerDefaults = Object.freeze({
+
+ const snapshotKind = "learningseo-tutorial-snapshot";
+ const operationIdPattern = /^tutorial-import-[a-z0-9-]+$/;
++const actorPattern = /^[a-z0-9][a-z0-9._@-]{0,127}$/i;
++const defaultImportActor = "unspecified";
+ const maxRedirects = 5;
+ const htmlSizeLimit = 4 * 1024 * 1024;
+ const mediaSizeLimit = 8 * 1024 * 1024;
+@@ -121,11 +123,12 @@ const extensionContentType = new Map([
+ ]);
+
+ export class TutorialImportError extends Error {
+-  constructor(code, message, operationId = null) {
++  constructor(code, message, operationId = null, actor = null) {
+     super(message);
+     this.name = "TutorialImportError";
+     this.code = code;
+     this.operationId = operationId;
++    this.actor = actor;
+   }
+ }
+
+@@ -166,13 +169,13 @@ export function tutorialImportResultMessage(result) {
+   return `[tutorial-importer] imported ${result.slug} as ${result.status}`;
+ }
+
+-function fail(code, message, operationId = null) {
+-  throw new TutorialImportError(code, message, operationId);
++function fail(code, message, operationId = null, actor = null) {
++  throw new TutorialImportError(code, message, operationId, actor);
+ }
+
+-function requireOption(args, key) {
++function requireOption(args, key, operationId = null, actor = null) {
+   const value = args[key];
+-  if (typeof value !== "string" || !value.trim()) fail("usage", `Missing required --${key}`);
++  if (typeof value !== "string" || !value.trim()) fail("usage", `Missing required --${key}`, operationId, actor);
+   return value.trim();
+ }
+
+@@ -183,6 +186,14 @@ function assertOperationId(value) {
+   return value;
+ }
+
++function optionalActor(value, operationId = null) {
++  if (value === undefined) return defaultImportActor;
++  if (typeof value !== "string" || !actorPattern.test(value.trim())) {
++    fail("usage", "--actor must be 1-128 characters of letters, numbers, dot, underscore, at, or dash", operationId);
++  }
++  return value.trim();
++}
++
+ function importGenerationMarker(operationId, slug, sourceKey, committedAt = null) {
+   return {
+     operationId,
+@@ -216,30 +227,34 @@ export function validateCollectOptions(args) {
+ }
+
+ export function validateImportOptions(args) {
++  const operationId = assertOperationId(args.operation ?? args["operation-id"] ?? `tutorial-import-${crypto.randomUUID()}`);
++  const actor = optionalActor(args.actor, operationId);
+   if (args["content-root"] !== undefined || args["public-root"] !== undefined) {
+-    fail("usage", "--content-root and --public-root are available through the programmatic fixture harness");
++    fail("usage", "--content-root and --public-root are available through the programmatic fixture harness", operationId, actor);
+   }
+-  const translatedAt = optionalIsoDateTime(args["translated-at"], "--translated-at");
++  const translatedAt = optionalIsoDateTime(args["translated-at"], "--translated-at", operationId, actor);
+   return {
+-    input: requireOption(args, "input"),
+-    translation: requireOption(args, "translation"),
+-    translator: optionalNonEmptyString(args.translator, "--translator"),
++    input: requireOption(args, "input", operationId, actor),
++    translation: requireOption(args, "translation", operationId, actor),
++    translator: optionalNonEmptyString(args.translator, "--translator", operationId, actor),
+     translatedAt,
++    operationId,
++    actor,
+     contentRoot: importerDefaults.contentRoot,
+     publicRoot: importerDefaults.publicRoot,
+   };
+ }
+
+-function optionalNonEmptyString(value, label) {
++function optionalNonEmptyString(value, label, operationId = null, actor = null) {
+   if (value === undefined) return null;
+-  if (typeof value !== "string" || !value.trim()) fail("usage", `${label} must be a non-empty string`);
++  if (typeof value !== "string" || !value.trim()) fail("usage", `${label} must be a non-empty string`, operationId, actor);
+   return value.trim();
+ }
+
+-function optionalIsoDateTime(value, label) {
++function optionalIsoDateTime(value, label, operationId = null, actor = null) {
+   if (value === undefined) return null;
+   if (typeof value !== "string" || !isoDateTimePattern.test(value) || Number.isNaN(Date.parse(value))) {
+-    fail("usage", `${label} must be an ISO-8601 timestamp`);
++    fail("usage", `${label} must be an ISO-8601 timestamp`, operationId, actor);
+   }
+   return new Date(value).toISOString();
+ }
+@@ -290,8 +305,8 @@ function isPrivateIpv4(value) {
+
+ function isPrivateIpv6(value) {
+   const lower = value.toLowerCase();
+-  const mappedIpv4 = ipv4FromMappedIpv6(lower);
+-  if (mappedIpv4) return isPrivateIpv4(mappedIpv4);
++  const embeddedIpv4 = ipv4FromEmbeddedIpv6(lower);
++  if (embeddedIpv4) return isPrivateIpv4(embeddedIpv4);
+   const firstHextet = Number.parseInt(lower.split(":", 1)[0] || "0", 16);
+   return lower === "::1" ||
+     lower === "::" ||
+@@ -302,13 +317,14 @@ function isPrivateIpv6(value) {
+     lower.startsWith("2001:db8:");
+ }
+
+-function ipv4FromMappedIpv6(value) {
++function ipv4FromEmbeddedIpv6(value) {
+   const normalized = normalizeIpv6(value);
+   if (!normalized) return null;
+   const parts = normalized.split(":");
+-  if (parts.length !== 8 || parts.slice(0, 5).some((part) => part !== "0") || parts[5] !== "ffff") {
++  if (parts.length !== 8 || parts.slice(0, 5).some((part) => part !== "0")) {
+     return null;
+   }
++  if (parts[5] !== "0" && parts[5] !== "ffff") return null;
+   const high = Number.parseInt(parts[6], 16);
+   const low = Number.parseInt(parts[7], 16);
+   if (!Number.isFinite(high) || !Number.isFinite(low) || high > 0xffff || low > 0xffff) return null;
+@@ -1340,9 +1356,6 @@ async function replaceManifestsAtomic(manifestFiles, roots, operationId, updateP
+     for (const file of manifestFiles) {
+       const target = path.join(roots.contentRoot, file.relative);
+       const backup = `${target}.backup-${operationId}`;
+-      if (hooks.failBeforeManifestRelative === file.relative) {
+-        throw new Error(`Injected commit failure before manifest replace for ${file.relative}`);
+-      }
+       await updatePhase("manifest-backup", file.relative);
+       try {
+         await fs.rename(target, backup);
+@@ -1353,6 +1366,12 @@ async function replaceManifestsAtomic(manifestFiles, roots, operationId, updateP
+       if (hooks.failAfterBackupRelative === file.relative) {
+         throw new Error(`Injected commit failure after backup for ${file.relative}`);
+       }
++    }
++    for (const file of manifestFiles) {
++      if (hooks.failBeforeManifestRelative === file.relative) {
++        throw new Error(`Injected commit failure before manifest replace for ${file.relative}`);
++      }
++      const target = path.join(roots.contentRoot, file.relative);
+       await updatePhase("manifest-replace", file.relative);
+       await fs.rename(file.target, target);
+       replaced.push(target);
+@@ -1575,6 +1594,43 @@ async function updateJournal(contentRoot, operationId, value) {
+   await writeJsonFileAtomic(target, value);
+ }
+
++function errorWithOperation(error, operationId, actor = null) {
++  if (error instanceof TutorialImportError) {
++    if (!error.operationId) error.operationId = operationId;
++    if (!error.actor && actor) error.actor = actor;
++    return error;
++  }
++  return new TutorialImportError("unavailable", error.message, operationId, actor);
++}
++
++async function recordFailureJournal(contentRoot, operationId, actor, error, currentJournal = null) {
++  const failure = {
++    code: error instanceof TutorialImportError ? error.code : "unavailable",
++    message: error.message,
++    recordedAt: new Date().toISOString(),
++  };
++  const existing = currentJournal ?? await readJsonFileOrNull(
++    path.join(contentRoot, ".import-journal", `${operationId}.json`),
++  );
++  const previousPhases = Array.isArray(existing?.phases) ? existing.phases : [];
++  await updateJournal(contentRoot, operationId, {
++    ...(existing && typeof existing === "object" ? existing : {}),
++    operationId,
++    actor,
++    phase: "failed",
++    failedAt: failure.recordedAt,
++    failure,
++    failures: [
++      ...(Array.isArray(existing?.failures) ? existing.failures : []),
++      failure,
++    ],
++    phases: [
++      ...previousPhases,
++      { phase: "failed", code: failure.code, recordedAt: failure.recordedAt },
++    ],
++  });
++}
++
+ async function readJournal(contentRoot, operationId) {
+   try {
+     return await readJsonFile(path.join(contentRoot, ".import-journal", `${operationId}.json`));
+@@ -1938,12 +1994,37 @@ async function parseBackupManifest(roots, relative, locale, operationId) {
+   }
+ }
+
++async function parseLiveManifestForRestore(roots, relative, locale, operationId) {
++  const target = path.join(roots.contentRoot, relative);
++  let bytes;
++  try {
++    bytes = await fs.readFile(target);
++  } catch {
++    return null;
++  }
++  try {
++    return {
++      backup: null,
++      bytes,
++      manifest: model.parseTutorialManifest(
++        parseRecoveryJson(bytes, `Live ${relative}`, operationId),
++        locale,
++        `live ${relative}`,
++      ),
++    };
++  } catch (error) {
++    fail("recovery-conflict", `Live ${relative} is invalid: ${error.message}`, operationId);
++  }
++}
++
+ async function restoreCommittedBackups(roots, operationId, reason) {
+-  const zhBackup = await parseBackupManifest(roots, "manifest.json", "zh-CN", operationId);
+-  const enBackup = await parseBackupManifest(roots, "manifest.en.json", "en", operationId);
+-  if (!zhBackup || !enBackup) return null;
++  const zhRestore = await parseBackupManifest(roots, "manifest.json", "zh-CN", operationId) ??
++    await parseLiveManifestForRestore(roots, "manifest.json", "zh-CN", operationId);
++  const enRestore = await parseBackupManifest(roots, "manifest.en.json", "en", operationId) ??
++    await parseLiveManifestForRestore(roots, "manifest.en.json", "en", operationId);
++  if (!zhRestore || !enRestore) return null;
+   try {
+-    model.validateTutorialManifestPair(zhBackup.manifest, enBackup.manifest);
++    model.validateTutorialManifestPair(zhRestore.manifest, enRestore.manifest);
+   } catch (error) {
+     fail("recovery-conflict", `Backup locale pair is invalid: ${error.message}`, operationId);
+   }
+@@ -1954,13 +2035,13 @@ async function restoreCommittedBackups(roots, operationId, reason) {
+   const liveMarkerBytes = await fs.readFile(markerPath).catch(() => null);
+   const markerBytes = markerBackupBytes ?? liveMarkerBytes;
+   const marker = markerBytes ? parseRecoveryJson(markerBytes, "Backup import-generation.json", operationId) : null;
+-  const restoresBootstrap = isBootstrapManifest(zhBackup.manifest) && isBootstrapManifest(enBackup.manifest);
+-  if (!markerMatchesManifestPair(marker, zhBackup.manifest, enBackup.manifest) && !restoresBootstrap) {
++  const restoresBootstrap = isBootstrapManifest(zhRestore.manifest) && isBootstrapManifest(enRestore.manifest);
++  if (!markerMatchesManifestPair(marker, zhRestore.manifest, enRestore.manifest) && !restoresBootstrap) {
+     fail("recovery-conflict", `Backup marker is missing or does not match restored manifests: ${reason}`, operationId);
+   }
+
+-  await fs.copyFile(zhBackup.backup, path.join(roots.contentRoot, "manifest.json"));
+-  await fs.copyFile(enBackup.backup, path.join(roots.contentRoot, "manifest.en.json"));
++  await fs.writeFile(path.join(roots.contentRoot, "manifest.json"), zhRestore.bytes);
++  await fs.writeFile(path.join(roots.contentRoot, "manifest.en.json"), enRestore.bytes);
+   if (markerBackupBytes) {
+     await fs.copyFile(markerBackupPath, markerPath);
+   } else if (restoresBootstrap) {
+@@ -2152,149 +2233,170 @@ function idempotentResult(snapshot, hashes, manifests) {
+ }
+
+ export async function importTutorialDraft(options) {
+-  const snapshot = await readSnapshot(options.input);
+-  model.assertTutorialSlug(snapshot.slug);
+-  if (snapshot.canonicalMatched !== true || normalizeSourceKey(snapshot.canonicalUrl) !== normalizeSourceKey(snapshot.requestedUrl)) {
+-    fail("canonical-mismatch", "Snapshot canonical does not match the requested source URL");
+-  }
+-  const translation = await readTranslation(options.translation);
++  const operationId = assertOperationId(options.operationId ?? `tutorial-import-${crypto.randomUUID()}`);
++  const actor = optionalActor(options.actor, operationId);
+   const roots = {
+-    contentRoot: path.resolve(options.contentRoot),
+-    publicRoot: path.resolve(options.publicRoot),
+-  };
+-  const translationMeta = {
+-    translator: options.translator ?? null,
+-    translatedAt: options.translatedAt ?? null,
++    contentRoot: path.resolve(options.contentRoot ?? importerDefaults.contentRoot),
++    publicRoot: path.resolve(options.publicRoot ?? importerDefaults.publicRoot),
+   };
+-  const operationId = assertOperationId(options.operationId ?? `tutorial-import-${crypto.randomUUID()}`);
+-  const generation = operationId;
+-  const { entries: mediaEntries, map: mediaMap } = await localizeMedia(snapshot, roots.publicRoot, {
+-    allowFixtureMedia: options.allowFixtureMedia === true,
+-  });
+-  const englishHtml = sanitizeTutorialHtml(snapshot.html, snapshot, mediaMap, "English source");
+-  const chineseHtml = sanitizeTutorialHtml(translation, snapshot, mediaMap, "Chinese translation");
+-  const enValidation = model.validateTutorialHtml(englishHtml, "English imported tutorial");
+-  const zhValidation = model.validateTutorialHtml(chineseHtml, "Chinese imported tutorial");
+-  assertTranslationHandoff(englishHtml, chineseHtml, enValidation, zhValidation);
+-  const hashes = { english: sha256(englishHtml), chinese: sha256(chineseHtml) };
+-  const validation = { en: enValidation, zh: zhValidation, enHtml: englishHtml, zhHtml: chineseHtml };
+-  const sharedMedia = mediaEntries.map(({ manifest }) => manifest);
+-  const stagingRoot = path.join(roots.contentRoot, ".import-staging", operationId);
+-  return withImportLock(roots.contentRoot, async () => {
+-    await options.testHooks?.afterLockAcquired?.(operationId);
+-    const [zhManifest, enManifest] = await Promise.all([
+-      readManifest(roots.contentRoot, "zh-CN"),
+-      readManifest(roots.contentRoot, "en"),
+-    ]);
+-    const manifests = { "zh-CN": zhManifest, en: enManifest };
+-    assertOwnership(snapshot, manifests);
+-    const idempotent = idempotentResult(snapshot, hashes, manifests);
+-    if (idempotent) return idempotent;
+-    const enRecord = routeFromSnapshot(snapshot, "en", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
+-    const zhRecord = routeFromSnapshot(snapshot, "zh-CN", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
+-    const candidateVersion = zhRecord.refreshCandidate?.operationId === operationId
+-      ? zhRecord.refreshCandidate.version
+-      : zhRecord.snapshot.version;
+-    const nextEnManifest = manifestJson(enManifest, replaceRoute(enManifest.routes, enRecord), generation);
+-    const nextZhManifest = manifestJson(zhManifest, replaceRoute(zhManifest.routes, zhRecord), generation);
+-    model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json");
+-    model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json");
+-    model.validateTutorialManifestPair(
+-      model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json"),
+-      model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json"),
+-    );
+-
+-    const marker = importGenerationMarker(
+-      operationId,
+-      snapshot.slug,
+-      snapshot.sourceKey,
+-      new Date().toISOString(),
+-    );
+-    const staged = [
+-      await stageText(stagingRoot, `content/${hashes.english}.html`, `${englishHtml}\n`),
+-      await stageText(stagingRoot, `content/${hashes.chinese}.html`, `${chineseHtml}\n`),
+-      await stageText(stagingRoot, "manifest.json", `${JSON.stringify(nextZhManifest, null, 2)}\n`),
+-      await stageText(stagingRoot, "manifest.en.json", `${JSON.stringify(nextEnManifest, null, 2)}\n`),
+-      await stageText(stagingRoot, "import-generation.json", `${JSON.stringify(marker, null, 2)}\n`),
+-    ];
+-    const stagedMedia = new Set();
+-    for (const { target, bytes } of mediaEntries) {
+-      const relative = `public/${path.relative(roots.publicRoot, target)}`;
+-      if (stagedMedia.has(relative)) continue;
+-      stagedMedia.add(relative);
+-      staged.push(await stageBytes(stagingRoot, relative, bytes));
++  let currentJournal = null;
++  try {
++    const snapshot = await readSnapshot(options.input);
++    model.assertTutorialSlug(snapshot.slug);
++    if (snapshot.canonicalMatched !== true || normalizeSourceKey(snapshot.canonicalUrl) !== normalizeSourceKey(snapshot.requestedUrl)) {
++      fail("canonical-mismatch", "Snapshot canonical does not match the requested source URL", operationId, actor);
+     }
+-    const journal = {
+-      operationId,
+-      phase: "staged",
+-      slug: snapshot.slug,
+-      sourceKey: snapshot.sourceKey,
+-      generation,
+-      candidateVersion,
+-      files: staged.map((file) => ({
+-        relative: file.relative,
+-        sha256: file.sha256,
+-      })),
+-      hashes: {
+-        sourceContentHash: snapshot.sourceContentHash,
+-        contentHash: hashes.english,
+-        translationContentHash: hashes.chinese,
+-      },
+-      marker: importGenerationMarker(operationId, snapshot.slug, snapshot.sourceKey),
+-      validation: {
+-        en: enValidation,
+-        zh: zhValidation,
+-      },
+-      phases: [],
++    const translation = await readTranslation(options.translation);
++    const translationMeta = {
++      translator: options.translator ?? null,
++      translatedAt: options.translatedAt ?? null,
+     };
+-    let currentJournal = journal;
+-    const setPhase = async (phase, relative = null) => {
+-      currentJournal = {
+-        ...currentJournal,
+-        phase,
+-        phases: [
+-          ...currentJournal.phases,
+-          { phase, ...(relative ? { relative } : {}), recordedAt: new Date().toISOString() },
+-        ],
+-      };
+-      await updateJournal(roots.contentRoot, operationId, currentJournal);
+-    };
+-    await updateJournal(roots.contentRoot, operationId, journal);
+-    await stageText(stagingRoot, "journal.json", `${JSON.stringify(journal, null, 2)}\n`);
+-
++    const generation = operationId;
++    const { entries: mediaEntries, map: mediaMap } = await localizeMedia(snapshot, roots.publicRoot, {
++      allowFixtureMedia: options.allowFixtureMedia === true,
++    });
++    const englishHtml = sanitizeTutorialHtml(snapshot.html, snapshot, mediaMap, "English source");
++    const chineseHtml = sanitizeTutorialHtml(translation, snapshot, mediaMap, "Chinese translation");
++    let enValidation;
++    let zhValidation;
+     try {
+-      await commitDraftFiles(staged, roots, operationId, setPhase, options.testHooks ?? {});
++      enValidation = model.validateTutorialHtml(englishHtml, "English imported tutorial");
++      zhValidation = model.validateTutorialHtml(chineseHtml, "Chinese imported tutorial");
++      assertTranslationHandoff(englishHtml, chineseHtml, enValidation, zhValidation);
+     } catch (error) {
+-      await setPhase("commit-failed");
+-      fail("commit", `Commit failed for ${operationId}: ${error.message}`, operationId);
++      if (error instanceof TutorialImportError) throw error;
++      fail("validation", `Tutorial validation failed: ${error.message}`, operationId, actor);
+     }
+-    await updateJournal(roots.contentRoot, operationId, {
+-      ...currentJournal,
+-      phase: "committed",
+-      committedAt: new Date().toISOString(),
++    const hashes = { english: sha256(englishHtml), chinese: sha256(chineseHtml) };
++    const validation = { en: enValidation, zh: zhValidation, enHtml: englishHtml, zhHtml: chineseHtml };
++    const sharedMedia = mediaEntries.map(({ manifest }) => manifest);
++    const stagingRoot = path.join(roots.contentRoot, ".import-staging", operationId);
++    return await withImportLock(roots.contentRoot, async () => {
++      await options.testHooks?.afterLockAcquired?.(operationId);
++      const [zhManifest, enManifest] = await Promise.all([
++        readManifest(roots.contentRoot, "zh-CN"),
++        readManifest(roots.contentRoot, "en"),
++      ]);
++      const manifests = { "zh-CN": zhManifest, en: enManifest };
++      assertOwnership(snapshot, manifests);
++      const idempotent = idempotentResult(snapshot, hashes, manifests);
++      if (idempotent) return { ...idempotent, actor };
++      const enRecord = routeFromSnapshot(snapshot, "en", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
++      const zhRecord = routeFromSnapshot(snapshot, "zh-CN", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
++      const candidateVersion = zhRecord.refreshCandidate?.operationId === operationId
++        ? zhRecord.refreshCandidate.version
++        : zhRecord.snapshot.version;
++      const nextEnManifest = manifestJson(enManifest, replaceRoute(enManifest.routes, enRecord), generation);
++      const nextZhManifest = manifestJson(zhManifest, replaceRoute(zhManifest.routes, zhRecord), generation);
++      model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json");
++      model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json");
++      model.validateTutorialManifestPair(
++        model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json"),
++        model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json"),
++      );
++
++      const marker = importGenerationMarker(
++        operationId,
++        snapshot.slug,
++        snapshot.sourceKey,
++        new Date().toISOString(),
++      );
++      const staged = [
++        await stageText(stagingRoot, `content/${hashes.english}.html`, `${englishHtml}\n`),
++        await stageText(stagingRoot, `content/${hashes.chinese}.html`, `${chineseHtml}\n`),
++        await stageText(stagingRoot, "manifest.json", `${JSON.stringify(nextZhManifest, null, 2)}\n`),
++        await stageText(stagingRoot, "manifest.en.json", `${JSON.stringify(nextEnManifest, null, 2)}\n`),
++        await stageText(stagingRoot, "import-generation.json", `${JSON.stringify(marker, null, 2)}\n`),
++      ];
++      const stagedMedia = new Set();
++      for (const { target, bytes } of mediaEntries) {
++        const relative = `public/${path.relative(roots.publicRoot, target)}`;
++        if (stagedMedia.has(relative)) continue;
++        stagedMedia.add(relative);
++        staged.push(await stageBytes(stagingRoot, relative, bytes));
++      }
++      const journal = {
++        operationId,
++        actor,
++        phase: "staged",
++        slug: snapshot.slug,
++        sourceKey: snapshot.sourceKey,
++        generation,
++        candidateVersion,
++        files: staged.map((file) => ({
++          relative: file.relative,
++          sha256: file.sha256,
++        })),
++        hashes: {
++          sourceContentHash: snapshot.sourceContentHash,
++          contentHash: hashes.english,
++          translationContentHash: hashes.chinese,
++        },
++        marker: importGenerationMarker(operationId, snapshot.slug, snapshot.sourceKey),
++        validation: {
++          en: enValidation,
++          zh: zhValidation,
++        },
++        phases: [],
++      };
++      currentJournal = journal;
++      const setPhase = async (phase, relative = null) => {
++        currentJournal = {
++          ...currentJournal,
++          phase,
++          phases: [
++            ...currentJournal.phases,
++            { phase, ...(relative ? { relative } : {}), recordedAt: new Date().toISOString() },
++          ],
++        };
++        await updateJournal(roots.contentRoot, operationId, currentJournal);
++      };
++      await updateJournal(roots.contentRoot, operationId, journal);
++      await stageText(stagingRoot, "journal.json", `${JSON.stringify(journal, null, 2)}\n`);
++
++      try {
++        await commitDraftFiles(staged, roots, operationId, setPhase, options.testHooks ?? {});
++      } catch (error) {
++        await setPhase("commit-failed");
++        fail("commit", `Commit failed for ${operationId}: ${error.message}`, operationId);
++      }
++      await updateJournal(roots.contentRoot, operationId, {
++        ...currentJournal,
++        phase: "committed",
++        committedAt: new Date().toISOString(),
++      });
++      try {
++        await pruneCommittedBackups(roots.contentRoot);
++      } catch (error) {
++        console.warn(`[tutorial-importer] backup retention warning operation=${operationId}: ${error.message}`);
++      }
++      await fs.rm(stagingRoot, { recursive: true, force: true });
++
++      const refreshCandidate = zhRecord.refreshCandidate?.operationId === operationId ? zhRecord.refreshCandidate : null;
++      return {
++        operationId,
++        actor,
++        generation,
++        slug: snapshot.slug,
++        sourceKey: snapshot.sourceKey,
++        englishContentFile: `content/${hashes.english}.html`,
++        chineseContentFile: `content/${hashes.chinese}.html`,
++        manifestFiles: ["manifest.json", "manifest.en.json"],
++        media: sharedMedia,
++        status: refreshCandidate?.status ?? zhRecord.status,
++        liveRouteStatus: zhRecord.status,
++        pendingReview: refreshCandidate ? true : zhRecord.status !== "published",
++        resultKind: refreshCandidate ? "refresh-candidate" : "route",
++        idempotent: false,
++      };
+     });
++  } catch (error) {
++    const importError = errorWithOperation(error, operationId, actor);
+     try {
+-      await pruneCommittedBackups(roots.contentRoot);
+-    } catch (error) {
+-      console.warn(`[tutorial-importer] backup retention warning operation=${operationId}: ${error.message}`);
++      await recordFailureJournal(roots.contentRoot, operationId, actor, importError, currentJournal);
++    } catch (journalError) {
++      console.warn(`[tutorial-importer] failure audit warning operation=${operationId}: ${journalError.message}`);
+     }
+-    await fs.rm(stagingRoot, { recursive: true, force: true });
+-
+-    const refreshCandidate = zhRecord.refreshCandidate?.operationId === operationId ? zhRecord.refreshCandidate : null;
+-    return {
+-      operationId,
+-      generation,
+-      slug: snapshot.slug,
+-      sourceKey: snapshot.sourceKey,
+-      englishContentFile: `content/${hashes.english}.html`,
+-      chineseContentFile: `content/${hashes.chinese}.html`,
+-      manifestFiles: ["manifest.json", "manifest.en.json"],
+-      media: sharedMedia,
+-      status: refreshCandidate?.status ?? zhRecord.status,
+-      liveRouteStatus: zhRecord.status,
+-      pendingReview: refreshCandidate ? true : zhRecord.status !== "published",
+-      resultKind: refreshCandidate ? "refresh-candidate" : "route",
+-      idempotent: false,
+-    };
+-  });
++    throw importError;
++  }
+ }
