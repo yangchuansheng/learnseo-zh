@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import dns from "node:dns/promises";
 import fs from "node:fs/promises";
+import https from "node:https";
 import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,6 +28,9 @@ const operationIdPattern = /^tutorial-import-[a-z0-9-]+$/;
 const maxRedirects = 5;
 const htmlSizeLimit = 4 * 1024 * 1024;
 const mediaSizeLimit = 8 * 1024 * 1024;
+const httpsRequestTimeoutMs = 15_000;
+const importLockStaleMs = 5 * 60 * 1000;
+const sha256Pattern = /^[a-f0-9]{64}$/;
 const semanticTags = new Set([
   "a",
   "article",
@@ -152,6 +156,13 @@ export function logFailure(error) {
   console.error(`[tutorial-importer] ${code}${operation}: ${error.message}`);
 }
 
+export function tutorialImportResultMessage(result) {
+  if (result.resultKind === "refresh-candidate") {
+    return `[tutorial-importer] staged refresh candidate for ${result.slug} as ${result.status}; live route remains ${result.liveRouteStatus} pending review`;
+  }
+  return `[tutorial-importer] imported ${result.slug} as ${result.status}`;
+}
+
 function fail(code, message, operationId = null) {
   throw new TutorialImportError(code, message, operationId);
 }
@@ -209,7 +220,7 @@ function assertPublicHttps(rawUrl) {
 }
 
 function isPublicHostname(hostname) {
-  const lower = hostname.toLowerCase();
+  const lower = hostname.toLowerCase().replace(/^\[/, "").replace(/\]$/, "");
   if (lower === "localhost" || lower.endsWith(".local")) return false;
   const ipVersion = net.isIP(lower);
   if (ipVersion === 4) return !isPrivateIpv4(lower);
@@ -237,23 +248,42 @@ function isPrivateIpv4(value) {
 
 function isPrivateIpv6(value) {
   const lower = value.toLowerCase();
-  const mappedIpv4 = lower.match(/::ffff:(\d+\.\d+\.\d+\.\d+)$/)?.[1];
+  const mappedIpv4 = ipv4FromMappedIpv6(lower);
   if (mappedIpv4) return isPrivateIpv4(mappedIpv4);
+  const firstHextet = Number.parseInt(lower.split(":", 1)[0] || "0", 16);
   return lower === "::1" ||
     lower === "::" ||
     lower.startsWith("fc") ||
     lower.startsWith("fd") ||
-    lower.startsWith("fe80:") ||
+    (Number.isFinite(firstHextet) && firstHextet >= 0xfe80 && firstHextet <= 0xfebf) ||
     lower.startsWith("ff") ||
     lower.startsWith("2001:db8:");
 }
 
-async function assertResolvedPublicHost(hostname) {
-  const records = await dns.lookup(hostname, { all: true });
+function ipv4FromMappedIpv6(value) {
+  const dotted = value.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/)?.[1];
+  if (dotted) return dotted;
+  const hex = value.match(/^::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})$/i);
+  if (!hex) return null;
+  const high = Number.parseInt(hex[1], 16);
+  const low = Number.parseInt(hex[2], 16);
+  if (!Number.isFinite(high) || !Number.isFinite(low) || high > 0xffff || low > 0xffff) return null;
+  return [
+    (high >> 8) & 0xff,
+    high & 0xff,
+    (low >> 8) & 0xff,
+    low & 0xff,
+  ].join(".");
+}
+
+async function publicDnsRecords(hostname) {
+  const lookupHost = hostname.toLowerCase().replace(/^\[/, "").replace(/\]$/, "");
+  const records = await dns.lookup(lookupHost, { all: true, verbatim: true });
   if (!records.length) fail("unavailable", `Source host has no DNS records: ${hostname}`);
   for (const { address } of records) {
     if (!isPublicHostname(address)) fail("unavailable", `Source DNS resolves to a private address: ${address}`);
   }
+  return records;
 }
 
 function assertSamePolicyHost(initialUrl, nextUrl) {
@@ -262,17 +292,47 @@ function assertSamePolicyHost(initialUrl, nextUrl) {
   }
 }
 
-async function responseBytes(response, limit, label, code = "unavailable") {
-  const reader = response.body?.getReader();
-  if (!reader) fail(code, `${label} response body is unavailable`);
+function responseHeader(headers, name) {
+  const value = headers[name.toLowerCase()];
+  return Array.isArray(value) ? value[0] : value ?? "";
+}
+
+async function pinnedHttpsRequest(rawUrl, label, code = "unavailable") {
+  const parsed = assertPublicHttps(rawUrl);
+  const records = await publicDnsRecords(parsed.hostname);
+  const { address, family } = records[0];
+  return new Promise((resolve, reject) => {
+    const request = https.request({
+      protocol: "https:",
+      hostname: parsed.hostname,
+      port: parsed.port || 443,
+      path: `${parsed.pathname}${parsed.search}`,
+      method: "GET",
+      servername: parsed.hostname,
+      lookup: (_hostname, _options, callback) => callback(null, address, family),
+      headers: {
+        host: parsed.host,
+        "user-agent": "learnseo-tutorial-importer/1.0",
+      },
+    }, resolve);
+    request.setTimeout(httpsRequestTimeoutMs, () => {
+      request.destroy(new Error(`${label} request timed out`));
+    });
+    request.on("error", (error) => {
+      reject(new TutorialImportError(code, `${label} request failed for ${rawUrl}: ${error.message}`));
+    });
+    request.end();
+  });
+}
+
+async function nodeResponseBytes(response, limit, label, code = "unavailable") {
   const chunks = [];
   let size = 0;
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    size += value.byteLength;
+  for await (const chunk of response) {
+    const bytes = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+    size += bytes.byteLength;
     if (size > limit) fail(code, `${label} exceeds importer size limit`);
-    chunks.push(Buffer.from(value));
+    chunks.push(bytes);
   }
   return Buffer.concat(chunks, size);
 }
@@ -503,37 +563,34 @@ async function fetchSourceHtml(initialUrl) {
   let current = initialUrl;
   const seen = new Set();
   const redirects = [];
-  await assertResolvedPublicHost(new URL(initialUrl).hostname);
 
   for (let redirectCount = 0; redirectCount <= maxRedirects; redirectCount += 1) {
     if (seen.has(current)) fail("redirect-loop", `Redirect loop detected at ${current}`);
     seen.add(current);
     let response;
     try {
-      response = await fetch(current, {
-        redirect: "manual",
-        headers: { "user-agent": "learnseo-tutorial-importer/1.0" },
-      });
+      response = await pinnedHttpsRequest(current, "Source HTML");
     } catch (error) {
+      if (error instanceof TutorialImportError) throw error;
       fail("unavailable", `Fetch failed for ${current}: ${error.message}`);
     }
-    const status = response.status;
+    const status = response.statusCode ?? 0;
     if ([301, 302, 303, 307, 308].includes(status)) {
-      const location = response.headers.get("location");
+      const location = responseHeader(response.headers, "location");
       if (!location) fail("unavailable", `Redirect missing Location header at ${current}`);
       const next = new URL(location, current).toString();
       assertPublicHttps(next);
       assertSamePolicyHost(initialUrl, next);
-      await assertResolvedPublicHost(new URL(next).hostname);
+      response.resume();
       redirects.push({ from: current, to: next, status });
       current = next;
       continue;
     }
     if (status === 401 || status === 403 || status === 407) fail("authentication", `Source requires authentication: ${status}`);
     if (status < 200 || status >= 300) fail("unavailable", `Source returned HTTP ${status}`);
-    const contentType = (response.headers.get("content-type") ?? "").toLowerCase();
+    const contentType = responseHeader(response.headers, "content-type").toLowerCase();
     if (!contentType.startsWith("text/html")) fail("non-html", `Source content type is ${contentType || "unknown"}`);
-    const body = await responseBytes(response, htmlSizeLimit, "Source HTML");
+    const body = await nodeResponseBytes(response, htmlSizeLimit, "Source HTML");
     return {
       html: decodeUtf8Strict(body, "Source HTML", "non-html"),
       finalUrl: current,
@@ -721,34 +778,31 @@ function assertSafeSvg(bytes, label) {
 async function fetchMediaBytes(sourceUrl) {
   let current = assertPublicHttps(sourceUrl).toString();
   const seen = new Set();
-  await assertResolvedPublicHost(new URL(current).hostname);
 
   for (let redirectCount = 0; redirectCount <= maxRedirects; redirectCount += 1) {
     if (seen.has(current)) fail("redirect-loop", `Media redirect loop detected at ${current}`);
     seen.add(current);
     let response;
     try {
-      response = await fetch(current, {
-        redirect: "manual",
-        headers: { "user-agent": "learnseo-tutorial-importer/1.0" },
-      });
+      response = await pinnedHttpsRequest(current, `Media ${current}`, "media-download");
     } catch (error) {
+      if (error instanceof TutorialImportError) throw error;
       fail("media-download", `Unable to download media ${current}: ${error.message}`);
     }
-    const status = response.status;
+    const status = response.statusCode ?? 0;
     if ([301, 302, 303, 307, 308].includes(status)) {
-      const location = response.headers.get("location");
+      const location = responseHeader(response.headers, "location");
       if (!location) fail("media-download", `Media redirect missing Location header at ${current}`);
       const next = new URL(location, current).toString();
       assertPublicHttps(next);
-      await assertResolvedPublicHost(new URL(next).hostname);
+      response.resume();
       current = next;
       continue;
     }
-    if (!response.ok) fail("media-download", `Media returned HTTP ${response.status}: ${current}`);
-    const contentType = (response.headers.get("content-type") ?? "").split(";", 1)[0].toLowerCase();
+    if (status < 200 || status >= 300) fail("media-download", `Media returned HTTP ${status}: ${current}`);
+    const contentType = responseHeader(response.headers, "content-type").split(";", 1)[0].toLowerCase();
     if (!imageContentTypes.has(contentType)) fail("unsupported-media", `Unsupported media type ${contentType || "unknown"}: ${current}`);
-    const bytes = await responseBytes(response, mediaSizeLimit, `Media ${current}`, "unsupported-media");
+    const bytes = await nodeResponseBytes(response, mediaSizeLimit, `Media ${current}`, "unsupported-media");
     if (contentType === "image/svg+xml") assertSafeSvg(bytes, `Media ${current}`);
     return { bytes, contentType };
   }
@@ -1224,7 +1278,7 @@ async function replaceManifestsAtomic(manifestFiles, roots, operationId, updateP
       await updatePhase("manifest-backup", file.relative);
       try {
         await fs.rename(target, backup);
-        backups.push({ target, backup });
+        backups.push({ target, backup, relative: file.relative });
       } catch (error) {
         if (error.code !== "ENOENT") throw error;
       }
@@ -1235,7 +1289,6 @@ async function replaceManifestsAtomic(manifestFiles, roots, operationId, updateP
       await fs.rename(file.target, target);
       replaced.push(target);
     }
-    for (const { backup } of backups) await fs.rm(backup, { force: true });
   } catch (error) {
     for (const target of replaced.reverse()) await fs.rm(target, { force: true });
     for (const { target, backup } of backups.reverse()) {
@@ -1246,6 +1299,17 @@ async function replaceManifestsAtomic(manifestFiles, roots, operationId, updateP
       }
     }
     throw error;
+  }
+  for (const { backup, relative } of backups) {
+    if (hooks.failCleanupBackupRelative === relative) {
+      console.warn(`[tutorial-importer] backup cleanup warning operation=${operationId}: injected cleanup failure for ${hooks.failCleanupBackupRelative}`);
+      continue;
+    }
+    try {
+      await fs.rm(backup, { force: true });
+    } catch (error) {
+      console.warn(`[tutorial-importer] backup cleanup warning operation=${operationId}: ${error.message}`);
+    }
   }
 }
 
@@ -1262,43 +1326,166 @@ async function commitDraftFiles(staged, roots, operationId, updatePhase = async 
   await replaceManifestsAtomic(manifestFiles, roots, operationId, updatePhase, hooks);
 }
 
-async function withImportLock(contentRoot, callback) {
+async function readJsonFileOrNull(filePath) {
+  try {
+    return JSON.parse(await fs.readFile(filePath, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+function isProcessAlive(pid) {
+  if (!Number.isInteger(pid) || pid <= 0) return false;
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    return error.code === "EPERM";
+  }
+}
+
+async function acquireReclaimGuard(lockPath) {
+  const guardPath = `${lockPath}.reclaiming`;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      await fs.mkdir(guardPath);
+      return guardPath;
+    } catch (error) {
+      if (error.code !== "EEXIST") throw error;
+      const stat = await fs.stat(guardPath).catch(() => null);
+      if (attempt === 0 && stat && Date.now() - stat.mtimeMs >= importLockStaleMs) {
+        await fs.rm(guardPath, { recursive: true, force: true });
+        continue;
+      }
+      return null;
+    }
+  }
+  return null;
+}
+
+async function tryReclaimImportLock(lockPath) {
+  const guardPath = await acquireReclaimGuard(lockPath);
+  if (!guardPath) return false;
+  try {
+    return await tryReclaimImportLockWithGuard(lockPath);
+  } finally {
+    await fs.rm(guardPath, { recursive: true, force: true });
+  }
+}
+
+async function tryReclaimImportLockWithGuard(lockPath) {
+  const lock = await readJsonFileOrNull(lockPath);
+  if (
+    !lock ||
+    !Number.isInteger(lock.pid) ||
+    typeof lock.token !== "string" ||
+    typeof lock.createdAt !== "string"
+  ) {
+    const stat = await fs.stat(lockPath).catch(() => null);
+    if (!stat || Date.now() - stat.mtimeMs < importLockStaleMs) return false;
+    const reclaimPath = `${lockPath}.reclaim-${process.pid}-${crypto.randomUUID()}`;
+    try {
+      await fs.rename(lockPath, reclaimPath);
+    } catch {
+      return false;
+    }
+    await fs.rm(reclaimPath, { force: true });
+    return true;
+  }
+  if (isProcessAlive(lock.pid)) return false;
+  const reclaimPath = `${lockPath}.reclaim-${process.pid}-${crypto.randomUUID()}`;
+  try {
+    await fs.rename(lockPath, reclaimPath);
+  } catch {
+    return false;
+  }
+  const current = await readJsonFileOrNull(reclaimPath);
+  if (!current || current.pid !== lock.pid || current.token !== lock.token) {
+    await fs.rename(reclaimPath, lockPath).catch(() => fs.rm(reclaimPath, { force: true }));
+    return false;
+  }
+  await fs.rm(reclaimPath, { force: true });
+  return true;
+}
+
+async function acquireImportLock(contentRoot) {
   const lockPath = path.join(contentRoot, ".tutorial-import.lock");
   await fs.mkdir(contentRoot, { recursive: true });
-  let handle;
-  try {
-    handle = await fs.open(lockPath, "wx");
-  } catch (error) {
-    if (error.code === "EEXIST") fail("unavailable", `Tutorial import lock is already held: ${lockPath}`);
-    throw error;
+  const token = crypto.randomUUID();
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    let handle;
+    try {
+      handle = await fs.open(lockPath, "wx");
+      await handle.writeFile(`${JSON.stringify({
+        pid: process.pid,
+        token,
+        createdAt: new Date().toISOString(),
+      }, null, 2)}\n`, "utf8");
+      return { lockPath, token };
+    } catch (error) {
+      if (error.code !== "EEXIST") throw error;
+      if (attempt === 0 && await tryReclaimImportLock(lockPath)) continue;
+      fail("unavailable", `Tutorial import lock is already held: ${lockPath}`);
+    } finally {
+      await handle?.close();
+    }
   }
+  fail("unavailable", `Tutorial import lock is already held: ${lockPath}`);
+}
+
+async function releaseImportLock(lock) {
+  const current = await readJsonFileOrNull(lock.lockPath);
+  if (current?.pid === process.pid && current?.token === lock.token) {
+    await fs.rm(lock.lockPath, { force: true });
+  }
+}
+
+async function withImportLock(contentRoot, callback) {
+  const lock = await acquireImportLock(contentRoot);
   try {
     return await callback();
   } finally {
-    await handle?.close();
-    await fs.rm(lockPath, { force: true });
+    await releaseImportLock(lock);
   }
+}
+
+async function writeJsonFileAtomic(filePath, value) {
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
+  const temporary = `${filePath}.${process.pid}.${crypto.randomUUID()}.tmp`;
+  const handle = await fs.open(temporary, "wx");
+  try {
+    await handle.writeFile(`${JSON.stringify(value, null, 2)}\n`, "utf8");
+    await handle.sync();
+  } finally {
+    await handle.close();
+  }
+  await fs.rename(temporary, filePath);
 }
 
 async function updateJournal(contentRoot, operationId, value) {
   const target = path.join(contentRoot, ".import-journal", `${operationId}.json`);
-  await writeJsonFile(target, value);
+  await writeJsonFileAtomic(target, value);
 }
 
 async function readJournal(contentRoot, operationId) {
-  return readJsonFile(path.join(contentRoot, ".import-journal", `${operationId}.json`));
+  try {
+    return await readJsonFile(path.join(contentRoot, ".import-journal", `${operationId}.json`));
+  } catch (error) {
+    const message = error instanceof TutorialImportError ? error.message : error.message;
+    fail("recovery-conflict", `Journal is missing or corrupt for ${operationId}: ${message}`, operationId);
+  }
 }
 
-function safeStagedTarget(stagingRoot, relative) {
+function safeStagedTarget(stagingRoot, relative, operationId = null) {
   try {
     assertSafeStagedRelative(relative);
   } catch (error) {
-    fail("recovery-conflict", error.message);
+    fail("recovery-conflict", error.message, operationId);
   }
   const target = path.resolve(stagingRoot, relative);
   const relativeFromRoot = path.relative(stagingRoot, target);
   if (!relativeFromRoot || relativeFromRoot.startsWith("..") || path.isAbsolute(relativeFromRoot)) {
-    fail("recovery-conflict", `Staged file escapes operation root: ${relative}`);
+    fail("recovery-conflict", `Staged file escapes operation root: ${relative}`, operationId);
   }
   return target;
 }
@@ -1308,29 +1495,168 @@ function liveTargetForRelative(roots, relative) {
   return path.join(roots.contentRoot, relative);
 }
 
-async function stagedFilesFromJournal(roots, operationId, journal) {
-  if (!Array.isArray(journal.files)) fail("recovery-conflict", "Journal files are missing");
+function parseRecoveryJson(bytes, label, operationId) {
+  try {
+    return JSON.parse(decodeUtf8Strict(bytes, label, "recovery-conflict"));
+  } catch (error) {
+    if (error instanceof TutorialImportError) {
+      fail("recovery-conflict", error.message, operationId);
+    }
+    fail("recovery-conflict", `${label} is invalid JSON: ${error.message}`, operationId);
+  }
+}
+
+function journalFileEntries(journal, operationId) {
+  if (!Array.isArray(journal.files)) fail("recovery-conflict", "Journal files are missing", operationId);
+  const entries = [];
+  const seen = new Set();
+  for (const entry of journal.files) {
+    if (
+      !entry ||
+      typeof entry !== "object" ||
+      typeof entry.relative !== "string" ||
+      !sha256Pattern.test(entry.sha256 ?? "")
+    ) {
+      fail("recovery-conflict", "Journal files must contain object entries with relative and sha256", operationId);
+    }
+    if (entry.relative === "journal.json") continue;
+    if (seen.has(entry.relative)) fail("recovery-conflict", `Journal contains duplicate file entry: ${entry.relative}`, operationId);
+    seen.add(entry.relative);
+    entries.push({ relative: entry.relative, sha256: entry.sha256 });
+  }
+  return entries;
+}
+
+async function recoveryFilesFromJournal(roots, operationId, journal) {
+  const entries = journalFileEntries(journal, operationId);
   const stagingRoot = path.join(roots.contentRoot, ".import-staging", operationId);
   const staged = [];
-  for (const entry of journal.files) {
-    const relative = typeof entry === "string" ? entry : entry?.relative;
-    const expectedHash = typeof entry === "string" ? null : entry?.sha256;
-    if (typeof relative !== "string" || relative === "journal.json") continue;
-    const target = safeStagedTarget(stagingRoot, relative);
+  const files = new Map();
+  for (const { relative, sha256: expectedHash } of entries) {
+    const target = safeStagedTarget(stagingRoot, relative, operationId);
     let bytes;
     try {
       bytes = await fs.readFile(target);
     } catch (error) {
       const liveBytes = await fs.readFile(liveTargetForRelative(roots, relative)).catch(() => null);
-      if (liveBytes && expectedHash && sha256(liveBytes) === expectedHash) continue;
-      fail("recovery-conflict", `Staged file is missing: ${relative}; ${error.message}`);
+      if (liveBytes && sha256(liveBytes) === expectedHash) {
+        files.set(relative, { bytes: liveBytes, sha256: expectedHash, target: liveTargetForRelative(roots, relative), live: true });
+        continue;
+      }
+      fail("recovery-conflict", `Staged file is missing: ${relative}; ${error.message}`, operationId);
     }
-    if (expectedHash && sha256(bytes) !== expectedHash) {
-      fail("recovery-conflict", `Staged file hash mismatch: ${relative}`);
+    if (sha256(bytes) !== expectedHash) {
+      fail("recovery-conflict", `Staged file hash mismatch: ${relative}`, operationId);
     }
+    files.set(relative, { bytes, sha256: expectedHash, target, live: false });
     staged.push({ relative, target, sha256: sha256(bytes) });
   }
-  return staged;
+  return { staged, files };
+}
+
+function contentReferencesFromRecord(route) {
+  return [
+    route.contentFile ? { relative: `content/${route.contentFile}`, sha256: route.contentFile.replace(/\.html$/, "") } : null,
+    route.refreshCandidate?.contentFile ? { relative: `content/${route.refreshCandidate.contentFile}`, sha256: route.refreshCandidate.contentHash } : null,
+    route.refreshCandidate?.translationContentFile ? {
+      relative: `content/${route.refreshCandidate.translationContentFile}`,
+      sha256: route.refreshCandidate.translationContentHash,
+    } : null,
+    ...route.snapshot.history.flatMap((entry) => [
+      entry.contentFile && entry.contentHash ? { relative: `content/${entry.contentFile}`, sha256: entry.contentHash } : null,
+      entry.translationContentFile && entry.translationContentHash ? {
+        relative: `content/${entry.translationContentFile}`,
+        sha256: entry.translationContentHash,
+      } : null,
+    ]),
+  ].filter(Boolean);
+}
+
+function mediaReferencesFromRecord(route) {
+  const media = [
+    ...route.media,
+    ...(route.refreshCandidate?.media ?? []),
+  ];
+  return media.map((entry) => ({
+    relative: `public/${entry.path.replace(/^\//, "")}`,
+    sha256: entry.sha256,
+  }));
+}
+
+async function validateReferencedFile(roots, files, reference, operationId) {
+  let bytes = files.get(reference.relative)?.bytes;
+  if (!bytes) {
+    try {
+      bytes = await fs.readFile(liveTargetForRelative(roots, reference.relative));
+    } catch (error) {
+      fail("recovery-conflict", `Referenced file is missing: ${reference.relative}; ${error.message}`, operationId);
+    }
+  }
+  let actualHash;
+  try {
+    actualHash = reference.relative.startsWith("content/")
+      ? sha256(decodeUtf8Strict(bytes, `Referenced file ${reference.relative}`, "recovery-conflict").trim())
+      : sha256(bytes);
+  } catch (error) {
+    if (error instanceof TutorialImportError) fail("recovery-conflict", error.message, operationId);
+    throw error;
+  }
+  if (actualHash !== reference.sha256) {
+    fail("recovery-conflict", `Referenced file hash mismatch: ${reference.relative}`, operationId);
+  }
+}
+
+async function validateRecoveryCandidates(roots, operationId, journal, files) {
+  for (const relative of ["manifest.json", "manifest.en.json", "import-generation.json"]) {
+    if (!files.has(relative)) fail("recovery-conflict", `Journal is missing required file: ${relative}`, operationId);
+  }
+  const marker = parseRecoveryJson(files.get("import-generation.json").bytes, "Recovery import-generation.json", operationId);
+  if (
+    marker.operationId !== operationId ||
+    marker.generation !== journal.generation ||
+    marker.generation !== operationId ||
+    JSON.stringify(marker.locales) !== JSON.stringify(["zh-CN", "en"])
+  ) {
+    fail("recovery-conflict", `Recovery marker does not match ${operationId}`, operationId);
+  }
+  let zhManifest;
+  let enManifest;
+  try {
+    zhManifest = model.parseTutorialManifest(
+      parseRecoveryJson(files.get("manifest.json").bytes, "Recovery manifest.json", operationId),
+      "zh-CN",
+      "recovery manifest.json",
+    );
+    enManifest = model.parseTutorialManifest(
+      parseRecoveryJson(files.get("manifest.en.json").bytes, "Recovery manifest.en.json", operationId),
+      "en",
+      "recovery manifest.en.json",
+    );
+    model.validateTutorialManifestPair(zhManifest, enManifest);
+  } catch (error) {
+    fail("recovery-conflict", `Recovery candidate manifests are invalid: ${error.message}`, operationId);
+  }
+  if (zhManifest.generation !== marker.generation || enManifest.generation !== marker.generation) {
+    fail("recovery-conflict", `Recovery manifests do not match marker generation ${operationId}`, operationId);
+  }
+  const references = [
+    ...zhManifest.routes.flatMap((route) => [...contentReferencesFromRecord(route), ...mediaReferencesFromRecord(route)]),
+    ...enManifest.routes.flatMap((route) => [...contentReferencesFromRecord(route), ...mediaReferencesFromRecord(route)]),
+  ];
+  const allowedFiles = new Set([
+    "manifest.json",
+    "manifest.en.json",
+    "import-generation.json",
+    ...references.map((reference) => reference.relative),
+  ]);
+  for (const relative of files.keys()) {
+    if (!allowedFiles.has(relative)) {
+      fail("recovery-conflict", `Journal contains an unreferenced staged file: ${relative}`, operationId);
+    }
+  }
+  for (const reference of references) {
+    await validateReferencedFile(roots, files, reference, operationId);
+  }
 }
 
 async function committedMarker(contentRoot, operationId) {
@@ -1362,7 +1688,8 @@ export async function recoverTutorialImport(options) {
     if (journal.operationId !== operationId || journal.generation !== operationId) {
       fail("recovery-conflict", `Journal operation mismatch for ${operationId}`, operationId);
     }
-    const staged = await stagedFilesFromJournal(roots, operationId, journal);
+    const { staged, files } = await recoveryFilesFromJournal(roots, operationId, journal);
+    await validateRecoveryCandidates(roots, operationId, journal, files);
     let currentJournal = journal;
     const setPhase = async (phase, relative = null) => {
       currentJournal = {
@@ -1418,6 +1745,9 @@ function idempotentResult(snapshot, hashes, manifests) {
       manifestFiles: ["manifest.json", "manifest.en.json"],
       media: zh.media,
       status: zh.status,
+      liveRouteStatus: zh.status,
+      pendingReview: zh.status !== "published",
+      resultKind: "route",
       idempotent: true,
     };
   }
@@ -1425,17 +1755,8 @@ function idempotentResult(snapshot, hashes, manifests) {
     candidate?.sourceContentHash === snapshot.sourceContentHash &&
     candidate.contentHash === hashes.english &&
     candidate.translationContentHash === hashes.chinese;
-  const candidate = zh.snapshot.history.find((entry) =>
-    entry.sourceContentHash === snapshot.sourceContentHash &&
-    entry.contentHash === hashes.english &&
-    entry.translationContentHash === hashes.chinese,
-  ) ?? (matchesCandidate(zh.refreshCandidate) ? zh.refreshCandidate : null);
-  const englishCandidate = en.snapshot.history.find((entry) =>
-    entry.version === candidate?.version &&
-    entry.sourceContentHash === snapshot.sourceContentHash &&
-    entry.contentHash === hashes.english &&
-    entry.translationContentHash === hashes.chinese,
-  ) ?? (matchesCandidate(en.refreshCandidate) ? en.refreshCandidate : null);
+  const candidate = matchesCandidate(zh.refreshCandidate) ? zh.refreshCandidate : null;
+  const englishCandidate = matchesCandidate(en.refreshCandidate) ? en.refreshCandidate : null;
   if (candidate && englishCandidate && englishCandidate.version === candidate.version) {
     return {
       operationId: candidate.operationId ?? manifests.en.generation,
@@ -1445,8 +1766,11 @@ function idempotentResult(snapshot, hashes, manifests) {
       englishContentFile: `content/${candidate.contentFile ?? `${hashes.english}.html`}`,
       chineseContentFile: `content/${candidate.translationContentFile ?? `${hashes.chinese}.html`}`,
       manifestFiles: ["manifest.json", "manifest.en.json"],
-      media: zh.media,
-      status: zh.status,
+      media: candidate.media,
+      status: candidate.status,
+      liveRouteStatus: zh.status,
+      pendingReview: true,
+      resultKind: "refresh-candidate",
       idempotent: true,
     };
   }
@@ -1510,11 +1834,14 @@ export async function importTutorialDraft(options) {
         slug: snapshot.slug,
         sourceKey: snapshot.sourceKey,
         locales: ["zh-CN", "en"],
-        committedAt: null,
+        committedAt: new Date().toISOString(),
       }, null, 2)}\n`),
     ];
+    const stagedMedia = new Set();
     for (const { target, bytes } of mediaEntries) {
       const relative = `public/${path.relative(roots.publicRoot, target)}`;
+      if (stagedMedia.has(relative)) continue;
+      stagedMedia.add(relative);
       staged.push(await stageBytes(stagingRoot, relative, bytes));
     }
     const journal = {
@@ -1562,6 +1889,7 @@ export async function importTutorialDraft(options) {
     });
     await fs.rm(stagingRoot, { recursive: true, force: true });
 
+    const refreshCandidate = zhRecord.refreshCandidate?.operationId === operationId ? zhRecord.refreshCandidate : null;
     return {
       operationId,
       generation,
@@ -1571,7 +1899,10 @@ export async function importTutorialDraft(options) {
       chineseContentFile: `content/${hashes.chinese}.html`,
       manifestFiles: ["manifest.json", "manifest.en.json"],
       media: sharedMedia,
-      status: zhRecord.status,
+      status: refreshCandidate?.status ?? zhRecord.status,
+      liveRouteStatus: zhRecord.status,
+      pendingReview: refreshCandidate ? true : zhRecord.status !== "published",
+      resultKind: refreshCandidate ? "refresh-candidate" : "route",
       idempotent: false,
     };
   });

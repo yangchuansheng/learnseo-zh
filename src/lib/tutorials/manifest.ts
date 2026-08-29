@@ -89,6 +89,48 @@ function manifestPath(locale: Locale): string {
   return path.join(TUTORIAL_CONTENT_ROOT, locale === "en" ? "manifest.en.json" : "manifest.json");
 }
 
+function unavailableManifest(locale: Locale): TutorialManifest {
+  return {
+    schemaVersion: 1,
+    locale,
+    generation: null,
+    activeVersion: null,
+    available: false,
+    routes: [],
+    aliases: [],
+  };
+}
+
+async function readImportGenerationMarker(): Promise<unknown | undefined> {
+  const markerPath = path.join(TUTORIAL_CONTENT_ROOT, "import-generation.json");
+  try {
+    return JSON.parse(await readFile(markerPath, "utf8")) as unknown;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return undefined;
+    return null;
+  }
+}
+
+export function tutorialManifestMatchesGenerationMarker(
+  manifest: TutorialManifest,
+  marker: unknown,
+): boolean {
+  if (marker === undefined) return true;
+  if (!marker || typeof marker !== "object") return false;
+  const value = marker as {
+    operationId?: unknown;
+    generation?: unknown;
+    locales?: unknown;
+  };
+  return typeof value.operationId === "string" &&
+    typeof value.generation === "string" &&
+    value.operationId === value.generation &&
+    value.generation === manifest.generation &&
+    Array.isArray(value.locales) &&
+    value.locales.includes("zh-CN") &&
+    value.locales.includes("en");
+}
+
 export const readTutorialManifest = cache(async (locale: Locale): Promise<TutorialManifest> => {
   const filePath = manifestPath(locale);
   let source: string;
@@ -96,21 +138,17 @@ export const readTutorialManifest = cache(async (locale: Locale): Promise<Tutori
     source = await readFile(filePath, "utf8");
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return {
-        schemaVersion: 1,
-        locale,
-        generation: null,
-        activeVersion: null,
-        available: false,
-        routes: [],
-        aliases: [],
-      };
+      return unavailableManifest(locale);
     }
     throw new Error(`Unable to read tutorial manifest ${filePath}: ${(error as Error).message}`);
   }
 
   try {
-    return parseTutorialManifest(JSON.parse(source) as unknown, locale, filePath);
+    const manifest = parseTutorialManifest(JSON.parse(source) as unknown, locale, filePath);
+    const marker = await readImportGenerationMarker();
+    return tutorialManifestMatchesGenerationMarker(manifest, marker)
+      ? manifest
+      : unavailableManifest(locale);
   } catch (error) {
     throw new Error(`Invalid tutorial manifest ${filePath}: ${(error as Error).message}`);
   }

@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import dns from "node:dns/promises";
+import { EventEmitter, once } from "node:events";
 import fs from "node:fs/promises";
+import https from "node:https";
 import os from "node:os";
 import path from "node:path";
+import { Readable } from "node:stream";
 import { fileURLToPath } from "node:url";
 
 import { createJiti } from "jiti";
@@ -13,6 +18,7 @@ import {
   importerDefaults,
   recoverTutorialImport,
   sha256,
+  tutorialImportResultMessage,
   writeJsonFile,
 } from "./lib/tutorial-importer.mjs";
 
@@ -25,6 +31,7 @@ const jiti = createJiti(import.meta.url, {
   alias: { "@": path.join(repositoryRoot, "src") },
 });
 const model = await jiti.import(path.join(repositoryRoot, "src/lib/tutorials/model.ts"));
+const runtimeManifest = await jiti.import(path.join(repositoryRoot, "src/lib/tutorials/manifest.ts"));
 
 function emptyManifest(locale) {
   return {
@@ -49,6 +56,24 @@ async function expectCode(code, action) {
     (error) => error instanceof TutorialImportError && error.code === code,
     `expected ${code}`,
   );
+}
+
+async function expectImportError(code, operationId, action) {
+  await assert.rejects(
+    action,
+    (error) =>
+      error instanceof TutorialImportError &&
+      error.code === code &&
+      error.operationId === operationId,
+    `expected ${code} for ${operationId}`,
+  );
+}
+
+async function exitedPid() {
+  const child = spawn(process.execPath, ["-e", ""], { stdio: "ignore" });
+  const pid = child.pid;
+  await once(child, "exit");
+  return pid;
 }
 
 async function collectFixture(overrides = {}) {
@@ -178,6 +203,13 @@ async function main() {
     const marker = JSON.parse(await fs.readFile(path.join(contentRoot, "import-generation.json"), "utf8"));
     assert.equal(marker.generation, result.generation);
     assert.deepEqual(marker.locales, ["zh-CN", "en"]);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, marker), true);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, undefined), true);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, {
+      ...marker,
+      generation: "tutorial-import-other-generation",
+    }), false);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, { broken: true }), false);
     const journal = JSON.parse(await fs.readFile(path.join(contentRoot, ".import-journal", `${result.operationId}.json`), "utf8"));
     assert.equal(journal.phase, "committed");
     assert.ok(journal.files.every((file) => typeof file.relative === "string" && /^[a-f0-9]{64}$/.test(file.sha256)));
@@ -254,6 +286,66 @@ async function main() {
     );
     await expectCode("canonical-mismatch", () => collectFixture({ fixture: missingCanonical }));
 
+    const originalLookup = dns.lookup;
+    const originalRequest = https.request;
+    const pinnedUrl = "https://example.com/search/docs/fundamentals/seo-starter-guide";
+    try {
+      let connectedToPinnedAddress = false;
+      const pinnedHtml = (await fs.readFile(path.join(fixtureRoot, "google-devsite.html"), "utf8"))
+        .replaceAll(sourceUrl, pinnedUrl);
+      dns.lookup = async (hostname) => {
+        assert.equal(hostname, "example.com");
+        return [{ address: "93.184.216.34", family: 4 }];
+      };
+      https.request = (options, callback) => {
+        assert.equal(options.hostname, "example.com");
+        assert.equal(options.servername, "example.com");
+        assert.equal(options.headers.host, "example.com");
+        const request = new EventEmitter();
+        request.setTimeout = () => request;
+        request.end = () => {
+          options.lookup("example.com", {}, (error, address, family) => {
+            assert.ifError(error);
+            assert.equal(address, "93.184.216.34");
+            assert.equal(family, 4);
+            connectedToPinnedAddress = true;
+            const response = Readable.from([pinnedHtml]);
+            response.statusCode = 200;
+            response.headers = { "content-type": "text/html; charset=utf-8" };
+            callback(response);
+          });
+        };
+        return request;
+      };
+      const pinnedSnapshot = await collectTutorialSnapshot({
+        url: pinnedUrl,
+        slug: "pinned-guide",
+        sourcePath,
+      });
+      assert.equal(pinnedSnapshot.canonicalUrl, pinnedUrl);
+      assert.equal(connectedToPinnedAddress, true);
+    } finally {
+      dns.lookup = originalLookup;
+      https.request = originalRequest;
+    }
+
+    try {
+      dns.lookup = async () => [{ address: "::ffff:7f00:1", family: 6 }];
+      https.request = () => {
+        throw new Error("HTTPS request must not run for private DNS answers");
+      };
+      await expectCode("unavailable", () =>
+        collectTutorialSnapshot({
+          url: pinnedUrl,
+          slug: "private-mapped-guide",
+          sourcePath,
+        }),
+      );
+    } finally {
+      dns.lookup = originalLookup;
+      https.request = originalRequest;
+    }
+
     const hashMismatchInput = path.join(tmpRoot, "hash-mismatch-snapshot.json");
     await writeJsonFile(hashMismatchInput, { ...snapshot, sourceContentHash: sha256("tampered") });
     await expectCode("snapshot-invalid", () =>
@@ -324,7 +416,7 @@ async function main() {
       files: [{ relative: "public/../escaped.txt", sha256: sha256("escaped") }],
       phases: [],
     });
-    await expectCode("recovery-conflict", () =>
+    await expectImportError("recovery-conflict", "tutorial-import-unsafe-relative", () =>
       recoverTutorialImport({
         contentRoot: unsafeRecoveryRoot,
         publicRoot: path.join(tmpRoot, "unsafe-recovery-public"),
@@ -369,6 +461,18 @@ async function main() {
       await fs.rm(activeSvg, { force: true });
     }
 
+    const repeatedMediaResult = await importFixture(tmpRoot, {
+      ...snapshot,
+      slug: "repeated-media-guide",
+      media: [snapshot.media[0], { ...snapshot.media[0] }],
+    }, {
+      contentRoot: path.join(tmpRoot, "repeated-media-content"),
+      publicRoot: path.join(tmpRoot, "repeated-media-public"),
+      operationId: "tutorial-import-repeated-media-test",
+    });
+    assert.equal(repeatedMediaResult.media.length, 2);
+    assert.equal(new Set(repeatedMediaResult.media.map((entry) => entry.path)).size, 1);
+
     const duplicateSnapshot = {
       ...snapshot,
       canonicalUrl: "https://developers.google.com/search/docs/fundamentals/other-guide",
@@ -402,6 +506,81 @@ async function main() {
       "utf8",
     ));
     assert.equal(failedJournal.phase, "commit-failed");
+
+    const cleanupContentRoot = path.join(tmpRoot, "cleanup-content");
+    await seedManifests(cleanupContentRoot);
+    const cleanupResult = await importFixture(tmpRoot, {
+      ...snapshot,
+      slug: "cleanup-guide",
+    }, {
+      contentRoot: cleanupContentRoot,
+      publicRoot: path.join(tmpRoot, "cleanup-public"),
+      operationId: "tutorial-import-cleanup-test",
+      testHooks: { failCleanupBackupRelative: "manifest.json" },
+    });
+    assert.equal(cleanupResult.status, "draft");
+    const cleanupManifest = JSON.parse(await fs.readFile(path.join(cleanupContentRoot, "manifest.json"), "utf8"));
+    assert.equal(cleanupManifest.generation, "tutorial-import-cleanup-test");
+    assert.equal(cleanupManifest.routes[0].slug, "cleanup-guide");
+    await fs.access(path.join(cleanupContentRoot, "manifest.json.backup-tutorial-import-cleanup-test"));
+
+    const markerOnlyContentRoot = path.join(tmpRoot, "marker-only-recovery-content");
+    const markerOnlyPublicRoot = path.join(tmpRoot, "marker-only-recovery-public");
+    await seedManifests(markerOnlyContentRoot);
+    const markerOnlyBefore = await Promise.all([
+      fs.readFile(path.join(markerOnlyContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(markerOnlyContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    const markerOnlyOperation = "tutorial-import-marker-only-test";
+    const markerOnlyStaging = path.join(markerOnlyContentRoot, ".import-staging", markerOnlyOperation);
+    const markerOnlyMarker = {
+      operationId: markerOnlyOperation,
+      generation: markerOnlyOperation,
+      slug,
+      sourceKey: snapshot.sourceKey,
+      locales: ["zh-CN", "en"],
+      committedAt: null,
+    };
+    const markerOnlyTarget = path.join(markerOnlyStaging, "import-generation.json");
+    await writeJsonFile(markerOnlyTarget, markerOnlyMarker);
+    const markerOnlyBytes = await fs.readFile(markerOnlyTarget);
+    await writeJsonFile(path.join(markerOnlyContentRoot, ".import-journal", `${markerOnlyOperation}.json`), {
+      operationId: markerOnlyOperation,
+      generation: markerOnlyOperation,
+      phase: "staged",
+      files: [{ relative: "import-generation.json", sha256: sha256(markerOnlyBytes) }],
+      phases: [],
+    });
+    await expectImportError("recovery-conflict", markerOnlyOperation, () =>
+      recoverTutorialImport({
+        contentRoot: markerOnlyContentRoot,
+        publicRoot: markerOnlyPublicRoot,
+        operationId: markerOnlyOperation,
+      }),
+    );
+    const markerOnlyAfter = await Promise.all([
+      fs.readFile(path.join(markerOnlyContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(markerOnlyContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    assert.deepEqual(markerOnlyAfter, markerOnlyBefore);
+
+    await expectImportError("recovery-conflict", "tutorial-import-missing-journal-test", () =>
+      recoverTutorialImport({
+        contentRoot: path.join(tmpRoot, "missing-journal-content"),
+        publicRoot: path.join(tmpRoot, "missing-journal-public"),
+        operationId: "tutorial-import-missing-journal-test",
+      }),
+    );
+    const corruptJournalRoot = path.join(tmpRoot, "corrupt-journal-content");
+    await fs.mkdir(path.join(corruptJournalRoot, ".import-journal"), { recursive: true });
+    await fs.writeFile(path.join(corruptJournalRoot, ".import-journal", "tutorial-import-corrupt-journal-test.json"), "{", "utf8");
+    await expectImportError("recovery-conflict", "tutorial-import-corrupt-journal-test", () =>
+      recoverTutorialImport({
+        contentRoot: corruptJournalRoot,
+        publicRoot: path.join(tmpRoot, "corrupt-journal-public"),
+        operationId: "tutorial-import-corrupt-journal-test",
+      }),
+    );
 
     const recoveryContentRoot = path.join(tmpRoot, "recovery-content");
     const recoveryPublicRoot = path.join(tmpRoot, "recovery-public");
@@ -460,7 +639,12 @@ async function main() {
       allowFixtureMedia: true,
       operationId: "tutorial-import-refresh-test",
     });
-    assert.equal(refreshResult.status, "published");
+    assert.equal(refreshResult.status, "draft");
+    assert.equal(refreshResult.liveRouteStatus, "published");
+    assert.equal(refreshResult.resultKind, "refresh-candidate");
+    assert.equal(refreshResult.pendingReview, true);
+    assert.match(tutorialImportResultMessage(refreshResult), /staged refresh candidate/);
+    assert.match(tutorialImportResultMessage(refreshResult), /live route remains published pending review/);
     const [refreshedZhManifest, refreshedEnManifest] = await Promise.all([
       fs.readFile(path.join(contentRoot, "manifest.json"), "utf8").then(JSON.parse),
       fs.readFile(path.join(contentRoot, "manifest.en.json"), "utf8").then(JSON.parse),
@@ -528,10 +712,28 @@ async function main() {
     assert.equal(secondRefreshManifest.routes[0].snapshot.version, publishedBefore.routes[0].snapshot.version);
     assert.equal(secondRefreshManifest.routes[0].refreshCandidate.version, refreshCandidate.version + 1);
     assert.equal(secondRefreshManifest.routes[0].refreshCandidate.operationId, "tutorial-import-refresh-second-test");
+    const supersededRefresh = await importTutorialDraft({
+      input: refreshedInput,
+      translation: refreshedTranslation,
+      contentRoot,
+      publicRoot,
+      allowFixtureMedia: true,
+      operationId: "tutorial-import-refresh-superseded-test",
+    });
+    assert.equal(supersededRefresh.idempotent, false);
+    assert.equal(supersededRefresh.status, "draft");
+    assert.equal(supersededRefresh.liveRouteStatus, "published");
+    const supersededRefreshManifest = JSON.parse(await fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"));
+    assert.equal(supersededRefreshManifest.routes[0].refreshCandidate.version, refreshCandidate.version + 2);
+    assert.equal(supersededRefreshManifest.routes[0].refreshCandidate.operationId, "tutorial-import-refresh-superseded-test");
 
     const lockContentRoot = path.join(tmpRoot, "lock-content");
     await seedManifests(lockContentRoot);
+    let signalLockAcquired;
     let releaseLock;
+    const lockAcquired = new Promise((resolve) => {
+      signalLockAcquired = resolve;
+    });
     const lockHeld = new Promise((resolve) => {
       releaseLock = resolve;
     });
@@ -539,9 +741,14 @@ async function main() {
       contentRoot: lockContentRoot,
       publicRoot: path.join(tmpRoot, "lock-public-a"),
       operationId: "tutorial-import-lock-a",
-      testHooks: { afterLockAcquired: async () => lockHeld },
+      testHooks: {
+        afterLockAcquired: async () => {
+          signalLockAcquired();
+          await lockHeld;
+        },
+      },
     });
-    await new Promise((resolve) => setTimeout(resolve, 25));
+    await lockAcquired;
     await expectCode("unavailable", () =>
       importFixture(tmpRoot, snapshot, {
         contentRoot: lockContentRoot,
@@ -552,7 +759,87 @@ async function main() {
     releaseLock();
     await firstImport;
 
-    console.log("Tutorial importer contract passed: fixture collect/import, idempotency, failure taxonomy, media trust boundaries, transaction rollback/recovery, lock scope, snapshot provenance, and refresh preservation.");
+    const staleLockContentRoot = path.join(tmpRoot, "stale-lock-content");
+    await seedManifests(staleLockContentRoot);
+    const staleLockPath = path.join(staleLockContentRoot, ".tutorial-import.lock");
+    await writeJsonFile(staleLockPath, {
+      pid: await exitedPid(),
+      token: "stale-lock-token",
+      createdAt: "2026-08-29T00:00:00.000Z",
+    });
+    const staleLockResult = await importFixture(tmpRoot, {
+      ...snapshot,
+      slug: "stale-lock-guide",
+    }, {
+      contentRoot: staleLockContentRoot,
+      publicRoot: path.join(tmpRoot, "stale-lock-public"),
+      operationId: "tutorial-import-stale-lock-test",
+    });
+    assert.equal(staleLockResult.status, "draft");
+    await assert.rejects(() => fs.access(staleLockPath), { code: "ENOENT" });
+
+    const guardedReclaimContentRoot = path.join(tmpRoot, "guarded-reclaim-content");
+    await seedManifests(guardedReclaimContentRoot);
+    const guardedReclaimLockPath = path.join(guardedReclaimContentRoot, ".tutorial-import.lock");
+    await writeJsonFile(guardedReclaimLockPath, {
+      pid: await exitedPid(),
+      token: "guarded-stale-lock-token",
+      createdAt: "2026-08-29T00:00:00.000Z",
+    });
+    await fs.mkdir(`${guardedReclaimLockPath}.reclaiming`);
+    await expectCode("unavailable", () =>
+      importFixture(tmpRoot, {
+        ...snapshot,
+        slug: "guarded-reclaim-guide",
+      }, {
+        contentRoot: guardedReclaimContentRoot,
+        publicRoot: path.join(tmpRoot, "guarded-reclaim-public"),
+        operationId: "tutorial-import-guarded-reclaim-test",
+      }),
+    );
+    await fs.access(guardedReclaimLockPath);
+    await fs.rm(`${guardedReclaimLockPath}.reclaiming`, { recursive: true, force: true });
+    const guardedReclaimResult = await importFixture(tmpRoot, {
+      ...snapshot,
+      slug: "guarded-reclaim-guide",
+    }, {
+      contentRoot: guardedReclaimContentRoot,
+      publicRoot: path.join(tmpRoot, "guarded-reclaim-public"),
+      operationId: "tutorial-import-guarded-reclaim-test",
+    });
+    assert.equal(guardedReclaimResult.status, "draft");
+
+    const freshEmptyLockContentRoot = path.join(tmpRoot, "fresh-empty-lock-content");
+    await seedManifests(freshEmptyLockContentRoot);
+    await fs.writeFile(path.join(freshEmptyLockContentRoot, ".tutorial-import.lock"), "", "utf8");
+    await expectCode("unavailable", () =>
+      importFixture(tmpRoot, {
+        ...snapshot,
+        slug: "fresh-empty-lock-guide",
+      }, {
+        contentRoot: freshEmptyLockContentRoot,
+        publicRoot: path.join(tmpRoot, "fresh-empty-lock-public"),
+        operationId: "tutorial-import-fresh-empty-lock-test",
+      }),
+    );
+
+    const staleEmptyLockContentRoot = path.join(tmpRoot, "stale-empty-lock-content");
+    await seedManifests(staleEmptyLockContentRoot);
+    const staleEmptyLockPath = path.join(staleEmptyLockContentRoot, ".tutorial-import.lock");
+    await fs.writeFile(staleEmptyLockPath, "", "utf8");
+    await fs.utimes(staleEmptyLockPath, new Date("2026-08-29T00:00:00.000Z"), new Date("2026-08-29T00:00:00.000Z"));
+    const staleEmptyLockResult = await importFixture(tmpRoot, {
+      ...snapshot,
+      slug: "stale-empty-lock-guide",
+    }, {
+      contentRoot: staleEmptyLockContentRoot,
+      publicRoot: path.join(tmpRoot, "stale-empty-lock-public"),
+      operationId: "tutorial-import-stale-empty-lock-test",
+    });
+    assert.equal(staleEmptyLockResult.status, "draft");
+    await assert.rejects(() => fs.access(staleEmptyLockPath), { code: "ENOENT" });
+
+    console.log("Tutorial importer contract passed: fixture collect/import, idempotency, failure taxonomy, DNS-pinned media/source trust boundaries, transaction rollback/recovery, stale and active lock scope, runtime marker gate, snapshot provenance, duplicate media staging, and refresh candidate preservation.");
   } finally {
     await fs.rm(tmpRoot, { recursive: true, force: true });
   }
