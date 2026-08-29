@@ -52,19 +52,19 @@ contentFile 只接受当前正文 SHA-256 文件名。snapshot.history 保留旧
 
 ## Lifecycle and rollback
 
-状态流转为 draft → review → published，返工进入 draft，来源变化进入 stale。导入器创建 draft，审校命令在双语内容和资格检查完整后转为 review，发布动作由审校人确认后转为 published。已发布来源的快照或 canonical 变化会转为 stale；重新采集并补齐双语内容后可进入 review，翻译或内容返工进入 draft。只有资格清单、双语章节数、正文安全检查、媒体检查、来源署名和十一项编辑 checklist 全部通过时才进入 published。draft、review 和 stale 页面继续提供静态预览，输出 noindex,nofollow，目录只列出已发布页面。
+状态流转为 draft → review → published，返工进入 draft，来源变化进入 stale。导入器创建 draft，审校命令在双语内容和资格检查完整后转为 review，发布动作由审校人确认后转为 published。已发布来源的快照或 canonical 变化会转为 stale；重新采集并补齐双语内容后可进入 review，翻译或内容返工进入 draft。只有资格清单、双语章节数、正文安全检查、媒体检查、来源署名和十一项编辑 checklist 全部通过时才进入 published。draft、review 和 stale 页面继续提供静态预览，输出 noindex,nofollow，目录只列出已发布页面。Issue #12 的状态守卫、重复来源映射、刷新审校、原子提交、失败恢复和回滚命令详见 [lifecycle decision](./tutorial-internalization-lifecycle.md)。
 
-导入按 slug 幂等。原 canonical 对 slug 保持不变；新来源创建新 slug。来源快照或正文变化时版本递增，旧版本写入 history。rollback-tutorial.mjs --slug <slug> --version <n> 以旧正文创建新的递增快照版本，保留当前版本在 history，并将双语页面放回 draft，等待重新审校。
+导入按 slug 幂等。原 canonical 对 slug 保持不变；新来源创建新 slug。来源快照或正文变化时版本递增，旧版本写入 history。rollback-tutorial.mjs --slug <slug> --version <n> 以旧正文创建新的递增候选版本，候选状态为 draft，当前 published 版本及 activeVersion 指针继续提供线上内容，候选通过重新审校后再一次性切换并将旧版本写入 history。canonical 变更通过显式 rebind 命令创建新来源记录和单向 alias，旧 slug 继续保留。
 
-每次导入、发布和回滚都以双语 manifest、两份 locale 正文以及媒体索引作为一个原子版本单元。任何校验或写入失败都会保留当前已发布版本及其媒体引用；新版本完整写入后再一次性切换两个 locale 的 manifest。
+每次导入、发布和回滚都以双语 manifest、两份 locale 正文以及媒体索引作为一个原子版本单元。操作目录和 journal 记录阶段，generation marker 约束两种 locale 一致；任何校验或写入失败都会保留当前已发布版本及其媒体引用，recover 命令可完成已验证提交或恢复最近备份；新版本完整写入后再一次性切换两个 locale 的 manifest。
 
-资源卡链接在页面渲染时按已发布来源 canonical 映射到本地双语路径。草稿和待更新来源继续显示外部 URL；同一个来源在多个资源卡出现时共用一个 slug。
+资源卡链接在页面渲染时按已发布来源 canonical 映射到本地双语路径。草稿和待更新来源继续显示外部 URL；同一个来源在多个资源卡出现时共用一个 slug，显式 rebind 的旧 key 在新记录发布后按 alias 映射。
 
 ## Child-ticket handoff
 
 | 子票据 | 本规格锁定的输入 | 子票据交付 |
 | --- | --- | --- |
-| #12 生命周期、链接与回滚 | 状态机、canonical 映射、版本历史 | 命令行为和失败恢复 |
+| [#12 生命周期、链接与回滚](./tutorial-internalization-lifecycle.md) | 状态机、canonical 映射、版本历史 | 命令行为、资源卡转换、失败恢复和回滚 |
 | #14 Pilot 验收 | 本文 Acceptance contract 与 Pilot 盘点 | 可执行验收清单和真实页面证据 |
 | #15 URL 与 SEO | 已锁定的 slug、locale 路径、alternate、canonical、robots、sitemap 约束 | 路由实现、SEO 测试和结构化数据 |
 | #16 内容模型 | TutorialRecord 字段表 | 类型、manifest schema 和版本兼容 |
@@ -74,7 +74,7 @@ contentFile 只接受当前正文 SHA-256 文件名。snapshot.history 保留旧
 ## Import command
 
     npm run tutorials:inventory
-    npm run tutorials:collect -- --url https://developers.google.com/search/docs/fundamentals/seo-starter-guide --source-path /seo_roadmap/seo-fundamentals/ --output temp/seo-starter.snapshot.json
+    npm run tutorials:collect -- --url https://developers.google.com/search/docs/fundamentals/seo-starter-guide --source-path /seo_roadmap/seo-fundamentals/ --slug google-seo-starter-guide --output temp/seo-starter.snapshot.json
     npm run tutorials:import -- --input temp/seo-starter.snapshot.json --translation temp/seo-starter.zh-CN.html
     npm run tutorials:review -- --slug google-seo-starter-guide --input temp/seo-starter.review.json
 
