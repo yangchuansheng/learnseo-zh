@@ -112,7 +112,7 @@ function record(locale, overrides = {}) {
       provider: "Example Publisher",
       author: null,
       canonicalUrl: "https://example.com/guide",
-      sourcePath: "/roadmap/guide/",
+      sourcePath: "/seo_roadmap/seo-fundamentals/",
       requestedUrl: "https://example.com/guide",
       finalUrl: "https://example.com/guide",
       contentType: "text/html",
@@ -264,6 +264,28 @@ assert.throws(
   }]), "zh-CN"),
   /absolute HTTPS URL/,
 );
+model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN", {
+  source: { ...record("zh-CN").source, sourcePath: "/seo_roadmap/seo-fundamentals/" },
+})]), "zh-CN");
+for (const sourcePath of [
+  "https://learningseo.io/seo_roadmap/seo-fundamentals/",
+  "//evil.example/seo_roadmap/",
+  "/seo_roadmap/../secret/",
+  "/seo_roadmap/%2e%2e/secret/",
+  "/seo_roadmap/%00/secret/",
+  "/seo_roadmap/%2fsecret/",
+  "/seo_roadmap/seo-fundamentals/?x=1",
+  "/seo_roadmap/seo-fundamentals/#x",
+  "/seo_roadmap/seo-\u0000fundamentals/",
+]) {
+  assert.throws(
+    () => model.parseTutorialManifest(manifest("zh-CN", [{
+      ...record("zh-CN"),
+      source: { ...record("zh-CN").source, sourcePath },
+    }]), "zh-CN"),
+    /repository-local path/,
+  );
+}
 assert.throws(
   () => model.validateTutorialHtml(fixture.replace("www.youtube-nocookie.com", "evil.example.com")),
   /outside the allowlist/,

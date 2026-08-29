@@ -24,6 +24,9 @@ export const TUTORIAL_ALLOWED_EMBED_HOSTS = [
 ] as const;
 
 const TUTORIAL_MEDIA_PATH_PREFIX = "/sites/learningseo-io-071dae18/tutorials/";
+const REPOSITORY_LOCAL_PATH_PATTERN =
+  "^/(?!/)(?!.*[\\u0000-\\u001f\\u007f\\\\?#])(?!.*/(?:\\.|\\.\\.)(?:/|$))(?!.*%(?:0[0-9a-fA-F]|2[eEfF]))(?!.*//).+$";
+const REPOSITORY_LOCAL_PATH_REGEX = new RegExp(REPOSITORY_LOCAL_PATH_PATTERN);
 
 export const TUTORIAL_SEMANTIC_TAGS = [
   "h1",
@@ -365,7 +368,10 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         provider: { type: "string", minLength: 1 },
         author: { type: ["string", "null"] },
         canonicalUrl: { type: "string", format: "uri", pattern: "^https://" },
-        sourcePath: { type: "string", minLength: 1 },
+        sourcePath: {
+          type: "string",
+          pattern: REPOSITORY_LOCAL_PATH_PATTERN,
+        },
         requestedUrl: { type: "string", format: "uri", pattern: "^https://" },
         finalUrl: { type: "string", format: "uri", pattern: "^https://" },
         contentType: { type: "string", pattern: "^text/html(?:;|$)" },
@@ -748,7 +754,11 @@ function parseSource(value: unknown, label: string): TutorialSource {
     provider: requiredString(value.provider, `${label}.provider`),
     author: requiredNullableString(value.author, `${label}.author`),
     canonicalUrl,
-    sourcePath: requiredString(value.sourcePath, `${label}.sourcePath`),
+    sourcePath: (() => {
+      const sourcePath = requiredString(value.sourcePath, `${label}.sourcePath`);
+      validateRepositoryLocalPath(sourcePath, `${label}.sourcePath`);
+      return sourcePath;
+    })(),
     requestedUrl,
     finalUrl,
     contentType,
@@ -1615,14 +1625,13 @@ function validateRepositoryLocalPath(
   const normalized = options.allowQueryHash
     ? `${parsed.pathname}${parsed.search}${parsed.hash}`
     : parsed.pathname;
+  const localPath = options.allowQueryHash ? parsed.pathname : raw;
   const pathSegments = decodedPath.split("/");
   if (
     parsed.origin !== "https://learningseo.io" ||
     normalized !== raw ||
-    !raw.startsWith("/") ||
-    raw.startsWith("//") ||
-    raw.includes("\\") ||
-    (!options.allowQueryHash && (raw.includes("?") || raw.includes("#"))) ||
+    !REPOSITORY_LOCAL_PATH_REGEX.test(localPath) ||
+    /[\u0000-\u001f\u007f]/.test(decodedPath) ||
     decodedPath.includes("\\") ||
     pathSegments.includes(".") ||
     pathSegments.includes("..") ||

@@ -90,24 +90,57 @@ function tutorialContentPath(locale: Locale, record: TutorialRecord): string {
 }
 
 function assertSafeToc(record: TutorialRecord, headingIds: readonly string[]): void {
-  const headings = new Set(headingIds);
+  const seen = new Set<string>();
+  let previousHeadingIndex = -1;
   for (const entry of record.toc) {
     if (!SAFE_ANCHOR_ID_PATTERN.test(entry.id)) {
       throw new Error(`Tutorial ${record.slug} TOC anchor is unsafe: ${entry.id}`);
     }
-    if (!headings.has(entry.id)) {
+    if (seen.has(entry.id)) {
+      throw new Error(`Tutorial ${record.slug} TOC anchor is duplicated: ${entry.id}`);
+    }
+    seen.add(entry.id);
+    const headingIndex = headingIds.indexOf(entry.id);
+    if (headingIndex === -1) {
       throw new Error(`Tutorial ${record.slug} TOC anchor is missing from HTML: ${entry.id}`);
     }
+    if (headingIndex < previousHeadingIndex) {
+      throw new Error(`Tutorial ${record.slug} TOC anchors must follow HTML heading order`);
+    }
+    previousHeadingIndex = headingIndex;
   }
 }
 
+function wrapTutorialTables(html: string): string {
+  const tagPattern = /<\/?table\b[^>]*>/gi;
+  let result = "";
+  let cursor = 0;
+  let tableStart = -1;
+  let depth = 0;
+  for (const match of html.matchAll(tagPattern)) {
+    const tag = match[0];
+    const index = match.index;
+    if (index === undefined) continue;
+    const isClosing = /^<\//.test(tag);
+    if (!isClosing) {
+      if (depth === 0) tableStart = index;
+      depth += 1;
+      continue;
+    }
+    if (depth === 0) continue;
+    depth -= 1;
+    if (depth === 0 && tableStart >= 0) {
+      result += html.slice(cursor, tableStart);
+      result += `<div class="tutorial-table-wrapper" data-tutorial-table>${html.slice(tableStart, index + tag.length)}</div>`;
+      cursor = index + tag.length;
+      tableStart = -1;
+    }
+  }
+  return result + html.slice(cursor);
+}
+
 export function prepareTutorialHtmlForRender(html: string): string {
-  return html
-    .replace(/<h1\b[\s\S]*?<\/h1>/i, "")
-    .replace(
-      /<table\b[\s\S]*?<\/table>/gi,
-      (table) => `<div class="tutorial-table-wrapper" data-tutorial-table>${table}</div>`,
-    );
+  return wrapTutorialTables(html.replace(/<h1\b[\s\S]*?<\/h1>/i, ""));
 }
 
 export async function loadTutorialHtml(locale: Locale, record: TutorialRecord): Promise<string> {

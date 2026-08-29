@@ -37,6 +37,24 @@ const chineseHtml = englishHtml.replace(
   "Accessible tutorials preserve the source meaning.",
   "Localized tutorials preserve the source meaning.",
 );
+const expectedSemanticMetrics = {
+  h1: 1,
+  h2: 2,
+  h3: 1,
+  h4: 1,
+  h5: 1,
+  h6: 1,
+  p: 6,
+  a: 1,
+  table: 1,
+  code: 1,
+  pre: 1,
+  blockquote: 1,
+  img: 1,
+  figure: 1,
+  figcaption: 1,
+  iframe: 1,
+};
 const htmlByLocale = { "zh-CN": chineseHtml, en: englishHtml };
 const validationByLocale = Object.fromEntries(
   Object.entries(htmlByLocale).map(([locale, source]) => [
@@ -140,7 +158,7 @@ function tutorialRecord(locale, status = "published") {
       width: 640,
       height: 360,
     }],
-    contentMetrics: validationByLocale[locale].metrics,
+    contentMetrics: expectedSemanticMetrics,
     seo: {
       title: "Semantic Guide",
       description: "A renderer contract fixture.",
@@ -215,14 +233,23 @@ try {
     "fine-detail",
     "source-note",
   ]);
-  assert.deepEqual(validationByLocale["zh-CN"].metrics, validationByLocale.en.metrics);
+  assert.deepEqual(validationByLocale.en.metrics, expectedSemanticMetrics);
+  assert.deepEqual(validationByLocale["zh-CN"].metrics, expectedSemanticMetrics);
   const preparedHtml = route.prepareTutorialHtmlForRender(englishHtml);
   assert.match(preparedHtml, /data-tutorial-table/);
   assert.doesNotMatch(preparedHtml, /<h1\b/i);
+  const nestedPreparedHtml = route.prepareTutorialHtmlForRender([
+    "<article><h1 id=\"nested-table\">Nested table</h1>",
+    "<table><tbody><tr><td>Outer",
+    "<table><tbody><tr><td>Inner</td></tr></tbody></table>",
+    "</td></tr></tbody></table></article>",
+  ].join(""));
+  assert.equal(count(nestedPreparedHtml, /data-tutorial-table/g), 1);
+  assert.match(nestedPreparedHtml, /Outer<table><tbody><tr><td>Inner/);
 
   for (const locale of ["zh-CN", "en"]) {
     const { markup, record } = await render(locale);
-    assert.deepEqual(record.contentMetrics, validationByLocale[locale].metrics);
+    assert.deepEqual(record.contentMetrics, expectedSemanticMetrics);
     assert.equal(count(markup, /<h1\b/g), 1, `${locale} must render one page h1`);
     assert.match(markup, new RegExp(`data-tutorial-slug="${record.slug}"`));
     assert.match(markup, new RegExp(`data-tutorial-status="${record.status}"`));
@@ -282,6 +309,26 @@ try {
       toc: [{ id: "1-unsafe", title: "Unsafe anchor", level: 1 }],
     }),
     /TOC anchor is unsafe/,
+  );
+  await assert.rejects(
+    () => route.loadTutorialHtml("en", {
+      ...englishRecord,
+      toc: [
+        { id: "semantic-fixture", title: "Semantic fixture", level: 1 },
+        { id: "semantic-fixture", title: "Semantic fixture again", level: 1 },
+      ],
+    }),
+    /TOC anchor is duplicated/,
+  );
+  await assert.rejects(
+    () => route.loadTutorialHtml("en", {
+      ...englishRecord,
+      toc: [
+        { id: "block-code", title: "Block code", level: 2 },
+        { id: "semantic-fixture", title: "Semantic fixture", level: 1 },
+      ],
+    }),
+    /TOC anchors must follow HTML heading order/,
   );
 
   const previewMetadata = seo.createTutorialMetadata(tutorialRecord("zh-CN", "draft"), "zh-CN", {
