@@ -24,11 +24,8 @@ import type {
 export type {
   Sha256,
   TutorialContentFile,
-  TutorialContentBlock,
   TutorialContentMetrics,
-  TutorialContentDocument,
   TutorialHtmlValidation,
-  TutorialInlineNode,
   TutorialLicense,
   TutorialManifest,
   TutorialManifestPair,

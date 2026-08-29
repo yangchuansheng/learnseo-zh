@@ -14,6 +14,78 @@ const model = await jiti.import(path.join(repositoryRoot, "src/lib/tutorials/mod
 const hex = (value) => value.repeat(64);
 const allTrue = (keys) => Object.fromEntries(keys.map((key) => [key, true]));
 
+function schemaError(label, message) {
+  return new Error(`${label}: ${message}`);
+}
+
+function matchesSchemaType(type, value) {
+  if (type === "null") return value === null;
+  if (type === "array") return Array.isArray(value);
+  if (type === "integer") return Number.isInteger(value);
+  if (type === "object") return value && typeof value === "object" && !Array.isArray(value);
+  return typeof value === type;
+}
+
+function resolveRef(rootSchema, ref) {
+  const pathSegments = ref.replace(/^#\//, "").split("/");
+  return pathSegments.reduce((node, segment) => node?.[segment], rootSchema);
+}
+
+function assertSchemaValid(schema, value, label, rootSchema = schema) {
+  if (schema.$ref) return assertSchemaValid(resolveRef(rootSchema, schema.$ref), value, label, rootSchema);
+  if (schema.anyOf) {
+    const errors = [];
+    for (const candidate of schema.anyOf) {
+      try {
+        assertSchemaValid(candidate, value, label, rootSchema);
+        return;
+      } catch (error) {
+        errors.push(error.message);
+      }
+    }
+    throw schemaError(label, `must match one schema: ${errors.join("; ")}`);
+  }
+  if (schema.const !== undefined) assert.deepEqual(value, schema.const, `${label} const mismatch`);
+  if (schema.enum) assert.ok(schema.enum.includes(value), `${label} enum mismatch`);
+  if (schema.type) {
+    const types = Array.isArray(schema.type) ? schema.type : [schema.type];
+    assert.ok(types.some((type) => matchesSchemaType(type, value)), `${label} type mismatch`);
+  }
+  if (typeof value === "string") {
+    if (schema.minLength !== undefined && value.length < schema.minLength) {
+      throw schemaError(label, `minLength ${schema.minLength} failed`);
+    }
+    if (schema.pattern) assert.match(value, new RegExp(schema.pattern), `${label} pattern mismatch`);
+  }
+  if (typeof value === "number") {
+    if (schema.minimum !== undefined && value < schema.minimum) {
+      throw schemaError(label, `minimum ${schema.minimum} failed`);
+    }
+    if (schema.maximum !== undefined && value > schema.maximum) {
+      throw schemaError(label, `maximum ${schema.maximum} failed`);
+    }
+  }
+  if (Array.isArray(value) && schema.items) {
+    value.forEach((item, index) => assertSchemaValid(schema.items, item, `${label}[${index}]`, rootSchema));
+  }
+  if (matchesSchemaType("object", value)) {
+    for (const key of schema.required ?? []) {
+      assert.ok(Object.hasOwn(value, key), `${label}.${key} is required by schema`);
+    }
+    const properties = schema.properties ?? {};
+    for (const [key, item] of Object.entries(value)) {
+      const propertySchema = properties[key];
+      if (propertySchema) {
+        assertSchemaValid(propertySchema, item, `${label}.${key}`, rootSchema);
+      } else if (schema.additionalProperties === false) {
+        throw schemaError(label, `${key} is unsupported by schema`);
+      } else if (schema.additionalProperties && typeof schema.additionalProperties === "object") {
+        assertSchemaValid(schema.additionalProperties, item, `${label}.${key}`, rootSchema);
+      }
+    }
+  }
+}
+
 function record(locale, overrides = {}) {
   const contentHash = hex("a");
   const sourceHash = hex("b");
@@ -60,6 +132,7 @@ function record(locale, overrides = {}) {
       sourceSections: 2,
       translatedSections: 2,
       contentHash: translationHash,
+      contentFile: `${translationHash}.html`,
     },
     review: {
       decision: "approved",
@@ -78,7 +151,7 @@ function record(locale, overrides = {}) {
     contentFile: `${contentHash}.html`,
     toc: [{ id: "semantic-guide", title: "Semantic Guide", level: 1 }],
     media: [{
-      path: "/sites/example/tutorials/diagram.png",
+      path: "/sites/learningseo-io-071dae18/tutorials/diagram.png",
       sha256: hex("d"),
       alt: "A semantic diagram",
       sourceUrl: "https://example.com/diagram.png",
@@ -94,28 +167,30 @@ function record(locale, overrides = {}) {
   };
 }
 
-const zh = model.parseTutorialManifest({
-  schemaVersion: 1,
-  locale: "zh-CN",
-  generation: "generation-1",
-  activeVersion: 1,
-  routes: [record("zh-CN")],
-  aliases: [],
-}, "zh-CN");
-const en = model.parseTutorialManifest({
-  schemaVersion: 1,
-  locale: "en",
-  generation: "generation-1",
-  activeVersion: 1,
-  routes: [record("en")],
-  aliases: [],
-}, "en");
+function manifest(locale, routes, overrides = {}) {
+  return {
+    $schema: "https://learningseo.io/schemas/tutorial-manifest.json",
+    schemaVersion: 1,
+    locale,
+    generation: "generation-1",
+    activeVersion: 1,
+    routes,
+    aliases: [],
+    ...overrides,
+  };
+}
+
+const zh = model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")]), "zh-CN");
+const en = model.parseTutorialManifest(manifest("en", [record("en")]), "en");
 
 assert.equal(zh.routes[0].sourceKey, "https://example.com/guide");
 assert.equal(zh.routes[0].contentFile, `${hex("a")}.html`);
 assert.deepEqual(model.validateTutorialManifestPair(zh, en).generation, "generation-1");
 assert.equal(model.isSha256(hex("f")), true);
 assert.equal(model.isSha256("invalid"), false);
+assert.equal(model.isTutorialRecord(record("zh-CN")), true);
+assert.equal(model.isTutorialRecord(record("zh-CN"), "zh-CN"), true);
+assert.equal(model.isTutorialRecord(record("zh-CN"), "en"), false);
 
 const fixture = await fs.readFile(
   path.join(repositoryRoot, "src/content/tutorials/fixtures/semantic-fixture.html"),
@@ -128,22 +203,34 @@ assert.equal(fixtureResult.metrics.pre, 1);
 assert.equal(fixtureResult.metrics.blockquote, 1);
 assert.equal(fixtureResult.metrics.iframe, 1);
 
+const committedManifestFiles = [
+  ["zh-CN", "src/content/tutorials/manifest.json"],
+  ["en", "src/content/tutorials/manifest.en.json"],
+];
+for (const [locale, relativePath] of committedManifestFiles) {
+  const filePath = path.join(repositoryRoot, relativePath);
+  const value = JSON.parse(await fs.readFile(filePath, "utf8"));
+  assertSchemaValid(model.TUTORIAL_MANIFEST_SCHEMA, value, relativePath);
+  assert.equal(model.parseTutorialManifest(value, locale, relativePath).locale, locale);
+}
+
 assert.throws(
-  () => model.parseTutorialManifest({
-    locale: "zh-CN",
-    generation: "generation-1",
-    routes: [record("zh-CN", { contentFile: "../guide.html" })],
-    aliases: [],
-  }, "zh-CN"),
+  () => model.parseTutorialManifest({ routes: [] }, "zh-CN"),
+  /schemaVersion must be 1/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [], { records: [] }), "zh-CN"),
+  /unsupported key records/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN", { contentFile: "../guide.html" })]), "zh-CN"),
   /content-addressed SHA-256 filename/,
 );
 assert.throws(
-  () => model.parseTutorialManifest({
-    locale: "zh-CN",
-    generation: "generation-1",
-    routes: [record("zh-CN", { source: { ...record("zh-CN").source, canonicalUrl: "http://example.com/guide" } })],
-    aliases: [],
-  }, "zh-CN"),
+  () => model.parseTutorialManifest(manifest("zh-CN", [{
+    ...record("zh-CN"),
+    source: { ...record("zh-CN").source, canonicalUrl: "http://example.com/guide" },
+  }]), "zh-CN"),
   /absolute HTTPS URL/,
 );
 assert.throws(
@@ -155,17 +242,213 @@ assert.throws(
   /unsupported <script>/,
 );
 assert.throws(
+  () => model.validateTutorialHtml("<article><h1 id=\"x\">Title</h1><p><a href=\"javascript:alert(1)\" href=\"https://safe.example/\">safe</a></p></article>"),
+  /duplicate attribute href/,
+);
+assert.throws(
+  () => model.validateTutorialHtml("<article><h1 id=\"x\">Title</h1><p><img src=\"/sites/%2e%2e/secret.png\" alt=\"Diagram\"></p></article>"),
+  /repository-local path/,
+);
+assert.throws(
+  () => model.validateTutorialHtml("<article><h1 id=\"x\">Title</h1><p><img src=\"/sites//learningseo-io-071dae18/tutorials/a.png\" alt=\"Diagram\"></p></article>"),
+  /repository-local path/,
+);
+assert.throws(
   () => model.validateTutorialManifestPair(zh, { ...en, generation: "generation-2" }),
   /share one generation/,
 );
 assert.throws(
-  () => model.parseTutorialManifest({
-    locale: "zh-CN",
-    generation: "generation-1",
-    routes: [record("zh-CN", { sourceKey: "https://example.com/other" })],
-    aliases: [],
-  }, "zh-CN"),
+  () => model.validateTutorialManifestPair(
+    zh,
+    model.parseTutorialManifest(manifest("en", [
+      { ...record("en"), toc: [{ id: "different", title: "Different", level: 1 }] },
+    ]), "en"),
+  ),
+  /TOC pairing failed/,
+);
+assert.throws(
+  () => model.validateTutorialManifestPair(
+    zh,
+    model.parseTutorialManifest(manifest("en", [
+      { ...record("en"), media: [{ ...record("en").media[0], path: "/sites/learningseo-io-071dae18/tutorials/other.png" }] },
+    ]), "en"),
+  ),
+  /media pairing failed/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN", {
+    media: [{ ...record("zh-CN").media[0], path: "/sites/example/tutorials/diagram.png" }],
+  })]), "zh-CN"),
+  /repository-local path/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [{
+    ...record("zh-CN"),
+    sourceKey: "https://example.com/other",
+  }]), "zh-CN"),
   /sourceKey does not match/,
+);
+
+const incompletePublished = {
+  ...record("zh-CN"),
+  snapshot: { ...record("zh-CN").snapshot, sourceUpdatedAt: undefined },
+  translation: { ...record("zh-CN").translation, translator: null, sourceSections: 0, translatedSections: 0 },
+  review: { ...record("zh-CN").review, reviewer: null, reviewedAt: null },
+  qualification: { ...record("zh-CN").qualification, reviewer: null, reviewedAt: null },
+};
+assert.throws(
+  () => model.validateTutorialRecord(incompletePublished, "zh-CN"),
+  /sourceUpdatedAt/,
+);
+assert.throws(
+  () => model.validateTutorialRecord({
+    ...record("zh-CN"),
+    snapshot: { ...record("zh-CN").snapshot, translationContentHash: undefined },
+  }, "zh-CN"),
+  /translationContentHash/,
+);
+assert.throws(
+  () => model.validateTutorialRecord({
+    ...record("zh-CN"),
+    translation: { ...record("zh-CN").translation, contentHash: hex("e"), contentFile: `${hex("e")}.html` },
+  }, "zh-CN"),
+  /translation contentHash must match/,
+);
+assert.throws(
+  () => model.validateTutorialRecord({
+    ...record("zh-CN"),
+    translation: { ...record("zh-CN").translation, contentFile: undefined },
+  }, "zh-CN"),
+  /translation contentFile/,
+);
+assert.throws(
+  () => model.validateTutorialRecord({
+    ...record("zh-CN"),
+    review: { ...record("zh-CN").review, reviewer: null },
+  }, "zh-CN"),
+  /review reviewer/,
+);
+assert.throws(
+  () => model.validateTutorialRecord({
+    ...record("zh-CN"),
+    qualification: { ...record("zh-CN").qualification, reviewedAt: null },
+  }, "zh-CN"),
+  /qualification timestamp/,
+);
+assert.throws(
+  () => model.validateTutorialRecord({
+    ...record("zh-CN"),
+    translation: { ...record("zh-CN").translation, translatedSections: 0 },
+  }, "zh-CN"),
+  /positive bilingual sections/,
+);
+assert.throws(
+  () => model.validateTutorialRecord({
+    ...record("zh-CN"),
+    snapshot: {
+      ...record("zh-CN").snapshot,
+      history: [{
+        version: 1,
+        canonicalUrl: "https://example.com/guide",
+        sourceContentHash: hex("b"),
+        contentHash: hex("a"),
+        canonicalMatched: "true",
+      }],
+    },
+  }, "zh-CN"),
+  /canonicalMatched must be boolean/,
+);
+model.parseTutorialManifest(manifest("zh-CN", [], {
+  resourceLinkReport: {
+    totalOccurrences: 3,
+    convertedOccurrences: 2,
+    fallbackOccurrences: 1,
+    normalizedSourceKeys: 2,
+    duplicateOccurrences: 1,
+    unknownFragments: 1,
+  },
+}), "zh-CN");
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [], { resourceLinkReport: {} }), "zh-CN"),
+  /totalOccurrences/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [], {
+    resourceLinkReport: {
+      totalOccurrences: 3,
+      convertedOccurrences: 3,
+      fallbackOccurrences: 1,
+      normalizedSourceKeys: 2,
+      duplicateOccurrences: 1,
+      unknownFragments: 1,
+    },
+  }), "zh-CN"),
+  /must equal totalOccurrences/,
+);
+
+const redirectTargetSource = {
+  ...record("zh-CN").source,
+  canonicalUrl: "https://example.com/target",
+  requestedUrl: "https://example.com/target",
+  finalUrl: "https://example.com/target",
+};
+const redirectSourceMetadata = {
+  ...record("zh-CN").source,
+  canonicalUrl: "https://example.com/legacy",
+  requestedUrl: "https://example.com/legacy",
+  finalUrl: "https://example.com/legacy",
+};
+const redirectTarget = record("zh-CN", {
+  slug: "target",
+  path: "/tutorials/target/",
+  sourceKey: "https://example.com/target",
+  source: redirectTargetSource,
+  snapshot: {
+    ...record("zh-CN").snapshot,
+    pageCanonicalUrl: "https://example.com/target",
+    requestedUrl: "https://example.com/target",
+    finalUrl: "https://example.com/target",
+  },
+});
+const redirectSource = record("zh-CN", {
+  slug: "legacy",
+  path: "/tutorials/legacy/",
+  sourceKey: "https://example.com/legacy",
+  source: redirectSourceMetadata,
+  snapshot: {
+    ...record("zh-CN").snapshot,
+    pageCanonicalUrl: "https://example.com/legacy",
+    requestedUrl: "https://example.com/legacy",
+    finalUrl: "https://example.com/legacy",
+  },
+  redirectTo: "/tutorials/target/",
+});
+model.parseTutorialManifest(manifest("zh-CN", [redirectSource, redirectTarget]), "zh-CN");
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [
+    { ...redirectSource, redirectTo: "/tutorials/missing/" },
+  ]), "zh-CN"),
+  /redirect target is missing/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [
+    { ...redirectSource, redirectTo: "/en/tutorials/target/" },
+    redirectTarget,
+  ]), "zh-CN"),
+  /Unsafe tutorial redirect/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [
+    { ...redirectSource, redirectTo: "/tutorials/legacy/" },
+  ]), "zh-CN"),
+  /Unsafe tutorial redirect/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [
+    { ...redirectSource, redirectTo: "/tutorials/target/" },
+    { ...redirectTarget, redirectTo: "/tutorials/legacy/" },
+  ]), "zh-CN"),
+  /redirect cycle detected/,
 );
 
 console.log("Tutorial content model contract passed.");

@@ -5,6 +5,8 @@ import {
   assertTutorialSlug,
   isTutorialSlug,
   normalizeSourceKey,
+  safeTutorialRedirect,
+  tutorialSlugFromPath,
   tutorialPath,
 } from "./url";
 
@@ -20,6 +22,8 @@ export const TUTORIAL_ALLOWED_EMBED_HOSTS = [
   "www.youtube-nocookie.com",
   "youtube.com",
 ] as const;
+
+const TUTORIAL_MEDIA_PATH_PREFIX = "/sites/learningseo-io-071dae18/tutorials/";
 
 export const TUTORIAL_SEMANTIC_TAGS = [
   "h1",
@@ -44,25 +48,6 @@ export const TUTORIAL_SEMANTIC_TAGS = [
 ] as const;
 export type TutorialSemanticTag = (typeof TUTORIAL_SEMANTIC_TAGS)[number];
 export type TutorialContentMetrics = Readonly<Partial<Record<TutorialSemanticTag, number>>>;
-
-export type TutorialInlineNode = Readonly<
-  | { type: "text"; text: string }
-  | { type: "inline-code"; code: string }
-  | { type: "link"; href: string; children: readonly TutorialInlineNode[] }
->;
-
-export type TutorialContentBlock = Readonly<
-  | { type: "heading"; level: 1 | 2 | 3 | 4 | 5 | 6; id?: string; children: readonly TutorialInlineNode[] }
-  | { type: "paragraph"; children: readonly TutorialInlineNode[] }
-  | { type: "list"; ordered: boolean; items: readonly TutorialContentBlock[] }
-  | { type: "table"; rows: readonly (readonly TutorialInlineNode[])[] }
-  | { type: "code"; code: string; language?: string; block: boolean }
-  | { type: "blockquote"; children: readonly TutorialContentBlock[]; cite?: string }
-  | { type: "image"; src: string; alt: string; caption?: string }
-  | { type: "embed"; src: string; title: string }
->;
-
-export type TutorialContentDocument = readonly TutorialContentBlock[];
 
 export const TUTORIAL_REVIEW_CHECKLIST_KEYS = [
   "contentComplete",
@@ -240,7 +225,14 @@ export type TutorialRecord = Readonly<{
   redirectTo?: string | null;
 }>;
 
-export type TutorialResourceLinkReport = Readonly<Record<string, unknown>>;
+export type TutorialResourceLinkReport = Readonly<{
+  totalOccurrences: number;
+  convertedOccurrences: number;
+  fallbackOccurrences: number;
+  normalizedSourceKeys: number;
+  duplicateOccurrences: number;
+  unknownFragments: number;
+}>;
 
 export type TutorialManifest = Readonly<{
   schemaVersion: typeof TUTORIAL_SCHEMA_VERSION;
@@ -276,20 +268,25 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
   type: "object",
   required: ["schemaVersion", "locale", "generation", "activeVersion", "routes", "aliases"],
   properties: {
+    $schema: { const: "https://learningseo.io/schemas/tutorial-manifest.json" },
     schemaVersion: { const: TUTORIAL_SCHEMA_VERSION },
     locale: { enum: ["en", "zh-CN"] },
     generation: { type: ["string", "null"] },
     activeVersion: { type: ["integer", "null"], minimum: 1 },
     routes: { type: "array", items: { "$ref": "#/$defs/tutorialRecord" } },
     aliases: { type: "array", items: { "$ref": "#/$defs/sourceAlias" } },
+    resourceLinkReport: { "$ref": "#/$defs/resourceLinkReport" },
   },
   $defs: {
     sourceAlias: {
       type: "object",
       required: ["sourceKey", "slug"],
       properties: {
-        sourceKey: { type: "string", format: "uri" },
+        sourceKey: { type: "string", format: "uri", pattern: "^https://" },
         slug: { type: "string", pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        sourceUrl: { type: "string", format: "uri", pattern: "^https://" },
+        createdAt: { type: "string", format: "date-time" },
+        reason: { type: "string", minLength: 1 },
       },
       additionalProperties: false,
     },
@@ -302,6 +299,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         "description",
         "provider",
         "status",
+        "sourceKey",
         "source",
         "snapshot",
         "activeVersion",
@@ -321,7 +319,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         description: { type: "string", minLength: 1 },
         provider: { type: "string", minLength: 1 },
         status: { enum: [...TUTORIAL_STATUSES] },
-        sourceKey: { type: "string", format: "uri" },
+        sourceKey: { type: "string", format: "uri", pattern: "^https://" },
         source: { "$ref": "#/$defs/source" },
         snapshot: { "$ref": "#/$defs/snapshot" },
         activeVersion: { type: "integer", minimum: 1 },
@@ -329,9 +327,15 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         review: { "$ref": "#/$defs/review" },
         qualification: { "$ref": "#/$defs/qualification" },
         contentFile: { type: ["string", "null"], pattern: "^[a-f0-9]{64}\\.html$" },
-        toc: { type: "array" },
-        media: { type: "array" },
-        contentMetrics: { type: "object", additionalProperties: { type: "integer", minimum: 0 } },
+        toc: { type: "array", items: { "$ref": "#/$defs/tocEntry" } },
+        media: { type: "array", items: { "$ref": "#/$defs/media" } },
+        contentMetrics: {
+          type: "object",
+          properties: Object.fromEntries(
+            TUTORIAL_SEMANTIC_TAGS.map((key) => [key, { type: "integer", minimum: 0 }]),
+          ),
+          additionalProperties: false,
+        },
         seo: { "$ref": "#/$defs/seo" },
         redirectTo: { type: ["string", "null"] },
       },
@@ -349,7 +353,20 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         requestedUrl: { type: "string", format: "uri", pattern: "^https://" },
         finalUrl: { type: "string", format: "uri", pattern: "^https://" },
         contentType: { type: "string", pattern: "^text/html(?:;|$)" },
-        license: { anyOf: [{ type: "string", minLength: 1 }, { type: "object" }] },
+        license: {
+          anyOf: [
+            { type: "string", minLength: 1 },
+            {
+              type: "object",
+              required: ["text"],
+              properties: {
+                text: { type: "string", minLength: 1 },
+                url: { type: "string", format: "uri", pattern: "^https://" },
+              },
+              additionalProperties: false,
+            },
+          ],
+        },
       },
       additionalProperties: false,
     },
@@ -367,8 +384,31 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         sourceContentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
         contentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
         translationContentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
-        history: { type: "array" },
+        history: { type: "array", items: { "$ref": "#/$defs/snapshotHistory" } },
         rollbackOf: { type: "integer", minimum: 1 },
+      },
+      additionalProperties: false,
+    },
+    snapshotHistory: {
+      type: "object",
+      required: ["version", "canonicalUrl", "sourceContentHash", "contentHash"],
+      properties: {
+        version: { type: "integer", minimum: 1 },
+        canonicalUrl: { type: "string", format: "uri", pattern: "^https://" },
+        sourceContentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
+        contentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
+        translationContentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
+        contentFile: { type: "string", pattern: "^[a-f0-9]{64}\\.html$" },
+        translationContentFile: { type: "string", pattern: "^[a-f0-9]{64}\\.html$" },
+        pageCanonicalUrl: { type: "string", format: "uri", pattern: "^https://" },
+        canonicalMatched: { type: "boolean" },
+        requestedUrl: { type: "string", format: "uri", pattern: "^https://" },
+        finalUrl: { type: "string", format: "uri", pattern: "^https://" },
+        capturedAt: { type: "string", format: "date-time" },
+        sourceUpdatedAt: { type: "string", format: "date-time" },
+        recordedAt: { type: "string", format: "date-time" },
+        rollbackOf: { type: "integer", minimum: 1 },
+        operationId: { type: "string", minLength: 1 },
       },
       additionalProperties: false,
     },
@@ -396,9 +436,30 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         reviewer: { type: ["string", "null"] },
         reviewedAt: { type: ["string", "null"] },
         notes: { type: "string", minLength: 1 },
-        checklist: { type: "object" },
-        history: { type: "array" },
+        checklist: { "$ref": "#/$defs/reviewChecklist" },
+        history: { type: "array", items: { "$ref": "#/$defs/reviewHistory" } },
       },
+      additionalProperties: false,
+    },
+    reviewHistory: {
+      type: "object",
+      required: ["decision", "reviewer", "reviewedAt", "notes"],
+      properties: {
+        decision: { enum: ["pending", "approved", "changes-requested"] },
+        reviewer: { type: ["string", "null"] },
+        reviewedAt: { type: ["string", "null"] },
+        notes: { type: "string", minLength: 1 },
+        version: { type: "integer", minimum: 1 },
+        operationId: { type: "string", minLength: 1 },
+      },
+      additionalProperties: false,
+    },
+    reviewChecklist: {
+      type: "object",
+      required: [...TUTORIAL_REVIEW_CHECKLIST_KEYS],
+      properties: Object.fromEntries(
+        TUTORIAL_REVIEW_CHECKLIST_KEYS.map((key) => [key, { type: "boolean" }]),
+      ),
       additionalProperties: false,
     },
     qualification: {
@@ -408,7 +469,62 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         decision: { enum: ["pending", "qualified", "rejected"] },
         reviewer: { type: ["string", "null"] },
         reviewedAt: { type: ["string", "null"] },
-        checklist: { type: "object" },
+        checklist: { "$ref": "#/$defs/qualificationChecklist" },
+      },
+      additionalProperties: false,
+    },
+    qualificationChecklist: {
+      type: "object",
+      required: [...TUTORIAL_QUALIFICATION_CHECKLIST_KEYS],
+      properties: Object.fromEntries(
+        TUTORIAL_QUALIFICATION_CHECKLIST_KEYS.map((key) => [key, { type: "boolean" }]),
+      ),
+      additionalProperties: false,
+    },
+    tocEntry: {
+      type: "object",
+      required: ["id", "title", "level"],
+      properties: {
+        id: { type: "string", minLength: 1 },
+        title: { type: "string", minLength: 1 },
+        level: { type: "integer", minimum: 1, maximum: 6 },
+      },
+      additionalProperties: false,
+    },
+    media: {
+      type: "object",
+      required: ["path", "sha256", "alt"],
+      properties: {
+        path: {
+          type: "string",
+          pattern: "^/sites/learningseo-io-071dae18/tutorials/(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))[^?#\\\\]+$",
+        },
+        sha256: { type: "string", pattern: "^[a-f0-9]{64}$" },
+        alt: { type: "string", minLength: 1 },
+        sourceUrl: { type: "string", format: "uri", pattern: "^https://" },
+        width: { type: "integer", minimum: 1 },
+        height: { type: "integer", minimum: 1 },
+        id: { type: "string", minLength: 1 },
+      },
+      additionalProperties: false,
+    },
+    resourceLinkReport: {
+      type: "object",
+      required: [
+        "totalOccurrences",
+        "convertedOccurrences",
+        "fallbackOccurrences",
+        "normalizedSourceKeys",
+        "duplicateOccurrences",
+        "unknownFragments",
+      ],
+      properties: {
+        totalOccurrences: { type: "integer", minimum: 0 },
+        convertedOccurrences: { type: "integer", minimum: 0 },
+        fallbackOccurrences: { type: "integer", minimum: 0 },
+        normalizedSourceKeys: { type: "integer", minimum: 0 },
+        duplicateOccurrences: { type: "integer", minimum: 0 },
+        unknownFragments: { type: "integer", minimum: 0 },
       },
       additionalProperties: false,
     },
@@ -435,6 +551,17 @@ function isRecord(value: unknown): value is JsonRecord {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+function assertAllowedKeys(
+  value: JsonRecord,
+  label: string,
+  allowedKeys: readonly string[],
+): void {
+  const allowed = new Set(allowedKeys);
+  for (const key of Object.keys(value)) {
+    if (!allowed.has(key)) throw new Error(`${label} contains unsupported key ${key}`);
+  }
+}
+
 function requiredString(value: unknown, label: string): string {
   if (typeof value !== "string" || !value.trim()) {
     throw new Error(`${label} must be a non-empty string`);
@@ -447,19 +574,9 @@ function nullableString(value: unknown, label: string): string | null {
   return requiredString(value, label);
 }
 
-function chooseAliasedValue(
-  object: JsonRecord,
-  keys: readonly string[],
-  label: string,
-): unknown {
-  const present = keys.filter((key) => object[key] !== undefined);
-  if (present.length > 1) {
-    const first = object[present[0]];
-    if (present.some((key) => !sameJsonValue(first, object[key]))) {
-      throw new Error(`${label} has conflicting aliases: ${present.join(", ")}`);
-    }
-  }
-  return present.length ? object[present[0]] : undefined;
+function requiredNullableString(value: unknown, label: string): string | null {
+  if (value === undefined) throw new Error(`${label} is required`);
+  return nullableString(value, label);
 }
 
 function sameJsonValue(left: unknown, right: unknown): boolean {
@@ -532,6 +649,11 @@ function optionalDate(value: unknown, label: string): string | null {
   return result;
 }
 
+function nullableDate(value: unknown, label: string): string | null {
+  if (value === undefined) throw new Error(`${label} is required`);
+  return optionalDate(value, label);
+}
+
 function dateString(value: unknown, label: string): string {
   const result = requiredString(value, label);
   if (!Number.isFinite(Date.parse(result))) throw new Error(`${label} must be a valid date`);
@@ -547,18 +669,22 @@ function parseStatus(value: unknown, label: string): TutorialStatus {
 
 function parseSource(value: unknown, label: string): TutorialSource {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, [
+    "title",
+    "provider",
+    "author",
+    "canonicalUrl",
+    "sourcePath",
+    "requestedUrl",
+    "finalUrl",
+    "contentType",
+    "license",
+  ]);
   const canonicalUrl = parseHttpsUrl(value.canonicalUrl, `${label}.canonicalUrl`);
-  const requestedUrl = parseHttpsUrl(
-    chooseAliasedValue(value, ["requestedUrl", "requested"], `${label}.requestedUrl`) ?? canonicalUrl,
-    `${label}.requestedUrl`,
-  );
-  const finalUrl = parseHttpsUrl(
-    chooseAliasedValue(value, ["finalUrl", "final"], `${label}.finalUrl`) ?? canonicalUrl,
-    `${label}.finalUrl`,
-  );
+  const requestedUrl = parseHttpsUrl(value.requestedUrl, `${label}.requestedUrl`);
+  const finalUrl = parseHttpsUrl(value.finalUrl, `${label}.finalUrl`);
   const contentType = requiredString(
-    chooseAliasedValue(value, ["contentType", "responseContentType"], `${label}.contentType`) ??
-      "text/html",
+    value.contentType,
     `${label}.contentType`,
   ).toLowerCase();
   if (contentType !== "text/html" && !contentType.startsWith("text/html;")) {
@@ -571,6 +697,7 @@ function parseSource(value: unknown, label: string): TutorialSource {
     if (typeof license === "string") {
       normalizedLicense = requiredString(license, `${label}.license`);
     } else if (isRecord(license)) {
+      assertAllowedKeys(license, `${label}.license`, ["text", "url"]);
       normalizedLicense = {
         text: requiredString(license.text, `${label}.license.text`),
         ...(license.url === undefined ? {} : { url: parseHttpsUrl(license.url, `${label}.license.url`) }),
@@ -583,7 +710,7 @@ function parseSource(value: unknown, label: string): TutorialSource {
   return {
     title: requiredString(value.title, `${label}.title`),
     provider: requiredString(value.provider, `${label}.provider`),
-    author: nullableString(value.author, `${label}.author`),
+    author: requiredNullableString(value.author, `${label}.author`),
     canonicalUrl,
     sourcePath: requiredString(value.sourcePath, `${label}.sourcePath`),
     requestedUrl,
@@ -595,6 +722,24 @@ function parseSource(value: unknown, label: string): TutorialSource {
 
 function parseHistoryEntry(value: unknown, label: string, sourceCanonical: string): TutorialSnapshotHistory {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, [
+    "version",
+    "canonicalUrl",
+    "sourceContentHash",
+    "contentHash",
+    "translationContentHash",
+    "contentFile",
+    "translationContentFile",
+    "pageCanonicalUrl",
+    "canonicalMatched",
+    "requestedUrl",
+    "finalUrl",
+    "capturedAt",
+    "sourceUpdatedAt",
+    "recordedAt",
+    "rollbackOf",
+    "operationId",
+  ]);
   const canonicalUrl = parseHttpsUrl(value.canonicalUrl ?? sourceCanonical, `${label}.canonicalUrl`);
   const contentFile = parseContentFile(value.contentFile, `${label}.contentFile`);
   const translationContentFile = parseContentFile(
@@ -621,7 +766,12 @@ function parseHistoryEntry(value: unknown, label: string, sourceCanonical: strin
       : { pageCanonicalUrl: parseHttpsUrl(value.pageCanonicalUrl, `${label}.pageCanonicalUrl`) }),
     ...(value.canonicalMatched === undefined
       ? {}
-      : { canonicalMatched: value.canonicalMatched === true }),
+      : (() => {
+        if (typeof value.canonicalMatched !== "boolean") {
+          throw new Error(`${label}.canonicalMatched must be boolean`);
+        }
+        return { canonicalMatched: value.canonicalMatched };
+      })()),
     ...(value.requestedUrl === undefined
       ? {}
       : { requestedUrl: parseHttpsUrl(value.requestedUrl, `${label}.requestedUrl`) }),
@@ -631,7 +781,7 @@ function parseHistoryEntry(value: unknown, label: string, sourceCanonical: strin
     ...(value.capturedAt === undefined ? {} : { capturedAt: dateString(value.capturedAt, `${label}.capturedAt`) }),
     ...(value.sourceUpdatedAt === undefined
       ? {}
-      : { sourceUpdatedAt: requiredString(value.sourceUpdatedAt, `${label}.sourceUpdatedAt`) }),
+      : { sourceUpdatedAt: dateString(value.sourceUpdatedAt, `${label}.sourceUpdatedAt`) }),
     ...(value.recordedAt === undefined ? {} : { recordedAt: dateString(value.recordedAt, `${label}.recordedAt`) }),
     ...(value.rollbackOf === undefined ? {} : { rollbackOf: positiveInteger(value.rollbackOf, `${label}.rollbackOf`) }),
     ...(value.operationId === undefined ? {} : { operationId: requiredString(value.operationId, `${label}.operationId`) }),
@@ -640,6 +790,20 @@ function parseHistoryEntry(value: unknown, label: string, sourceCanonical: strin
 
 function parseSnapshot(value: unknown, label: string, source: TutorialSource): TutorialSnapshot {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, [
+    "version",
+    "capturedAt",
+    "sourceUpdatedAt",
+    "pageCanonicalUrl",
+    "canonicalMatched",
+    "requestedUrl",
+    "finalUrl",
+    "sourceContentHash",
+    "contentHash",
+    "translationContentHash",
+    "history",
+    "rollbackOf",
+  ]);
   const sourceContentHash = requiredSha256(value.sourceContentHash, `${label}.sourceContentHash`);
   const contentHash = requiredSha256(value.contentHash, `${label}.contentHash`);
   const historyValue = value.history;
@@ -665,7 +829,7 @@ function parseSnapshot(value: unknown, label: string, source: TutorialSource): T
     capturedAt: dateString(value.capturedAt, `${label}.capturedAt`),
     ...(value.sourceUpdatedAt === undefined
       ? {}
-      : { sourceUpdatedAt: requiredString(value.sourceUpdatedAt, `${label}.sourceUpdatedAt`) }),
+      : { sourceUpdatedAt: dateString(value.sourceUpdatedAt, `${label}.sourceUpdatedAt`) }),
     pageCanonicalUrl,
     canonicalMatched: value.canonicalMatched,
     requestedUrl: parseHttpsUrl(value.requestedUrl ?? source.requestedUrl, `${label}.requestedUrl`),
@@ -700,14 +864,19 @@ function parseChecklist<T extends readonly string[]>(
 
 function parseTranslation(value: unknown, label: string): TutorialTranslation {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
-  const sourceSections = nonNegativeInteger(
-    chooseAliasedValue(value, ["sourceSections", "sourceSectionCount"], `${label}.sourceSections`),
-    `${label}.sourceSections`,
-  );
-  const translatedSections = nonNegativeInteger(
-    chooseAliasedValue(value, ["translatedSections", "translatedSectionCount"], `${label}.translatedSections`),
-    `${label}.translatedSections`,
-  );
+  assertAllowedKeys(value, label, [
+    "sourceLanguage",
+    "language",
+    "translator",
+    "translatedAt",
+    "reviewedAt",
+    "sourceSections",
+    "translatedSections",
+    "contentHash",
+    "contentFile",
+  ]);
+  const sourceSections = nonNegativeInteger(value.sourceSections, `${label}.sourceSections`);
+  const translatedSections = nonNegativeInteger(value.translatedSections, `${label}.translatedSections`);
   const contentHash = value.contentHash === undefined
     ? undefined
     : requiredSha256(value.contentHash, `${label}.contentHash`);
@@ -720,9 +889,9 @@ function parseTranslation(value: unknown, label: string): TutorialTranslation {
   return {
     sourceLanguage: "en",
     language: "zh-CN",
-    translator: nullableString(value.translator, `${label}.translator`),
-    translatedAt: optionalDate(value.translatedAt, `${label}.translatedAt`),
-    reviewedAt: optionalDate(value.reviewedAt, `${label}.reviewedAt`),
+    translator: requiredNullableString(value.translator, `${label}.translator`),
+    translatedAt: nullableDate(value.translatedAt, `${label}.translatedAt`),
+    reviewedAt: nullableDate(value.reviewedAt, `${label}.reviewedAt`),
     sourceSections,
     translatedSections,
     ...(contentHash === undefined ? {} : { contentHash }),
@@ -732,15 +901,23 @@ function parseTranslation(value: unknown, label: string): TutorialTranslation {
 
 function parseReviewHistory(value: unknown, label: string): TutorialReviewHistoryEntry {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, [
+    "decision",
+    "reviewer",
+    "reviewedAt",
+    "notes",
+    "version",
+    "operationId",
+  ]);
   const decision = value.decision;
   if (decision !== "pending" && decision !== "approved" && decision !== "changes-requested") {
     throw new Error(`${label}.decision is invalid`);
   }
   return {
     decision,
-    reviewer: nullableString(value.reviewer, `${label}.reviewer`),
-    reviewedAt: optionalDate(value.reviewedAt, `${label}.reviewedAt`),
-    notes: requiredString(value.notes ?? "review history", `${label}.notes`),
+    reviewer: requiredNullableString(value.reviewer, `${label}.reviewer`),
+    reviewedAt: nullableDate(value.reviewedAt, `${label}.reviewedAt`),
+    notes: requiredString(value.notes, `${label}.notes`),
     ...(value.version === undefined ? {} : { version: positiveInteger(value.version, `${label}.version`) }),
     ...(value.operationId === undefined ? {} : { operationId: requiredString(value.operationId, `${label}.operationId`) }),
   };
@@ -748,6 +925,14 @@ function parseReviewHistory(value: unknown, label: string): TutorialReviewHistor
 
 function parseReview(value: unknown, label: string): TutorialReview {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, [
+    "decision",
+    "reviewer",
+    "reviewedAt",
+    "notes",
+    "checklist",
+    "history",
+  ]);
   const decision = value.decision;
   if (decision !== "pending" && decision !== "approved" && decision !== "changes-requested") {
     throw new Error(`${label}.decision is invalid`);
@@ -756,9 +941,9 @@ function parseReview(value: unknown, label: string): TutorialReview {
   if (!Array.isArray(history)) throw new Error(`${label}.history must be an array`);
   return {
     decision,
-    reviewer: nullableString(value.reviewer, `${label}.reviewer`),
-    reviewedAt: optionalDate(value.reviewedAt, `${label}.reviewedAt`),
-    notes: requiredString(value.notes ?? "review pending", `${label}.notes`),
+    reviewer: requiredNullableString(value.reviewer, `${label}.reviewer`),
+    reviewedAt: nullableDate(value.reviewedAt, `${label}.reviewedAt`),
+    notes: requiredString(value.notes, `${label}.notes`),
     checklist: parseChecklist(value.checklist, TUTORIAL_REVIEW_CHECKLIST_KEYS, `${label}.checklist`),
     history: history.map((entry, index) => parseReviewHistory(entry, `${label}.history[${index}]`)),
   };
@@ -766,15 +951,15 @@ function parseReview(value: unknown, label: string): TutorialReview {
 
 function parseQualification(value: unknown, label: string): TutorialQualification {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
-  const rawDecision = value.decision;
-  const decision = rawDecision === "approved" ? "qualified" : rawDecision;
+  assertAllowedKeys(value, label, ["decision", "reviewer", "reviewedAt", "checklist"]);
+  const decision = value.decision;
   if (decision !== "pending" && decision !== "qualified" && decision !== "rejected") {
     throw new Error(`${label}.decision is invalid`);
   }
   return {
     decision,
-    reviewer: nullableString(value.reviewer, `${label}.reviewer`),
-    reviewedAt: optionalDate(value.reviewedAt, `${label}.reviewedAt`),
+    reviewer: requiredNullableString(value.reviewer, `${label}.reviewer`),
+    reviewedAt: nullableDate(value.reviewedAt, `${label}.reviewedAt`),
     checklist: parseChecklist(
       value.checklist,
       TUTORIAL_QUALIFICATION_CHECKLIST_KEYS,
@@ -785,6 +970,7 @@ function parseQualification(value: unknown, label: string): TutorialQualificatio
 
 function parseSeo(value: unknown, label: string): TutorialSeo {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, ["title", "description", "indexable", "dateModified"]);
   const dateModified = value.dateModified === undefined
     ? undefined
     : dateString(value.dateModified, `${label}.dateModified`);
@@ -798,29 +984,11 @@ function parseSeo(value: unknown, label: string): TutorialSeo {
 
 function parseMedia(value: unknown, label: string): TutorialMedia {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
-  const path = requiredString(
-    chooseAliasedValue(value, ["path", "src"], `${label}.path`),
-    `${label}.path`,
-  );
-  if (
-    !path.startsWith("/") ||
-    path.includes("\\") ||
-    path.includes("..") ||
-    (() => {
-      try {
-        return decodeURIComponent(path).includes("..");
-      } catch {
-        return true;
-      }
-    })() ||
-    /^[a-z][a-z\d+.-]*:/i.test(path) ||
-    path.includes("?") ||
-    path.includes("#")
-  ) {
-    throw new Error(`${label}.path must be a repository-local media path`);
-  }
+  assertAllowedKeys(value, label, ["path", "sha256", "alt", "sourceUrl", "width", "height", "id"]);
+  const path = requiredString(value.path, `${label}.path`);
+  validateRepositoryLocalPath(path, `${label}.path`, { media: true });
   const sha256 = requiredSha256(
-    chooseAliasedValue(value, ["sha256", "hash", "contentHash"], `${label}.sha256`),
+    value.sha256,
     `${label}.sha256`,
   );
   const sourceUrl = parseOptionalHttpsUrl(value.sourceUrl, `${label}.sourceUrl`);
@@ -842,6 +1010,7 @@ function parseToc(value: unknown, label: string): readonly TutorialTocEntry[] {
   if (!Array.isArray(value)) throw new Error(`${label} must be an array`);
   return value.map((entry, index) => {
     if (!isRecord(entry)) throw new Error(`${label}[${index}] must be an object`);
+    assertAllowedKeys(entry, `${label}[${index}]`, ["id", "title", "level"]);
     const level = positiveInteger(entry.level, `${label}[${index}].level`);
     if (level > 6) throw new Error(`${label}[${index}].level must be between 1 and 6`);
     return {
@@ -866,6 +1035,27 @@ function parseMetrics(value: unknown, label: string): TutorialContentMetrics {
 function parseRecord(value: unknown, locale: Locale, index: number): TutorialRecord {
   const label = `Tutorial route ${index}`;
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, [
+    "slug",
+    "path",
+    "title",
+    "description",
+    "provider",
+    "status",
+    "sourceKey",
+    "source",
+    "snapshot",
+    "activeVersion",
+    "translation",
+    "review",
+    "qualification",
+    "contentFile",
+    "toc",
+    "media",
+    "contentMetrics",
+    "seo",
+    "redirectTo",
+  ]);
   const slug = assertTutorialSlug(requiredString(value.slug, `${label}.slug`));
   const expectedPath = tutorialPath(slug, locale);
   const routePath = requiredString(value.path, `${label}.path`);
@@ -874,7 +1064,6 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
   const source = parseSource(value.source, `${label} ${slug}.source`);
   const sourceKey = normalizeSourceKey(source.canonicalUrl);
   if (
-    value.sourceKey !== undefined &&
     normalizeSourceKey(parseHttpsUrl(value.sourceKey, `${label} ${slug}.sourceKey`)) !== sourceKey
   ) {
     throw new Error(`Tutorial route ${slug} sourceKey does not match source.canonicalUrl`);
@@ -883,12 +1072,7 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
   const activeVersion = positiveInteger(value.activeVersion, `${label} ${slug}.activeVersion`);
   const translation = parseTranslation(value.translation, `${label} ${slug}.translation`);
   const review = parseReview(value.review, `${label} ${slug}.review`);
-  const qualificationValue = chooseAliasedValue(
-    value,
-    ["qualification", "eligibility"],
-    `${label} ${slug}.qualification`,
-  );
-  const qualification = parseQualification(qualificationValue, `${label} ${slug}.qualification`);
+  const qualification = parseQualification(value.qualification, `${label} ${slug}.qualification`);
   const contentHash = snapshot.contentHash;
   const contentFile = parseContentFile(value.contentFile, `${label} ${slug}.contentFile`);
   if (contentFile && !contentFile.startsWith(contentHash)) {
@@ -909,11 +1093,30 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
   if (status === "published") {
     if (!contentFile) throw new Error(`Tutorial route ${slug} published records require contentFile`);
     if (!snapshot.canonicalMatched) throw new Error(`Tutorial route ${slug} canonical match is unverified`);
+    if (!snapshot.sourceUpdatedAt) throw new Error(`Tutorial route ${slug} published records require sourceUpdatedAt`);
+    if (!snapshot.translationContentHash) {
+      throw new Error(`Tutorial route ${slug} published records require translationContentHash`);
+    }
     if (seo.indexable !== true) throw new Error(`Tutorial route ${slug} published records must be indexable`);
     if (review.decision !== "approved") throw new Error(`Tutorial route ${slug} published records require approved review`);
+    if (!review.reviewer) throw new Error(`Tutorial route ${slug} published records require review reviewer`);
+    if (!review.reviewedAt) throw new Error(`Tutorial route ${slug} published records require review timestamp`);
     if (qualification.decision !== "qualified") throw new Error(`Tutorial route ${slug} published records require qualification`);
+    if (!qualification.reviewer) throw new Error(`Tutorial route ${slug} published records require qualification reviewer`);
+    if (!qualification.reviewedAt) throw new Error(`Tutorial route ${slug} published records require qualification timestamp`);
+    if (!translation.translator) throw new Error(`Tutorial route ${slug} published records require translator`);
+    if (!translation.translatedAt) throw new Error(`Tutorial route ${slug} published records require translatedAt`);
+    if (!translation.reviewedAt) throw new Error(`Tutorial route ${slug} published records require translation review timestamp`);
+    if (translation.sourceSections < 1 || translation.translatedSections < 1) {
+      throw new Error(`Tutorial route ${slug} published records require positive bilingual sections`);
+    }
     if (translation.sourceSections !== translation.translatedSections) {
       throw new Error(`Tutorial route ${slug} translation section count differs`);
+    }
+    if (!translation.contentHash) throw new Error(`Tutorial route ${slug} published records require translation contentHash`);
+    if (!translation.contentFile) throw new Error(`Tutorial route ${slug} published records require translation contentFile`);
+    if (translation.contentHash !== snapshot.translationContentHash) {
+      throw new Error(`Tutorial route ${slug} translation contentHash must match snapshot.translationContentHash`);
     }
     if (!TUTORIAL_REVIEW_CHECKLIST_KEYS.every((key) => review.checklist[key])) {
       throw new Error(`Tutorial route ${slug} review checklist is incomplete`);
@@ -950,9 +1153,9 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
 function parseAlias(value: unknown, index: number): TutorialSourceAlias {
   const label = `Tutorial alias ${index}`;
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
-  const sourceKeyValue = chooseAliasedValue(value, ["sourceKey", "from"], `${label}.sourceKey`);
-  const sourceKey = normalizeSourceKey(parseHttpsUrl(sourceKeyValue, `${label}.sourceKey`));
-  const slug = assertTutorialSlug(requiredString(value.slug ?? value.to, `${label}.slug`));
+  assertAllowedKeys(value, label, ["sourceKey", "slug", "sourceUrl", "createdAt", "reason"]);
+  const sourceKey = normalizeSourceKey(parseHttpsUrl(value.sourceKey, `${label}.sourceKey`));
+  const slug = assertTutorialSlug(requiredString(value.slug, `${label}.slug`));
   const sourceUrl = parseOptionalHttpsUrl(value.sourceUrl, `${label}.sourceUrl`);
   const createdAt = value.createdAt === undefined ? undefined : dateString(value.createdAt, `${label}.createdAt`);
   const reason = value.reason === undefined ? undefined : requiredString(value.reason, `${label}.reason`);
@@ -966,26 +1169,61 @@ function parseAlias(value: unknown, index: number): TutorialSourceAlias {
 }
 
 function parseAliases(value: unknown, label: string): readonly TutorialSourceAlias[] {
-  if (value === undefined || value === null) return [];
   if (Array.isArray(value)) return value.map((entry, index) => parseAlias(entry, index));
-  if (!isRecord(value)) throw new Error(`${label} must be an array or source-key map`);
-  return Object.entries(value).map(([sourceKey, target], index) =>
-    parseAlias({ sourceKey, slug: target }, index),
-  );
+  throw new Error(`${label} must be an array`);
 }
 
-function parseRoutes(value: JsonRecord, filePath: string): unknown[] {
-  const keys = ["routes", "records", "tutorials"] as const;
-  const present = keys.filter((key) => value[key] !== undefined);
-  if (!present.length) throw new Error(`Tutorial manifest ${filePath} must contain routes`);
-  const first = value[present[0]];
-  if (!Array.isArray(first)) throw new Error(`Tutorial manifest ${filePath} ${present[0]} must be an array`);
-  for (const key of present.slice(1)) {
-    if (!Array.isArray(value[key]) || !sameJsonValue(first, value[key])) {
-      throw new Error(`Tutorial manifest ${filePath} has conflicting route aliases`);
+function parseResourceLinkReport(value: unknown, label: string): TutorialResourceLinkReport | undefined {
+  if (value === undefined) return undefined;
+  if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, [
+    "totalOccurrences",
+    "convertedOccurrences",
+    "fallbackOccurrences",
+    "normalizedSourceKeys",
+    "duplicateOccurrences",
+    "unknownFragments",
+  ]);
+  const totalOccurrences = nonNegativeInteger(value.totalOccurrences, `${label}.totalOccurrences`);
+  const convertedOccurrences = nonNegativeInteger(value.convertedOccurrences, `${label}.convertedOccurrences`);
+  const fallbackOccurrences = nonNegativeInteger(value.fallbackOccurrences, `${label}.fallbackOccurrences`);
+  const report = {
+    totalOccurrences,
+    convertedOccurrences,
+    fallbackOccurrences,
+    normalizedSourceKeys: nonNegativeInteger(value.normalizedSourceKeys, `${label}.normalizedSourceKeys`),
+    duplicateOccurrences: nonNegativeInteger(value.duplicateOccurrences, `${label}.duplicateOccurrences`),
+    unknownFragments: nonNegativeInteger(value.unknownFragments, `${label}.unknownFragments`),
+  };
+  if (convertedOccurrences + fallbackOccurrences !== totalOccurrences) {
+    throw new Error(`${label} convertedOccurrences plus fallbackOccurrences must equal totalOccurrences`);
+  }
+  return report;
+}
+
+function validateTutorialRedirectGraph(
+  routes: readonly TutorialRecord[],
+  locale: Locale,
+): void {
+  const recordsBySlug = new Map(routes.map((route) => [route.slug, route]));
+  for (const route of routes) {
+    if (route.redirectTo === undefined || route.redirectTo === null) continue;
+    const visited = new Set([route.slug]);
+    let current = route;
+    while (current.redirectTo !== undefined && current.redirectTo !== null) {
+      const safeTarget = safeTutorialRedirect(current.redirectTo, locale, current.slug);
+      if (!safeTarget) {
+        throw new Error(`Unsafe tutorial redirect from ${current.path}: ${current.redirectTo}`);
+      }
+      const targetSlug = tutorialSlugFromPath(safeTarget, locale);
+      if (!targetSlug) throw new Error(`Tutorial redirect target is invalid: ${safeTarget}`);
+      if (visited.has(targetSlug)) throw new Error(`Tutorial redirect cycle detected at ${current.path}`);
+      const next = recordsBySlug.get(targetSlug);
+      if (!next) throw new Error(`Tutorial redirect target is missing: ${safeTarget}`);
+      visited.add(targetSlug);
+      current = next;
     }
   }
-  return first;
 }
 
 export function parseTutorialManifest(
@@ -994,25 +1232,42 @@ export function parseTutorialManifest(
   filePath = "tutorial manifest",
 ): TutorialManifest {
   if (!isRecord(value)) throw new Error(`Tutorial manifest ${filePath} must be an object`);
-  if (value.schemaVersion !== undefined && value.schemaVersion !== TUTORIAL_SCHEMA_VERSION) {
+  const allowedKeys = new Set([
+    "$schema",
+    "schemaVersion",
+    "locale",
+    "generation",
+    "activeVersion",
+    "routes",
+    "aliases",
+    "resourceLinkReport",
+  ]);
+  for (const key of Object.keys(value)) {
+    if (!allowedKeys.has(key)) throw new Error(`Tutorial manifest ${filePath} contains unsupported key ${key}`);
+  }
+  if (
+    value.$schema !== undefined &&
+    value.$schema !== TUTORIAL_MANIFEST_SCHEMA.$id
+  ) {
+    throw new Error(`Tutorial manifest ${filePath} $schema must be ${TUTORIAL_MANIFEST_SCHEMA.$id}`);
+  }
+  if (value.schemaVersion !== TUTORIAL_SCHEMA_VERSION) {
     throw new Error(`Tutorial manifest ${filePath} schemaVersion must be ${TUTORIAL_SCHEMA_VERSION}`);
   }
-  if (value.locale !== undefined && value.locale !== locale) {
+  if (value.locale !== locale) {
     throw new Error(`Tutorial manifest ${filePath} locale must be ${locale}`);
   }
-  const generationValue = chooseAliasedValue(
-    value,
-    ["generation", "commitGeneration"],
-    `Tutorial manifest ${filePath}.generation`,
-  );
-  const generation = generationValue === null || generationValue === undefined
+  const generation = value.generation === null
     ? null
-    : requiredString(generationValue, `Tutorial manifest ${filePath}.generation`);
+    : requiredString(value.generation, `Tutorial manifest ${filePath}.generation`);
   const activeVersionValue = value.activeVersion;
-  const activeVersion = activeVersionValue === null || activeVersionValue === undefined
+  const activeVersion = activeVersionValue === null
     ? null
     : positiveInteger(activeVersionValue, `Tutorial manifest ${filePath}.activeVersion`);
-  const routes = parseRoutes(value, filePath).map((entry, index) => parseRecord(entry, locale, index));
+  if (!Array.isArray(value.routes)) {
+    throw new Error(`Tutorial manifest ${filePath}.routes must be an array`);
+  }
+  const routes = value.routes.map((entry, index) => parseRecord(entry, locale, index));
   const slugs = new Set<string>();
   const sourceOwners = new Map<string, string>();
   for (const route of routes) {
@@ -1034,9 +1289,11 @@ export function parseTutorialManifest(
       throw new Error(`Tutorial alias source key is already owned: ${alias.sourceKey}`);
     }
   }
-  const resourceLinkReport = isRecord(value.resourceLinkReport)
-    ? value.resourceLinkReport
-    : undefined;
+  validateTutorialRedirectGraph(routes, locale);
+  const resourceLinkReport = parseResourceLinkReport(
+    value.resourceLinkReport,
+    `Tutorial manifest ${filePath}.resourceLinkReport`,
+  );
   return {
     schemaVersion: TUTORIAL_SCHEMA_VERSION,
     locale,
@@ -1087,6 +1344,36 @@ export function validateTutorialManifestPair(
     if (!sameJsonValue(zh.contentMetrics, en.contentMetrics)) {
       throw new Error(`Tutorial content metrics pairing failed: ${slug}`);
     }
+    if (
+      !sameJsonValue(
+        zh.toc.map(({ id, level }) => ({ id, level })),
+        en.toc.map(({ id, level }) => ({ id, level })),
+      )
+    ) {
+      throw new Error(`Tutorial TOC pairing failed: ${slug}`);
+    }
+    if (
+      !sameJsonValue(
+        zh.media.map(({ path, sha256, sourceUrl, width, height, id }) => ({
+          path,
+          sha256,
+          sourceUrl: sourceUrl ?? null,
+          width: width ?? null,
+          height: height ?? null,
+          id: id ?? null,
+        })),
+        en.media.map(({ path, sha256, sourceUrl, width, height, id }) => ({
+          path,
+          sha256,
+          sourceUrl: sourceUrl ?? null,
+          width: width ?? null,
+          height: height ?? null,
+          id: id ?? null,
+        })),
+      )
+    ) {
+      throw new Error(`Tutorial media pairing failed: ${slug}`);
+    }
   }
   for (const slug of englishBySlug.keys()) {
     if (!chineseBySlug.has(slug)) throw new Error(`Chinese tutorial route is missing: ${slug}`);
@@ -1115,25 +1402,73 @@ function openingTags(html: string, tag: string): readonly string[] {
   return [...html.matchAll(new RegExp(`<${tag}\\b[^>]*>`, "gi"))].map((match) => match[0]);
 }
 
-function attributeMap(source: string): Map<string, string> {
-  return new Map(
-    [...source.matchAll(/([:\w-]+)\s*=\s*(["'])([\s\S]*?)\2/g)].map((match) => [
-      match[1].toLowerCase(),
-      match[3],
-    ]),
-  );
+function attributeMap(source: string, label = "HTML tag"): Map<string, string> {
+  const tag = source.match(/^<\/?[a-z][\w:-]*\b/i)?.[0] ?? "";
+  const body = source
+    .slice(tag.length)
+    .replace(/\/?>\s*$/, "");
+  const attrs = new Map<string, string>();
+  for (const match of body.matchAll(/(?:^|\s)([:\w-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g)) {
+    const key = match[1].toLowerCase();
+    if (attrs.has(key)) throw new Error(`${label} contains duplicate attribute ${key}`);
+    attrs.set(key, match[2] ?? match[3] ?? match[4] ?? "");
+  }
+  return attrs;
+}
+
+function validateRepositoryLocalPath(
+  raw: string,
+  label: string,
+  options: { allowQueryHash?: boolean; media?: boolean } = {},
+): void {
+  let parsed: URL;
+  let decodedPath: string;
+  try {
+    parsed = new URL(raw, "https://learningseo.io");
+    decodedPath = decodeURIComponent(parsed.pathname);
+  } catch {
+    throw new Error(`${label} must be a repository-local path`);
+  }
+  const normalized = options.allowQueryHash
+    ? `${parsed.pathname}${parsed.search}${parsed.hash}`
+    : parsed.pathname;
+  const pathSegments = decodedPath.split("/");
+  if (
+    parsed.origin !== "https://learningseo.io" ||
+    normalized !== raw ||
+    !raw.startsWith("/") ||
+    raw.startsWith("//") ||
+    raw.includes("\\") ||
+    (!options.allowQueryHash && (raw.includes("?") || raw.includes("#"))) ||
+    decodedPath.includes("\\") ||
+    pathSegments.includes(".") ||
+    pathSegments.includes("..") ||
+    pathSegments.slice(1, -1).includes("") ||
+    (options.media && !decodedPath.startsWith(TUTORIAL_MEDIA_PATH_PREFIX))
+  ) {
+    throw new Error(`${label} must be a repository-local path`);
+  }
 }
 
 function validateUrlAttribute(value: string, label: string, options: { local?: boolean } = {}): void {
-  if (!value || /[\u0000-\u0020\u007f]/.test(value)) throw new Error(`${label} must be a safe URL`);
-  if (/^(?:javascript|vbscript|data):/i.test(value)) throw new Error(`${label} uses a dangerous URL protocol`);
-  if (options.local) {
-    if (!value.startsWith("/") || value.startsWith("//") || value.includes("..")) {
-      throw new Error(`${label} must be a repository-local path`);
-    }
+  const raw = value.trim();
+  if (!raw || /[\u0000-\u0020\u007f]/.test(raw)) throw new Error(`${label} must be a safe URL`);
+  if (/^(?:javascript|vbscript|data):/i.test(raw)) throw new Error(`${label} uses a dangerous URL protocol`);
+  if (options.local || raw.startsWith("/")) {
+    validateRepositoryLocalPath(raw, label, {
+      allowQueryHash: !options.local,
+      media: options.local,
+    });
     return;
   }
-  if (/^(?:https?:|mailto:|tel:|#|\/)/i.test(value)) return;
+  if (raw.startsWith("#")) return;
+  if (/^(?:mailto|tel):/i.test(raw)) return;
+  try {
+    const parsed = new URL(raw);
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") return;
+  } catch {
+    throw new Error(`${label} must use an approved URL form`);
+  }
   throw new Error(`${label} must use an approved URL form`);
 }
 
@@ -1166,7 +1501,7 @@ export function validateTutorialHtml(
   }
   for (const match of html.matchAll(/<([a-z][\w:-]*)\b([^>]*)>/gi)) {
     const tag = match[1].toLowerCase();
-    const attrs = attributeMap(match[0]);
+    const attrs = attributeMap(match[0], `${label} <${tag}>`);
     for (const key of attrs.keys()) {
       if (!safeAttributes.has(key)) throw new Error(`${label} contains unsupported attribute ${key}`);
     }
@@ -1200,13 +1535,13 @@ export function validateTutorialHtml(
     const level = Number(match[1]);
     if (level > previousHeading + 1) throw new Error(`${label} heading hierarchy jumps from h${previousHeading}`);
     previousHeading = level;
-    const id = attributeMap(match[0]).get("id");
+    const id = attributeMap(match[0], `${label} h${level}`).get("id");
     if (id) headingIds.push(id);
   }
   const h1Count = openingTags(html, "h1").length;
   if ((options.requireSingleH1 ?? true) && h1Count !== 1) throw new Error(`${label} must contain one h1`);
   for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
-    const attrs = attributeMap(match[0]);
+    const attrs = attributeMap(match[0], `${label} anchor`);
     if (!attrs.get("href")) throw new Error(`${label} anchor is missing href`);
     const text = match[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
     const imageAlt = [...match[2].matchAll(/<img\b[^>]*\balt\s*=\s*(["'])(.*?)\1[^>]*>/gi)]
@@ -1243,9 +1578,16 @@ export function assertTutorialContentFile(value: unknown, label = "contentFile")
   return parsed;
 }
 
-export function isTutorialRecord(value: unknown): value is TutorialRecord {
+export function isTutorialRecord(value: unknown, locale?: Locale): value is TutorialRecord {
   try {
-    validateTutorialRecord(value, "en");
+    if (locale) validateTutorialRecord(value, locale);
+    else {
+      try {
+        validateTutorialRecord(value, "en");
+      } catch {
+        validateTutorialRecord(value, "zh-CN");
+      }
+    }
     return true;
   } catch {
     return false;
