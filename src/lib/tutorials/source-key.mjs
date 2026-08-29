@@ -8,13 +8,14 @@ export function normalizeSourceKey(rawValue) {
     throw new Error(`Source URL must use HTTPS: ${rawValue}`);
   }
   parsed.hostname = parsed.hostname.toLowerCase();
-  parsed.port = "";
+  if (parsed.port === "443") parsed.port = "";
   parsed.hash = "";
   for (const key of [...parsed.searchParams.keys()]) {
     if (/^(?:utm_|fbclid$|gclid$)/i.test(key)) parsed.searchParams.delete(key);
   }
-  const sorted = [...parsed.searchParams.entries()].sort(([left], [right]) =>
-    left.localeCompare(right),
+  const compareCodePoints = (left, right) => (left < right ? -1 : left > right ? 1 : 0);
+  const sorted = [...parsed.searchParams.entries()].sort(([leftKey], [rightKey]) =>
+    compareCodePoints(leftKey, rightKey),
   );
   parsed.search = "";
   for (const [key, value] of sorted) parsed.searchParams.append(key, value);

@@ -16,18 +16,27 @@ function routePath(canonical: string): string {
 export function tutorialSitemapEntries(
   pairs: readonly TutorialPublicationPair[],
 ): MetadataRoute.Sitemap {
-  return pairs.map(({ zh }) => {
-    const lastModified = tutorialDateModified(zh);
-    return {
-      url: tutorialUrl(zh.slug, "zh-CN"),
-      ...(lastModified ? { lastModified } : {}),
-      alternates: {
-        languages: {
-          "zh-CN": tutorialUrl(zh.slug, "zh-CN"),
-          en: tutorialUrl(zh.slug, "en"),
-        },
+  return pairs.flatMap(({ zh, en }) => {
+    const alternates = {
+      languages: {
+        "zh-CN": tutorialUrl(zh.slug, "zh-CN"),
+        en: tutorialUrl(en.slug, "en"),
       },
     };
+    const zhLastModified = tutorialDateModified(zh);
+    const enLastModified = tutorialDateModified(en);
+    return [
+      {
+        url: tutorialUrl(zh.slug, "zh-CN"),
+        ...(zhLastModified ? { lastModified: zhLastModified } : {}),
+        alternates,
+      },
+      {
+        url: tutorialUrl(en.slug, "en"),
+        ...(enLastModified ? { lastModified: enLastModified } : {}),
+        alternates,
+      },
+    ];
   });
 }
 

@@ -202,9 +202,19 @@ function parseManifest(value: unknown, locale: Locale, filePath: string): Tutori
 
   const routes = records.map((record, index) => normalizeRecord(record, locale, index));
   const slugs = new Set<string>();
+  const sourceKeyOwners = new Map<string, string>();
   for (const route of routes) {
     if (slugs.has(route.slug)) throw new Error(`Duplicate tutorial slug: ${route.slug}`);
     slugs.add(route.slug);
+
+    const sourceKey = normalizeSourceKey(route.source.canonicalUrl);
+    const owner = sourceKeyOwners.get(sourceKey);
+    if (owner && owner !== route.slug) {
+      throw new Error(
+        `Tutorial source key ${sourceKey} is owned by both ${owner} and ${route.slug}`,
+      );
+    }
+    sourceKeyOwners.set(sourceKey, route.slug);
   }
 
   const routesBySlug = new Map(routes.map((route) => [route.slug, route]));

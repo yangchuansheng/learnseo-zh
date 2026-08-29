@@ -105,6 +105,14 @@ async function assertProductionContract(production) {
     sitemap: `${origin}/sitemap.xml`,
   });
   assert.equal(url.normalizeSourceKey(canonicalZh), url.normalizeSourceKey(canonicalEn));
+  assert.equal(
+    url.normalizeSourceKey("https://example.com:443/guide"),
+    url.normalizeSourceKey("https://example.com/guide"),
+  );
+  assert.notEqual(
+    url.normalizeSourceKey("https://example.com:8443/guide"),
+    url.normalizeSourceKey("https://example.com/guide"),
+  );
 
   const pairs = manifest.getPublishedTutorialPairsFromManifests(zhManifest, enManifest);
   assert.deepEqual(pairs.map(({ zh: pairZh }) => pairZh.slug), ["guide"]);
@@ -208,8 +216,14 @@ async function assertProductionContract(production) {
   assert.doesNotMatch(serialized, /<Guide>/);
 
   const sitemapEntries = sitemap.tutorialSitemapEntries(pairs);
-  assert.deepEqual(sitemapEntries.map((entry) => entry.url), [`${origin}/tutorials/guide/`]);
-  assert.deepEqual(sitemapEntries[0].alternates.languages, url.tutorialAlternates("guide"));
+  assert.deepEqual(sitemapEntries.map((entry) => entry.url), [
+    `${origin}/tutorials/guide/`,
+    `${origin}/en/tutorials/guide/`,
+  ]);
+  for (const entry of sitemapEntries) {
+    assert.deepEqual(entry.alternates.languages, url.tutorialAlternates("guide"));
+  }
+  assert.equal(sitemapEntries.some((entry) => entry.url.includes("/preview/")), false);
   assert.equal(sitemapEntries.some((entry) => entry.url.includes("legacy-guide")), false);
 
   const redirectRecords = new Map([
@@ -228,10 +242,6 @@ async function assertProductionContract(production) {
     route.renderTutorialRecord("zh-CN", aliasZh, async (_locale, record) =>
       manifest.resolveTutorialRedirectPath("zh-CN", record, redirectRecords),
     ),
-    (error) =>
-      typeof error?.digest === "string" &&
-      error.digest.includes("/tutorials/guide/") &&
-      error.digest.includes(";308;"),
   );
 
   const self = tutorialRecord("zh-CN", "self", { redirectTo: "/tutorials/self/" });
@@ -285,6 +295,9 @@ async function checkManifestIntegration(production) {
   for (const [locale, routes] of [["zh-CN", zh.routes], ["en", en.routes]]) {
     for (const record of routes) {
       const pair = pairBySlug.get(record.slug);
+      if (record.status === "published") {
+        assert.ok(pair, `${locale}/${record.slug} is published without a validated bilingual pair`);
+      }
       const metadata = seo.createTutorialMetadata(record, locale, {
         indexable: Boolean(pair),
         includeAlternates: Boolean(pair),
@@ -295,8 +308,11 @@ async function checkManifestIntegration(production) {
     }
   }
   const entries = sitemap.tutorialSitemapEntries(pairs);
-  assert.deepEqual(entries.map((entry) => entry.url).sort(),
-    pairs.map((pair) => url.tutorialUrl(pair.zh.slug, "zh-CN")).sort());
+  const expectedEntryUrls = pairs.flatMap((pair) => [
+    url.tutorialUrl(pair.zh.slug, "zh-CN"),
+    url.tutorialUrl(pair.en.slug, "en"),
+  ]);
+  assert.deepEqual(entries.map((entry) => entry.url).sort(), expectedEntryUrls.sort());
   console.log(
     `Tutorial manifest integration passed: ${pairs.length} published pair(s), ${zh.routes.length - pairs.length} non-indexable route(s).`,
   );
