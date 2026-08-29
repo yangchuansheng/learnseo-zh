@@ -35,6 +35,7 @@
     "translate:localization:google": "node scripts/translate-learningseo-google.mjs && cp temp/learningseo-translation-cache-google.json temp/learningseo-translation-cache.json && node scripts/translate-learningseo.mjs",
     "inventory:localization": "node scripts/inventory-learningseo-localization.mjs",
     "check:data": "node scripts/check-learningseo-subpages.mjs && node scripts/check-learningseo-localization.mjs",
+    "tutorials:check": "node scripts/check-learningseo-tutorial-pilot.mjs",
     "lint": "eslint",
     "test:smoke": "node scripts/smoke-learningseo.mjs",
     "typecheck": "tsc --noEmit",

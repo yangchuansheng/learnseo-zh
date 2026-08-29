@@ -90,13 +90,17 @@ Import 阶段必须同时接收英文来源 HTML 和简体中文译稿，执行�
 
 ## Acceptance contract
 
-1. Pilot 的两种 locale 都能静态构建和访问，slug、来源 URL、快照版本、章节结构和四张图片一一对应。
-2. 英文正文逐段保留来源正文文本；允许的转换仅包括移除来源外壳、HTML 安全清理、相对链接解析和本地媒体重写，并通过 sourceContentHash 加上段落/标题结构比对证明保真。中文正文通过人工审校清单，章节数、标题锚点、链接、媒体和关键数据与英文一致。
-3. 所有图片使用本地 /sites/.../tutorials/ 路径并存在于 public；表格在窄屏可横向滚动；代码、引用和 allowlisted embed 有可读样式。
-4. HTML 通过危险标签、事件属性、srcdoc、危险协议、远程图片、未授权 iframe、内联样式和路径逃逸检查。
-5. 已发布页面输出双语 canonical/hreflang、可索引 robots、来源署名、原文链接和 isBasedOn；预览状态输出 noindex 并从 sitemap 排除。
-6. 已发布来源 URL 在现有 roadmap 页面渲染为唯一站内教程路径；draft/stale 来源保持外链。
-7. npm run tutorials:check、npm run check:data、npm run lint、npm run typecheck、npm run build 和 npm run test:smoke 全部通过。
+Issue #14 将完整的 Pilot 通过/失败标准锁定在
+[`tutorial-internalization-acceptance.md`](./tutorial-internalization-acceptance.md)。
+该契约覆盖 source-content coverage、media integrity、translation fidelity、
+accessibility、responsive rendering、security、SEO、internal navigation、
+provenance、build verification、refresh drift 和 rollback，并把每项标准
+绑定到可检查的 manifest、HTML、媒体、运行时或生命周期证据。
+
+可执行门禁为 `npm run tutorials:check`；门禁同时验证 Pilot 的真实内容
+指标与重复链接、刷新漂移、中断提交恢复、回滚四类生命周期场景。发布还需
+通过 `npm run check:data`、`npm run lint`、`npm run typecheck`、
+`npm run build` 和 `npm run test:smoke`。
 
 ## Operations
 
