@@ -271,6 +271,13 @@ export type TutorialHtmlValidation = Readonly<{
   headingIds: readonly string[];
 }>;
 
+const ISO_DATE_TIME_PATTERN = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?Z$";
+const isoDateTimeSchema = {
+  type: "string",
+  format: "date-time",
+  pattern: ISO_DATE_TIME_PATTERN,
+} as const;
+
 export const TUTORIAL_MANIFEST_SCHEMA = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://learningseo.io/schemas/tutorial-manifest.json",
@@ -294,7 +301,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         sourceKey: { type: "string", format: "uri", pattern: "^https://" },
         slug: { type: "string", pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
         sourceUrl: { type: "string", format: "uri", pattern: "^https://" },
-        createdAt: { type: "string", format: "date-time" },
+        createdAt: isoDateTimeSchema,
         reason: { type: "string", minLength: 1 },
       },
       additionalProperties: false,
@@ -384,8 +391,8 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
       required: ["version", "capturedAt", "pageCanonicalUrl", "canonicalMatched", "requestedUrl", "finalUrl", "sourceContentHash", "contentHash", "history"],
       properties: {
         version: { type: "integer", minimum: 1 },
-        capturedAt: { type: "string", format: "date-time" },
-        sourceUpdatedAt: { type: "string", format: "date-time" },
+        capturedAt: isoDateTimeSchema,
+        sourceUpdatedAt: isoDateTimeSchema,
         pageCanonicalUrl: { type: "string", format: "uri", pattern: "^https://" },
         canonicalMatched: { type: "boolean" },
         requestedUrl: { type: "string", format: "uri", pattern: "^https://" },
@@ -413,9 +420,9 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         canonicalMatched: { type: "boolean" },
         requestedUrl: { type: "string", format: "uri", pattern: "^https://" },
         finalUrl: { type: "string", format: "uri", pattern: "^https://" },
-        capturedAt: { type: "string", format: "date-time" },
-        sourceUpdatedAt: { type: "string", format: "date-time" },
-        recordedAt: { type: "string", format: "date-time" },
+        capturedAt: isoDateTimeSchema,
+        sourceUpdatedAt: isoDateTimeSchema,
+        recordedAt: isoDateTimeSchema,
         rollbackOf: { type: "integer", minimum: 1 },
         operationId: { type: "string", minLength: 1 },
       },
@@ -428,8 +435,8 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         sourceLanguage: { const: "en" },
         language: { const: "zh-CN" },
         translator: { type: ["string", "null"] },
-        translatedAt: { type: ["string", "null"], format: "date-time" },
-        reviewedAt: { type: ["string", "null"], format: "date-time" },
+        translatedAt: { ...isoDateTimeSchema, type: ["string", "null"] },
+        reviewedAt: { ...isoDateTimeSchema, type: ["string", "null"] },
         sourceSections: { type: "integer", minimum: 0 },
         translatedSections: { type: "integer", minimum: 0 },
         contentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
@@ -443,7 +450,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
       properties: {
         decision: { enum: ["pending", "approved", "changes-requested"] },
         reviewer: { type: ["string", "null"] },
-        reviewedAt: { type: ["string", "null"], format: "date-time" },
+        reviewedAt: { ...isoDateTimeSchema, type: ["string", "null"] },
         notes: { type: "string", minLength: 1 },
         checklist: { "$ref": "#/$defs/reviewChecklist" },
         history: { type: "array", items: { "$ref": "#/$defs/reviewHistory" } },
@@ -456,7 +463,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
       properties: {
         decision: { enum: ["pending", "approved", "changes-requested"] },
         reviewer: { type: ["string", "null"] },
-        reviewedAt: { type: ["string", "null"], format: "date-time" },
+        reviewedAt: { ...isoDateTimeSchema, type: ["string", "null"] },
         notes: { type: "string", minLength: 1 },
         version: { type: "integer", minimum: 1 },
         operationId: { type: "string", minLength: 1 },
@@ -477,7 +484,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
       properties: {
         decision: { enum: ["pending", "qualified", "rejected"] },
         reviewer: { type: ["string", "null"] },
-        reviewedAt: { type: ["string", "null"], format: "date-time" },
+        reviewedAt: { ...isoDateTimeSchema, type: ["string", "null"] },
         checklist: { "$ref": "#/$defs/qualificationChecklist" },
       },
       additionalProperties: false,
@@ -559,7 +566,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         title: { type: "string", minLength: 1 },
         description: { type: "string", minLength: 1 },
         indexable: { type: "boolean" },
-        dateModified: { type: "string", format: "date-time" },
+        dateModified: isoDateTimeSchema,
       },
       additionalProperties: false,
     },
@@ -1424,7 +1431,7 @@ export function parseTutorialManifest(
     aliasOwners.add(alias.sourceKey);
     const target = routesBySlug.get(alias.slug);
     if (!target) throw new Error(`Tutorial alias target is missing: ${alias.slug}`);
-    if (!isPublishedTutorialRoute(target)) throw new Error(`Tutorial alias target must be a published route: ${alias.slug}`);
+    if (target.redirectTo !== undefined) throw new Error(`Tutorial alias target must be a non-redirect route: ${alias.slug}`);
     if (sourceOwners.has(alias.sourceKey)) {
       throw new Error(`Tutorial alias source key is already owned: ${alias.sourceKey}`);
     }

@@ -491,10 +491,20 @@ assert.throws(
   /slug must match sourceKey owner/,
 );
 
-const previewRoute = record("zh-CN", {
-  status: "draft",
-  seo: { ...record("zh-CN").seo, indexable: false },
-});
+function previewRecord(status) {
+  return record("zh-CN", {
+    status,
+    seo: { ...record("zh-CN").seo, indexable: false },
+  });
+}
+
+for (const status of ["draft", "review", "stale"]) {
+  model.parseTutorialManifest(manifest("zh-CN", [previewRecord(status)], {
+    aliases: [{ sourceKey: `https://example.com/${status}-alias`, slug: "semantic-guide" }],
+  }), "zh-CN");
+}
+
+const previewRoute = previewRecord("draft");
 assert.throws(
   () => model.parseTutorialManifest(manifest("zh-CN", [previewRoute], {
     resourceLinkReport: resourceLinkReport([
@@ -504,10 +514,38 @@ assert.throws(
   /published route/,
 );
 assert.throws(
-  () => model.parseTutorialManifest(manifest("zh-CN", [previewRoute], {
-    aliases: [{ sourceKey: "https://example.com/alias", slug: "semantic-guide" }],
+  () => model.parseTutorialManifest(manifest("zh-CN", [previewRecord("review")], {
+    resourceLinkReport: resourceLinkReport([
+      { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
+    ]),
   }), "zh-CN"),
-  /alias target must be a published route/,
+  /published route/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")], {
+    aliases: [{ sourceKey: "https://example.com/missing-alias", slug: "missing-guide" }],
+  }), "zh-CN"),
+  /alias target is missing/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")], {
+    aliases: [{
+      sourceKey: "https://example.com/bad-time-alias",
+      slug: "semantic-guide",
+      createdAt: "2026-08-29T00:00:00.123456Z",
+    }],
+  }), "zh-CN"),
+  /createdAt must be an ISO date-time/,
+);
+assert.throws(
+  () => assertSchemaValid(model.TUTORIAL_MANIFEST_SCHEMA, manifest("zh-CN", [record("zh-CN")], {
+    aliases: [{
+      sourceKey: "https://example.com/bad-schema-time-alias",
+      slug: "semantic-guide",
+      createdAt: "2026-08-29T00:00:00.123456Z",
+    }],
+  }), "tutorial manifest schema"),
+  /pattern mismatch/,
 );
 
 const redirectTargetSource = {
@@ -560,7 +598,7 @@ assert.throws(
   () => model.parseTutorialManifest(manifest("zh-CN", [redirectSource, redirectTarget], {
     aliases: [{ sourceKey: "https://example.com/alias", slug: "legacy" }],
   }), "zh-CN"),
-  /alias target must be a published route/,
+  /alias target must be a non-redirect route/,
 );
 assert.throws(
   () => model.parseTutorialManifest(manifest("zh-CN", [
