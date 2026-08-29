@@ -19,22 +19,50 @@ const jiti = createJiti(import.meta.url, {
   },
   jsx: true,
 });
-const [route, model, seo] = await Promise.all([
+const [route, model, seo, headerModule, navigationMock] = await Promise.all([
   jiti.import(path.join(repositoryRoot, "src/components/tutorials/route.tsx")),
   jiti.import(path.join(repositoryRoot, "src/lib/tutorials/model.ts")),
   jiti.import(path.join(repositoryRoot, "src/lib/tutorials/seo.tsx")),
+  jiti.import(path.join(repositoryRoot, "src/components/sites/learningseo-io-071dae18/root-8a5edab2/HeaderNavigation.tsx")),
+  jiti.import(path.join(repositoryRoot, "scripts/fixtures/next-navigation.mock.mjs")),
 ]);
 
 const hex = (value) => value.repeat(64);
 const sourceCanonical = "https://developers.google.com/search/docs/fundamentals/seo-starter-guide";
 const allTrue = (keys) => Object.fromEntries(keys.map((key) => [key, true]));
 const fixturePath = path.join(repositoryRoot, "src/content/tutorials/fixtures/semantic-fixture.html");
-const html = await fs.readFile(fixturePath, "utf8");
+const contentRoot = path.join(repositoryRoot, "src/content/tutorials/content");
+const englishHtml = await fs.readFile(fixturePath, "utf8");
+const chineseHtml = englishHtml.replace(
+  "Accessible tutorials preserve the source meaning.",
+  "Localized tutorials preserve the source meaning.",
+);
+const htmlByLocale = { "zh-CN": chineseHtml, en: englishHtml };
+const validationByLocale = Object.fromEntries(
+  Object.entries(htmlByLocale).map(([locale, source]) => [
+    locale,
+    model.validateTutorialHtml(source, `renderer fixture ${locale}`, {
+      requireTags: ["pre", "blockquote", "iframe"],
+    }),
+  ]),
+);
+const contentHashByLocale = Object.fromEntries(
+  Object.entries(htmlByLocale).map(([locale, source]) => [locale, model.sha256(source)]),
+);
+const createdFixtureFiles = new Set();
+let contentRootExisted = true;
+
+try {
+  await fs.access(contentRoot);
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+  contentRootExisted = false;
+}
 
 function tutorialRecord(locale, status = "published") {
-  const contentHash = hex("a");
+  const contentHash = contentHashByLocale.en;
   const sourceContentHash = hex("b");
-  const translationContentHash = hex("c");
+  const translationContentHash = contentHashByLocale["zh-CN"];
   const now = "2026-08-29T00:00:00.000Z";
   return {
     slug: "semantic-guide",
@@ -112,24 +140,7 @@ function tutorialRecord(locale, status = "published") {
       width: 640,
       height: 360,
     }],
-    contentMetrics: {
-      h1: 1,
-      h2: 1,
-      h3: 1,
-      p: 3,
-      ul: 1,
-      ol: 1,
-      li: 3,
-      a: 1,
-      table: 1,
-      code: 1,
-      pre: 1,
-      blockquote: 1,
-      img: 1,
-      figure: 1,
-      figcaption: 1,
-      iframe: 1,
-    },
+    contentMetrics: validationByLocale[locale].metrics,
     seo: {
       title: "Semantic Guide",
       description: "A renderer contract fixture.",
@@ -143,69 +154,144 @@ function count(source, pattern) {
   return (source.match(pattern) ?? []).length;
 }
 
+async function ensureContentFile(contentFile, source) {
+  await fs.mkdir(contentRoot, { recursive: true });
+  const target = path.join(contentRoot, contentFile);
+  try {
+    const existing = await fs.readFile(target, "utf8");
+    assert.equal(existing, source, `${contentFile} must contain the renderer fixture content`);
+    return;
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  await fs.writeFile(target, source, "utf8");
+  createdFixtureFiles.add(target);
+}
+
+async function cleanupContentFiles() {
+  for (const target of createdFixtureFiles) {
+    await fs.rm(target, { force: true });
+  }
+  if (!contentRootExisted) {
+    try {
+      await fs.rmdir(contentRoot);
+    } catch (error) {
+      if (!["ENOENT", "ENOTEMPTY"].includes(error.code)) throw error;
+    }
+  }
+}
+
 async function render(locale, status = "published") {
   const record = tutorialRecord(locale, status);
-  const preparedHtml = route.prepareTutorialHtmlForRender(html);
   const element = await route.renderTutorialRecord(locale, record, {
-    contentLoader: async () => preparedHtml,
     redirectResolver: async () => null,
   });
   return { markup: renderToStaticMarkup(element), record };
 }
 
-const validation = model.validateTutorialHtml(html, "renderer fixture", {
-  requireTags: ["pre", "blockquote", "iframe"],
-});
-assert.deepEqual(validation.headingIds, [
-  "semantic-fixture",
-  "block-code",
-  "supported-embed",
-  "nested-section",
-  "deep-topic",
-  "fine-detail",
-  "source-note",
-]);
-const preparedHtml = route.prepareTutorialHtmlForRender(html);
-assert.match(preparedHtml, /data-tutorial-table/);
-assert.doesNotMatch(preparedHtml, /<h1\b/i);
-
-for (const locale of ["zh-CN", "en"]) {
-  const { markup, record } = await render(locale);
-  assert.equal(count(markup, /<h1\b/g), 1, `${locale} must render one page h1`);
-  assert.match(markup, new RegExp(`data-tutorial-slug="${record.slug}"`));
-  assert.match(markup, new RegExp(`data-tutorial-status="${record.status}"`));
-  assert.match(markup, /href="#semantic-fixture"/);
-  assert.match(markup, /href="#block-code"/);
-  assert.match(markup, /href="#fine-detail"/);
-  assert.match(markup, /class="tutorial-table-wrapper"/);
-  assert.match(markup, /overflow-x-auto/);
-  assert.match(markup, /w-\[calc\(100%-40px\)\]/);
-  assert.match(markup, /max-w-\[1224px\]/);
-  assert.match(markup, /min-w-0/);
-  assert.match(markup, /_h5/);
-  assert.match(markup, /_h6/);
-  assert.match(markup, /_img\]:max-w-full/);
-  assert.match(markup, /_iframe\]:w-full/);
-  assert.match(markup, /src="\/sites\/learningseo-io-071dae18\/tutorials\/semantic-diagram.png"/);
-  assert.match(markup, /alt="Semantic tutorial diagram"/);
-  assert.match(markup, /www.youtube-nocookie.com\/embed\/dQw4w9WgXcQ/);
-  assert.match(markup, /title="YouTube privacy-enhanced example"/);
-  assert.match(markup, new RegExp(`href="${sourceCanonical}"`));
-  assert.match(markup, /\/seo_roadmap\/seo-fundamentals\//);
-  assert.match(markup, /CC BY 4.0/);
-  assert.match(markup, /application\/ld\+json/);
-  assert.match(markup, /isBasedOn/);
-  assert.match(
-    markup,
-    new RegExp(`href="${locale === "en" ? "/tutorials/semantic-guide/" : "/en/tutorials/semantic-guide/"}"`),
+function renderHeader(pathname, locale) {
+  navigationMock.setMockPathname(pathname);
+  return renderToStaticMarkup(
+    React.createElement(headerModule.HeaderNavigation, {
+      header: { menuTitle: "Menu", navigation: [], social: [] },
+      locale,
+    }),
   );
 }
 
-const previewMetadata = seo.createTutorialMetadata(tutorialRecord("zh-CN", "draft"), "zh-CN", {
-  indexable: false,
-  includeAlternates: false,
-});
-assert.equal(previewMetadata.robots.index, false);
-assert.equal(previewMetadata.robots.follow, false);
+try {
+  await Promise.all(
+    Object.entries(htmlByLocale).map(([locale, source]) =>
+      ensureContentFile(`${contentHashByLocale[locale]}.html`, source),
+    ),
+  );
 
-console.log("Tutorial renderer contract passed: locales, semantics, TOC, media, tables, attribution, and preview metadata.");
+  assert.deepEqual(validationByLocale.en.headingIds, [
+    "semantic-fixture",
+    "block-code",
+    "supported-embed",
+    "nested-section",
+    "deep-topic",
+    "fine-detail",
+    "source-note",
+  ]);
+  assert.deepEqual(validationByLocale["zh-CN"].metrics, validationByLocale.en.metrics);
+  const preparedHtml = route.prepareTutorialHtmlForRender(englishHtml);
+  assert.match(preparedHtml, /data-tutorial-table/);
+  assert.doesNotMatch(preparedHtml, /<h1\b/i);
+
+  for (const locale of ["zh-CN", "en"]) {
+    const { markup, record } = await render(locale);
+    assert.deepEqual(record.contentMetrics, validationByLocale[locale].metrics);
+    assert.equal(count(markup, /<h1\b/g), 1, `${locale} must render one page h1`);
+    assert.match(markup, new RegExp(`data-tutorial-slug="${record.slug}"`));
+    assert.match(markup, new RegExp(`data-tutorial-status="${record.status}"`));
+    assert.match(markup, new RegExp(locale === "en" ? "Accessible tutorials preserve" : "Localized tutorials preserve"));
+    assert.match(markup, /href="#semantic-fixture"/);
+    assert.match(markup, /href="#block-code"/);
+    assert.match(markup, /href="#fine-detail"/);
+    assert.match(markup, /class="tutorial-table-wrapper"/);
+    assert.match(markup, /overflow-x-auto/);
+    assert.match(markup, /min-w-0/);
+    assert.match(markup, /_pre\]:overflow-x-auto/);
+    assert.match(markup, /_h5/);
+    assert.match(markup, /_h6/);
+    assert.match(markup, /_img\]:max-w-full/);
+    assert.match(markup, /_iframe\]:aspect-video/);
+    assert.match(markup, /_iframe\]:w-full/);
+    assert.match(markup, /src="\/sites\/learningseo-io-071dae18\/tutorials\/semantic-diagram.png"/);
+    assert.match(markup, /alt="Semantic tutorial diagram"/);
+    assert.match(markup, /www.youtube-nocookie.com\/embed\/dQw4w9WgXcQ/);
+    assert.match(markup, /title="YouTube privacy-enhanced example"/);
+    assert.match(markup, new RegExp(`href="${sourceCanonical}"`));
+    assert.match(markup, /\/seo_roadmap\/seo-fundamentals\//);
+    assert.match(markup, /CC BY 4.0/);
+    assert.match(markup, /application\/ld\+json/);
+    assert.match(markup, /isBasedOn/);
+    assert.match(
+      markup,
+      new RegExp(`href="${locale === "en" ? "/tutorials/semantic-guide/" : "/en/tutorials/semantic-guide/"}"`),
+    );
+  }
+
+  assert.match(renderHeader("/tutorials/semantic-guide/", "zh-CN"), /href="\/en\/tutorials\/semantic-guide\/"/);
+  assert.match(renderHeader("/en/tutorials/semantic-guide/", "en"), /href="\/tutorials\/semantic-guide\/"/);
+  assert.match(renderHeader("/privacy-policy-terms-of-use/", "zh-CN"), /href="\/en\/privacy-policy-terms-of-use\/"/);
+
+  const mismatchHash = hex("e");
+  const englishRecord = tutorialRecord("en");
+  await ensureContentFile(`${mismatchHash}.html`, englishHtml);
+  await assert.rejects(
+    () => route.loadTutorialHtml("en", {
+      ...englishRecord,
+      snapshot: { ...englishRecord.snapshot, contentHash: mismatchHash },
+      contentFile: `${mismatchHash}.html`,
+    }),
+    /hash does not match expected SHA-256/,
+  );
+  await assert.rejects(
+    () => route.loadTutorialHtml("en", {
+      ...englishRecord,
+      toc: [...englishRecord.toc, { id: "missing-anchor", title: "Missing anchor", level: 2 }],
+    }),
+    /TOC anchor is missing from HTML/,
+  );
+  await assert.rejects(
+    () => route.loadTutorialHtml("en", {
+      ...englishRecord,
+      toc: [{ id: "1-unsafe", title: "Unsafe anchor", level: 1 }],
+    }),
+    /TOC anchor is unsafe/,
+  );
+
+  const previewMetadata = seo.createTutorialMetadata(tutorialRecord("zh-CN", "draft"), "zh-CN", {
+    indexable: false,
+    includeAlternates: false,
+  });
+  assert.equal(previewMetadata.robots.index, false);
+  assert.equal(previewMetadata.robots.follow, false);
+
+  console.log("Tutorial renderer contract passed: locale files, hashes, TOC, media, tables, attribution, header language links, and preview metadata.");
+} finally {
+  await cleanupContentFiles();
+}

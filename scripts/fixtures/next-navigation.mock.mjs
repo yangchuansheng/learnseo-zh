@@ -10,6 +10,12 @@ export function permanentRedirect(target) {
   throw error;
 }
 
+let mockPathname = "/tutorials/semantic-guide/";
+
+export function setMockPathname(pathname) {
+  mockPathname = pathname;
+}
+
 export function usePathname() {
-  return "/tutorials/semantic-guide/";
+  return mockPathname;
 }

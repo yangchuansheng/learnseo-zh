@@ -22,12 +22,17 @@ export function localizedPath(pathname: string, locale: Locale): string {
   return normalized;
 }
 
+function isTutorialRoute(pathname: string): boolean {
+  return /^\/(?:en\/)?tutorials\/[a-z0-9]+(?:-[a-z0-9]+)*\/?$/.test(pathname);
+}
+
 export function resolveLocalizedPath(
   pathname: string,
   targetLocale: Locale,
   availablePaths?: ReadonlySet<string>,
 ): string {
   const candidate = localizedPath(pathname, targetLocale);
+  if (isTutorialRoute(candidate)) return candidate;
   if (!availablePaths || availablePaths.has(candidate)) return candidate;
   return localizedPath(pathname, DEFAULT_LOCALE);
 }
