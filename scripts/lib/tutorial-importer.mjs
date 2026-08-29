@@ -10,6 +10,7 @@ import { createJiti } from "jiti";
 import { normalizeSourceKey } from "../../src/lib/tutorials/source-key.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const fixtureMediaRoot = path.join(repositoryRoot, "scripts/fixtures/tutorial-importer/media");
 const jiti = createJiti(import.meta.url, {
   alias: { "@": path.join(repositoryRoot, "src") },
 });
@@ -22,6 +23,7 @@ export const importerDefaults = Object.freeze({
 });
 
 const snapshotKind = "learningseo-tutorial-snapshot";
+const operationIdPattern = /^tutorial-import-[a-z0-9-]+$/;
 const maxRedirects = 5;
 const htmlSizeLimit = 4 * 1024 * 1024;
 const mediaSizeLimit = 8 * 1024 * 1024;
@@ -112,10 +114,11 @@ const extensionContentType = new Map([
 ]);
 
 export class TutorialImportError extends Error {
-  constructor(code, message) {
+  constructor(code, message, operationId = null) {
     super(message);
     this.name = "TutorialImportError";
     this.code = code;
+    this.operationId = operationId;
   }
 }
 
@@ -143,11 +146,14 @@ export function sha256(value) {
 
 export function logFailure(error) {
   const code = error instanceof TutorialImportError ? error.code : "unavailable";
-  console.error(`[tutorial-importer] ${code}: ${error.message}`);
+  const operation = error instanceof TutorialImportError && error.operationId
+    ? ` operation=${error.operationId}`
+    : "";
+  console.error(`[tutorial-importer] ${code}${operation}: ${error.message}`);
 }
 
-function fail(code, message) {
-  throw new TutorialImportError(code, message);
+function fail(code, message, operationId = null) {
+  throw new TutorialImportError(code, message, operationId);
 }
 
 function requireOption(args, key) {
@@ -156,22 +162,33 @@ function requireOption(args, key) {
   return value.trim();
 }
 
+function assertOperationId(value) {
+  if (typeof value !== "string" || !operationIdPattern.test(value)) {
+    fail("usage", `Invalid operation id: ${value}`);
+  }
+  return value;
+}
+
 export function validateCollectOptions(args) {
+  if (args.fixture !== undefined) fail("usage", "--fixture is available through the programmatic fixture harness");
   return {
     url: requireOption(args, "url"),
     slug: requireOption(args, "slug"),
     sourcePath: requireOption(args, "source-path"),
     output: requireOption(args, "output"),
-    fixture: typeof args.fixture === "string" ? args.fixture : null,
+    fixture: null,
   };
 }
 
 export function validateImportOptions(args) {
+  if (args["content-root"] !== undefined || args["public-root"] !== undefined) {
+    fail("usage", "--content-root and --public-root are available through the programmatic fixture harness");
+  }
   return {
     input: requireOption(args, "input"),
     translation: requireOption(args, "translation"),
-    contentRoot: typeof args["content-root"] === "string" ? args["content-root"] : importerDefaults.contentRoot,
-    publicRoot: typeof args["public-root"] === "string" ? args["public-root"] : importerDefaults.publicRoot,
+    contentRoot: importerDefaults.contentRoot,
+    publicRoot: importerDefaults.publicRoot,
   };
 }
 
@@ -204,19 +221,31 @@ function isPrivateIpv4(value) {
   const parts = value.split(".").map(Number);
   return parts[0] === 10 ||
     parts[0] === 127 ||
+    (parts[0] === 100 && parts[1] >= 64 && parts[1] <= 127) ||
     (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) ||
     (parts[0] === 169 && parts[1] === 254) ||
+    (parts[0] === 192 && parts[1] === 0 && parts[2] === 0) ||
+    (parts[0] === 192 && parts[1] === 0 && parts[2] === 2) ||
     (parts[0] === 192 && parts[1] === 168) ||
+    (parts[0] === 198 && (parts[1] === 18 || parts[1] === 19)) ||
+    (parts[0] === 198 && parts[1] === 51 && parts[2] === 100) ||
+    (parts[0] === 203 && parts[1] === 0 && parts[2] === 113) ||
     parts[0] === 0 ||
-    parts[0] >= 224;
+    parts[0] >= 224 ||
+    value === "255.255.255.255";
 }
 
 function isPrivateIpv6(value) {
   const lower = value.toLowerCase();
+  const mappedIpv4 = lower.match(/::ffff:(\d+\.\d+\.\d+\.\d+)$/)?.[1];
+  if (mappedIpv4) return isPrivateIpv4(mappedIpv4);
   return lower === "::1" ||
+    lower === "::" ||
     lower.startsWith("fc") ||
     lower.startsWith("fd") ||
-    lower.startsWith("fe80:");
+    lower.startsWith("fe80:") ||
+    lower.startsWith("ff") ||
+    lower.startsWith("2001:db8:");
 }
 
 async function assertResolvedPublicHost(hostname) {
@@ -224,6 +253,35 @@ async function assertResolvedPublicHost(hostname) {
   if (!records.length) fail("unavailable", `Source host has no DNS records: ${hostname}`);
   for (const { address } of records) {
     if (!isPublicHostname(address)) fail("unavailable", `Source DNS resolves to a private address: ${address}`);
+  }
+}
+
+function assertSamePolicyHost(initialUrl, nextUrl) {
+  if (new URL(initialUrl).hostname.toLowerCase() !== new URL(nextUrl).hostname.toLowerCase()) {
+    fail("canonical-mismatch", `Cross-host redirect is outside source policy: ${initialUrl} -> ${nextUrl}`);
+  }
+}
+
+async function responseBytes(response, limit, label, code = "unavailable") {
+  const reader = response.body?.getReader();
+  if (!reader) fail(code, `${label} response body is unavailable`);
+  const chunks = [];
+  let size = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > limit) fail(code, `${label} exceeds importer size limit`);
+    chunks.push(Buffer.from(value));
+  }
+  return Buffer.concat(chunks, size);
+}
+
+function decodeUtf8Strict(bytes, label, code) {
+  try {
+    return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+  } catch {
+    fail(code, `${label} must be valid UTF-8`);
   }
 }
 
@@ -266,7 +324,7 @@ function canonicalFromHtml(html, fallbackUrl) {
       return new URL(attrs.get("href") ?? "", fallbackUrl).toString();
     }
   }
-  return fallbackUrl;
+  return null;
 }
 
 function titleFromHtml(html, articleHtml) {
@@ -421,9 +479,18 @@ function mediaEntriesFromHtml(articleHtml, baseUrl, fixtureFile) {
       alt: attrs.get("alt") ?? "",
       ...(positiveAttr(attrs.get("width")) ? { width: positiveAttr(attrs.get("width")) } : {}),
       ...(positiveAttr(attrs.get("height")) ? { height: positiveAttr(attrs.get("height")) } : {}),
-      ...(fixtureBase && fixtureRelative ? { fixtureFile: path.resolve(fixtureBase, fixtureRelative) } : {}),
+      ...(fixtureBase && fixtureRelative ? { fixtureFile: safeFixturePath(fixtureBase, fixtureRelative) } : {}),
     };
   });
+}
+
+function safeFixturePath(fixtureBase, relativePath) {
+  const target = path.resolve(fixtureBase, relativePath);
+  const relative = path.relative(fixtureBase, target);
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) {
+    fail("unsupported-media", `Fixture media path escapes its fixture root: ${relativePath}`);
+  }
+  return target;
 }
 
 function positiveAttr(value) {
@@ -456,6 +523,7 @@ async function fetchSourceHtml(initialUrl) {
       if (!location) fail("unavailable", `Redirect missing Location header at ${current}`);
       const next = new URL(location, current).toString();
       assertPublicHttps(next);
+      assertSamePolicyHost(initialUrl, next);
       await assertResolvedPublicHost(new URL(next).hostname);
       redirects.push({ from: current, to: next, status });
       current = next;
@@ -465,10 +533,9 @@ async function fetchSourceHtml(initialUrl) {
     if (status < 200 || status >= 300) fail("unavailable", `Source returned HTTP ${status}`);
     const contentType = (response.headers.get("content-type") ?? "").toLowerCase();
     if (!contentType.startsWith("text/html")) fail("non-html", `Source content type is ${contentType || "unknown"}`);
-    const body = await response.arrayBuffer();
-    if (body.byteLength > htmlSizeLimit) fail("unavailable", "Source HTML exceeds importer size limit");
+    const body = await responseBytes(response, htmlSizeLimit, "Source HTML");
     return {
-      html: new TextDecoder("utf-8", { fatal: false }).decode(body),
+      html: decodeUtf8Strict(body, "Source HTML", "non-html"),
       finalUrl: current,
       contentType,
       status,
@@ -479,7 +546,7 @@ async function fetchSourceHtml(initialUrl) {
 }
 
 async function fixtureSourceHtml(fixture, requestedUrl, options = {}) {
-  const html = await fs.readFile(fixture, "utf8");
+  const html = decodeUtf8Strict(await fs.readFile(fixture), "Fixture HTML", "non-html");
   return {
     html,
     finalUrl: requestedUrl,
@@ -501,6 +568,7 @@ export async function collectTutorialSnapshot(options) {
   if (!source.contentType.toLowerCase().startsWith("text/html")) fail("non-html", `Source content type is ${source.contentType || "unknown"}`);
   if (detectBotChallenge(source.html, source.finalUrl)) fail("bot-challenge", "Source returned a bot challenge page");
   const canonicalUrl = canonicalFromHtml(source.html, source.finalUrl);
+  if (!canonicalUrl) fail("canonical-mismatch", "Source canonical link is missing");
   if (normalizeSourceKey(canonicalUrl) !== normalizeSourceKey(options.url)) {
     fail("canonical-mismatch", `Canonical ${canonicalUrl} does not match requested URL ${options.url}`);
   }
@@ -564,8 +632,9 @@ export async function writeJsonFile(filePath, value) {
 
 async function readJsonFile(filePath) {
   try {
-    return JSON.parse(await fs.readFile(filePath, "utf8"));
+    return JSON.parse(decodeUtf8Strict(await fs.readFile(filePath), `JSON ${filePath}`, "usage"));
   } catch (error) {
+    if (error instanceof TutorialImportError) throw error;
     fail("usage", `Unable to read JSON ${filePath}: ${error.message}`);
   }
 }
@@ -607,14 +676,22 @@ async function readSnapshot(filePath) {
   if (snapshot?.kind !== snapshotKind || snapshot.schemaVersion !== 1) {
     fail("snapshot-invalid", "Input is not a tutorial collector snapshot");
   }
+  if (typeof snapshot.html !== "string" || typeof snapshot.sourceContentHash !== "string") {
+    fail("snapshot-invalid", "Snapshot is missing source HTML provenance fields");
+  }
+  if (sha256(snapshot.html) !== snapshot.sourceContentHash) {
+    fail("snapshot-invalid", "Snapshot sourceContentHash does not match snapshot.html");
+  }
+  if (!Array.isArray(snapshot.media)) fail("snapshot-invalid", "Snapshot media must be an array");
   return snapshot;
 }
 
 async function readTranslation(filePath) {
   let source;
   try {
-    source = await fs.readFile(filePath, "utf8");
+    source = decodeUtf8Strict(await fs.readFile(filePath), "Translation file", "translation-missing");
   } catch (error) {
+    if (error instanceof TutorialImportError) throw error;
     if (error.code === "ENOENT") fail("translation-missing", `Translation file is missing: ${filePath}`);
     fail("translation-missing", `Unable to read translation file: ${error.message}`);
   }
@@ -622,26 +699,75 @@ async function readTranslation(filePath) {
   return source;
 }
 
-async function mediaBytes(entry) {
+function assertFixtureMediaAllowed(filePath) {
+  const target = path.resolve(filePath);
+  const relative = path.relative(fixtureMediaRoot, target);
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) {
+    fail("unsupported-media", `Fixture media path is outside the controlled fixture root: ${filePath}`);
+  }
+}
+
+function assertSafeSvg(bytes, label) {
+  const source = decodeUtf8Strict(bytes, `${label} SVG`, "unsupported-media");
+  if (
+    /<(?:script|foreignObject|iframe|object|embed|audio|video|canvas|style|link|meta)\b/i.test(source) ||
+    /\s(?:on[a-z-]+|href|xlink:href)\s*=/i.test(source) ||
+    /(?:javascript|vbscript|data:text\/html):/i.test(source)
+  ) {
+    fail("unsupported-media", `${label} SVG contains active content`);
+  }
+}
+
+async function fetchMediaBytes(sourceUrl) {
+  let current = assertPublicHttps(sourceUrl).toString();
+  const seen = new Set();
+  await assertResolvedPublicHost(new URL(current).hostname);
+
+  for (let redirectCount = 0; redirectCount <= maxRedirects; redirectCount += 1) {
+    if (seen.has(current)) fail("redirect-loop", `Media redirect loop detected at ${current}`);
+    seen.add(current);
+    let response;
+    try {
+      response = await fetch(current, {
+        redirect: "manual",
+        headers: { "user-agent": "learnseo-tutorial-importer/1.0" },
+      });
+    } catch (error) {
+      fail("media-download", `Unable to download media ${current}: ${error.message}`);
+    }
+    const status = response.status;
+    if ([301, 302, 303, 307, 308].includes(status)) {
+      const location = response.headers.get("location");
+      if (!location) fail("media-download", `Media redirect missing Location header at ${current}`);
+      const next = new URL(location, current).toString();
+      assertPublicHttps(next);
+      await assertResolvedPublicHost(new URL(next).hostname);
+      current = next;
+      continue;
+    }
+    if (!response.ok) fail("media-download", `Media returned HTTP ${response.status}: ${current}`);
+    const contentType = (response.headers.get("content-type") ?? "").split(";", 1)[0].toLowerCase();
+    if (!imageContentTypes.has(contentType)) fail("unsupported-media", `Unsupported media type ${contentType || "unknown"}: ${current}`);
+    const bytes = await responseBytes(response, mediaSizeLimit, `Media ${current}`, "unsupported-media");
+    if (contentType === "image/svg+xml") assertSafeSvg(bytes, `Media ${current}`);
+    return { bytes, contentType };
+  }
+  fail("redirect-loop", `Media redirect limit exceeded after ${maxRedirects} hops`);
+}
+
+async function mediaBytes(entry, options = {}) {
   if (entry.fixtureFile) {
+    if (!options.allowFixtureMedia) {
+      fail("unsupported-media", `Snapshot fixture media is not allowed during import: ${entry.sourceUrl}`);
+    }
+    assertFixtureMediaAllowed(entry.fixtureFile);
     const bytes = await fs.readFile(entry.fixtureFile);
-    return { bytes, contentType: contentTypeFromPath(entry.fixtureFile) };
+    const contentType = contentTypeFromPath(entry.fixtureFile);
+    if (bytes.byteLength > mediaSizeLimit) fail("unsupported-media", `Media exceeds importer size limit: ${entry.sourceUrl}`);
+    if (contentType === "image/svg+xml") assertSafeSvg(bytes, `Fixture media ${entry.fixtureFile}`);
+    return { bytes, contentType };
   }
-  let response;
-  try {
-    response = await fetch(entry.sourceUrl, {
-      redirect: "follow",
-      headers: { "user-agent": "learnseo-tutorial-importer/1.0" },
-    });
-  } catch (error) {
-    fail("unsupported-media", `Unable to download media ${entry.sourceUrl}: ${error.message}`);
-  }
-  if (!response.ok) fail("unsupported-media", `Media returned HTTP ${response.status}: ${entry.sourceUrl}`);
-  const contentType = (response.headers.get("content-type") ?? "").split(";", 1)[0].toLowerCase();
-  if (!imageContentTypes.has(contentType)) fail("unsupported-media", `Unsupported media type ${contentType || "unknown"}: ${entry.sourceUrl}`);
-  const buffer = Buffer.from(await response.arrayBuffer());
-  if (buffer.byteLength > mediaSizeLimit) fail("unsupported-media", `Media exceeds importer size limit: ${entry.sourceUrl}`);
-  return { bytes: buffer, contentType };
+  return fetchMediaBytes(entry.sourceUrl);
 }
 
 function contentTypeFromPath(filePath) {
@@ -651,11 +777,11 @@ function contentTypeFromPath(filePath) {
   return contentType;
 }
 
-async function localizeMedia(snapshot, publicRoot) {
+async function localizeMedia(snapshot, publicRoot, options = {}) {
   const entries = [];
   const map = new Map();
   for (const media of snapshot.media ?? []) {
-    const { bytes, contentType } = await mediaBytes(media);
+    const { bytes, contentType } = await mediaBytes(media, options);
     if (!imageContentTypes.has(contentType)) fail("unsupported-media", `Unsupported media type ${contentType}: ${media.sourceUrl}`);
     const hash = sha256(bytes);
     const extension = extensionByContentType.get(contentType) ?? (path.extname(new URL(media.sourceUrl).pathname) || ".bin");
@@ -783,6 +909,10 @@ function attributeValues(html, tag, attribute) {
   );
 }
 
+function numericFacts(html) {
+  return [...visibleText(html).matchAll(/\d[\d,]*(?:\.\d+)?%?/g)].map((match) => match[0]);
+}
+
 function assertTranslationHandoff(englishHtml, chineseHtml, enValidation, zhValidation) {
   if (!/[\u3400-\u9fff]/.test(visibleText(chineseHtml))) {
     fail("translation-missing", "Chinese translation does not contain Simplified Chinese text");
@@ -796,6 +926,9 @@ function assertTranslationHandoff(englishHtml, chineseHtml, enValidation, zhVali
   if (JSON.stringify(enValidation.headingEntries) !== JSON.stringify(zhValidation.headingEntries)) {
     fail("extraction-failure", "Chinese translation heading ids/order do not match English");
   }
+  if (JSON.stringify(numericFacts(englishHtml)) !== JSON.stringify(numericFacts(chineseHtml))) {
+    fail("extraction-failure", "Chinese translation numeric facts do not match English");
+  }
   for (const [tag, attr] of [["a", "href"], ["img", "src"], ["iframe", "src"]]) {
     if (JSON.stringify(attributeValues(englishHtml, tag, attr)) !== JSON.stringify(attributeValues(chineseHtml, tag, attr))) {
       fail("extraction-failure", `Chinese translation ${tag}.${attr} order does not match English`);
@@ -803,8 +936,96 @@ function assertTranslationHandoff(englishHtml, chineseHtml, enValidation, zhVali
   }
 }
 
+function refreshHistoryEntry(snapshot, hashes, operationId, version) {
+  return {
+    version,
+    canonicalUrl: snapshot.canonicalUrl,
+    sourceContentHash: snapshot.sourceContentHash,
+    contentHash: hashes.english,
+    translationContentHash: hashes.chinese,
+    contentFile: `${hashes.english}.html`,
+    translationContentFile: `${hashes.chinese}.html`,
+    pageCanonicalUrl: snapshot.canonicalUrl,
+    canonicalMatched: true,
+    requestedUrl: snapshot.requestedUrl,
+    finalUrl: snapshot.finalUrl,
+    capturedAt: snapshot.capturedAt,
+    ...(snapshot.sourceUpdatedAt ? { sourceUpdatedAt: snapshot.sourceUpdatedAt } : {}),
+    recordedAt: new Date().toISOString(),
+    operationId,
+  };
+}
+
+function refreshCandidateFromSnapshot(snapshot, locale, hashes, validation, media, operationId, version) {
+  const localizedTitle = firstTagText(validation.zhHtml, "h1");
+  const localizedDescription = firstTagText(validation.zhHtml, "p");
+  const title = locale === "en" ? snapshot.title : localizedTitle;
+  const description = locale === "en" ? snapshot.description : localizedDescription;
+  return {
+    status: "draft",
+    version,
+    operationId,
+    createdAt: new Date().toISOString(),
+    title,
+    description,
+    sourceContentHash: snapshot.sourceContentHash,
+    contentHash: hashes.english,
+    translationContentHash: hashes.chinese,
+    contentFile: locale === "en" ? `${hashes.english}.html` : `${hashes.chinese}.html`,
+    translationContentFile: `${hashes.chinese}.html`,
+    toc: validation.en.headingEntries.map(({ id, level }) => ({
+      id,
+      level,
+      title: headingTitleById(locale === "en" ? validation.enHtml : validation.zhHtml, id),
+    })),
+    media,
+    contentMetrics: validation.en.metrics,
+    seo: {
+      title,
+      description,
+      indexable: false,
+      ...(snapshot.sourceUpdatedAt ? { dateModified: snapshot.sourceUpdatedAt } : {}),
+    },
+  };
+}
+
+function routeWithPublishedRefreshCandidate(existing, snapshot, locale, hashes, validation, media, operationId) {
+  const candidateVersion = Math.max(
+    existing.snapshot.version,
+    existing.refreshCandidate?.version ?? existing.snapshot.version,
+  ) + 1;
+  return {
+    ...existing,
+    refreshCandidate: refreshCandidateFromSnapshot(snapshot, locale, hashes, validation, media, operationId, candidateVersion),
+    snapshot: {
+      ...existing.snapshot,
+      history: [
+        ...existing.snapshot.history,
+        refreshHistoryEntry(snapshot, hashes, operationId, candidateVersion),
+      ],
+    },
+    review: {
+      ...existing.review,
+      history: [
+        ...existing.review.history,
+        {
+          decision: "pending",
+          reviewer: null,
+          reviewedAt: null,
+          notes: "Refresh candidate imported; review required before publication.",
+          version: candidateVersion,
+          operationId,
+        },
+      ],
+    },
+  };
+}
+
 function routeFromSnapshot(snapshot, locale, hashes, validation, media, manifests, operationId) {
   const existing = manifests[locale].routes.find((route) => route.slug === snapshot.slug);
+  if (existing?.status === "published") {
+    return routeWithPublishedRefreshCandidate(existing, snapshot, locale, hashes, validation, media, operationId);
+  }
   const version = existing ? existing.snapshot.version + 1 : 1;
   const activeVersion = existing?.activeVersion ?? version;
   const history = existing ? [
@@ -952,7 +1173,7 @@ async function stageFile(stagingRoot, relative, value, encoding) {
   const target = path.join(stagingRoot, relative);
   await fs.mkdir(path.dirname(target), { recursive: true });
   await fs.writeFile(target, value, encoding);
-  return { relative, target };
+  return { relative, target, sha256: sha256(value) };
 }
 
 async function stageText(stagingRoot, relative, value) {
@@ -964,6 +1185,7 @@ async function stageBytes(stagingRoot, relative, value) {
 }
 
 async function renameStagedFile(file, roots) {
+  assertSafeStagedRelative(file.relative);
   const root = file.relative.startsWith("public/") ? roots.publicRoot : roots.contentRoot;
   const relative = file.relative.startsWith("public/")
     ? file.relative.slice("public/".length)
@@ -974,25 +1196,48 @@ async function renameStagedFile(file, roots) {
   return target;
 }
 
-async function replaceManifestsAtomic(manifestFiles, roots, operationId) {
+function assertSafeStagedRelative(relative) {
+  if (typeof relative !== "string" || path.isAbsolute(relative) || relative.includes("\\") || relative.includes("\0")) {
+    throw new Error(`Unsafe staged file path: ${relative}`);
+  }
+  const parts = relative.split("/");
+  if (parts.some((part) => !part || part === "." || part === "..")) {
+    throw new Error(`Unsafe staged file path: ${relative}`);
+  }
+  if (["manifest.json", "manifest.en.json", "import-generation.json", "journal.json"].includes(relative)) return;
+  if (/^content\/[a-f0-9]{64}\.html$/.test(relative)) return;
+  const mediaPrefix = `public${importerDefaults.mediaPathPrefix}`;
+  if (relative.startsWith(mediaPrefix) && !relative.slice(mediaPrefix.length).includes("..")) return;
+  throw new Error(`Unsafe staged file path: ${relative}`);
+}
+
+async function replaceManifestsAtomic(manifestFiles, roots, operationId, updatePhase, hooks = {}) {
   const backups = [];
+  const replaced = [];
   try {
     for (const file of manifestFiles) {
       const target = path.join(roots.contentRoot, file.relative);
       const backup = `${target}.backup-${operationId}`;
+      if (hooks.failBeforeManifestRelative === file.relative) {
+        throw new Error(`Injected commit failure before manifest replace for ${file.relative}`);
+      }
+      await updatePhase("manifest-backup", file.relative);
       try {
         await fs.rename(target, backup);
         backups.push({ target, backup });
       } catch (error) {
         if (error.code !== "ENOENT") throw error;
       }
+      if (hooks.failAfterBackupRelative === file.relative) {
+        throw new Error(`Injected commit failure after backup for ${file.relative}`);
+      }
+      await updatePhase("manifest-replace", file.relative);
       await fs.rename(file.target, target);
+      replaced.push(target);
     }
     for (const { backup } of backups) await fs.rm(backup, { force: true });
   } catch (error) {
-    for (const file of manifestFiles) {
-      await fs.rm(path.join(roots.contentRoot, file.relative), { force: true });
-    }
+    for (const target of replaced.reverse()) await fs.rm(target, { force: true });
     for (const { target, backup } of backups.reverse()) {
       try {
         await fs.rename(backup, target);
@@ -1004,13 +1249,17 @@ async function replaceManifestsAtomic(manifestFiles, roots, operationId) {
   }
 }
 
-async function commitDraftFiles(staged, roots, operationId) {
+async function commitDraftFiles(staged, roots, operationId, updatePhase = async () => {}, hooks = {}) {
   const manifestFiles = staged.filter((file) => ["manifest.json", "manifest.en.json", "import-generation.json"].includes(file.relative));
   const contentAndMedia = staged.filter((file) => !["manifest.json", "manifest.en.json", "import-generation.json", "journal.json"].includes(file.relative));
   for (const file of contentAndMedia) {
+    await updatePhase("content-replace", file.relative);
+    if (hooks.failBeforeFirstContent || hooks.failBeforeContentRelative === file.relative) {
+      throw new Error(`Injected commit failure before content replace for ${file.relative}`);
+    }
     await renameStagedFile(file, roots);
   }
-  await replaceManifestsAtomic(manifestFiles, roots, operationId);
+  await replaceManifestsAtomic(manifestFiles, roots, operationId, updatePhase, hooks);
 }
 
 async function withImportLock(contentRoot, callback) {
@@ -1034,6 +1283,116 @@ async function withImportLock(contentRoot, callback) {
 async function updateJournal(contentRoot, operationId, value) {
   const target = path.join(contentRoot, ".import-journal", `${operationId}.json`);
   await writeJsonFile(target, value);
+}
+
+async function readJournal(contentRoot, operationId) {
+  return readJsonFile(path.join(contentRoot, ".import-journal", `${operationId}.json`));
+}
+
+function safeStagedTarget(stagingRoot, relative) {
+  try {
+    assertSafeStagedRelative(relative);
+  } catch (error) {
+    fail("recovery-conflict", error.message);
+  }
+  const target = path.resolve(stagingRoot, relative);
+  const relativeFromRoot = path.relative(stagingRoot, target);
+  if (!relativeFromRoot || relativeFromRoot.startsWith("..") || path.isAbsolute(relativeFromRoot)) {
+    fail("recovery-conflict", `Staged file escapes operation root: ${relative}`);
+  }
+  return target;
+}
+
+function liveTargetForRelative(roots, relative) {
+  if (relative.startsWith("public/")) return path.join(roots.publicRoot, relative.slice("public/".length));
+  return path.join(roots.contentRoot, relative);
+}
+
+async function stagedFilesFromJournal(roots, operationId, journal) {
+  if (!Array.isArray(journal.files)) fail("recovery-conflict", "Journal files are missing");
+  const stagingRoot = path.join(roots.contentRoot, ".import-staging", operationId);
+  const staged = [];
+  for (const entry of journal.files) {
+    const relative = typeof entry === "string" ? entry : entry?.relative;
+    const expectedHash = typeof entry === "string" ? null : entry?.sha256;
+    if (typeof relative !== "string" || relative === "journal.json") continue;
+    const target = safeStagedTarget(stagingRoot, relative);
+    let bytes;
+    try {
+      bytes = await fs.readFile(target);
+    } catch (error) {
+      const liveBytes = await fs.readFile(liveTargetForRelative(roots, relative)).catch(() => null);
+      if (liveBytes && expectedHash && sha256(liveBytes) === expectedHash) continue;
+      fail("recovery-conflict", `Staged file is missing: ${relative}; ${error.message}`);
+    }
+    if (expectedHash && sha256(bytes) !== expectedHash) {
+      fail("recovery-conflict", `Staged file hash mismatch: ${relative}`);
+    }
+    staged.push({ relative, target, sha256: sha256(bytes) });
+  }
+  return staged;
+}
+
+async function committedMarker(contentRoot, operationId) {
+  try {
+    const marker = await readJsonFile(path.join(contentRoot, "import-generation.json"));
+    return marker.operationId === operationId && marker.generation === operationId ? marker : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function recoverTutorialImport(options) {
+  const roots = {
+    contentRoot: path.resolve(options.contentRoot ?? importerDefaults.contentRoot),
+    publicRoot: path.resolve(options.publicRoot ?? importerDefaults.publicRoot),
+  };
+  const operationId = assertOperationId(requireOption({ operation: options.operationId }, "operation"));
+  return withImportLock(roots.contentRoot, async () => {
+    const marker = await committedMarker(roots.contentRoot, operationId);
+    if (marker) {
+      return {
+        operationId,
+        generation: marker.generation,
+        recovered: false,
+        status: "committed",
+      };
+    }
+    const journal = await readJournal(roots.contentRoot, operationId);
+    if (journal.operationId !== operationId || journal.generation !== operationId) {
+      fail("recovery-conflict", `Journal operation mismatch for ${operationId}`, operationId);
+    }
+    const staged = await stagedFilesFromJournal(roots, operationId, journal);
+    let currentJournal = journal;
+    const setPhase = async (phase, relative = null) => {
+      currentJournal = {
+        ...currentJournal,
+        phase,
+        phases: [
+          ...(Array.isArray(currentJournal.phases) ? currentJournal.phases : []),
+          { phase, ...(relative ? { relative } : {}), recordedAt: new Date().toISOString() },
+        ],
+      };
+      await updateJournal(roots.contentRoot, operationId, currentJournal);
+    };
+    try {
+      await commitDraftFiles(staged, roots, operationId, setPhase);
+    } catch (error) {
+      fail("recovery-conflict", `Recovery cannot prove a safe commit for ${operationId}: ${error.message}`, operationId);
+    }
+    await updateJournal(roots.contentRoot, operationId, {
+      ...currentJournal,
+      phase: "committed",
+      recoveredAt: new Date().toISOString(),
+    });
+    await fs.rm(path.join(roots.contentRoot, ".import-staging", operationId), { recursive: true, force: true });
+    return {
+      operationId,
+      generation: operationId,
+      recovered: true,
+      status: "committed",
+    };
+  });
 }
 
 function idempotentResult(snapshot, hashes, manifests) {
@@ -1062,6 +1421,35 @@ function idempotentResult(snapshot, hashes, manifests) {
       idempotent: true,
     };
   }
+  const matchesCandidate = (candidate) =>
+    candidate?.sourceContentHash === snapshot.sourceContentHash &&
+    candidate.contentHash === hashes.english &&
+    candidate.translationContentHash === hashes.chinese;
+  const candidate = zh.snapshot.history.find((entry) =>
+    entry.sourceContentHash === snapshot.sourceContentHash &&
+    entry.contentHash === hashes.english &&
+    entry.translationContentHash === hashes.chinese,
+  ) ?? (matchesCandidate(zh.refreshCandidate) ? zh.refreshCandidate : null);
+  const englishCandidate = en.snapshot.history.find((entry) =>
+    entry.version === candidate?.version &&
+    entry.sourceContentHash === snapshot.sourceContentHash &&
+    entry.contentHash === hashes.english &&
+    entry.translationContentHash === hashes.chinese,
+  ) ?? (matchesCandidate(en.refreshCandidate) ? en.refreshCandidate : null);
+  if (candidate && englishCandidate && englishCandidate.version === candidate.version) {
+    return {
+      operationId: candidate.operationId ?? manifests.en.generation,
+      generation: manifests.en.generation,
+      slug: snapshot.slug,
+      sourceKey: snapshot.sourceKey,
+      englishContentFile: `content/${candidate.contentFile ?? `${hashes.english}.html`}`,
+      chineseContentFile: `content/${candidate.translationContentFile ?? `${hashes.chinese}.html`}`,
+      manifestFiles: ["manifest.json", "manifest.en.json"],
+      media: zh.media,
+      status: zh.status,
+      idempotent: true,
+    };
+  }
   return null;
 }
 
@@ -1076,51 +1464,54 @@ export async function importTutorialDraft(options) {
     contentRoot: path.resolve(options.contentRoot),
     publicRoot: path.resolve(options.publicRoot),
   };
-  const [zhManifest, enManifest] = await Promise.all([
-    readManifest(roots.contentRoot, "zh-CN"),
-    readManifest(roots.contentRoot, "en"),
-  ]);
-  const manifests = { "zh-CN": zhManifest, en: enManifest };
-  assertOwnership(snapshot, manifests);
-  const operationId = `tutorial-import-${crypto.randomUUID()}`;
+  const operationId = assertOperationId(options.operationId ?? `tutorial-import-${crypto.randomUUID()}`);
   const generation = operationId;
-  const { entries: mediaEntries, map: mediaMap } = await localizeMedia(snapshot, roots.publicRoot);
+  const { entries: mediaEntries, map: mediaMap } = await localizeMedia(snapshot, roots.publicRoot, {
+    allowFixtureMedia: options.allowFixtureMedia === true,
+  });
   const englishHtml = sanitizeTutorialHtml(snapshot.html, snapshot, mediaMap, "English source");
   const chineseHtml = sanitizeTutorialHtml(translation, snapshot, mediaMap, "Chinese translation");
   const enValidation = model.validateTutorialHtml(englishHtml, "English imported tutorial");
   const zhValidation = model.validateTutorialHtml(chineseHtml, "Chinese imported tutorial");
   assertTranslationHandoff(englishHtml, chineseHtml, enValidation, zhValidation);
   const hashes = { english: sha256(englishHtml), chinese: sha256(chineseHtml) };
-  const idempotent = idempotentResult(snapshot, hashes, manifests);
-  if (idempotent) return idempotent;
   const validation = { en: enValidation, zh: zhValidation, enHtml: englishHtml, zhHtml: chineseHtml };
   const sharedMedia = mediaEntries.map(({ manifest }) => manifest);
-  const enRecord = routeFromSnapshot(snapshot, "en", hashes, validation, sharedMedia, manifests, operationId);
-  const zhRecord = routeFromSnapshot(snapshot, "zh-CN", hashes, validation, sharedMedia, manifests, operationId);
-  const nextEnManifest = manifestJson(enManifest, replaceRoute(enManifest.routes, enRecord), generation);
-  const nextZhManifest = manifestJson(zhManifest, replaceRoute(zhManifest.routes, zhRecord), generation);
-  model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json");
-  model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json");
-  model.validateTutorialManifestPair(
-    model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json"),
-    model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json"),
-  );
-
   const stagingRoot = path.join(roots.contentRoot, ".import-staging", operationId);
   return withImportLock(roots.contentRoot, async () => {
+    await options.testHooks?.afterLockAcquired?.(operationId);
+    const [zhManifest, enManifest] = await Promise.all([
+      readManifest(roots.contentRoot, "zh-CN"),
+      readManifest(roots.contentRoot, "en"),
+    ]);
+    const manifests = { "zh-CN": zhManifest, en: enManifest };
+    assertOwnership(snapshot, manifests);
+    const idempotent = idempotentResult(snapshot, hashes, manifests);
+    if (idempotent) return idempotent;
+    const enRecord = routeFromSnapshot(snapshot, "en", hashes, validation, sharedMedia, manifests, operationId);
+    const zhRecord = routeFromSnapshot(snapshot, "zh-CN", hashes, validation, sharedMedia, manifests, operationId);
+    const nextEnManifest = manifestJson(enManifest, replaceRoute(enManifest.routes, enRecord), generation);
+    const nextZhManifest = manifestJson(zhManifest, replaceRoute(zhManifest.routes, zhRecord), generation);
+    model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json");
+    model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json");
+    model.validateTutorialManifestPair(
+      model.parseTutorialManifest(nextZhManifest, "zh-CN", "candidate manifest.json"),
+      model.parseTutorialManifest(nextEnManifest, "en", "candidate manifest.en.json"),
+    );
+
     const staged = [
-    await stageText(stagingRoot, `content/${hashes.english}.html`, `${englishHtml}\n`),
-    await stageText(stagingRoot, `content/${hashes.chinese}.html`, `${chineseHtml}\n`),
-    await stageText(stagingRoot, "manifest.json", `${JSON.stringify(nextZhManifest, null, 2)}\n`),
-    await stageText(stagingRoot, "manifest.en.json", `${JSON.stringify(nextEnManifest, null, 2)}\n`),
-    await stageText(stagingRoot, "import-generation.json", `${JSON.stringify({
-      operationId,
-      generation,
-      slug: snapshot.slug,
-      sourceKey: snapshot.sourceKey,
-      locales: ["zh-CN", "en"],
-      committedAt: null,
-    }, null, 2)}\n`),
+      await stageText(stagingRoot, `content/${hashes.english}.html`, `${englishHtml}\n`),
+      await stageText(stagingRoot, `content/${hashes.chinese}.html`, `${chineseHtml}\n`),
+      await stageText(stagingRoot, "manifest.json", `${JSON.stringify(nextZhManifest, null, 2)}\n`),
+      await stageText(stagingRoot, "manifest.en.json", `${JSON.stringify(nextEnManifest, null, 2)}\n`),
+      await stageText(stagingRoot, "import-generation.json", `${JSON.stringify({
+        operationId,
+        generation,
+        slug: snapshot.slug,
+        sourceKey: snapshot.sourceKey,
+        locales: ["zh-CN", "en"],
+        committedAt: null,
+      }, null, 2)}\n`),
     ];
     for (const { target, bytes } of mediaEntries) {
       const relative = `public/${path.relative(roots.publicRoot, target)}`;
@@ -1132,14 +1523,40 @@ export async function importTutorialDraft(options) {
       slug: snapshot.slug,
       sourceKey: snapshot.sourceKey,
       generation,
-      files: staged.map((file) => file.relative),
+      files: staged.map((file) => ({
+        relative: file.relative,
+        sha256: file.sha256,
+      })),
+      hashes: {
+        sourceContentHash: snapshot.sourceContentHash,
+        contentHash: hashes.english,
+        translationContentHash: hashes.chinese,
+      },
+      phases: [],
+    };
+    let currentJournal = journal;
+    const setPhase = async (phase, relative = null) => {
+      currentJournal = {
+        ...currentJournal,
+        phase,
+        phases: [
+          ...currentJournal.phases,
+          { phase, ...(relative ? { relative } : {}), recordedAt: new Date().toISOString() },
+        ],
+      };
+      await updateJournal(roots.contentRoot, operationId, currentJournal);
     };
     await updateJournal(roots.contentRoot, operationId, journal);
     await stageText(stagingRoot, "journal.json", `${JSON.stringify(journal, null, 2)}\n`);
 
-    await commitDraftFiles(staged, roots, operationId);
+    try {
+      await commitDraftFiles(staged, roots, operationId, setPhase, options.testHooks ?? {});
+    } catch (error) {
+      await setPhase("commit-failed");
+      fail("commit", `Commit failed for ${operationId}: ${error.message}`, operationId);
+    }
     await updateJournal(roots.contentRoot, operationId, {
-      ...journal,
+      ...currentJournal,
       phase: "committed",
       committedAt: new Date().toISOString(),
     });
@@ -1154,7 +1571,7 @@ export async function importTutorialDraft(options) {
       chineseContentFile: `content/${hashes.chinese}.html`,
       manifestFiles: ["manifest.json", "manifest.en.json"],
       media: sharedMedia,
-      status: "draft",
+      status: zhRecord.status,
       idempotent: false,
     };
   });

@@ -1,0 +1,7 @@
+
+> ai-website-clone-template@0.4.0 tutorials:check
+> node scripts/check-learningseo-tutorial-pilot.mjs --contract
+
+Tutorial lifecycle acceptance contract passed.
+
+exit_code=0

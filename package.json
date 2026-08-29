@@ -42,6 +42,7 @@
     "tutorials:model": "node scripts/check-tutorial-model.mjs",
     "tutorials:renderer": "node scripts/check-tutorial-renderer.mjs",
     "tutorials:seo": "node scripts/check-tutorial-seo.mjs",
+    "tutorials:recover": "node scripts/recover-tutorial.mjs",
     "lint": "eslint",
     "test:smoke": "node scripts/smoke-learningseo.mjs",
     "typecheck": "tsc --noEmit",

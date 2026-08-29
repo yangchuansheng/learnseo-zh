@@ -203,6 +203,24 @@ export type TutorialSeo = Readonly<{
   dateModified?: string;
 }>;
 
+export type TutorialRefreshCandidate = Readonly<{
+  status: "draft" | "review" | "stale";
+  version: number;
+  operationId: string;
+  createdAt: string;
+  title: string;
+  description: string;
+  sourceContentHash: Sha256;
+  contentHash: Sha256;
+  translationContentHash: Sha256;
+  contentFile: TutorialContentFile;
+  translationContentFile: TutorialContentFile;
+  toc: readonly TutorialTocEntry[];
+  media: readonly TutorialMedia[];
+  contentMetrics: TutorialContentMetrics;
+  seo: TutorialSeo;
+}>;
+
 export type TutorialSourceAlias = Readonly<{
   sourceKey: string;
   slug: string;
@@ -231,6 +249,7 @@ export type TutorialRecord = Readonly<{
   contentMetrics: TutorialContentMetrics;
   seo: TutorialSeo;
   redirectTo?: string | null;
+  refreshCandidate?: TutorialRefreshCandidate;
 }>;
 
 export type TutorialResourceLinkReport = Readonly<{
@@ -363,6 +382,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         },
         seo: { "$ref": "#/$defs/seo" },
         redirectTo: { type: ["string", "null"] },
+        refreshCandidate: { "$ref": "#/$defs/refreshCandidate" },
       },
       additionalProperties: false,
     },
@@ -453,6 +473,50 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         translatedSections: { type: "integer", minimum: 0 },
         contentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
         contentFile: { type: "string", pattern: "^[a-f0-9]{64}\\.html$" },
+      },
+      additionalProperties: false,
+    },
+    refreshCandidate: {
+      type: "object",
+      required: [
+        "status",
+        "version",
+        "operationId",
+        "createdAt",
+        "title",
+        "description",
+        "sourceContentHash",
+        "contentHash",
+        "translationContentHash",
+        "contentFile",
+        "translationContentFile",
+        "toc",
+        "media",
+        "contentMetrics",
+        "seo",
+      ],
+      properties: {
+        status: { enum: ["draft", "review", "stale"] },
+        version: { type: "integer", minimum: 1 },
+        operationId: { type: "string", minLength: 1 },
+        createdAt: isoDateTimeSchema,
+        title: { type: "string", minLength: 1 },
+        description: { type: "string", minLength: 1 },
+        sourceContentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
+        contentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
+        translationContentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
+        contentFile: { type: "string", pattern: "^[a-f0-9]{64}\\.html$" },
+        translationContentFile: { type: "string", pattern: "^[a-f0-9]{64}\\.html$" },
+        toc: { type: "array", items: { "$ref": "#/$defs/tocEntry" } },
+        media: { type: "array", items: { "$ref": "#/$defs/media" } },
+        contentMetrics: {
+          type: "object",
+          properties: Object.fromEntries(
+            TUTORIAL_SEMANTIC_TAGS.map((key) => [key, { type: "integer", minimum: 0 }]),
+          ),
+          additionalProperties: false,
+        },
+        seo: { "$ref": "#/$defs/seo" },
       },
       additionalProperties: false,
     },
@@ -803,6 +867,12 @@ function parseHistoryEntry(value: unknown, label: string, sourceCanonical: strin
   if (contentFile && !contentFile.startsWith(`${contentHash}.`)) {
     throw new Error(`${label}.contentFile must match contentHash`);
   }
+  if (translationContentFile && value.translationContentHash !== undefined) {
+    const translationContentHash = requiredSha256(value.translationContentHash, `${label}.translationContentHash`);
+    if (!translationContentFile.startsWith(`${translationContentHash}.`)) {
+      throw new Error(`${label}.translationContentFile must match translationContentHash`);
+    }
+  }
   return {
     version: positiveInteger(value.version, `${label}.version`),
     canonicalUrl,
@@ -1026,13 +1096,14 @@ function parseQualification(value: unknown, label: string): TutorialQualificatio
 function parseSeo(value: unknown, label: string): TutorialSeo {
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
   assertAllowedKeys(value, label, ["title", "description", "indexable", "dateModified"]);
+  if (typeof value.indexable !== "boolean") throw new Error(`${label}.indexable must be boolean`);
   const dateModified = value.dateModified === undefined
     ? undefined
     : dateString(value.dateModified, `${label}.dateModified`);
   return {
     title: requiredString(value.title, `${label}.title`),
     description: requiredString(value.description, `${label}.description`),
-    indexable: value.indexable === true,
+    indexable: value.indexable,
     ...(dateModified === undefined ? {} : { dateModified }),
   };
 }
@@ -1087,6 +1158,60 @@ function parseMetrics(value: unknown, label: string): TutorialContentMetrics {
   return result as TutorialContentMetrics;
 }
 
+function parseRefreshCandidate(value: unknown, label: string, locale: Locale): TutorialRefreshCandidate | undefined {
+  if (value === undefined) return undefined;
+  if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, [
+    "status",
+    "version",
+    "operationId",
+    "createdAt",
+    "title",
+    "description",
+    "sourceContentHash",
+    "contentHash",
+    "translationContentHash",
+    "contentFile",
+    "translationContentFile",
+    "toc",
+    "media",
+    "contentMetrics",
+    "seo",
+  ]);
+  const status = parseStatus(value.status, `${label}.status`);
+  if (status === "published") throw new Error(`${label}.status must be a preview status`);
+  const contentHash = requiredSha256(value.contentHash, `${label}.contentHash`);
+  const translationContentHash = requiredSha256(value.translationContentHash, `${label}.translationContentHash`);
+  const contentFile = parseContentFile(value.contentFile, `${label}.contentFile`);
+  const translationContentFile = parseContentFile(value.translationContentFile, `${label}.translationContentFile`);
+  const localeContentHash = locale === "en" ? contentHash : translationContentHash;
+  if (!contentFile?.startsWith(`${localeContentHash}.`)) throw new Error(`${label}.contentFile must match locale contentHash`);
+  if (!translationContentFile?.startsWith(`${translationContentHash}.`)) {
+    throw new Error(`${label}.translationContentFile must match translationContentHash`);
+  }
+  const mediaValue = value.media;
+  if (!Array.isArray(mediaValue)) throw new Error(`${label}.media must be an array`);
+  const seo = parseSeo(value.seo, `${label}.seo`);
+  if (seo.indexable) throw new Error(`${label}.seo must be noindex`);
+  return {
+    status,
+    version: positiveInteger(value.version, `${label}.version`),
+    operationId: requiredString(value.operationId, `${label}.operationId`),
+    createdAt: dateString(value.createdAt, `${label}.createdAt`),
+    title: requiredString(value.title, `${label}.title`),
+    description: requiredString(value.description, `${label}.description`),
+    sourceContentHash: requiredSha256(value.sourceContentHash, `${label}.sourceContentHash`),
+    contentHash,
+    translationContentHash,
+    contentFile,
+    translationContentFile,
+    toc: parseToc(value.toc, `${label}.toc`),
+    media: mediaValue.map((entry, index) => parseMedia(entry, `${label}.media[${index}]`)),
+    contentMetrics: parseMetrics(value.contentMetrics, `${label}.contentMetrics`),
+    seo,
+  };
+}
+
 function parseRecord(value: unknown, locale: Locale, index: number): TutorialRecord {
   const label = `Tutorial route ${index}`;
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
@@ -1110,6 +1235,7 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
     "contentMetrics",
     "seo",
     "redirectTo",
+    "refreshCandidate",
   ]);
   const slug = assertTutorialSlug(requiredString(value.slug, `${label}.slug`));
   const expectedPath = tutorialPath(slug, locale);
@@ -1148,6 +1274,7 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
     parseMedia(entry, `Tutorial route ${slug}.media[${mediaIndex}]`),
   );
   const seo = parseSeo(value.seo, `Tutorial route ${slug}.seo`);
+  const refreshCandidate = parseRefreshCandidate(value.refreshCandidate, `Tutorial route ${slug}.refreshCandidate`, locale);
   const redirectTo = value.redirectTo === undefined || value.redirectTo === null
     ? value.redirectTo ?? undefined
     : requiredString(value.redirectTo, `Tutorial route ${slug}.redirectTo`);
@@ -1214,6 +1341,7 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
     contentMetrics: parseMetrics(value.contentMetrics, `Tutorial route ${slug}.contentMetrics`),
     seo,
     ...(redirectTo === undefined ? {} : { redirectTo }),
+    ...(refreshCandidate === undefined ? {} : { refreshCandidate }),
   };
 }
 
@@ -1536,6 +1664,27 @@ export function validateTutorialManifestPair(
       en.translation.contentHash !== zh.snapshot.translationContentHash
     ) {
       throw new Error(`Tutorial content file pairing failed: ${slug}`);
+    }
+    if (Boolean(zh.refreshCandidate) !== Boolean(en.refreshCandidate)) {
+      throw new Error(`Tutorial refresh candidate pairing failed: ${slug}`);
+    }
+    if (zh.refreshCandidate && en.refreshCandidate) {
+      const zhCandidate = zh.refreshCandidate;
+      const enCandidate = en.refreshCandidate;
+      if (
+        zhCandidate.status !== enCandidate.status ||
+        zhCandidate.version !== enCandidate.version ||
+        zhCandidate.operationId !== enCandidate.operationId ||
+        zhCandidate.sourceContentHash !== enCandidate.sourceContentHash ||
+        zhCandidate.contentHash !== enCandidate.contentHash ||
+        zhCandidate.translationContentHash !== enCandidate.translationContentHash ||
+        enCandidate.contentFile !== `${enCandidate.contentHash}.html` ||
+        zhCandidate.contentFile !== `${zhCandidate.translationContentHash}.html` ||
+        zhCandidate.translationContentFile !== `${zhCandidate.translationContentHash}.html` ||
+        enCandidate.translationContentFile !== `${zhCandidate.translationContentHash}.html`
+      ) {
+        throw new Error(`Tutorial refresh candidate pairing failed: ${slug}`);
+      }
     }
     if (!sameJsonValue(zh.contentMetrics, en.contentMetrics)) {
       throw new Error(`Tutorial content metrics pairing failed: ${slug}`);

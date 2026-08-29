@@ -1,0 +1,6 @@
+
+> ai-website-clone-template@0.4.0 tutorials:seo
+> node scripts/check-tutorial-seo.mjs
+
+Tutorial SEO production contract passed: URL, metadata, JSON-LD, sitemap, and redirects.
+Tutorial manifest integration passed: 0 published pair(s), 0 non-indexable route(s).

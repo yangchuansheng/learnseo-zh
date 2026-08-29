@@ -43,6 +43,7 @@ export type {
   TutorialReviewChecklistKey,
   TutorialReviewDecision,
   TutorialReviewHistoryEntry,
+  TutorialRefreshCandidate,
   TutorialSeo,
   TutorialSemanticTag,
   TutorialSnapshot,
