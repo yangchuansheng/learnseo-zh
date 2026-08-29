@@ -162,6 +162,47 @@ export function logFailure(error) {
   console.error(`[tutorial-importer] ${code}${operation}: ${error.message}`);
 }
 
+function generatedOperationId() {
+  return `tutorial-import-${crypto.randomUUID()}`;
+}
+
+function safeAuditContext(operationId, actor) {
+  return {
+    operationId: typeof operationId === "string" && operationIdPattern.test(operationId)
+      ? operationId
+      : generatedOperationId(),
+    actor: typeof actor === "string" && actorPattern.test(actor.trim()) ? actor.trim() : defaultImportActor,
+    invalidOperationId: operationId !== undefined && !operationIdPattern.test(String(operationId)),
+  };
+}
+
+function argValue(argv, key) {
+  const flag = `--${key}`;
+  for (let index = 0; index < argv.length; index += 1) {
+    if (argv[index] !== flag) continue;
+    const next = argv[index + 1];
+    return next && !next.startsWith("--") ? next : undefined;
+  }
+  return undefined;
+}
+
+export async function recordCliFailure(error, argv) {
+  const context = safeAuditContext(
+    error instanceof TutorialImportError && error.operationId
+      ? error.operationId
+      : argValue(argv, "operation-id") ?? argValue(argv, "operation"),
+    error instanceof TutorialImportError && error.actor ? error.actor : argValue(argv, "actor"),
+  );
+  const failure = errorWithOperation(error, context.operationId, context.actor);
+  const contentRoot = path.resolve(importerDefaults.contentRoot);
+  try {
+    await recordFailureJournal(contentRoot, context.operationId, context.actor, failure);
+  } catch (journalError) {
+    console.warn(`[tutorial-importer] failure audit warning operation=${context.operationId}: ${journalError.message}`);
+  }
+  return failure;
+}
+
 export function tutorialImportResultMessage(result) {
   if (result.resultKind === "refresh-candidate") {
     return `[tutorial-importer] staged refresh candidate for ${result.slug} as ${result.status}; live route remains ${result.liveRouteStatus} pending review`;
@@ -177,13 +218,6 @@ function requireOption(args, key, operationId = null, actor = null) {
   const value = args[key];
   if (typeof value !== "string" || !value.trim()) fail("usage", `Missing required --${key}`, operationId, actor);
   return value.trim();
-}
-
-function assertOperationId(value) {
-  if (typeof value !== "string" || !operationIdPattern.test(value)) {
-    fail("usage", `Invalid operation id: ${value}`);
-  }
-  return value;
 }
 
 function optionalActor(value, operationId = null) {
@@ -227,8 +261,10 @@ export function validateCollectOptions(args) {
 }
 
 export function validateImportOptions(args) {
-  const operationId = assertOperationId(args.operation ?? args["operation-id"] ?? `tutorial-import-${crypto.randomUUID()}`);
+  const auditContext = safeAuditContext(args.operation ?? args["operation-id"], args.actor);
+  const operationId = auditContext.operationId;
   const actor = optionalActor(args.actor, operationId);
+  if (auditContext.invalidOperationId) fail("usage", "Invalid operation id", operationId, actor);
   if (args["content-root"] !== undefined || args["public-root"] !== undefined) {
     fail("usage", "--content-root and --public-root are available through the programmatic fixture harness", operationId, actor);
   }
@@ -304,36 +340,41 @@ function isPrivateIpv4(value) {
 }
 
 function isPrivateIpv6(value) {
-  const lower = value.toLowerCase();
-  const embeddedIpv4 = ipv4FromEmbeddedIpv6(lower);
-  if (embeddedIpv4) return isPrivateIpv4(embeddedIpv4);
-  const firstHextet = Number.parseInt(lower.split(":", 1)[0] || "0", 16);
-  return lower === "::1" ||
-    lower === "::" ||
-    lower.startsWith("fc") ||
-    lower.startsWith("fd") ||
-    (Number.isFinite(firstHextet) && firstHextet >= 0xfe80 && firstHextet <= 0xfebf) ||
-    lower.startsWith("ff") ||
-    lower.startsWith("2001:db8:");
+  const parts = ipv6Parts(value);
+  if (!parts) return true;
+  if (isIpv4EmbeddedIpv6(parts)) return true;
+  if (parts[0] < 0x2000 || parts[0] > 0x3fff) return true;
+  return [
+    [[0x2001, 0, 0, 0, 0, 0, 0, 0], 23],
+    [[0x2001, 0x2, 0, 0, 0, 0, 0, 0], 48],
+    [[0x2001, 0xdb8, 0, 0, 0, 0, 0, 0], 32],
+    [[0x2002, 0, 0, 0, 0, 0, 0, 0], 16],
+    [[0x3fff, 0, 0, 0, 0, 0, 0, 0], 20],
+  ].some(([prefix, bits]) => ipv6PrefixMatches(parts, prefix, bits));
 }
 
-function ipv4FromEmbeddedIpv6(value) {
+function ipv6Parts(value) {
   const normalized = normalizeIpv6(value);
   if (!normalized) return null;
-  const parts = normalized.split(":");
-  if (parts.length !== 8 || parts.slice(0, 5).some((part) => part !== "0")) {
-    return null;
+  return normalized.split(":").map((part) => Number.parseInt(part, 16));
+}
+
+function isIpv4EmbeddedIpv6(parts) {
+  return (
+    parts.slice(0, 6).every((part) => part === 0) ||
+    (parts.slice(0, 5).every((part) => part === 0) && parts[5] === 0xffff)
+  );
+}
+
+function ipv6PrefixMatches(parts, prefix, bits) {
+  const fullHextets = Math.floor(bits / 16);
+  for (let index = 0; index < fullHextets; index += 1) {
+    if (parts[index] !== prefix[index]) return false;
   }
-  if (parts[5] !== "0" && parts[5] !== "ffff") return null;
-  const high = Number.parseInt(parts[6], 16);
-  const low = Number.parseInt(parts[7], 16);
-  if (!Number.isFinite(high) || !Number.isFinite(low) || high > 0xffff || low > 0xffff) return null;
-  return [
-    (high >> 8) & 0xff,
-    high & 0xff,
-    (low >> 8) & 0xff,
-    low & 0xff,
-  ].join(".");
+  const remainingBits = bits % 16;
+  if (remainingBits === 0) return true;
+  const mask = (0xffff << (16 - remainingBits)) & 0xffff;
+  return (parts[fullHextets] & mask) === (prefix[fullHextets] & mask);
 }
 
 function normalizeIpv6(value) {
@@ -2017,33 +2058,73 @@ async function parseLiveManifestForRestore(roots, relative, locale, operationId)
   }
 }
 
-async function restoreCommittedBackups(roots, operationId, reason) {
-  const zhRestore = await parseBackupManifest(roots, "manifest.json", "zh-CN", operationId) ??
-    await parseLiveManifestForRestore(roots, "manifest.json", "zh-CN", operationId);
-  const enRestore = await parseBackupManifest(roots, "manifest.en.json", "en", operationId) ??
-    await parseLiveManifestForRestore(roots, "manifest.en.json", "en", operationId);
-  if (!zhRestore || !enRestore) return null;
+async function parseMarkerForRestore(filePath, label, operationId) {
+  let bytes;
   try {
-    model.validateTutorialManifestPair(zhRestore.manifest, enRestore.manifest);
-  } catch (error) {
-    fail("recovery-conflict", `Backup locale pair is invalid: ${error.message}`, operationId);
+    bytes = await fs.readFile(filePath);
+  } catch {
+    return null;
   }
+  try {
+    return {
+      bytes,
+      marker: parseRecoveryJson(bytes, label, operationId),
+    };
+  } catch (error) {
+    fail("recovery-conflict", `${label} is invalid: ${error.message}`, operationId);
+  }
+}
 
+function restoreCandidateIsValid(candidate) {
+  try {
+    model.validateTutorialManifestPair(candidate.zh.manifest, candidate.en.manifest);
+  } catch {
+    return false;
+  }
+  const restoresBootstrap = isBootstrapManifest(candidate.zh.manifest) && isBootstrapManifest(candidate.en.manifest);
+  return markerMatchesManifestPair(candidate.marker?.marker ?? null, candidate.zh.manifest, candidate.en.manifest) ||
+    (restoresBootstrap && !candidate.marker);
+}
+
+async function restoreCommittedBackups(roots, operationId, reason) {
   const markerPath = path.join(roots.contentRoot, "import-generation.json");
   const markerBackupPath = `${markerPath}.backup-${operationId}`;
-  const markerBackupBytes = await fs.readFile(markerBackupPath).catch(() => null);
-  const liveMarkerBytes = await fs.readFile(markerPath).catch(() => null);
-  const markerBytes = markerBackupBytes ?? liveMarkerBytes;
-  const marker = markerBytes ? parseRecoveryJson(markerBytes, "Backup import-generation.json", operationId) : null;
-  const restoresBootstrap = isBootstrapManifest(zhRestore.manifest) && isBootstrapManifest(enRestore.manifest);
-  if (!markerMatchesManifestPair(marker, zhRestore.manifest, enRestore.manifest) && !restoresBootstrap) {
-    fail("recovery-conflict", `Backup marker is missing or does not match restored manifests: ${reason}`, operationId);
+  const zhCandidates = [
+    await parseBackupManifest(roots, "manifest.json", "zh-CN", operationId),
+    await parseLiveManifestForRestore(roots, "manifest.json", "zh-CN", operationId),
+  ].filter(Boolean);
+  const enCandidates = [
+    await parseBackupManifest(roots, "manifest.en.json", "en", operationId),
+    await parseLiveManifestForRestore(roots, "manifest.en.json", "en", operationId),
+  ].filter(Boolean);
+  const markerCandidates = [
+    await parseMarkerForRestore(markerBackupPath, "Backup import-generation.json", operationId),
+    await parseMarkerForRestore(markerPath, "Live import-generation.json", operationId),
+    null,
+  ];
+  let restore = null;
+  for (const zh of zhCandidates) {
+    for (const en of enCandidates) {
+      for (const marker of markerCandidates) {
+        const candidate = { zh, en, marker };
+        if (restoreCandidateIsValid(candidate)) {
+          restore = candidate;
+          break;
+        }
+      }
+      if (restore) break;
+    }
+    if (restore) break;
   }
+  if (!restore) fail("recovery-conflict", `No valid backup locale pair is available: ${reason}`, operationId);
+  const zhRestore = restore.zh;
+  const enRestore = restore.en;
+  const restoresBootstrap = isBootstrapManifest(zhRestore.manifest) && isBootstrapManifest(enRestore.manifest);
 
   await fs.writeFile(path.join(roots.contentRoot, "manifest.json"), zhRestore.bytes);
   await fs.writeFile(path.join(roots.contentRoot, "manifest.en.json"), enRestore.bytes);
-  if (markerBackupBytes) {
-    await fs.copyFile(markerBackupPath, markerPath);
+  if (restore.marker) {
+    await fs.writeFile(markerPath, restore.marker.bytes);
   } else if (restoresBootstrap) {
     const failedMarker = `${markerPath}.failed-${operationId}`;
     await fs.rename(markerPath, failedMarker).catch((error) => {
@@ -2079,73 +2160,88 @@ function canRestoreBackups(journal) {
 }
 
 export async function recoverTutorialImport(options) {
+  const auditContext = safeAuditContext(options.operationId, options.actor);
   const roots = {
     contentRoot: path.resolve(options.contentRoot ?? importerDefaults.contentRoot),
     publicRoot: path.resolve(options.publicRoot ?? importerDefaults.publicRoot),
   };
-  const operationId = assertOperationId(requireOption({ operation: options.operationId }, "operation"));
-  return withImportLock(roots.contentRoot, async () => {
-    const journal = await readJournal(roots.contentRoot, operationId);
-    assertRecoveryJournal(journal, operationId);
-    const marker = await committedMarker(roots, operationId, journal);
-    if (marker) {
+  const operationId = auditContext.operationId;
+  const actor = auditContext.actor;
+  let currentJournal = null;
+  try {
+    if (options.operationId === undefined) fail("usage", "Missing required --operation", operationId, actor);
+    if (auditContext.invalidOperationId) fail("usage", "Invalid operation id", operationId, actor);
+    return await withImportLock(roots.contentRoot, async () => {
+      const journal = await readJournal(roots.contentRoot, operationId);
+      currentJournal = journal;
+      assertRecoveryJournal(journal, operationId);
+      const marker = await committedMarker(roots, operationId, journal);
+      if (marker) {
+        return {
+          operationId,
+          generation: marker.generation,
+          recovered: false,
+          status: "committed",
+        };
+      }
+      let staged;
+      try {
+        const recoveryFiles = await recoveryFilesFromJournal(roots, operationId, journal);
+        staged = recoveryFiles.staged;
+        await validateRecoveryCandidates(roots, operationId, journal, recoveryFiles.files);
+      } catch (error) {
+        if (canRestoreBackups(journal)) {
+          const restored = await restoreCommittedBackups(roots, operationId, error.message);
+          if (restored) {
+            await updateJournal(roots.contentRoot, operationId, {
+              ...journal,
+              phase: "restored",
+              restoredAt: new Date().toISOString(),
+              restoreReason: error.message,
+            });
+            return restored;
+          }
+        }
+        throw error;
+      }
+      const setPhase = async (phase, relative = null) => {
+        currentJournal = {
+          ...currentJournal,
+          phase,
+          phases: [
+            ...(Array.isArray(currentJournal.phases) ? currentJournal.phases : []),
+            { phase, ...(relative ? { relative } : {}), recordedAt: new Date().toISOString() },
+          ],
+        };
+        await updateJournal(roots.contentRoot, operationId, currentJournal);
+      };
+      try {
+        await commitDraftFiles(staged, roots, operationId, setPhase);
+      } catch (error) {
+        fail("recovery-conflict", `Recovery cannot prove a safe commit for ${operationId}: ${error.message}`, operationId);
+      }
+      await updateJournal(roots.contentRoot, operationId, {
+        ...currentJournal,
+        phase: "committed",
+        recoveredAt: new Date().toISOString(),
+      });
+      await fs.rm(path.join(roots.contentRoot, ".import-staging", operationId), { recursive: true, force: true });
       return {
         operationId,
-        generation: marker.generation,
-        recovered: false,
+        generation: operationId,
+        recovered: true,
         status: "committed",
       };
-    }
-    let staged;
-    try {
-      const recoveryFiles = await recoveryFilesFromJournal(roots, operationId, journal);
-      staged = recoveryFiles.staged;
-      await validateRecoveryCandidates(roots, operationId, journal, recoveryFiles.files);
-    } catch (error) {
-      if (canRestoreBackups(journal)) {
-        const restored = await restoreCommittedBackups(roots, operationId, error.message);
-        if (restored) {
-          await updateJournal(roots.contentRoot, operationId, {
-            ...journal,
-            phase: "restored",
-            restoredAt: new Date().toISOString(),
-            restoreReason: error.message,
-          });
-          return restored;
-        }
-      }
-      throw error;
-    }
-    let currentJournal = journal;
-    const setPhase = async (phase, relative = null) => {
-      currentJournal = {
-        ...currentJournal,
-        phase,
-        phases: [
-          ...(Array.isArray(currentJournal.phases) ? currentJournal.phases : []),
-          { phase, ...(relative ? { relative } : {}), recordedAt: new Date().toISOString() },
-        ],
-      };
-      await updateJournal(roots.contentRoot, operationId, currentJournal);
-    };
-    try {
-      await commitDraftFiles(staged, roots, operationId, setPhase);
-    } catch (error) {
-      fail("recovery-conflict", `Recovery cannot prove a safe commit for ${operationId}: ${error.message}`, operationId);
-    }
-    await updateJournal(roots.contentRoot, operationId, {
-      ...currentJournal,
-      phase: "committed",
-      recoveredAt: new Date().toISOString(),
     });
-    await fs.rm(path.join(roots.contentRoot, ".import-staging", operationId), { recursive: true, force: true });
-    return {
-      operationId,
-      generation: operationId,
-      recovered: true,
-      status: "committed",
-    };
-  });
+  } catch (error) {
+    const recoveryError = errorWithOperation(error, operationId, actor);
+    try {
+      await recordFailureJournal(roots.contentRoot, operationId, actor, recoveryError, currentJournal);
+    } catch (journalError) {
+      console.warn(`[tutorial-importer] failure audit warning operation=${operationId}: ${journalError.message}`);
+    }
+    throw recoveryError;
+  }
 }
 
 function idempotentResult(snapshot, hashes, manifests) {
@@ -2233,14 +2329,17 @@ function idempotentResult(snapshot, hashes, manifests) {
 }
 
 export async function importTutorialDraft(options) {
-  const operationId = assertOperationId(options.operationId ?? `tutorial-import-${crypto.randomUUID()}`);
-  const actor = optionalActor(options.actor, operationId);
+  const auditContext = safeAuditContext(options.operationId, options.actor);
+  const operationId = auditContext.operationId;
+  let actor = auditContext.actor;
   const roots = {
     contentRoot: path.resolve(options.contentRoot ?? importerDefaults.contentRoot),
     publicRoot: path.resolve(options.publicRoot ?? importerDefaults.publicRoot),
   };
   let currentJournal = null;
   try {
+    actor = optionalActor(options.actor, operationId);
+    if (auditContext.invalidOperationId) fail("usage", "Invalid operation id", operationId, actor);
     const snapshot = await readSnapshot(options.input);
     model.assertTutorialSlug(snapshot.slug);
     if (snapshot.canonicalMatched !== true || normalizeSourceKey(snapshot.canonicalUrl) !== normalizeSourceKey(snapshot.requestedUrl)) {

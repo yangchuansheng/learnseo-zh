@@ -698,6 +698,17 @@ function sameJsonValue(left: unknown, right: unknown): boolean {
   return JSON.stringify(left) === JSON.stringify(right);
 }
 
+function comparableMedia(media: readonly TutorialMedia[]) {
+  return media.map(({ path, sha256, sourceUrl, width, height, id }) => ({
+    path,
+    sha256,
+    sourceUrl: sourceUrl ?? null,
+    width: width ?? null,
+    height: height ?? null,
+    id: id ?? null,
+  }));
+}
+
 function parseHttpsUrl(value: unknown, label: string): string {
   const raw = requiredString(value, label);
   if (/[\u0000-\u0020\u007f]/.test(raw)) {
@@ -1693,6 +1704,31 @@ export function validateTutorialManifestPair(
       ) {
         throw new Error(`Tutorial refresh candidate pairing failed: ${slug}`);
       }
+      if (!sameJsonValue(zhCandidate.contentMetrics, enCandidate.contentMetrics)) {
+        throw new Error(`Tutorial refresh candidate metrics pairing failed: ${slug}`);
+      }
+      if (
+        !sameJsonValue(
+          zhCandidate.toc.map(({ id, level }) => ({ id, level })),
+          enCandidate.toc.map(({ id, level }) => ({ id, level })),
+        )
+      ) {
+        throw new Error(`Tutorial refresh candidate TOC pairing failed: ${slug}`);
+      }
+      if (
+        !sameJsonValue(
+          comparableMedia(zhCandidate.media),
+          comparableMedia(enCandidate.media),
+        )
+      ) {
+        throw new Error(`Tutorial refresh candidate media pairing failed: ${slug}`);
+      }
+      if (
+        zhCandidate.seo.indexable !== enCandidate.seo.indexable ||
+        (zhCandidate.seo.dateModified ?? null) !== (enCandidate.seo.dateModified ?? null)
+      ) {
+        throw new Error(`Tutorial refresh candidate SEO pairing failed: ${slug}`);
+      }
     }
     if (!sameJsonValue(zh.contentMetrics, en.contentMetrics)) {
       throw new Error(`Tutorial content metrics pairing failed: ${slug}`);
@@ -1707,22 +1743,8 @@ export function validateTutorialManifestPair(
     }
     if (
       !sameJsonValue(
-        zh.media.map(({ path, sha256, sourceUrl, width, height, id }) => ({
-          path,
-          sha256,
-          sourceUrl: sourceUrl ?? null,
-          width: width ?? null,
-          height: height ?? null,
-          id: id ?? null,
-        })),
-        en.media.map(({ path, sha256, sourceUrl, width, height, id }) => ({
-          path,
-          sha256,
-          sourceUrl: sourceUrl ?? null,
-          width: width ?? null,
-          height: height ?? null,
-          id: id ?? null,
-        })),
+        comparableMedia(zh.media),
+        comparableMedia(en.media),
       )
     ) {
       throw new Error(`Tutorial media pairing failed: ${slug}`);
