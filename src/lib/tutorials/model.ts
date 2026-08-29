@@ -226,12 +226,21 @@ export type TutorialRecord = Readonly<{
 }>;
 
 export type TutorialResourceLinkReport = Readonly<{
-  totalOccurrences: number;
-  convertedOccurrences: number;
-  fallbackOccurrences: number;
-  normalizedSourceKeys: number;
+  total: number;
+  unique: number;
+  converted: number;
+  fallback: number;
+  rendered: number;
   duplicateOccurrences: number;
   unknownFragments: number;
+  occurrences: readonly TutorialResourceLinkOccurrence[];
+}>;
+
+export type TutorialResourceLinkOccurrence = Readonly<{
+  sourceKey: string;
+  slug: string | null;
+  fragment: string | null;
+  converted: boolean;
 }>;
 
 export type TutorialManifest = Readonly<{
@@ -376,7 +385,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
       properties: {
         version: { type: "integer", minimum: 1 },
         capturedAt: { type: "string", format: "date-time" },
-        sourceUpdatedAt: { type: "string" },
+        sourceUpdatedAt: { type: "string", format: "date-time" },
         pageCanonicalUrl: { type: "string", format: "uri", pattern: "^https://" },
         canonicalMatched: { type: "boolean" },
         requestedUrl: { type: "string", format: "uri", pattern: "^https://" },
@@ -419,8 +428,8 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
         sourceLanguage: { const: "en" },
         language: { const: "zh-CN" },
         translator: { type: ["string", "null"] },
-        translatedAt: { type: ["string", "null"] },
-        reviewedAt: { type: ["string", "null"] },
+        translatedAt: { type: ["string", "null"], format: "date-time" },
+        reviewedAt: { type: ["string", "null"], format: "date-time" },
         sourceSections: { type: "integer", minimum: 0 },
         translatedSections: { type: "integer", minimum: 0 },
         contentHash: { type: "string", pattern: "^[a-f0-9]{64}$" },
@@ -434,7 +443,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
       properties: {
         decision: { enum: ["pending", "approved", "changes-requested"] },
         reviewer: { type: ["string", "null"] },
-        reviewedAt: { type: ["string", "null"] },
+        reviewedAt: { type: ["string", "null"], format: "date-time" },
         notes: { type: "string", minLength: 1 },
         checklist: { "$ref": "#/$defs/reviewChecklist" },
         history: { type: "array", items: { "$ref": "#/$defs/reviewHistory" } },
@@ -447,7 +456,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
       properties: {
         decision: { enum: ["pending", "approved", "changes-requested"] },
         reviewer: { type: ["string", "null"] },
-        reviewedAt: { type: ["string", "null"] },
+        reviewedAt: { type: ["string", "null"], format: "date-time" },
         notes: { type: "string", minLength: 1 },
         version: { type: "integer", minimum: 1 },
         operationId: { type: "string", minLength: 1 },
@@ -468,7 +477,7 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
       properties: {
         decision: { enum: ["pending", "qualified", "rejected"] },
         reviewer: { type: ["string", "null"] },
-        reviewedAt: { type: ["string", "null"] },
+        reviewedAt: { type: ["string", "null"], format: "date-time" },
         checklist: { "$ref": "#/$defs/qualificationChecklist" },
       },
       additionalProperties: false,
@@ -511,20 +520,35 @@ export const TUTORIAL_MANIFEST_SCHEMA = {
     resourceLinkReport: {
       type: "object",
       required: [
-        "totalOccurrences",
-        "convertedOccurrences",
-        "fallbackOccurrences",
-        "normalizedSourceKeys",
+        "total",
+        "unique",
+        "converted",
+        "fallback",
+        "rendered",
         "duplicateOccurrences",
         "unknownFragments",
+        "occurrences",
       ],
       properties: {
-        totalOccurrences: { type: "integer", minimum: 0 },
-        convertedOccurrences: { type: "integer", minimum: 0 },
-        fallbackOccurrences: { type: "integer", minimum: 0 },
-        normalizedSourceKeys: { type: "integer", minimum: 0 },
+        total: { type: "integer", minimum: 0 },
+        unique: { type: "integer", minimum: 0 },
+        converted: { type: "integer", minimum: 0 },
+        fallback: { type: "integer", minimum: 0 },
+        rendered: { type: "integer", minimum: 0 },
         duplicateOccurrences: { type: "integer", minimum: 0 },
         unknownFragments: { type: "integer", minimum: 0 },
+        occurrences: { type: "array", items: { "$ref": "#/$defs/resourceLinkOccurrence" } },
+      },
+      additionalProperties: false,
+    },
+    resourceLinkOccurrence: {
+      type: "object",
+      required: ["sourceKey", "slug", "fragment", "converted"],
+      properties: {
+        sourceKey: { type: "string", format: "uri", pattern: "^https://" },
+        slug: { type: ["string", "null"], pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        fragment: { type: ["string", "null"] },
+        converted: { type: "boolean" },
       },
       additionalProperties: false,
     },
@@ -611,20 +635,20 @@ function parseOptionalHttpsUrl(value: unknown, label: string): string | undefine
 }
 
 export function isSha256(value: unknown): value is Sha256 {
-  return typeof value === "string" && /^[a-f0-9]{64}$/i.test(value);
+  return typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
 }
 
 function requiredSha256(value: unknown, label: string): Sha256 {
   if (!isSha256(value)) throw new Error(`${label} must be a SHA-256 hex digest`);
-  return value.toLowerCase();
+  return value;
 }
 
 function parseContentFile(value: unknown, label: string): TutorialContentFile | null {
   if (value === undefined || value === null) return null;
-  if (typeof value !== "string" || !/^[a-f0-9]{64}\.html$/i.test(value)) {
+  if (typeof value !== "string" || !/^[a-f0-9]{64}\.html$/.test(value)) {
     throw new Error(`${label} must be a content-addressed SHA-256 filename`);
   }
-  return value.toLowerCase() as TutorialContentFile;
+  return value as TutorialContentFile;
 }
 
 function positiveInteger(value: unknown, label: string): number {
@@ -643,8 +667,8 @@ function nonNegativeInteger(value: unknown, label: string): number {
 
 function optionalDate(value: unknown, label: string): string | null {
   const result = nullableString(value, label);
-  if (result !== null && !Number.isFinite(Date.parse(result))) {
-    throw new Error(`${label} must be a valid date`);
+  if (result !== null && !isIsoDateTime(result)) {
+    throw new Error(`${label} must be an ISO date-time`);
   }
   return result;
 }
@@ -656,8 +680,13 @@ function nullableDate(value: unknown, label: string): string | null {
 
 function dateString(value: unknown, label: string): string {
   const result = requiredString(value, label);
-  if (!Number.isFinite(Date.parse(result))) throw new Error(`${label} must be a valid date`);
+  if (!isIsoDateTime(result)) throw new Error(`${label} must be an ISO date-time`);
   return result;
+}
+
+function isIsoDateTime(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value) &&
+    Number.isFinite(Date.parse(value));
 }
 
 function parseStatus(value: unknown, label: string): TutorialStatus {
@@ -881,6 +910,9 @@ function parseTranslation(value: unknown, label: string): TutorialTranslation {
     ? undefined
     : requiredSha256(value.contentHash, `${label}.contentHash`);
   const contentFile = parseContentFile(value.contentFile, `${label}.contentFile`);
+  if (contentFile && !contentHash) {
+    throw new Error(`${label}.contentFile requires contentHash`);
+  }
   if (contentFile && contentHash && !contentFile.startsWith(contentHash)) {
     throw new Error(`${label}.contentFile must match contentHash`);
   }
@@ -1075,8 +1107,14 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
   const qualification = parseQualification(value.qualification, `${label} ${slug}.qualification`);
   const contentHash = snapshot.contentHash;
   const contentFile = parseContentFile(value.contentFile, `${label} ${slug}.contentFile`);
-  if (contentFile && !contentFile.startsWith(contentHash)) {
-    throw new Error(`Tutorial route ${slug} contentFile must match snapshot.contentHash`);
+  const routeContentHash = locale === "en" ? contentHash : snapshot.translationContentHash;
+  if (locale === "zh-CN" && contentFile && !routeContentHash) {
+    throw new Error(`Tutorial route ${slug} contentFile requires snapshot.translationContentHash`);
+  }
+  if (contentFile && routeContentHash && !contentFile.startsWith(routeContentHash)) {
+    throw new Error(
+      `Tutorial route ${slug} contentFile must match ${locale === "en" ? "snapshot.contentHash" : "snapshot.translationContentHash"}`,
+    );
   }
   if (status === "published" && activeVersion !== snapshot.version) {
     throw new Error(`Tutorial route ${slug} published activeVersion must match snapshot.version`);
@@ -1117,6 +1155,12 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
     if (!translation.contentFile) throw new Error(`Tutorial route ${slug} published records require translation contentFile`);
     if (translation.contentHash !== snapshot.translationContentHash) {
       throw new Error(`Tutorial route ${slug} translation contentHash must match snapshot.translationContentHash`);
+    }
+    if (translation.contentFile && !translation.contentFile.startsWith(translation.contentHash)) {
+      throw new Error(`Tutorial route ${slug} translation contentFile must match translation.contentHash`);
+    }
+    if (locale === "zh-CN" && translation.contentFile !== contentFile) {
+      throw new Error(`Tutorial route ${slug} translation contentFile must match contentFile`);
     }
     if (!TUTORIAL_REVIEW_CHECKLIST_KEYS.every((key) => review.checklist[key])) {
       throw new Error(`Tutorial route ${slug} review checklist is incomplete`);
@@ -1173,30 +1217,90 @@ function parseAliases(value: unknown, label: string): readonly TutorialSourceAli
   throw new Error(`${label} must be an array`);
 }
 
+function parseResourceLinkOccurrence(value: unknown, label: string): TutorialResourceLinkOccurrence {
+  if (!isRecord(value)) throw new Error(`${label} must be an object`);
+  assertAllowedKeys(value, label, ["sourceKey", "slug", "fragment", "converted"]);
+  const converted = value.converted;
+  if (typeof converted !== "boolean") throw new Error(`${label}.converted must be boolean`);
+  const sourceKey = normalizeSourceKey(parseHttpsUrl(value.sourceKey, `${label}.sourceKey`));
+  const slug = value.slug === null
+    ? null
+    : assertTutorialSlug(requiredString(value.slug, `${label}.slug`));
+  const fragment = value.fragment === null ? null : requiredString(value.fragment, `${label}.fragment`);
+  if (converted && !slug) throw new Error(`${label}.slug is required for converted occurrences`);
+  return { sourceKey, slug, fragment, converted };
+}
+
 function parseResourceLinkReport(value: unknown, label: string): TutorialResourceLinkReport | undefined {
   if (value === undefined) return undefined;
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
   assertAllowedKeys(value, label, [
-    "totalOccurrences",
-    "convertedOccurrences",
-    "fallbackOccurrences",
-    "normalizedSourceKeys",
+    "total",
+    "unique",
+    "converted",
+    "fallback",
+    "rendered",
     "duplicateOccurrences",
     "unknownFragments",
+    "occurrences",
   ]);
-  const totalOccurrences = nonNegativeInteger(value.totalOccurrences, `${label}.totalOccurrences`);
-  const convertedOccurrences = nonNegativeInteger(value.convertedOccurrences, `${label}.convertedOccurrences`);
-  const fallbackOccurrences = nonNegativeInteger(value.fallbackOccurrences, `${label}.fallbackOccurrences`);
+  const total = nonNegativeInteger(value.total, `${label}.total`);
+  const unique = nonNegativeInteger(value.unique, `${label}.unique`);
+  const converted = nonNegativeInteger(value.converted, `${label}.converted`);
+  const fallback = nonNegativeInteger(value.fallback, `${label}.fallback`);
+  const rendered = nonNegativeInteger(value.rendered, `${label}.rendered`);
+  const duplicateOccurrences = nonNegativeInteger(value.duplicateOccurrences, `${label}.duplicateOccurrences`);
+  const unknownFragments = nonNegativeInteger(value.unknownFragments, `${label}.unknownFragments`);
+  if (!Array.isArray(value.occurrences)) throw new Error(`${label}.occurrences must be an array`);
+  const occurrences = value.occurrences.map((entry, index) =>
+    parseResourceLinkOccurrence(entry, `${label}.occurrences[${index}]`),
+  );
   const report = {
-    totalOccurrences,
-    convertedOccurrences,
-    fallbackOccurrences,
-    normalizedSourceKeys: nonNegativeInteger(value.normalizedSourceKeys, `${label}.normalizedSourceKeys`),
-    duplicateOccurrences: nonNegativeInteger(value.duplicateOccurrences, `${label}.duplicateOccurrences`),
-    unknownFragments: nonNegativeInteger(value.unknownFragments, `${label}.unknownFragments`),
+    total,
+    unique,
+    converted,
+    fallback,
+    rendered,
+    duplicateOccurrences,
+    unknownFragments,
+    occurrences,
   };
-  if (convertedOccurrences + fallbackOccurrences !== totalOccurrences) {
-    throw new Error(`${label} convertedOccurrences plus fallbackOccurrences must equal totalOccurrences`);
+  if (converted + fallback !== total) {
+    throw new Error(`${label} converted plus fallback must equal total`);
+  }
+  if (occurrences.length !== total) {
+    throw new Error(`${label}.occurrences length must equal total`);
+  }
+  const convertedOccurrenceCount = occurrences.filter((occurrence) => occurrence.converted).length;
+  if (convertedOccurrenceCount !== converted) {
+    throw new Error(`${label}.occurrences converted count must equal converted`);
+  }
+  if (new Set(occurrences.map((occurrence) => occurrence.sourceKey)).size !== unique) {
+    throw new Error(`${label}.occurrences unique sourceKey count must equal unique`);
+  }
+  const slugBySourceKey = new Map<string, string>();
+  for (const occurrence of occurrences) {
+    if (!occurrence.converted || !occurrence.slug) continue;
+    const slug = slugBySourceKey.get(occurrence.sourceKey);
+    if (slug && slug !== occurrence.slug) {
+      throw new Error(`${label}.occurrences converted sourceKey must resolve to one slug`);
+    }
+    slugBySourceKey.set(occurrence.sourceKey, occurrence.slug);
+  }
+  const unknownFragmentCount = occurrences.filter(
+    (occurrence) => !occurrence.converted && occurrence.fragment !== null,
+  ).length;
+  if (unknownFragments !== unknownFragmentCount) {
+    throw new Error(`${label}.unknownFragments must match fallback occurrence fragments`);
+  }
+  if (rendered !== total * 2) {
+    throw new Error(`${label}.rendered must equal bilingual anchor count`);
+  }
+  if (duplicateOccurrences !== total - unique) {
+    throw new Error(`${label}.duplicateOccurrences must equal total minus unique`);
+  }
+  if (unknownFragments > fallback) {
+    throw new Error(`${label}.unknownFragments must be covered by fallback`);
   }
   return report;
 }
@@ -1341,6 +1445,37 @@ export function validateTutorialManifestPair(
     if (zh.snapshot.version !== en.snapshot.version) throw new Error(`Tutorial version pairing failed: ${slug}`);
     if (zh.activeVersion !== en.activeVersion) throw new Error(`Tutorial activeVersion pairing failed: ${slug}`);
     if (zh.sourceKey !== en.sourceKey) throw new Error(`Tutorial canonical pairing failed: ${slug}`);
+    if (
+      normalizeSourceKey(zh.source.canonicalUrl) !== normalizeSourceKey(en.source.canonicalUrl) ||
+      normalizeSourceKey(zh.source.requestedUrl) !== normalizeSourceKey(en.source.requestedUrl) ||
+      normalizeSourceKey(zh.source.finalUrl) !== normalizeSourceKey(en.source.finalUrl) ||
+      zh.source.title !== en.source.title ||
+      zh.source.provider !== en.source.provider ||
+      zh.source.author !== en.source.author ||
+      zh.source.sourcePath !== en.source.sourcePath ||
+      zh.source.contentType !== en.source.contentType ||
+      !sameJsonValue(zh.source.license ?? null, en.source.license ?? null)
+    ) {
+      throw new Error(`Tutorial source pairing failed: ${slug}`);
+    }
+    if (
+      zh.snapshot.sourceContentHash !== en.snapshot.sourceContentHash ||
+      zh.snapshot.contentHash !== en.snapshot.contentHash ||
+      zh.snapshot.translationContentHash !== en.snapshot.translationContentHash
+    ) {
+      throw new Error(`Tutorial content hash pairing failed: ${slug}`);
+    }
+    if (
+      en.contentFile !== `${en.snapshot.contentHash}.html` ||
+      zh.snapshot.translationContentHash === undefined ||
+      zh.contentFile !== `${zh.snapshot.translationContentHash}.html` ||
+      zh.translation.contentFile !== zh.contentFile ||
+      en.translation.contentFile !== zh.contentFile ||
+      zh.translation.contentHash !== zh.snapshot.translationContentHash ||
+      en.translation.contentHash !== zh.snapshot.translationContentHash
+    ) {
+      throw new Error(`Tutorial content file pairing failed: ${slug}`);
+    }
     if (!sameJsonValue(zh.contentMetrics, en.contentMetrics)) {
       throw new Error(`Tutorial content metrics pairing failed: ${slug}`);
     }
@@ -1380,6 +1515,9 @@ export function validateTutorialManifestPair(
   }
   if (!sameJsonValue(zhManifest.aliases, enManifest.aliases)) {
     throw new Error("Tutorial source aliases must be paired");
+  }
+  if (!sameJsonValue(zhManifest.resourceLinkReport ?? null, enManifest.resourceLinkReport ?? null)) {
+    throw new Error("Tutorial resource link reports must be paired");
   }
   return { zh: zhManifest, en: enManifest, generation: zhManifest.generation };
 }

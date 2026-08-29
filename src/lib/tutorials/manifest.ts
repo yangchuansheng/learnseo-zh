@@ -12,6 +12,7 @@ import {
 } from "./url";
 import {
   parseTutorialManifest,
+  validateTutorialManifestPair,
   validateTutorialRecord,
   validateTutorialManifestPairOwnership as validateModelPairOwnership,
 } from "./model";
@@ -167,7 +168,8 @@ export function isIndexableTutorialPair(
   if (zh.snapshot.version !== en.snapshot.version) return false;
   if (!tutorialDateModified(zh) || !tutorialDateModified(en)) return false;
   try {
-    return recordSourceKey(zh) === recordSourceKey(en);
+    return recordSourceKey(zh) === recordSourceKey(en) &&
+      normalizeSourceKey(zh.source.canonicalUrl) === normalizeSourceKey(en.source.canonicalUrl);
   } catch {
     return false;
   }
@@ -203,8 +205,9 @@ export function getPublishedTutorialPairsFromManifests(
   if (!zhManifest.available || !enManifest.available) return [];
   const generation = zhManifest.generation;
   if (!generation || generation !== enManifest.generation) return [];
-  const englishBySlug = new Map(enManifest.routes.map((route) => [route.slug, route]));
-  return zhManifest.routes.flatMap((zh) => {
+  const pair = validateTutorialManifestPair(zhManifest, enManifest);
+  const englishBySlug = new Map(pair.en.routes.map((route) => [route.slug, route]));
+  return pair.zh.routes.flatMap((zh) => {
     const en = englishBySlug.get(zh.slug);
     if (!en || !isIndexableTutorialPair(zh, en, generation, enManifest.generation)) {
       return [];

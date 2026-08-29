@@ -314,11 +314,17 @@ async function validateRecord(record, locale, html, contentPath) {
   assertString(record.provider, `${label} provider`);
   assertString(record.contentFile, `${label} contentFile`);
   const snapshot = record.snapshot || {};
-  const contentHash = locale === "en"
-    ? snapshot.contentHash
-    : record.contentHash || record.translation?.contentHash || snapshot.translationContentHash || snapshot.localizedContentHash || snapshot.contentHash;
+  const translation = record.translation || {};
+  const contentHash = locale === "en" ? snapshot.contentHash : snapshot.translationContentHash;
   assert.ok(Number.isInteger(snapshot.version) && snapshot.version > 0, `${label} snapshot version is invalid`);
   assertHex(contentHash, `${label} contentHash`);
+  if (locale === "zh-CN") {
+    assertHex(translation.contentHash, `${label} translation contentHash`);
+    assert.equal(translation.contentHash, snapshot.translationContentHash,
+      `${label} translation contentHash must match snapshot.translationContentHash`);
+    assert.equal(translation.contentFile, record.contentFile,
+      `${label} translation contentFile must match contentFile`);
+  }
   assert.equal(path.basename(contentPath, ".html"), contentHash,
     `${label} contentFile must be named after contentHash`);
   assert.equal(contentHash, sha256(awaitFileBytes.get(contentPath)),
@@ -381,19 +387,35 @@ async function readLinkReport(zhManifest) {
 }
 
 function validateLinkReport(report) {
-  const total = report.totalOccurrences ?? report.total;
-  const unique = report.uniqueSourceKeys ?? report.uniqueKeys;
-  const converted = report.converted ?? report.publishedConversions;
-  const fallback = report.fallback ?? report.externalFallbacks;
-  const rendered = report.renderedAnchors ?? report.bilingualAnchors;
+  const { total, unique, converted, fallback, rendered, occurrences } = report;
   assert.equal(total, 2152, "resource occurrence total changed");
   assert.equal(unique, 914, "normalized source-key total changed");
   assert.equal(rendered, 4304, "bilingual rendered-anchor total changed");
   assert.equal(converted + fallback, total, "resource conversion report is not partitioned");
-  const entries = report.occurrences || report.entries;
-  assert.ok(Array.isArray(entries), "resource-link report must expose occurrences");
-  const pilotEntries = entries.filter((entry) =>
-    normalizeSourceKey(entry.sourceKey || entry.sourceUrl || entry.href) === normalizeSourceKey(sourceCanonical),
+  assert.ok(Array.isArray(occurrences), "resource-link report must expose occurrences");
+  assert.equal(occurrences.length, total, "resource occurrence evidence total changed");
+  assert.equal(new Set(occurrences.map((entry) => normalizeSourceKey(entry.sourceKey))).size, unique,
+    "resource occurrence evidence unique count changed");
+  assert.equal(occurrences.filter((entry) => entry.converted).length, converted,
+    "resource occurrence evidence converted count changed");
+  assert.equal(occurrences.filter((entry) => !entry.converted && entry.fragment !== null).length,
+    report.unknownFragments, "resource occurrence unknown-fragment evidence changed");
+  const slugBySourceKey = new Map();
+  for (const [index, entry] of occurrences.entries()) {
+    assertString(entry.sourceKey, `resource occurrence ${index} sourceKey`);
+    assert.ok(entry.fragment === null || typeof entry.fragment === "string",
+      `resource occurrence ${index} fragment must be string or null`);
+    assert.equal(typeof entry.converted, "boolean", `resource occurrence ${index} converted must be boolean`);
+    if (entry.converted) {
+      assertString(entry.slug, `resource occurrence ${index} slug`);
+      const sourceKey = normalizeSourceKey(entry.sourceKey);
+      const slug = slugBySourceKey.get(sourceKey);
+      assert.ok(!slug || slug === entry.slug, `resource occurrence ${index} sourceKey changed slug`);
+      slugBySourceKey.set(sourceKey, entry.slug);
+    }
+  }
+  const pilotEntries = occurrences.filter((entry) =>
+    normalizeSourceKey(entry.sourceKey) === normalizeSourceKey(sourceCanonical),
   );
   assert.ok(pilotEntries.length > 1, "pilot duplicate occurrences are missing from the report");
   assert.equal(new Set(pilotEntries.filter((entry) => entry.converted !== false).map((entry) => entry.slug)).size, 1,

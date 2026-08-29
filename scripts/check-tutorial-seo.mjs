@@ -3,9 +3,32 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { createJiti } from "jiti";
+import { normalizeSourceKey } from "../src/lib/tutorials/source-key.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const origin = "https://learningseo.io";
+const hex = (value) => value.repeat(64);
+const allTrue = (keys) => Object.fromEntries(keys.map((key) => [key, true]));
+const reviewChecklistKeys = [
+  "contentComplete",
+  "dataPreserved",
+  "factsPreserved",
+  "logicPreserved",
+  "terminologyCorrect",
+  "chineseNatural",
+  "authorVoicePreserved",
+  "linksPreserved",
+  "mediaVerified",
+  "attributionPresent",
+  "seoVerified",
+];
+const qualificationChecklistKeys = [
+  "publiclyAccessible",
+  "continuousBody",
+  "topicComplete",
+  "singlePage",
+  "canonicalVerified",
+];
 
 async function loadProductionModules() {
   const jiti = createJiti(import.meta.url, {
@@ -33,6 +56,10 @@ function tutorialRecord(
     redirectTo,
   } = {},
 ) {
+  const contentHash = hex("a");
+  const sourceContentHash = hex("b");
+  const translationContentHash = hex("c");
+  const now = "2026-08-29T00:00:00.000Z";
   return {
     slug,
     path: locale === "en" ? `/en/tutorials/${slug}/` : `/tutorials/${slug}/`,
@@ -40,23 +67,86 @@ function tutorialRecord(
     description: "A tested tutorial",
     provider: "Example",
     status,
+    activeVersion: version,
+    sourceKey: normalizeSourceKey(canonicalUrl),
     source: {
       title: "SEO <Guide>",
       provider: "Example",
       author: "Example Author",
       canonicalUrl,
+      sourcePath: "/roadmap/guide/",
+      requestedUrl: canonicalUrl,
+      finalUrl: canonicalUrl,
+      contentType: "text/html",
+      license: "CC BY 4.0",
     },
     snapshot: {
       version,
-      capturedAt: "2026-08-29T00:00:00.000Z",
+      capturedAt: now,
       sourceUpdatedAt: "2026-08-28T00:00:00.000Z",
+      pageCanonicalUrl: canonicalUrl,
+      canonicalMatched: true,
+      requestedUrl: canonicalUrl,
+      finalUrl: canonicalUrl,
+      sourceContentHash,
+      contentHash,
+      translationContentHash,
+      history: [],
+    },
+    translation: {
+      sourceLanguage: "en",
+      language: "zh-CN",
+      translator: "Translator",
+      translatedAt: now,
+      reviewedAt: now,
+      sourceSections: 1,
+      translatedSections: 1,
+      contentHash: translationContentHash,
+      contentFile: `${translationContentHash}.html`,
+    },
+    review: {
+      decision: status === "published" ? "approved" : "pending",
+      reviewer: status === "published" ? "Reviewer" : null,
+      reviewedAt: status === "published" ? now : null,
+      notes: "Fixture review state.",
+      checklist: allTrue(reviewChecklistKeys),
+      history: [],
+    },
+    qualification: {
+      decision: status === "published" ? "qualified" : "pending",
+      reviewer: status === "published" ? "Reviewer" : null,
+      reviewedAt: status === "published" ? now : null,
+      checklist: allTrue(qualificationChecklistKeys),
+    },
+    contentFile: locale === "en" ? `${contentHash}.html` : `${translationContentHash}.html`,
+    toc: [{ id: "seo-guide", title: "SEO Guide", level: 1 }],
+    media: [],
+    contentMetrics: {
+      h1: 1,
+      p: 1,
+      a: 1,
+    },
+    seo: {
+      title: "SEO <Guide>",
+      description: "A tested tutorial",
+      indexable: status === "published" && redirectTo === undefined,
+      dateModified: now,
     },
     ...(redirectTo === undefined ? {} : { redirectTo }),
   };
 }
 
 function tutorialManifest(locale, generation, routes) {
-  return { locale, generation, available: true, routes };
+  return {
+    $schema: "https://learningseo.io/schemas/tutorial-manifest.json",
+    schemaVersion: 1,
+    locale,
+    generation,
+    activeVersion: 1,
+    available: true,
+    routes,
+    aliases: [],
+  };
 }
 
 function sortedSlugs(routes) {
@@ -80,7 +170,7 @@ async function assertProductionContract(production) {
   const zh = tutorialRecord("zh-CN", "guide", { canonicalUrl: canonicalZh });
   const en = tutorialRecord("en", "guide", { canonicalUrl: canonicalEn });
   const previewZh = tutorialRecord("zh-CN", "preview", { status: "draft" });
-  const previewEn = tutorialRecord("en", "preview", { status: "review" });
+  const previewEn = tutorialRecord("en", "preview", { status: "draft" });
   const aliasZh = tutorialRecord("zh-CN", "legacy-guide", {
     canonicalUrl: "https://example.com/legacy-guide",
     redirectTo: "/tutorials/guide/",
@@ -116,6 +206,79 @@ async function assertProductionContract(production) {
 
   const pairs = manifest.getPublishedTutorialPairsFromManifests(zhManifest, enManifest);
   assert.deepEqual(pairs.map(({ zh: pairZh }) => pairZh.slug), ["guide"]);
+  const rejectPublishedDrift = (enRoute, message) => {
+    assert.throws(
+      () => manifest.getPublishedTutorialPairsFromManifests(
+        tutorialManifest("zh-CN", "generation-1", [zh]),
+        tutorialManifest("en", "generation-1", [enRoute]),
+      ),
+      message,
+    );
+  };
+  rejectPublishedDrift(
+    { ...en, toc: [{ id: "changed", title: "SEO Guide", level: 1 }] },
+    /TOC pairing failed/,
+  );
+  rejectPublishedDrift(
+    {
+      ...en,
+      media: [{
+        path: "/sites/learningseo-io-071dae18/tutorials/other.png",
+        sha256: hex("d"),
+        alt: "Other diagram",
+      }],
+    },
+    /media pairing failed/,
+  );
+  rejectPublishedDrift(
+    { ...en, contentMetrics: { ...en.contentMetrics, p: 2 } },
+    /content metrics pairing failed/,
+  );
+  rejectPublishedDrift(
+    { ...en, source: { ...en.source, provider: "Other" } },
+    /source pairing failed/,
+  );
+  rejectPublishedDrift(
+    {
+      ...en,
+      snapshot: { ...en.snapshot, contentHash: hex("d") },
+      contentFile: `${hex("d")}.html`,
+    },
+    /content hash pairing failed/,
+  );
+  rejectPublishedDrift(
+    { ...en, translation: { ...en.translation, contentFile: `${hex("e")}.html` } },
+    /content file pairing failed/,
+  );
+  assert.throws(
+    () => manifest.getPublishedTutorialPairsFromManifests(
+      {
+        ...tutorialManifest("zh-CN", "generation-1", [zh]),
+        aliases: [{ sourceKey: "https://example.com/alias", slug: "guide" }],
+      },
+      tutorialManifest("en", "generation-1", [en]),
+    ),
+    /source aliases must be paired/,
+  );
+  assert.throws(
+    () => manifest.getPublishedTutorialPairsFromManifests(
+      {
+        ...tutorialManifest("zh-CN", "generation-1", [zh]),
+        resourceLinkReport: {
+          total: 0,
+          unique: 0,
+          converted: 0,
+          fallback: 0,
+          rendered: 0,
+          duplicateOccurrences: 0,
+          unknownFragments: 0,
+          occurrences: [],
+        },
+      },
+      tutorialManifest("en", "generation-1", [en]),
+    ),
+    /resource link reports must be paired/,
+  );
 
   for (const status of ["draft", "review", "stale"]) {
     const conflictingZh = tutorialRecord("zh-CN", `${status}-owner`, {
@@ -183,8 +346,8 @@ async function assertProductionContract(production) {
     manifest.isIndexableTutorialPair(zh, aliasEn, "generation-1", "generation-1"),
     false,
   );
-  const undatedZh = { ...zh, snapshot: { version: 1 } };
-  const undatedEn = { ...en, snapshot: { version: 1 } };
+  const undatedZh = { ...zh, snapshot: { version: 1 }, seo: {} };
+  const undatedEn = { ...en, snapshot: { version: 1 }, seo: {} };
   assert.equal(
     manifest.isIndexableTutorialPair(undatedZh, undatedEn, "generation-1", "generation-1"),
     false,
