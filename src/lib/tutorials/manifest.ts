@@ -3,7 +3,14 @@ import path from "node:path";
 import { cache } from "react";
 
 import type { Locale } from "@/lib/localization";
-import { assertTutorialSlug, isTutorialSlug, tutorialPath } from "./url";
+import {
+  assertTutorialSlug,
+  isTutorialSlug,
+  normalizeSourceKey,
+  safeTutorialRedirect,
+  tutorialPath,
+  tutorialSlugFromPath,
+} from "./url";
 
 export type TutorialStatus = "draft" | "review" | "published" | "stale";
 
@@ -56,6 +63,12 @@ export type TutorialManifest = Readonly<{
   routes: readonly TutorialRecord[];
 }>;
 
+export type TutorialPublicationPair = Readonly<{
+  zh: TutorialRecord;
+  en: TutorialRecord;
+  generation: string;
+}>;
+
 export const TUTORIAL_CONTENT_ROOT = path.join(process.cwd(), "src/content/tutorials");
 
 type JsonRecord = Record<string, unknown>;
@@ -86,6 +99,7 @@ function sourceCanonical(value: unknown, label: string): string {
   if (parsed.protocol !== "https:" || !parsed.hostname) {
     throw new Error(`${label} must be an absolute HTTPS URL`);
   }
+  normalizeSourceKey(canonical);
   return canonical;
 }
 
@@ -94,6 +108,10 @@ function tutorialStatus(value: unknown, label: string): TutorialStatus {
     return value;
   }
   throw new Error(`${label} must be draft, review, published, or stale`);
+}
+
+export function isTutorialRedirect(record: TutorialRecord): boolean {
+  return record.redirectTo !== undefined && record.redirectTo !== null;
 }
 
 function normalizeRecord(value: unknown, locale: Locale, index: number): TutorialRecord {
@@ -148,6 +166,12 @@ function normalizeRecord(value: unknown, locale: Locale, index: number): Tutoria
       }
     : undefined;
 
+  const redirectTo = value.redirectTo;
+  if (redirectTo !== undefined && redirectTo !== null &&
+      (typeof redirectTo !== "string" || !redirectTo.trim())) {
+    throw new Error(`Tutorial route ${slug} redirectTo must be a non-empty string or null`);
+  }
+
   return {
     ...value,
     slug,
@@ -162,8 +186,8 @@ function normalizeRecord(value: unknown, locale: Locale, index: number): Tutoria
     contentFile: typeof value.contentFile === "string" || value.contentFile === null
       ? value.contentFile
       : undefined,
-    redirectTo: typeof value.redirectTo === "string" || value.redirectTo === null
-      ? value.redirectTo
+    redirectTo: typeof redirectTo === "string" || redirectTo === null
+      ? redirectTo
       : undefined,
   } as TutorialRecord;
 }
@@ -181,6 +205,13 @@ function parseManifest(value: unknown, locale: Locale, filePath: string): Tutori
   for (const route of routes) {
     if (slugs.has(route.slug)) throw new Error(`Duplicate tutorial slug: ${route.slug}`);
     slugs.add(route.slug);
+  }
+
+  const routesBySlug = new Map(routes.map((route) => [route.slug, route]));
+  for (const route of routes) {
+    if (isTutorialRedirect(route)) {
+      resolveTutorialRedirectPath(locale, route, routesBySlug);
+    }
   }
 
   return {
@@ -236,18 +267,104 @@ export function isPublishedTutorial(record: TutorialRecord): boolean {
   return record.status === "published";
 }
 
+export function isIndexableTutorialPair(
+  zh: TutorialRecord,
+  en: TutorialRecord,
+  zhGeneration: string | null | undefined,
+  enGeneration: string | null | undefined,
+): boolean {
+  if (!isPublishedTutorial(zh) || !isPublishedTutorial(en)) return false;
+  if (isTutorialRedirect(zh) || isTutorialRedirect(en)) return false;
+  if (!zhGeneration || zhGeneration !== enGeneration) return false;
+  if (
+    !Number.isInteger(zh.snapshot.version) ||
+    zh.snapshot.version < 1 ||
+    !Number.isInteger(en.snapshot.version) ||
+    en.snapshot.version < 1
+  ) return false;
+  if (zh.snapshot.version !== en.snapshot.version) return false;
+  try {
+    return normalizeSourceKey(zh.source.canonicalUrl) === normalizeSourceKey(en.source.canonicalUrl);
+  } catch {
+    return false;
+  }
+}
+
+export function getPublishedTutorialPairsFromManifests(
+  zhManifest: TutorialManifest,
+  enManifest: TutorialManifest,
+): TutorialPublicationPair[] {
+  if (!zhManifest.available || !enManifest.available) return [];
+  const generation = zhManifest.generation;
+  if (!generation || generation !== enManifest.generation) return [];
+  const englishBySlug = new Map(enManifest.routes.map((route) => [route.slug, route]));
+  return zhManifest.routes.flatMap((zh) => {
+    const en = englishBySlug.get(zh.slug);
+    if (!en || !isIndexableTutorialPair(zh, en, generation, enManifest.generation)) {
+      return [];
+    }
+    return [{ zh, en, generation }];
+  });
+}
+
+export async function getPublishedTutorialPair(
+  locale: Locale,
+  slug: string,
+): Promise<TutorialPublicationPair | undefined> {
+  const pair = (await getPublishedTutorialPairs()).find(
+    ({ zh, en }) => (locale === "en" ? en : zh).slug === slug,
+  );
+  return pair;
+}
+
 export async function getPublishedTutorialPairs(): Promise<
-  Array<{ zh: TutorialRecord; en: TutorialRecord }>
+  TutorialPublicationPair[]
 > {
   const [zhManifest, enManifest] = await Promise.all([
     readTutorialManifest("zh-CN"),
     readTutorialManifest("en"),
   ]);
-  const englishBySlug = new Map(enManifest.routes.map((route) => [route.slug, route]));
-  return zhManifest.routes.flatMap((zh) => {
-    const en = englishBySlug.get(zh.slug);
-    if (!en || !isPublishedTutorial(zh) || !isPublishedTutorial(en)) return [];
-    if (zh.source.canonicalUrl !== en.source.canonicalUrl) return [];
-    return [{ zh, en }];
-  });
+  return getPublishedTutorialPairsFromManifests(zhManifest, enManifest);
+}
+
+export function resolveTutorialRedirectPath(
+  locale: Locale,
+  record: TutorialRecord,
+  recordsBySlug: ReadonlyMap<string, TutorialRecord>,
+): string | null {
+  if (!isTutorialRedirect(record)) return null;
+
+  const visited = new Set([record.slug]);
+  let current = record;
+  let firstTarget: string | null = null;
+
+  while (isTutorialRedirect(current)) {
+    const safeTarget = safeTutorialRedirect(current.redirectTo as string, locale, current.slug);
+    if (!safeTarget) {
+      throw new Error(`Unsafe tutorial redirect from ${current.path}: ${current.redirectTo}`);
+    }
+    firstTarget ??= safeTarget;
+    const targetSlug = tutorialSlugFromPath(safeTarget, locale);
+    if (!targetSlug || visited.has(targetSlug)) {
+      throw new Error(`Tutorial redirect cycle detected at ${current.path}`);
+    }
+    visited.add(targetSlug);
+    const next = recordsBySlug.get(targetSlug);
+    if (!next) {
+      throw new Error(`Tutorial redirect target is missing: ${safeTarget}`);
+    }
+    current = next;
+  }
+
+  return firstTarget;
+}
+
+export async function resolveTutorialRedirect(
+  locale: Locale,
+  record: TutorialRecord,
+): Promise<string | null> {
+  const recordsBySlug = new Map(
+    (await getTutorialRecords(locale)).map((route) => [route.slug, route]),
+  );
+  return resolveTutorialRedirectPath(locale, record, recordsBySlug);
 }

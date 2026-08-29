@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import type { Locale } from "@/lib/localization";
 import {
   getTutorialRecord,
+  getPublishedTutorialPair,
   getTutorialStaticParams,
+  isTutorialRedirect,
+  resolveTutorialRedirect,
   type TutorialRecord,
 } from "@/lib/tutorials/manifest";
 import { createTutorialMetadata, TutorialStructuredData } from "@/lib/tutorials/seo";
 
 export type TutorialParams = Promise<{ slug: string }>;
+type TutorialRedirectResolver = (
+  locale: Locale,
+  record: TutorialRecord,
+) => Promise<string | null>;
 
 export function generateTutorialStaticParams(locale: Locale): Promise<Array<{ slug: string }>> {
   return getTutorialStaticParams(locale);
@@ -29,11 +36,23 @@ export async function generateTutorialPageMetadata(
   locale: Locale,
   params: TutorialParams,
 ): Promise<Metadata> {
-  return createTutorialMetadata(await getTutorialPageRecord(locale, params), locale);
+  const record = await getTutorialPageRecord(locale, params);
+  const pair = isTutorialRedirect(record)
+    ? undefined
+    : await getPublishedTutorialPair(locale, record.slug);
+  return createTutorialMetadata(record, locale, {
+    indexable: Boolean(pair),
+    includeAlternates: Boolean(pair),
+  });
 }
 
-export async function renderTutorialPage(locale: Locale, params: TutorialParams) {
-  const record = await getTutorialPageRecord(locale, params);
+export async function renderTutorialRecord(
+  locale: Locale,
+  record: TutorialRecord,
+  redirectResolver: TutorialRedirectResolver = resolveTutorialRedirect,
+) {
+  const redirectTarget = await redirectResolver(locale, record);
+  if (redirectTarget) permanentRedirect(redirectTarget);
   const sourceTitle = record.source.title ?? record.source.canonicalUrl;
   return (
     <>
@@ -49,4 +68,8 @@ export async function renderTutorialPage(locale: Locale, params: TutorialParams)
       </article>
     </>
   );
+}
+
+export async function renderTutorialPage(locale: Locale, params: TutorialParams) {
+  return renderTutorialRecord(locale, await getTutorialPageRecord(locale, params));
 }

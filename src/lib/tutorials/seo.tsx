@@ -16,6 +16,11 @@ type TutorialAuthor = Readonly<{
   name: string;
 }>;
 
+export type TutorialMetadataOptions = Readonly<{
+  indexable?: boolean;
+  includeAlternates?: boolean;
+}>;
+
 export type TutorialStructuredData = Readonly<{
   "@context": "https://schema.org";
   "@type": "TechArticle";
@@ -52,14 +57,19 @@ export function tutorialDateModified(record: TutorialRecord): string | undefined
   return new Date(value).toISOString();
 }
 
-export function createTutorialMetadata(record: TutorialRecord, locale: Locale): Metadata {
+export function createTutorialMetadata(
+  record: TutorialRecord,
+  locale: Locale,
+  options: TutorialMetadataOptions = {},
+): Metadata {
   const url = tutorialUrl(record.slug, locale);
   const alternates = tutorialAlternates(record.slug);
   const title = firstText(record.seo?.title, record.title) ?? record.title;
   const description = firstText(record.seo?.description, record.description) ?? record.description;
   const author = sourceAuthor(record);
   const dateModified = tutorialDateModified(record);
-  const indexable = record.status === "published";
+  const indexable = options.indexable ?? record.status === "published";
+  const includeAlternates = options.includeAlternates ?? true;
 
   return {
     metadataBase: new URL(SITE_ORIGIN),
@@ -67,7 +77,7 @@ export function createTutorialMetadata(record: TutorialRecord, locale: Locale): 
     description,
     alternates: {
       canonical: url,
-      languages: alternates,
+      ...(includeAlternates ? { languages: alternates } : {}),
     },
     robots: {
       index: indexable,

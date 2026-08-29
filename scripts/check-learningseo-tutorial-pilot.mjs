@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { normalizeSourceKey } from "../src/lib/tutorials/source-key.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tutorialRoot = path.join(repositoryRoot, "src/content/tutorials");
@@ -93,24 +94,6 @@ function assertString(value, label) {
 
 function assertHex(value, label) {
   assert.match(value, /^[a-f0-9]{64}$/i, `${label} must be a SHA-256 hex digest`);
-}
-
-function normalizeSourceKey(rawValue) {
-  const parsed = new URL(rawValue);
-  assert.equal(parsed.protocol, "https:", `Source URL must use HTTPS: ${rawValue}`);
-  parsed.hostname = parsed.hostname.toLowerCase();
-  parsed.port = "";
-  parsed.hash = "";
-  for (const key of [...parsed.searchParams.keys()]) {
-    if (/^(?:utm_|fbclid$|gclid$)/i.test(key)) parsed.searchParams.delete(key);
-  }
-  const sorted = [...parsed.searchParams.entries()].sort(([left], [right]) =>
-    left.localeCompare(right),
-  );
-  parsed.search = "";
-  for (const [key, value] of sorted) parsed.searchParams.append(key, value);
-  parsed.pathname = parsed.pathname === "/" ? "/" : parsed.pathname.replace(/\/+$/, "");
-  return parsed.toString();
 }
 
 function tags(html) {

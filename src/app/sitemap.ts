@@ -2,12 +2,33 @@ import type { MetadataRoute } from "next";
 
 import manifest from "@/components/sites/learningseo-io-071dae18/subpages/generated/manifest.json";
 import { localHref, SITE_ORIGIN } from "@/components/sites/learningseo-io-071dae18/shared/links";
-import { getPublishedTutorialPairs } from "@/lib/tutorials/manifest";
+import {
+  getPublishedTutorialPairs,
+  type TutorialPublicationPair,
+} from "@/lib/tutorials/manifest";
 import { tutorialDateModified } from "@/lib/tutorials/seo";
 import { tutorialUrl } from "@/lib/tutorials/url";
 
 function routePath(canonical: string): string {
   return new URL(canonical).pathname;
+}
+
+export function tutorialSitemapEntries(
+  pairs: readonly TutorialPublicationPair[],
+): MetadataRoute.Sitemap {
+  return pairs.map(({ zh }) => {
+    const lastModified = tutorialDateModified(zh);
+    return {
+      url: tutorialUrl(zh.slug, "zh-CN"),
+      ...(lastModified ? { lastModified } : {}),
+      alternates: {
+        languages: {
+          "zh-CN": tutorialUrl(zh.slug, "zh-CN"),
+          en: tutorialUrl(zh.slug, "en"),
+        },
+      },
+    };
+  });
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -26,19 +47,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
   });
 
-  const tutorialRoutes = (await getPublishedTutorialPairs()).map(({ zh }) => {
-    const lastModified = tutorialDateModified(zh);
-    return {
-      url: tutorialUrl(zh.slug, "zh-CN"),
-      ...(lastModified ? { lastModified } : {}),
-      alternates: {
-        languages: {
-          "zh-CN": tutorialUrl(zh.slug, "zh-CN"),
-          en: tutorialUrl(zh.slug, "en"),
-        },
-      },
-    };
-  });
-
-  return [...legacyRoutes, ...tutorialRoutes];
+  return [...legacyRoutes, ...tutorialSitemapEntries(await getPublishedTutorialPairs())];
 }
