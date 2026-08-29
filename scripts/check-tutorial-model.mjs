@@ -213,6 +213,15 @@ const fixtureResult = model.validateTutorialHtml(fixture, "semantic fixture", {
 assert.equal(fixtureResult.metrics.pre, 1);
 assert.equal(fixtureResult.metrics.blockquote, 1);
 assert.equal(fixtureResult.metrics.iframe, 1);
+assert.deepEqual(fixtureResult.headingEntries, [
+  { id: "semantic-fixture", level: 1 },
+  { id: "block-code", level: 2 },
+  { id: "supported-embed", level: 2 },
+  { id: "nested-section", level: 3 },
+  { id: "deep-topic", level: 4 },
+  { id: "fine-detail", level: 5 },
+  { id: "source-note", level: 6 },
+]);
 
 const committedManifestFiles = [
   ["zh-CN", "src/content/tutorials/manifest.json"],
@@ -305,6 +314,14 @@ assert.throws(
 assert.throws(
   () => model.validateTutorialHtml("<article><h1 id=\"x\">Title</h1><p><img src=\"/sites//learningseo-io-071dae18/tutorials/a.png\" alt=\"Diagram\"></p></article>"),
   /repository-local path/,
+);
+assert.throws(
+  () => model.validateTutorialHtml("<article><h1 id=\"x\">Title</h1><h2 id=\"x\">Duplicate</h2></article>"),
+  /duplicate id x/,
+);
+assert.throws(
+  () => model.validateTutorialHtml("<article><h1 id=\"x\">Title</h1><p id=\"x\">Duplicate</p></article>"),
+  /duplicate id x/,
 );
 assert.throws(
   () => model.validateTutorialManifestPair(zh, { ...en, generation: "generation-2" }),

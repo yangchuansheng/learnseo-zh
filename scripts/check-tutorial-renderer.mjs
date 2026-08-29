@@ -233,6 +233,15 @@ try {
     "fine-detail",
     "source-note",
   ]);
+  assert.deepEqual(validationByLocale.en.headingEntries, [
+    { id: "semantic-fixture", level: 1 },
+    { id: "block-code", level: 2 },
+    { id: "supported-embed", level: 2 },
+    { id: "nested-section", level: 3 },
+    { id: "deep-topic", level: 4 },
+    { id: "fine-detail", level: 5 },
+    { id: "source-note", level: 6 },
+  ]);
   assert.deepEqual(validationByLocale.en.metrics, expectedSemanticMetrics);
   assert.deepEqual(validationByLocale["zh-CN"].metrics, expectedSemanticMetrics);
   const preparedHtml = route.prepareTutorialHtmlForRender(englishHtml);
@@ -256,23 +265,6 @@ try {
   assert.match(commentedAndSiblingPreparedHtml, /<!-- <table><tbody><tr><td>Comment only<\/td><\/tr><\/tbody><\/table> -->/);
   assert.match(commentedAndSiblingPreparedHtml, /data-tutorial-table><table><tbody><tr><td>First/);
   assert.match(commentedAndSiblingPreparedHtml, /<\/table><\/div><div class="tutorial-table-wrapper" data-tutorial-table><table>/);
-
-  const mislabelledBodyHeadingRecord = {
-    ...tutorialRecord("en"),
-    toc: [
-      { id: "block-code", title: "Block code", level: 1 },
-      { id: "supported-embed", title: "Supported embed", level: 2 },
-    ],
-  };
-  const mislabelledBodyHeadingMarkup = renderToStaticMarkup(
-    await route.renderTutorialRecord("en", mislabelledBodyHeadingRecord, {
-      contentLoader: async () => preparedHtml,
-      redirectResolver: async () => null,
-    }),
-  );
-  assert.equal(count(mislabelledBodyHeadingMarkup, /id="block-code"/g), 1);
-  assert.doesNotMatch(mislabelledBodyHeadingMarkup, /<h1\b[^>]*id="block-code"/);
-  assert.match(mislabelledBodyHeadingMarkup, /<h2 id="block-code">/);
 
   for (const locale of ["zh-CN", "en"]) {
     const { markup, record } = await render(locale);
@@ -356,6 +348,16 @@ try {
       ],
     }),
     /TOC anchors must follow HTML heading order/,
+  );
+  await assert.rejects(
+    () => route.loadTutorialHtml("en", {
+      ...englishRecord,
+      toc: [
+        { id: "semantic-fixture", title: "Semantic fixture", level: 1 },
+        { id: "block-code", title: "Block code", level: 1 },
+      ],
+    }),
+    /TOC anchor level does not match HTML heading/,
   );
 
   const previewMetadata = seo.createTutorialMetadata(tutorialRecord("zh-CN", "draft"), "zh-CN", {

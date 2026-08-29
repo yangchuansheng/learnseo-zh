@@ -15,6 +15,7 @@ import {
   TUTORIAL_CONTENT_ROOT,
   validateContentHash,
   validateTutorialHtml,
+  type TutorialHeadingEntry,
   type TutorialRecord,
 } from "@/lib/tutorials/manifest";
 import { createTutorialMetadata } from "@/lib/tutorials/seo";
@@ -89,8 +90,16 @@ function tutorialContentPath(locale: Locale, record: TutorialRecord): string {
   return target;
 }
 
-function assertSafeToc(record: TutorialRecord, headingIds: readonly string[]): void {
+function assertSafeToc(record: TutorialRecord, headings: readonly TutorialHeadingEntry[]): void {
   const seen = new Set<string>();
+  const headingsById = new Map<string, TutorialHeadingEntry & { index: number }>();
+  for (const [index, heading] of headings.entries()) {
+    const existing = headingsById.get(heading.id);
+    if (existing) {
+      throw new Error(`Tutorial ${record.slug} HTML heading id is duplicated: ${heading.id}`);
+    }
+    headingsById.set(heading.id, { ...heading, index });
+  }
   let previousHeadingIndex = -1;
   for (const entry of record.toc) {
     if (!SAFE_ANCHOR_ID_PATTERN.test(entry.id)) {
@@ -100,14 +109,19 @@ function assertSafeToc(record: TutorialRecord, headingIds: readonly string[]): v
       throw new Error(`Tutorial ${record.slug} TOC anchor is duplicated: ${entry.id}`);
     }
     seen.add(entry.id);
-    const headingIndex = headingIds.indexOf(entry.id);
-    if (headingIndex === -1) {
+    const heading = headingsById.get(entry.id);
+    if (!heading) {
       throw new Error(`Tutorial ${record.slug} TOC anchor is missing from HTML: ${entry.id}`);
     }
-    if (headingIndex < previousHeadingIndex) {
+    if (entry.level !== heading.level) {
+      throw new Error(
+        `Tutorial ${record.slug} TOC anchor level does not match HTML heading ${entry.id}: toc h${entry.level}, html h${heading.level}`,
+      );
+    }
+    if (heading.index < previousHeadingIndex) {
       throw new Error(`Tutorial ${record.slug} TOC anchors must follow HTML heading order`);
     }
-    previousHeadingIndex = headingIndex;
+    previousHeadingIndex = heading.index;
   }
 }
 
@@ -149,7 +163,7 @@ export async function loadTutorialHtml(locale: Locale, record: TutorialRecord): 
   const html = await readFile(contentPath, "utf8");
   validateContentHash(html, contentHashForLocale(locale, record), `Tutorial ${record.slug} ${locale} content`);
   const validation = validateTutorialHtml(html, `Tutorial ${record.slug} ${locale}`);
-  assertSafeToc(record, validation.headingIds);
+  assertSafeToc(record, validation.headingEntries);
   return prepareTutorialHtmlForRender(html);
 }
 

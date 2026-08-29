@@ -119,6 +119,11 @@ export type TutorialTocEntry = Readonly<{
   level: 1 | 2 | 3 | 4 | 5 | 6;
 }>;
 
+export type TutorialHeadingEntry = Readonly<{
+  id: string;
+  level: TutorialTocEntry["level"];
+}>;
+
 export type TutorialSnapshotHistory = Readonly<{
   version: number;
   canonicalUrl: string;
@@ -272,6 +277,7 @@ export type TutorialPublicationPair = Readonly<{
 export type TutorialHtmlValidation = Readonly<{
   metrics: TutorialContentMetrics;
   headingIds: readonly string[];
+  headingEntries: readonly TutorialHeadingEntry[];
 }>;
 
 const ISO_DATE_TIME_PATTERN = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?Z$";
@@ -1691,11 +1697,17 @@ export function validateTutorialHtml(
   if (/\bon[a-z-]+\s*=|\bsrcdoc\s*=|\bstyle\s*=/i.test(html)) {
     throw new Error(`${label} contains an executable or inline-style attribute`);
   }
+  const elementIds = new Set<string>();
   for (const match of html.matchAll(/<([a-z][\w:-]*)\b([^>]*)>/gi)) {
     const tag = match[1].toLowerCase();
     const attrs = attributeMap(match[0], `${label} <${tag}>`);
     for (const key of attrs.keys()) {
       if (!safeAttributes.has(key)) throw new Error(`${label} contains unsupported attribute ${key}`);
+    }
+    const id = attrs.get("id");
+    if (id) {
+      if (elementIds.has(id)) throw new Error(`${label} contains duplicate id ${id}`);
+      elementIds.add(id);
     }
     for (const [key, value] of attrs) {
       if (["href", "src", "cite"].includes(key)) validateUrlAttribute(value, `${label} ${tag}.${key}`);
@@ -1721,14 +1733,19 @@ export function validateTutorialHtml(
       }
     }
   }
-  const headingIds: string[] = [];
+  const headingEntries: TutorialHeadingEntry[] = [];
+  const headingIds = new Set<string>();
   let previousHeading = 0;
   for (const match of html.matchAll(/<h([1-6])\b([^>]*)>/gi)) {
-    const level = Number(match[1]);
+    const level = Number(match[1]) as TutorialTocEntry["level"];
     if (level > previousHeading + 1) throw new Error(`${label} heading hierarchy jumps from h${previousHeading}`);
     previousHeading = level;
     const id = attributeMap(match[0], `${label} h${level}`).get("id");
-    if (id) headingIds.push(id);
+    if (id) {
+      if (headingIds.has(id)) throw new Error(`${label} contains duplicate heading id ${id}`);
+      headingIds.add(id);
+      headingEntries.push({ id, level });
+    }
   }
   const h1Count = openingTags(html, "h1").length;
   if ((options.requireSingleH1 ?? true) && h1Count !== 1) throw new Error(`${label} must contain one h1`);
@@ -1751,7 +1768,7 @@ export function validateTutorialHtml(
   for (const requiredTag of options.requireTags ?? []) {
     if (!tags.includes(requiredTag.toLowerCase())) throw new Error(`${label} is missing <${requiredTag}>`);
   }
-  return { metrics, headingIds };
+  return { metrics, headingIds: headingEntries.map(({ id }) => id), headingEntries };
 }
 
 export function sha256(value: string | Uint8Array): Sha256 {

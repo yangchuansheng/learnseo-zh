@@ -26,6 +26,7 @@ export type {
   Sha256,
   TutorialContentFile,
   TutorialContentMetrics,
+  TutorialHeadingEntry,
   TutorialHtmlValidation,
   TutorialLicense,
   TutorialManifest,
