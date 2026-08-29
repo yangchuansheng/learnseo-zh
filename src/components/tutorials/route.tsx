@@ -37,9 +37,13 @@ export async function generateTutorialPageMetadata(
   params: TutorialParams,
 ): Promise<Metadata> {
   const record = await getTutorialPageRecord(locale, params);
-  const pair = isTutorialRedirect(record)
-    ? undefined
-    : await getPublishedTutorialPair(locale, record.slug);
+  if (isTutorialRedirect(record)) {
+    return createTutorialMetadata(record, locale, {
+      indexable: false,
+      includeAlternates: false,
+    });
+  }
+  const pair = await getPublishedTutorialPair(locale, record.slug);
   return createTutorialMetadata(record, locale, {
     indexable: Boolean(pair),
     includeAlternates: Boolean(pair),

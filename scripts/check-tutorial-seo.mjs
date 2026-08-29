@@ -82,11 +82,11 @@ async function assertProductionContract(production) {
   const previewZh = tutorialRecord("zh-CN", "preview", { status: "draft" });
   const previewEn = tutorialRecord("en", "preview", { status: "review" });
   const aliasZh = tutorialRecord("zh-CN", "legacy-guide", {
-    canonicalUrl: canonicalZh,
+    canonicalUrl: "https://example.com/legacy-guide",
     redirectTo: "/tutorials/guide/",
   });
   const aliasEn = tutorialRecord("en", "legacy-guide", {
-    canonicalUrl: canonicalEn,
+    canonicalUrl: "https://example.com/legacy-guide",
     redirectTo: "/en/tutorials/guide/",
   });
   const zhManifest = tutorialManifest("zh-CN", "generation-1", [zh, previewZh, aliasZh]);
@@ -116,6 +116,34 @@ async function assertProductionContract(production) {
 
   const pairs = manifest.getPublishedTutorialPairsFromManifests(zhManifest, enManifest);
   assert.deepEqual(pairs.map(({ zh: pairZh }) => pairZh.slug), ["guide"]);
+
+  for (const status of ["draft", "review", "stale"]) {
+    const conflictingZh = tutorialRecord("zh-CN", `${status}-owner`, {
+      canonicalUrl: "https://example.com/shared-source",
+      status,
+    });
+    const conflictingEn = tutorialRecord("en", `${status}-other`, {
+      canonicalUrl: "https://example.com/shared-source",
+      status,
+    });
+    const conflictingZhManifest = tutorialManifest("zh-CN", "generation-1", [conflictingZh]);
+    const conflictingEnManifest = tutorialManifest("en", "generation-1", [conflictingEn]);
+    assert.throws(
+      () => manifest.validateTutorialManifestPairOwnership(
+        conflictingZhManifest,
+        conflictingEnManifest,
+      ),
+      /source key .* is owned by both/,
+    );
+    assert.throws(
+      () => manifest.getPublishedTutorialPairsFromManifests(
+        conflictingZhManifest,
+        conflictingEnManifest,
+      ),
+      /source key .* is owned by both/,
+    );
+  }
+
   assert.equal(
     manifest.isIndexableTutorialPair(zh, en, "generation-1", "generation-1"),
     true,
@@ -154,6 +182,24 @@ async function assertProductionContract(production) {
   assert.equal(
     manifest.isIndexableTutorialPair(zh, aliasEn, "generation-1", "generation-1"),
     false,
+  );
+  const undatedZh = { ...zh, snapshot: { version: 1 } };
+  const undatedEn = { ...en, snapshot: { version: 1 } };
+  assert.equal(
+    manifest.isIndexableTutorialPair(undatedZh, undatedEn, "generation-1", "generation-1"),
+    false,
+  );
+  const seoDatedZh = {
+    ...undatedZh,
+    seo: { dateModified: "2026-08-29T00:00:00.000Z" },
+  };
+  const seoDatedEn = {
+    ...undatedEn,
+    seo: { dateModified: "2026-08-29T00:00:00.000Z" },
+  };
+  assert.equal(
+    manifest.isIndexableTutorialPair(seoDatedZh, seoDatedEn, "generation-1", "generation-1"),
+    true,
   );
   assert.equal(
     manifest.getPublishedTutorialPairsFromManifests(
@@ -195,6 +241,15 @@ async function assertProductionContract(production) {
     false,
     undefined,
   );
+  const aliasMetadata = seo.createTutorialMetadata(aliasZh, "zh-CN", {
+    indexable: true,
+    includeAlternates: true,
+  });
+  assert.equal(aliasMetadata.robots.index, false);
+  assert.equal(aliasMetadata.robots.follow, false);
+  assert.equal(aliasMetadata.alternates, null);
+  assert.equal(aliasMetadata.openGraph, null);
+  assert.equal(aliasMetadata.other, undefined);
 
   const structured = seo.createTutorialStructuredData(zh, "zh-CN");
   for (const key of [
@@ -242,6 +297,10 @@ async function assertProductionContract(production) {
     route.renderTutorialRecord("zh-CN", aliasZh, async (_locale, record) =>
       manifest.resolveTutorialRedirectPath("zh-CN", record, redirectRecords),
     ),
+    (error) =>
+      typeof error?.digest === "string" &&
+      error.digest.includes("/tutorials/guide/") &&
+      error.digest.includes(";308;"),
   );
 
   const self = tutorialRecord("zh-CN", "self", { redirectTo: "/tutorials/self/" });
@@ -289,6 +348,7 @@ async function checkManifestIntegration(production) {
     return false;
   }
 
+  manifest.validateTutorialManifestPairOwnership(zh, en);
   assert.deepEqual(sortedSlugs(zh.routes), sortedSlugs(en.routes), "Locale tutorial slug sets differ");
   const pairs = manifest.getPublishedTutorialPairsFromManifests(zh, en);
   const pairBySlug = new Map(pairs.map((pair) => [pair.zh.slug, pair]));
@@ -297,12 +357,19 @@ async function checkManifestIntegration(production) {
       const pair = pairBySlug.get(record.slug);
       if (record.status === "published") {
         assert.ok(pair, `${locale}/${record.slug} is published without a validated bilingual pair`);
+        assert.ok(seo.tutorialDateModified(record), `${locale}/${record.slug} is missing a valid dateModified`);
       }
       const metadata = seo.createTutorialMetadata(record, locale, {
         indexable: Boolean(pair),
         includeAlternates: Boolean(pair),
       });
       assert.equal(metadata.robots.index, Boolean(pair), `${locale}/${record.slug} indexability drifted`);
+      if (manifest.isTutorialRedirect(record)) {
+        assert.equal(metadata.robots.index, false, `${locale}/${record.slug} alias must be noindex`);
+        assert.equal(metadata.alternates, null, `${locale}/${record.slug} alias must have no alternates`);
+        assert.equal(metadata.openGraph, null, `${locale}/${record.slug} alias must have no Open Graph metadata`);
+        assert.equal(metadata.other, undefined, `${locale}/${record.slug} alias must have no citation metadata`);
+      }
       if (pair) assert.equal(url.normalizeSourceKey(record.source.canonicalUrl),
         url.normalizeSourceKey(locale === "en" ? pair.zh.source.canonicalUrl : pair.en.source.canonicalUrl));
     }

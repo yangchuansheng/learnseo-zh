@@ -277,6 +277,20 @@ export function isPublishedTutorial(record: TutorialRecord): boolean {
   return record.status === "published";
 }
 
+export function tutorialDateModified(record: TutorialRecord): string | undefined {
+  const values = [
+    record.seo?.dateModified,
+    record.snapshot.sourceUpdatedAt,
+    record.snapshot.capturedAt,
+  ];
+  for (const value of values) {
+    if (typeof value !== "string" || !value.trim()) continue;
+    const timestamp = Date.parse(value);
+    if (Number.isFinite(timestamp)) return new Date(timestamp).toISOString();
+  }
+  return undefined;
+}
+
 export function isIndexableTutorialPair(
   zh: TutorialRecord,
   en: TutorialRecord,
@@ -293,6 +307,7 @@ export function isIndexableTutorialPair(
     en.snapshot.version < 1
   ) return false;
   if (zh.snapshot.version !== en.snapshot.version) return false;
+  if (!tutorialDateModified(zh) || !tutorialDateModified(en)) return false;
   try {
     return normalizeSourceKey(zh.source.canonicalUrl) === normalizeSourceKey(en.source.canonicalUrl);
   } catch {
@@ -300,10 +315,28 @@ export function isIndexableTutorialPair(
   }
 }
 
+export function validateTutorialManifestPairOwnership(
+  zhManifest: TutorialManifest,
+  enManifest: TutorialManifest,
+): void {
+  const owners = new Map<string, string>();
+  for (const route of [...zhManifest.routes, ...enManifest.routes]) {
+    const sourceKey = normalizeSourceKey(route.source.canonicalUrl);
+    const owner = owners.get(sourceKey);
+    if (owner && owner !== route.slug) {
+      throw new Error(
+        `Tutorial source key ${sourceKey} is owned by both ${owner} and ${route.slug}`,
+      );
+    }
+    owners.set(sourceKey, route.slug);
+  }
+}
+
 export function getPublishedTutorialPairsFromManifests(
   zhManifest: TutorialManifest,
   enManifest: TutorialManifest,
 ): TutorialPublicationPair[] {
+  validateTutorialManifestPairOwnership(zhManifest, enManifest);
   if (!zhManifest.available || !enManifest.available) return [];
   const generation = zhManifest.generation;
   if (!generation || generation !== enManifest.generation) return [];

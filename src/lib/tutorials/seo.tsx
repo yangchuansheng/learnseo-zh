@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 
 import { SITE_ORIGIN } from "@/components/sites/learningseo-io-071dae18/shared/links";
 import type { Locale } from "@/lib/localization";
-import type { TutorialRecord } from "./manifest";
+import { isTutorialRedirect, tutorialDateModified, type TutorialRecord } from "./manifest";
 import { tutorialAlternates, tutorialUrl } from "./url";
+
+export { tutorialDateModified } from "./manifest";
 
 export const TUTORIAL_PUBLISHER = Object.freeze({
   "@type": "Organization" as const,
@@ -47,16 +49,6 @@ function sourceAuthor(record: TutorialRecord): { name: string; type: "Person" | 
   };
 }
 
-export function tutorialDateModified(record: TutorialRecord): string | undefined {
-  const value = firstText(
-    record.seo?.dateModified,
-    record.snapshot.sourceUpdatedAt,
-    record.snapshot.capturedAt,
-  );
-  if (!value || !Number.isFinite(Date.parse(value))) return undefined;
-  return new Date(value).toISOString();
-}
-
 export function createTutorialMetadata(
   record: TutorialRecord,
   locale: Locale,
@@ -70,6 +62,21 @@ export function createTutorialMetadata(
   const dateModified = tutorialDateModified(record);
   const indexable = options.indexable ?? record.status === "published";
   const includeAlternates = options.includeAlternates ?? true;
+
+  if (isTutorialRedirect(record)) {
+    return {
+      metadataBase: new URL(SITE_ORIGIN),
+      title,
+      description,
+      alternates: null,
+      robots: {
+        index: false,
+        follow: false,
+        googleBot: { index: false, follow: false },
+      },
+      openGraph: null,
+    };
+  }
 
   return {
     metadataBase: new URL(SITE_ORIGIN),
