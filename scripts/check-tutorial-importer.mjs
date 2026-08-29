@@ -19,6 +19,7 @@ import {
   recoverTutorialImport,
   sha256,
   tutorialImportResultMessage,
+  validateImportOptions,
   writeJsonFile,
 } from "./lib/tutorial-importer.mjs";
 
@@ -100,6 +101,37 @@ async function importFixture(tmpRoot, snapshot, overrides = {}) {
   });
 }
 
+function recoveryMarker(operationId, snapshot) {
+  return {
+    operationId,
+    generation: operationId,
+    slug,
+    sourceKey: snapshot.sourceKey,
+    locales: ["zh-CN", "en"],
+  };
+}
+
+async function recoveryJournalFixture(operationId, snapshot, files, overrides = {}) {
+  const marker = overrides.marker ?? recoveryMarker(operationId, snapshot);
+  return {
+    operationId,
+    generation: operationId,
+    candidateVersion: overrides.candidateVersion ?? 1,
+    slug,
+    sourceKey: snapshot.sourceKey,
+    marker,
+    hashes: {
+      sourceContentHash: snapshot.sourceContentHash,
+      contentHash: sha256(snapshot.html),
+      translationContentHash: sha256(await fs.readFile(path.join(fixtureRoot, "google-devsite.zh-CN.html"), "utf8")),
+    },
+    validation: { en: {}, zh: {} },
+    files,
+    phases: [],
+    ...overrides,
+  };
+}
+
 function allTrue(keys) {
   return Object.fromEntries(keys.map((key) => [key, true]));
 }
@@ -141,6 +173,40 @@ function publishRoute(route, locale) {
   };
 }
 
+function routeWithMissingContent(route, locale) {
+  const source = "https://developers.google.com/search/docs/fundamentals/missing-content";
+  const sourceContentHash = "c".repeat(64);
+  const contentHash = "a".repeat(64);
+  const translationContentHash = "b".repeat(64);
+  const contentFile = locale === "en" ? `${contentHash}.html` : `${translationContentHash}.html`;
+  return {
+    ...route,
+    slug: "missing-content-guide",
+    path: locale === "en" ? "/en/tutorials/missing-content-guide/" : "/tutorials/missing-content-guide/",
+    sourceKey: source,
+    source: {
+      ...route.source,
+      canonicalUrl: source,
+      requestedUrl: source,
+      finalUrl: source,
+    },
+    snapshot: {
+      ...route.snapshot,
+      sourceContentHash,
+      contentHash,
+      translationContentHash,
+      history: [],
+    },
+    contentFile,
+    translation: {
+      ...route.translation,
+      contentHash: translationContentHash,
+      contentFile: `${translationContentHash}.html`,
+    },
+    media: [],
+  };
+}
+
 async function publishImportedFixture(contentRoot) {
   const [zhManifest, enManifest] = await Promise.all([
     fs.readFile(path.join(contentRoot, "manifest.json"), "utf8").then(JSON.parse),
@@ -156,6 +222,10 @@ async function publishImportedFixture(contentRoot) {
 async function main() {
   const tmpRoot = await fs.mkdtemp(path.join(os.tmpdir(), "tutorial-importer-"));
   try {
+    assert.throws(
+      () => validateImportOptions({ input: "snapshot.json", translation: "translation.html", "translated-at": "1" }),
+      (error) => error instanceof TutorialImportError && error.code === "usage",
+    );
     const snapshot = await collectFixture();
     assert.equal(snapshot.slug, slug);
     assert.equal(snapshot.sourcePath, sourcePath);
@@ -172,7 +242,10 @@ async function main() {
     const contentRoot = path.join(tmpRoot, "content-root");
     const publicRoot = path.join(tmpRoot, "public");
     await seedManifests(contentRoot);
-    const result = await importFixture(tmpRoot, snapshot);
+    const result = await importFixture(tmpRoot, snapshot, {
+      translator: "Fixture Translator",
+      translatedAt: "2026-08-30T00:00:00.000Z",
+    });
     assert.equal(result.status, "draft");
     assert.equal(result.manifestFiles.length, 2);
     assert.equal(result.media.length, 1);
@@ -189,6 +262,8 @@ async function main() {
     assert.equal(zhManifest.routes[0].description, "搜索引擎需要清晰的页面、稳定的链接和可抓取的内容。");
     assert.equal(zhManifest.routes[0].review.decision, "pending");
     assert.equal(zhManifest.routes[0].qualification.decision, "pending");
+    assert.equal(zhManifest.routes[0].translation.translator, "Fixture Translator");
+    assert.equal(zhManifest.routes[0].translation.translatedAt, "2026-08-30T00:00:00.000Z");
     assert.equal(zhManifest.routes[0].seo.indexable, false);
     assert.equal(enManifest.routes[0].seo.indexable, false);
     const enHtml = await fs.readFile(path.join(contentRoot, "content", enManifest.routes[0].contentFile), "utf8");
@@ -204,7 +279,8 @@ async function main() {
     assert.equal(marker.generation, result.generation);
     assert.deepEqual(marker.locales, ["zh-CN", "en"]);
     assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, marker), true);
-    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, undefined), true);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, undefined), false);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(emptyManifest("zh-CN"), undefined), true);
     assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, {
       ...marker,
       generation: "tutorial-import-other-generation",
@@ -214,6 +290,10 @@ async function main() {
     assert.equal(journal.phase, "committed");
     assert.ok(journal.files.every((file) => typeof file.relative === "string" && /^[a-f0-9]{64}$/.test(file.sha256)));
     assert.equal(journal.hashes.sourceContentHash, snapshot.sourceContentHash);
+    assert.equal(journal.candidateVersion, zhManifest.routes[0].snapshot.version);
+    assert.equal(journal.marker.slug, slug);
+    assert.equal(journal.marker.sourceKey, snapshot.sourceKey);
+    assert.deepEqual(journal.validation.en.headingEntries, journal.validation.zh.headingEntries);
 
     const generationBeforeSecondImport = zhManifest.generation;
     const secondResult = await importFixture(tmpRoot, snapshot);
@@ -222,6 +302,28 @@ async function main() {
     assert.equal(secondZhManifest.generation, generationBeforeSecondImport);
     assert.equal(secondZhManifest.routes[0].snapshot.version, 1);
     assert.deepEqual(secondZhManifest.routes[0].snapshot.history, []);
+
+    const tamperedMarker = { ...marker, slug: "different-guide" };
+    await writeJsonFile(path.join(contentRoot, "import-generation.json"), tamperedMarker);
+    const tamperedBefore = await Promise.all([
+      fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(contentRoot, "manifest.en.json"), "utf8"),
+      fs.readFile(path.join(contentRoot, "import-generation.json"), "utf8"),
+    ]);
+    await expectImportError("recovery-conflict", result.operationId, () =>
+      recoverTutorialImport({
+        contentRoot,
+        publicRoot,
+        operationId: result.operationId,
+      }),
+    );
+    const tamperedAfter = await Promise.all([
+      fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(contentRoot, "manifest.en.json"), "utf8"),
+      fs.readFile(path.join(contentRoot, "import-generation.json"), "utf8"),
+    ]);
+    assert.deepEqual(tamperedAfter, tamperedBefore);
+    await writeJsonFile(path.join(contentRoot, "import-generation.json"), marker);
 
     await expectCode("translation-missing", () =>
       importTutorialDraft({
@@ -329,15 +431,48 @@ async function main() {
       https.request = originalRequest;
     }
 
+    for (const privateMappedAddress of [
+      "::ffff:7f00:1",
+      "0:0:0:0:0:ffff:7f00:1",
+      "::ffff:127.0.0.1",
+      "::ffff:192.88.99.1",
+      "0:0:0:0:0:ffff:c058:6301",
+    ]) {
+      try {
+        dns.lookup = async () => [{ address: privateMappedAddress, family: 6 }];
+        https.request = () => {
+          throw new Error("HTTPS request must not run for private DNS answers");
+        };
+        await expectCode("unavailable", () =>
+          collectTutorialSnapshot({
+            url: pinnedUrl,
+            slug: "private-mapped-guide",
+            sourcePath,
+          }),
+        );
+      } finally {
+        dns.lookup = originalLookup;
+        https.request = originalRequest;
+      }
+    }
     try {
-      dns.lookup = async () => [{ address: "::ffff:7f00:1", family: 6 }];
-      https.request = () => {
-        throw new Error("HTTPS request must not run for private DNS answers");
+      dns.lookup = async () => [{ address: "::ffff:5db8:d822", family: 6 }];
+      https.request = (_options, callback) => {
+        const request = new EventEmitter();
+        request.setTimeout = () => request;
+        request.on = () => request;
+        request.end = () => {
+          const response = Readable.from([""]);
+          response.statusCode = 404;
+          response.headers = { "content-type": "text/html; charset=utf-8" };
+          callback(response);
+        };
+        return request;
       };
       await expectCode("unavailable", () =>
         collectTutorialSnapshot({
           url: pinnedUrl,
-          slug: "private-mapped-guide",
+          slug: "public-mapped-guide",
           sourcePath,
         }),
       );
@@ -524,6 +659,47 @@ async function main() {
     assert.equal(cleanupManifest.routes[0].slug, "cleanup-guide");
     await fs.access(path.join(cleanupContentRoot, "manifest.json.backup-tutorial-import-cleanup-test"));
 
+    const retentionContentRoot = path.join(tmpRoot, "retention-content");
+    const retentionPublicRoot = path.join(tmpRoot, "retention-public");
+    await seedManifests(retentionContentRoot);
+    const retentionImports = [
+      ["backup-retention-one", "tutorial-import-backup-retention-one", "retention=1"],
+      ["backup-retention-two", "tutorial-import-backup-retention-two", "retention=2"],
+      ["backup-retention-three", "tutorial-import-backup-retention-three", "retention=3"],
+      ["backup-retention-four", "tutorial-import-backup-retention-four", "retention=4"],
+    ];
+    for (const [retentionSlug, operationId, query] of retentionImports) {
+      const url = `${sourceUrl}?${query}`;
+      await importFixture(tmpRoot, {
+        ...snapshot,
+        slug: retentionSlug,
+        canonicalUrl: url,
+        requestedUrl: url,
+        finalUrl: url,
+        sourceKey: url,
+      }, {
+        contentRoot: retentionContentRoot,
+        publicRoot: retentionPublicRoot,
+        operationId,
+      });
+    }
+    for (const operationId of ["tutorial-import-backup-retention-three", "tutorial-import-backup-retention-four"]) {
+      for (const relative of ["manifest.json", "manifest.en.json", "import-generation.json"]) {
+        await fs.access(path.join(retentionContentRoot, `${relative}.backup-${operationId}`));
+      }
+    }
+    for (const [operationId, relatives] of [
+      ["tutorial-import-backup-retention-one", ["manifest.json", "manifest.en.json"]],
+      ["tutorial-import-backup-retention-two", ["manifest.json", "manifest.en.json", "import-generation.json"]],
+    ]) {
+      for (const relative of relatives) {
+        await assert.rejects(
+          fs.access(path.join(retentionContentRoot, `${relative}.backup-${operationId}`)),
+          /ENOENT/,
+        );
+      }
+    }
+
     const markerOnlyContentRoot = path.join(tmpRoot, "marker-only-recovery-content");
     const markerOnlyPublicRoot = path.join(tmpRoot, "marker-only-recovery-public");
     await seedManifests(markerOnlyContentRoot);
@@ -564,6 +740,65 @@ async function main() {
     ]);
     assert.deepEqual(markerOnlyAfter, markerOnlyBefore);
 
+    const liveMarkerOnlyContentRoot = path.join(tmpRoot, "live-marker-only-recovery-content");
+    await seedManifests(liveMarkerOnlyContentRoot);
+    const liveMarkerOnlyBefore = await Promise.all([
+      fs.readFile(path.join(liveMarkerOnlyContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(liveMarkerOnlyContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    const liveMarkerOnlyOperation = "tutorial-import-live-marker-only-test";
+    const liveMarkerOnlyMarker = recoveryMarker(liveMarkerOnlyOperation, snapshot);
+    await writeJsonFile(path.join(liveMarkerOnlyContentRoot, "import-generation.json"), liveMarkerOnlyMarker);
+    const liveMarkerOnlyBytes = await fs.readFile(path.join(liveMarkerOnlyContentRoot, "import-generation.json"));
+    await writeJsonFile(
+      path.join(liveMarkerOnlyContentRoot, ".import-journal", `${liveMarkerOnlyOperation}.json`),
+      await recoveryJournalFixture(liveMarkerOnlyOperation, snapshot, [
+        { relative: "import-generation.json", sha256: sha256(liveMarkerOnlyBytes) },
+      ], { marker: liveMarkerOnlyMarker }),
+    );
+    await expectImportError("recovery-conflict", liveMarkerOnlyOperation, () =>
+      recoverTutorialImport({
+        contentRoot: liveMarkerOnlyContentRoot,
+        publicRoot: path.join(tmpRoot, "live-marker-only-recovery-public"),
+        operationId: liveMarkerOnlyOperation,
+      }),
+    );
+    const liveMarkerOnlyAfter = await Promise.all([
+      fs.readFile(path.join(liveMarkerOnlyContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(liveMarkerOnlyContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    assert.deepEqual(liveMarkerOnlyAfter, liveMarkerOnlyBefore);
+
+    const emptyPairContentRoot = path.join(tmpRoot, "empty-pair-recovery-content");
+    await seedManifests(emptyPairContentRoot);
+    const emptyPairOperation = "tutorial-import-empty-pair-test";
+    const emptyPairStaging = path.join(emptyPairContentRoot, ".import-staging", emptyPairOperation);
+    const emptyPairMarker = recoveryMarker(emptyPairOperation, snapshot);
+    const emptyZh = { ...emptyManifest("zh-CN"), generation: emptyPairOperation };
+    const emptyEn = { ...emptyManifest("en"), generation: emptyPairOperation };
+    await writeJsonFile(path.join(emptyPairStaging, "manifest.json"), emptyZh);
+    await writeJsonFile(path.join(emptyPairStaging, "manifest.en.json"), emptyEn);
+    await writeJsonFile(path.join(emptyPairStaging, "import-generation.json"), emptyPairMarker);
+    const emptyPairFiles = await Promise.all([
+      "manifest.json",
+      "manifest.en.json",
+      "import-generation.json",
+    ].map(async (relative) => ({
+      relative,
+      sha256: sha256(await fs.readFile(path.join(emptyPairStaging, relative))),
+    })));
+    await writeJsonFile(
+      path.join(emptyPairContentRoot, ".import-journal", `${emptyPairOperation}.json`),
+      await recoveryJournalFixture(emptyPairOperation, snapshot, emptyPairFiles, { marker: emptyPairMarker }),
+    );
+    await expectImportError("recovery-conflict", emptyPairOperation, () =>
+      recoverTutorialImport({
+        contentRoot: emptyPairContentRoot,
+        publicRoot: path.join(tmpRoot, "empty-pair-recovery-public"),
+        operationId: emptyPairOperation,
+      }),
+    );
+
     await expectImportError("recovery-conflict", "tutorial-import-missing-journal-test", () =>
       recoverTutorialImport({
         contentRoot: path.join(tmpRoot, "missing-journal-content"),
@@ -581,6 +816,122 @@ async function main() {
         operationId: "tutorial-import-corrupt-journal-test",
       }),
     );
+
+    const validationContentRoot = path.join(tmpRoot, "validation-content");
+    const validationPublicRoot = path.join(tmpRoot, "validation-public");
+    await seedManifests(validationContentRoot);
+    await expectCode("commit", () =>
+      importFixture(tmpRoot, snapshot, {
+        contentRoot: validationContentRoot,
+        publicRoot: validationPublicRoot,
+        operationId: "tutorial-import-validation-test",
+        testHooks: { failBeforeManifestRelative: "manifest.json" },
+      }),
+    );
+    const validationJournalPath = path.join(validationContentRoot, ".import-journal", "tutorial-import-validation-test.json");
+    const validationJournal = JSON.parse(await fs.readFile(validationJournalPath, "utf8"));
+    await writeJsonFile(validationJournalPath, {
+      ...validationJournal,
+      validation: {
+        ...validationJournal.validation,
+        en: { ...validationJournal.validation.en, headingEntries: [] },
+      },
+    });
+    const validationBefore = await Promise.all([
+      fs.readFile(path.join(validationContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(validationContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    await expectImportError("recovery-conflict", "tutorial-import-validation-test", () =>
+      recoverTutorialImport({
+        contentRoot: validationContentRoot,
+        publicRoot: validationPublicRoot,
+        operationId: "tutorial-import-validation-test",
+      }),
+    );
+    const validationAfter = await Promise.all([
+      fs.readFile(path.join(validationContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(validationContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    assert.deepEqual(validationAfter, validationBefore);
+
+    const versionContentRoot = path.join(tmpRoot, "version-content");
+    const versionPublicRoot = path.join(tmpRoot, "version-public");
+    await seedManifests(versionContentRoot);
+    await expectCode("commit", () =>
+      importFixture(tmpRoot, snapshot, {
+        contentRoot: versionContentRoot,
+        publicRoot: versionPublicRoot,
+        operationId: "tutorial-import-version-test",
+        testHooks: { failBeforeManifestRelative: "manifest.json" },
+      }),
+    );
+    const versionJournalPath = path.join(versionContentRoot, ".import-journal", "tutorial-import-version-test.json");
+    const versionJournal = JSON.parse(await fs.readFile(versionJournalPath, "utf8"));
+    await writeJsonFile(versionJournalPath, { ...versionJournal, candidateVersion: versionJournal.candidateVersion + 1 });
+    const versionBefore = await Promise.all([
+      fs.readFile(path.join(versionContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(versionContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    await expectImportError("recovery-conflict", "tutorial-import-version-test", () =>
+      recoverTutorialImport({
+        contentRoot: versionContentRoot,
+        publicRoot: versionPublicRoot,
+        operationId: "tutorial-import-version-test",
+      }),
+    );
+    const versionAfter = await Promise.all([
+      fs.readFile(path.join(versionContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(versionContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    assert.deepEqual(versionAfter, versionBefore);
+
+    const extraRouteContentRoot = path.join(tmpRoot, "extra-route-content");
+    const extraRoutePublicRoot = path.join(tmpRoot, "extra-route-public");
+    await seedManifests(extraRouteContentRoot);
+    await expectCode("commit", () =>
+      importFixture(tmpRoot, snapshot, {
+        contentRoot: extraRouteContentRoot,
+        publicRoot: extraRoutePublicRoot,
+        operationId: "tutorial-import-extra-route-test",
+        testHooks: { failBeforeManifestRelative: "manifest.json" },
+      }),
+    );
+    const extraRouteStaging = path.join(extraRouteContentRoot, ".import-staging", "tutorial-import-extra-route-test");
+    const [extraZhManifest, extraEnManifest] = await Promise.all([
+      fs.readFile(path.join(extraRouteStaging, "manifest.json"), "utf8").then(JSON.parse),
+      fs.readFile(path.join(extraRouteStaging, "manifest.en.json"), "utf8").then(JSON.parse),
+    ]);
+    extraZhManifest.routes.push(routeWithMissingContent(extraZhManifest.routes[0], "zh-CN"));
+    extraEnManifest.routes.push(routeWithMissingContent(extraEnManifest.routes[0], "en"));
+    await writeJsonFile(path.join(extraRouteStaging, "manifest.json"), extraZhManifest);
+    await writeJsonFile(path.join(extraRouteStaging, "manifest.en.json"), extraEnManifest);
+    const extraRouteJournalPath = path.join(extraRouteContentRoot, ".import-journal", "tutorial-import-extra-route-test.json");
+    const extraRouteJournal = JSON.parse(await fs.readFile(extraRouteJournalPath, "utf8"));
+    await writeJsonFile(extraRouteJournalPath, {
+      ...extraRouteJournal,
+      files: await Promise.all(extraRouteJournal.files.map(async (file) => ({
+        ...file,
+        sha256: file.relative === "manifest.json" || file.relative === "manifest.en.json"
+          ? sha256(await fs.readFile(path.join(extraRouteStaging, file.relative)))
+          : file.sha256,
+      }))),
+    });
+    const extraRouteBefore = await Promise.all([
+      fs.readFile(path.join(extraRouteContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(extraRouteContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    await expectImportError("recovery-conflict", "tutorial-import-extra-route-test", () =>
+      recoverTutorialImport({
+        contentRoot: extraRouteContentRoot,
+        publicRoot: extraRoutePublicRoot,
+        operationId: "tutorial-import-extra-route-test",
+      }),
+    );
+    const extraRouteAfter = await Promise.all([
+      fs.readFile(path.join(extraRouteContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(extraRouteContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    assert.deepEqual(extraRouteAfter, extraRouteBefore);
 
     const recoveryContentRoot = path.join(tmpRoot, "recovery-content");
     const recoveryPublicRoot = path.join(tmpRoot, "recovery-public");
@@ -608,6 +959,42 @@ async function main() {
     assert.equal(recoveredAgain.recovered, false);
     const recoveredZhManifest = JSON.parse(await fs.readFile(path.join(recoveryContentRoot, "manifest.json"), "utf8"));
     assert.equal(recoveredZhManifest.generation, "tutorial-import-recovery-test");
+
+    const restoreContentRoot = path.join(tmpRoot, "restore-content");
+    await seedManifests(restoreContentRoot);
+    const restoreOperation = "tutorial-import-restore-test";
+    const restoreBefore = await Promise.all([
+      fs.readFile(path.join(restoreContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(restoreContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    await fs.copyFile(path.join(restoreContentRoot, "manifest.json"), path.join(restoreContentRoot, `manifest.json.backup-${restoreOperation}`));
+    await fs.copyFile(path.join(restoreContentRoot, "manifest.en.json"), path.join(restoreContentRoot, `manifest.en.json.backup-${restoreOperation}`));
+    const restoreMarker = recoveryMarker(restoreOperation, snapshot);
+    await writeJsonFile(path.join(restoreContentRoot, "import-generation.json"), restoreMarker);
+    await writeJsonFile(
+      path.join(restoreContentRoot, ".import-journal", `${restoreOperation}.json`),
+      await recoveryJournalFixture(restoreOperation, snapshot, [
+        { relative: "manifest.json", sha256: sha256("missing-candidate-manifest") },
+        { relative: "manifest.en.json", sha256: sha256("missing-candidate-manifest-en") },
+        { relative: "import-generation.json", sha256: sha256("missing-candidate-marker") },
+      ], {
+        marker: restoreMarker,
+        phases: [{ phase: "manifest-backup", relative: "manifest.json", recordedAt: "2026-08-30T00:00:00.000Z" }],
+      }),
+    );
+    const restored = await recoverTutorialImport({
+      contentRoot: restoreContentRoot,
+      publicRoot: path.join(tmpRoot, "restore-public"),
+      operationId: restoreOperation,
+    });
+    assert.equal(restored.status, "restored");
+    const restoreAfter = await Promise.all([
+      fs.readFile(path.join(restoreContentRoot, "manifest.json"), "utf8"),
+      fs.readFile(path.join(restoreContentRoot, "manifest.en.json"), "utf8"),
+    ]);
+    assert.deepEqual(restoreAfter, restoreBefore);
+    await assert.rejects(() => fs.access(path.join(restoreContentRoot, "import-generation.json")), { code: "ENOENT" });
+    await fs.access(path.join(restoreContentRoot, `manifest.json.backup-${restoreOperation}`));
 
     await publishImportedFixture(contentRoot);
     const publishedBefore = JSON.parse(await fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"));
@@ -712,6 +1099,7 @@ async function main() {
     assert.equal(secondRefreshManifest.routes[0].snapshot.version, publishedBefore.routes[0].snapshot.version);
     assert.equal(secondRefreshManifest.routes[0].refreshCandidate.version, refreshCandidate.version + 1);
     assert.equal(secondRefreshManifest.routes[0].refreshCandidate.operationId, "tutorial-import-refresh-second-test");
+    const beforeSupersededRefresh = JSON.parse(await fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"));
     const supersededRefresh = await importTutorialDraft({
       input: refreshedInput,
       translation: refreshedTranslation,
@@ -720,12 +1108,11 @@ async function main() {
       allowFixtureMedia: true,
       operationId: "tutorial-import-refresh-superseded-test",
     });
-    assert.equal(supersededRefresh.idempotent, false);
-    assert.equal(supersededRefresh.status, "draft");
+    assert.equal(supersededRefresh.idempotent, true);
+    assert.equal(supersededRefresh.status, "stale");
     assert.equal(supersededRefresh.liveRouteStatus, "published");
     const supersededRefreshManifest = JSON.parse(await fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"));
-    assert.equal(supersededRefreshManifest.routes[0].refreshCandidate.version, refreshCandidate.version + 2);
-    assert.equal(supersededRefreshManifest.routes[0].refreshCandidate.operationId, "tutorial-import-refresh-superseded-test");
+    assert.deepEqual(supersededRefreshManifest, beforeSupersededRefresh);
 
     const lockContentRoot = path.join(tmpRoot, "lock-content");
     await seedManifests(lockContentRoot);
@@ -839,7 +1226,7 @@ async function main() {
     assert.equal(staleEmptyLockResult.status, "draft");
     await assert.rejects(() => fs.access(staleEmptyLockPath), { code: "ENOENT" });
 
-    console.log("Tutorial importer contract passed: fixture collect/import, idempotency, failure taxonomy, DNS-pinned media/source trust boundaries, transaction rollback/recovery, stale and active lock scope, runtime marker gate, snapshot provenance, duplicate media staging, and refresh candidate preservation.");
+    console.log("Tutorial importer contract passed: deterministic fixture collect/import, in-process recovery/restore coverage, marker gating, mapped IPv6 rejection, tuple idempotency, failure taxonomy, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-final-fix-tutorials-importer.log");
   } finally {
     await fs.rm(tmpRoot, { recursive: true, force: true });
   }

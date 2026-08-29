@@ -202,6 +202,14 @@ assert.equal(model.isSha256("invalid"), false);
 assert.equal(model.isTutorialRecord(record("zh-CN")), true);
 assert.equal(model.isTutorialRecord(record("zh-CN"), "zh-CN"), true);
 assert.equal(model.isTutorialRecord(record("zh-CN"), "en"), false);
+assert.equal(
+  model.isTutorialBootstrapManifest(manifest("zh-CN", [], {
+    generation: "tutorial-generation-0",
+    activeVersion: null,
+  })),
+  true,
+);
+assert.equal(model.isTutorialBootstrapManifest(manifest("zh-CN", [record("zh-CN")])), false);
 
 const fixture = await fs.readFile(
   path.join(repositoryRoot, "src/content/tutorials/fixtures/semantic-fixture.html"),

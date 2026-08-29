@@ -422,11 +422,17 @@ function validateLinkReport(report) {
     "duplicate pilot occurrences must share one slug");
 }
 
-function validateGeneration(zhManifest, enManifest) {
+function validateGeneration(zhManifest, enManifest, marker) {
   const zhGeneration = zhManifest.data.generation ?? zhManifest.data.commitGeneration;
   const enGeneration = enManifest.data.generation ?? enManifest.data.commitGeneration;
   assertString(String(zhGeneration || ""), "Chinese manifest generation");
   assert.equal(zhGeneration, enGeneration, "locale manifests have different commit generations");
+  assert.equal(marker.operationId, zhGeneration, "import marker operation differs from manifest generation");
+  assert.equal(marker.generation, zhGeneration, "import marker generation differs from manifest generation");
+  assert.equal(marker.slug, pilotSlug, "import marker slug differs from pilot slug");
+  assert.equal(normalizeSourceKey(marker.sourceKey), normalizeSourceKey(sourceCanonical),
+    "import marker source differs from pilot source");
+  assert.deepEqual(marker.locales, ["zh-CN", "en"], "import marker locales differ");
 }
 
 function validatePair(zhRecord, enRecord, zhHtml, enHtml) {
@@ -533,6 +539,23 @@ function lifecycleContractFixture() {
   };
 }
 
+function validateLifecycleMarkerFixture() {
+  const zhManifest = { data: { generation: "tutorial-import-contract" } };
+  const enManifest = { data: { generation: "tutorial-import-contract" } };
+  const marker = {
+    operationId: "tutorial-import-contract",
+    generation: "tutorial-import-contract",
+    slug: pilotSlug,
+    sourceKey: sourceCanonical,
+    locales: ["zh-CN", "en"],
+  };
+  validateGeneration(zhManifest, enManifest, marker);
+  assert.throws(
+    () => validateGeneration(zhManifest, enManifest, { ...marker, generation: "tutorial-import-other" }),
+    /import marker generation differs/,
+  );
+}
+
 async function runtimeCheck() {
   const baseUrl = process.env.BASE_URL;
   assertString(baseUrl, "BASE_URL");
@@ -598,13 +621,14 @@ async function main() {
   const args = new Set(process.argv.slice(2));
   if (args.has("--contract")) {
     validateLifecycleEvidence(lifecycleContractFixture());
+    validateLifecycleMarkerFixture();
     console.log("Tutorial lifecycle acceptance contract passed.");
     return;
   }
 
   const zhManifest = await readManifest(path.join(tutorialRoot, "manifest.json"), "zh-CN");
   const enManifest = await readManifest(path.join(tutorialRoot, "manifest.en.json"), "en");
-  validateGeneration(zhManifest, enManifest);
+  validateGeneration(zhManifest, enManifest, JSON.parse(await fs.readFile(path.join(tutorialRoot, "import-generation.json"), "utf8")));
   const zhPath = await contentPath(zhManifest.record);
   const enPath = await contentPath(enManifest.record);
   const zhHtml = await fs.readFile(zhPath, "utf8");

@@ -299,6 +299,14 @@ export type TutorialHtmlValidation = Readonly<{
   headingEntries: readonly TutorialHeadingEntry[];
 }>;
 
+export function isTutorialBootstrapManifest(
+  manifest: Pick<TutorialManifest, "generation" | "routes" | "aliases">,
+): boolean {
+  return manifest.generation === "tutorial-generation-0" &&
+    manifest.routes.length === 0 &&
+    manifest.aliases.length === 0;
+}
+
 const ISO_DATE_TIME_PATTERN = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?Z$";
 const isoDateTimeSchema = {
   type: "string",

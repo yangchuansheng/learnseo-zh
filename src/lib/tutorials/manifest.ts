@@ -11,6 +11,7 @@ import {
   tutorialSlugFromPath,
 } from "./url";
 import {
+  isTutorialBootstrapManifest,
   parseTutorialManifest,
   validateTutorialManifestPair,
   validateTutorialRecord,
@@ -57,6 +58,7 @@ export type {
 export {
   assertTutorialContentFile,
   isSha256,
+  isTutorialBootstrapManifest,
   isTutorialRecord,
   parseTutorialManifest,
   sha256,
@@ -115,7 +117,9 @@ export function tutorialManifestMatchesGenerationMarker(
   manifest: TutorialManifest,
   marker: unknown,
 ): boolean {
-  if (marker === undefined) return true;
+  if (marker === undefined) {
+    return isTutorialBootstrapManifest(manifest);
+  }
   if (!marker || typeof marker !== "object") return false;
   const value = marker as {
     operationId?: unknown;
