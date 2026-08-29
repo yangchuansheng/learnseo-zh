@@ -112,7 +112,7 @@ function assertSafeToc(record: TutorialRecord, headingIds: readonly string[]): v
 }
 
 function wrapTutorialTables(html: string): string {
-  const tagPattern = /<\/?table\b[^>]*>/gi;
+  const tagPattern = /<!--[\s\S]*?(?:-->|$)|<\/?table\b[^>]*>/gi;
   let result = "";
   let cursor = 0;
   let tableStart = -1;
@@ -121,6 +121,7 @@ function wrapTutorialTables(html: string): string {
     const tag = match[0];
     const index = match.index;
     if (index === undefined) continue;
+    if (tag.startsWith("<!--")) continue;
     const isClosing = /^<\//.test(tag);
     if (!isClosing) {
       if (depth === 0) tableStart = index;

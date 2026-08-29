@@ -246,6 +246,33 @@ try {
   ].join(""));
   assert.equal(count(nestedPreparedHtml, /data-tutorial-table/g), 1);
   assert.match(nestedPreparedHtml, /Outer<table><tbody><tr><td>Inner/);
+  const commentedAndSiblingPreparedHtml = route.prepareTutorialHtmlForRender([
+    "<article><h1 id=\"commented-table\">Commented table</h1>",
+    "<!-- <table><tbody><tr><td>Comment only</td></tr></tbody></table> -->",
+    "<table><tbody><tr><td>First</td></tr></tbody></table>",
+    "<table><tbody><tr><td>Second</td></tr></tbody></table></article>",
+  ].join(""));
+  assert.equal(count(commentedAndSiblingPreparedHtml, /data-tutorial-table/g), 2);
+  assert.match(commentedAndSiblingPreparedHtml, /<!-- <table><tbody><tr><td>Comment only<\/td><\/tr><\/tbody><\/table> -->/);
+  assert.match(commentedAndSiblingPreparedHtml, /data-tutorial-table><table><tbody><tr><td>First/);
+  assert.match(commentedAndSiblingPreparedHtml, /<\/table><\/div><div class="tutorial-table-wrapper" data-tutorial-table><table>/);
+
+  const mislabelledBodyHeadingRecord = {
+    ...tutorialRecord("en"),
+    toc: [
+      { id: "block-code", title: "Block code", level: 1 },
+      { id: "supported-embed", title: "Supported embed", level: 2 },
+    ],
+  };
+  const mislabelledBodyHeadingMarkup = renderToStaticMarkup(
+    await route.renderTutorialRecord("en", mislabelledBodyHeadingRecord, {
+      contentLoader: async () => preparedHtml,
+      redirectResolver: async () => null,
+    }),
+  );
+  assert.equal(count(mislabelledBodyHeadingMarkup, /id="block-code"/g), 1);
+  assert.doesNotMatch(mislabelledBodyHeadingMarkup, /<h1\b[^>]*id="block-code"/);
+  assert.match(mislabelledBodyHeadingMarkup, /<h2 id="block-code">/);
 
   for (const locale of ["zh-CN", "en"]) {
     const { markup, record } = await render(locale);

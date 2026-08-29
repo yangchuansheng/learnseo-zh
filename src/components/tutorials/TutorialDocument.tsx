@@ -37,6 +37,22 @@ function anchorHref(id: string): string {
   return `#${encodeURIComponent(id)}`;
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function hasRenderedHeadingId(html: string, id: string): boolean {
+  const idPattern = new RegExp(
+    `\\bid\\s*=\\s*(?:"${escapeRegExp(id)}"|'${escapeRegExp(id)}'|${escapeRegExp(id)})(?=\\s|>|/)`,
+    "i",
+  );
+  for (const match of html.matchAll(/<!--[\s\S]*?(?:-->|$)|<h[1-6]\b[^>]*>/gi)) {
+    const tag = match[0];
+    if (!tag.startsWith("<!--") && idPattern.test(tag)) return true;
+  }
+  return false;
+}
+
 export function TutorialDocument({ html, locale, record }: TutorialDocumentProps) {
   const content = getSiteContent(locale);
   const sourceAuthor = record.source.author ?? record.source.provider;
@@ -46,7 +62,8 @@ export function TutorialDocument({ html, locale, record }: TutorialDocumentProps
   const languageLabel = oppositeLocale === "en" ? "English" : "简体中文";
   const license = licenseText(record.source.license);
   const licenseUrl = licenseHref(record.source.license);
-  const titleId = record.toc.find((entry) => entry.level === 1)?.id;
+  const tocTitleId = record.toc.find((entry) => entry.level === 1)?.id;
+  const titleId = tocTitleId && !hasRenderedHeadingId(html, tocTitleId) ? tocTitleId : undefined;
 
   return (
     <>
