@@ -1231,7 +1231,32 @@ function parseResourceLinkOccurrence(value: unknown, label: string): TutorialRes
   return { sourceKey, slug, fragment, converted };
 }
 
-function parseResourceLinkReport(value: unknown, label: string): TutorialResourceLinkReport | undefined {
+function isPublishedTutorialRoute(route: TutorialRecord): boolean {
+  return route.status === "published" && route.redirectTo === undefined;
+}
+
+function resourceLinkOwners(
+  routes: readonly TutorialRecord[],
+  aliases: readonly TutorialSourceAlias[],
+): ReadonlyMap<string, string> {
+  const routesBySlug = new Map(routes.map((route) => [route.slug, route]));
+  const owners = new Map<string, string>();
+  for (const route of routes) {
+    if (isPublishedTutorialRoute(route)) owners.set(route.sourceKey, route.slug);
+  }
+  for (const alias of aliases) {
+    const route = routesBySlug.get(alias.slug);
+    if (route && isPublishedTutorialRoute(route)) owners.set(alias.sourceKey, route.slug);
+  }
+  return owners;
+}
+
+function parseResourceLinkReport(
+  value: unknown,
+  label: string,
+  routes: readonly TutorialRecord[],
+  aliases: readonly TutorialSourceAlias[],
+): TutorialResourceLinkReport | undefined {
   if (value === undefined) return undefined;
   if (!isRecord(value)) throw new Error(`${label} must be an object`);
   assertAllowedKeys(value, label, [
@@ -1279,11 +1304,19 @@ function parseResourceLinkReport(value: unknown, label: string): TutorialResourc
     throw new Error(`${label}.occurrences unique sourceKey count must equal unique`);
   }
   const slugBySourceKey = new Map<string, string>();
+  const owners = resourceLinkOwners(routes, aliases);
   for (const occurrence of occurrences) {
     if (!occurrence.converted || !occurrence.slug) continue;
     const slug = slugBySourceKey.get(occurrence.sourceKey);
     if (slug && slug !== occurrence.slug) {
       throw new Error(`${label}.occurrences converted sourceKey must resolve to one slug`);
+    }
+    const ownerSlug = owners.get(occurrence.sourceKey);
+    if (!ownerSlug) {
+      throw new Error(`${label}.occurrences converted sourceKey must resolve to a published route`);
+    }
+    if (ownerSlug !== occurrence.slug) {
+      throw new Error(`${label}.occurrences converted slug must match sourceKey owner`);
     }
     slugBySourceKey.set(occurrence.sourceKey, occurrence.slug);
   }
@@ -1384,11 +1417,14 @@ export function parseTutorialManifest(
     sourceOwners.set(route.sourceKey, route.slug);
   }
   const aliases = parseAliases(value.aliases, `Tutorial manifest ${filePath}.aliases`);
+  const routesBySlug = new Map(routes.map((route) => [route.slug, route]));
   const aliasOwners = new Set<string>();
   for (const alias of aliases) {
     if (aliasOwners.has(alias.sourceKey)) throw new Error(`Duplicate tutorial alias: ${alias.sourceKey}`);
     aliasOwners.add(alias.sourceKey);
-    if (!slugs.has(alias.slug)) throw new Error(`Tutorial alias target is missing: ${alias.slug}`);
+    const target = routesBySlug.get(alias.slug);
+    if (!target) throw new Error(`Tutorial alias target is missing: ${alias.slug}`);
+    if (!isPublishedTutorialRoute(target)) throw new Error(`Tutorial alias target must be a published route: ${alias.slug}`);
     if (sourceOwners.has(alias.sourceKey)) {
       throw new Error(`Tutorial alias source key is already owned: ${alias.sourceKey}`);
     }
@@ -1397,6 +1433,8 @@ export function parseTutorialManifest(
   const resourceLinkReport = parseResourceLinkReport(
     value.resourceLinkReport,
     `Tutorial manifest ${filePath}.resourceLinkReport`,
+    routes,
+    aliases,
   );
   return {
     schemaVersion: TUTORIAL_SCHEMA_VERSION,

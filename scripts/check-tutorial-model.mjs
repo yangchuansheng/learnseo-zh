@@ -389,21 +389,46 @@ assert.throws(
   }, "zh-CN"),
   /canonicalMatched must be boolean/,
 );
+
+function resourceLinkReport(occurrences = [
+  { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
+  { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
+  { sourceKey: "https://example.com/missing", slug: null, fragment: "#missing", converted: false },
+]) {
+  const total = occurrences.length;
+  const converted = occurrences.filter((entry) => entry.converted).length;
+  const fallback = total - converted;
+  const unique = new Set(occurrences.map((entry) => entry.sourceKey)).size;
+  const unknownFragments = occurrences.filter((entry) => !entry.converted && entry.fragment !== null).length;
+  return {
+    total,
+    unique,
+    converted,
+    fallback,
+    rendered: total * 2,
+    duplicateOccurrences: total - unique,
+    unknownFragments,
+    occurrences,
+  };
+}
+
+const zhReportManifest = model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")], {
+  resourceLinkReport: resourceLinkReport(),
+}), "zh-CN");
+const enReportManifest = model.parseTutorialManifest(manifest("en", [record("en")], {
+  resourceLinkReport: resourceLinkReport(),
+}), "en");
+assert.deepEqual(model.validateTutorialManifestPair(zhReportManifest, enReportManifest).generation, "generation-1");
+model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")], {
+  aliases: [{ sourceKey: "https://example.com/alias", slug: "semantic-guide" }],
+  resourceLinkReport: resourceLinkReport([
+    { sourceKey: "https://example.com/alias", slug: "semantic-guide", fragment: null, converted: true },
+  ]),
+}), "zh-CN");
 model.parseTutorialManifest(manifest("zh-CN", [], {
-  resourceLinkReport: {
-    total: 3,
-    unique: 2,
-    converted: 2,
-    fallback: 1,
-    rendered: 6,
-    duplicateOccurrences: 1,
-    unknownFragments: 1,
-    occurrences: [
-      { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
-      { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
-      { sourceKey: "https://example.com/missing", slug: null, fragment: "#missing", converted: false },
-    ],
-  },
+  resourceLinkReport: resourceLinkReport([
+    { sourceKey: "https://example.com/missing", slug: null, fragment: "#missing", converted: false },
+  ]),
 }), "zh-CN");
 assert.throws(
   () => model.parseTutorialManifest(manifest("zh-CN", [], { resourceLinkReport: {} }), "zh-CN"),
@@ -411,75 +436,78 @@ assert.throws(
 );
 assert.throws(
   () => model.parseTutorialManifest(manifest("zh-CN", [], {
-    resourceLinkReport: {
-      total: 3,
-      unique: 2,
-      converted: 3,
-      fallback: 1,
-      rendered: 6,
-      duplicateOccurrences: 1,
-      unknownFragments: 1,
-      occurrences: [
-        { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
-        { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
-        { sourceKey: "https://example.com/missing", slug: null, fragment: "#missing", converted: false },
-      ],
-    },
+    resourceLinkReport: { ...resourceLinkReport(), converted: 3 },
   }), "zh-CN"),
   /must equal total/,
 );
 assert.throws(
-  () => model.parseTutorialManifest(manifest("zh-CN", [], {
-    resourceLinkReport: {
-      total: 2,
-      unique: 1,
-      converted: 2,
-      fallback: 0,
-      rendered: 4,
-      duplicateOccurrences: 1,
-      unknownFragments: 0,
-      occurrences: [
-        { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
-        { sourceKey: "https://example.com/guide", slug: null, fragment: "#overview", converted: true },
-      ],
-    },
+  () => model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")], {
+    resourceLinkReport: resourceLinkReport([
+      { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
+      { sourceKey: "https://example.com/guide", slug: null, fragment: "#overview", converted: true },
+    ]),
   }), "zh-CN"),
   /slug is required/,
 );
 assert.throws(
-  () => model.parseTutorialManifest(manifest("zh-CN", [], {
-    resourceLinkReport: {
-      total: 2,
-      unique: 1,
-      converted: 2,
-      fallback: 0,
-      rendered: 4,
-      duplicateOccurrences: 1,
-      unknownFragments: 0,
-      occurrences: [
-        { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
-        { sourceKey: "https://example.com/guide", slug: "other-guide", fragment: "#overview", converted: true },
-      ],
-    },
+  () => model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")], {
+    resourceLinkReport: resourceLinkReport([
+      { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
+      { sourceKey: "https://example.com/guide", slug: "other-guide", fragment: "#overview", converted: true },
+    ]),
   }), "zh-CN"),
   /must resolve to one slug/,
 );
 assert.throws(
   () => model.parseTutorialManifest(manifest("zh-CN", [], {
-    resourceLinkReport: {
-      total: 1,
-      unique: 1,
-      converted: 0,
-      fallback: 1,
-      rendered: 2,
-      duplicateOccurrences: 0,
-      unknownFragments: 0,
-      occurrences: [
-        { sourceKey: "https://example.com/missing", slug: null, fragment: "#missing", converted: false },
-      ],
-    },
+    resourceLinkReport: { ...resourceLinkReport([
+      { sourceKey: "https://example.com/missing", slug: null, fragment: "#missing", converted: false },
+    ]), unknownFragments: 0 },
   }), "zh-CN"),
   /unknownFragments must match/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [], {
+    resourceLinkReport: resourceLinkReport([
+      { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
+    ]),
+  }), "zh-CN"),
+  /published route/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")], {
+    resourceLinkReport: resourceLinkReport([
+      { sourceKey: "https://example.com/other", slug: "semantic-guide", fragment: "#overview", converted: true },
+    ]),
+  }), "zh-CN"),
+  /published route/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [record("zh-CN")], {
+    resourceLinkReport: resourceLinkReport([
+      { sourceKey: "https://example.com/guide", slug: "missing-guide", fragment: "#overview", converted: true },
+    ]),
+  }), "zh-CN"),
+  /slug must match sourceKey owner/,
+);
+
+const previewRoute = record("zh-CN", {
+  status: "draft",
+  seo: { ...record("zh-CN").seo, indexable: false },
+});
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [previewRoute], {
+    resourceLinkReport: resourceLinkReport([
+      { sourceKey: "https://example.com/guide", slug: "semantic-guide", fragment: "#overview", converted: true },
+    ]),
+  }), "zh-CN"),
+  /published route/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [previewRoute], {
+    aliases: [{ sourceKey: "https://example.com/alias", slug: "semantic-guide" }],
+  }), "zh-CN"),
+  /alias target must be a published route/,
 );
 
 const redirectTargetSource = {
@@ -520,6 +548,20 @@ const redirectSource = record("zh-CN", {
   redirectTo: "/tutorials/target/",
 });
 model.parseTutorialManifest(manifest("zh-CN", [redirectSource, redirectTarget]), "zh-CN");
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [redirectSource, redirectTarget], {
+    resourceLinkReport: resourceLinkReport([
+      { sourceKey: "https://example.com/legacy", slug: "legacy", fragment: "#overview", converted: true },
+    ]),
+  }), "zh-CN"),
+  /published route/,
+);
+assert.throws(
+  () => model.parseTutorialManifest(manifest("zh-CN", [redirectSource, redirectTarget], {
+    aliases: [{ sourceKey: "https://example.com/alias", slug: "legacy" }],
+  }), "zh-CN"),
+  /alias target must be a published route/,
+);
 assert.throws(
   () => model.parseTutorialManifest(manifest("zh-CN", [
     { ...redirectSource, redirectTo: "/tutorials/missing/" },
