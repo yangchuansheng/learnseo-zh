@@ -8,6 +8,10 @@ to every SEO Fundamentals tutorial and every migration wave. The published
 `google-seo-starter-guide` pair remains the release baseline while a candidate
 or wave is collected, reviewed, staged, or recovered.
 
+Wave order, throughput limits, source dependencies, promotion, and partial-wave
+rollback are fixed in the [Issue #23 migration-wave decision](./wayfinder-seo-fundamentals-migration-waves.md)
+and checked by `npm run tutorials:migration-waves`.
+
 ## Decision
 
 Publication is an atomic bilingual release. A tutorial is publishable only
