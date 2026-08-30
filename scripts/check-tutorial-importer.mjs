@@ -19,6 +19,7 @@ import {
   recoverTutorialImport,
   sha256,
   tutorialImportResultMessage,
+  validateCollectOptions,
   validateImportOptions,
   writeJsonFile,
 } from "./lib/tutorial-importer.mjs";
@@ -72,6 +73,18 @@ async function expectImportError(code, operationId, action) {
 
 async function runImportCli(args) {
   const child = spawn(process.execPath, [path.join(repositoryRoot, "scripts/import-learningseo-tutorial.mjs"), ...args], {
+    stdio: ["ignore", "ignore", "pipe"],
+  });
+  let stderr = "";
+  child.stderr.on("data", (chunk) => {
+    stderr += chunk.toString();
+  });
+  const [code] = await once(child, "exit");
+  return { code, stderr };
+}
+
+async function runCollectCli(args) {
+  const child = spawn(process.execPath, [path.join(repositoryRoot, "scripts/collect-learningseo-tutorial.mjs"), ...args], {
     stdio: ["ignore", "ignore", "pipe"],
   });
   let stderr = "";
@@ -274,6 +287,13 @@ async function main() {
   const tmpRoot = await fs.mkdtemp(path.join(os.tmpdir(), "tutorial-importer-"));
   try {
     assert.throws(
+      () => validateCollectOptions({ url: sourceUrl, slug, "source-path": sourcePath, output: "snapshot.json", "operation-id": "INVALID" }),
+      (error) =>
+        error instanceof TutorialImportError &&
+        error.code === "usage" &&
+        /^tutorial-import-[0-9a-f-]{36}$/.test(error.operationId),
+    );
+    assert.throws(
       () => validateImportOptions({ input: "snapshot.json", translation: "translation.html", "translated-at": "1" }),
       (error) => error instanceof TutorialImportError && error.code === "usage",
     );
@@ -381,6 +401,69 @@ async function main() {
       "recovery-conflict",
     );
     await removeFailureJournal(importerDefaults.contentRoot, "tutorial-import-cli-recover-missing-journal-test");
+    const collectStrayCli = await runCollectCli([
+      "stray",
+      "--operation-id",
+      "tutorial-import-collect-cli-stray-test",
+      "--actor",
+      "cli.operator",
+    ]);
+    assert.equal(collectStrayCli.code, 1);
+    assert.match(collectStrayCli.stderr, /\[tutorial-importer\] usage operation=tutorial-import-collect-cli-stray-test:/);
+    await assertFailureJournal(importerDefaults.contentRoot, "tutorial-import-collect-cli-stray-test", "cli.operator", "usage");
+    await removeFailureJournal(importerDefaults.contentRoot, "tutorial-import-collect-cli-stray-test");
+    const collectMissingCli = await runCollectCli([
+      "--url",
+      sourceUrl,
+      "--slug",
+      slug,
+      "--source-path",
+      sourcePath,
+      "--actor",
+      "cli.operator",
+    ]);
+    assert.equal(collectMissingCli.code, 1);
+    const collectMissingMatch = collectMissingCli.stderr.match(/operation=(tutorial-import-[0-9a-f-]{36})/);
+    assert.ok(collectMissingMatch);
+    await assertFailureJournal(importerDefaults.contentRoot, collectMissingMatch[1], "cli.operator", "usage");
+    await removeFailureJournal(importerDefaults.contentRoot, collectMissingMatch[1]);
+    const collectInvalidOperationCli = await runCollectCli([
+      "--operation-id",
+      "INVALID",
+      "--actor",
+      "cli.operator",
+      "--url",
+      sourceUrl,
+      "--slug",
+      slug,
+      "--source-path",
+      sourcePath,
+      "--output",
+      path.join(tmpRoot, "unused-collect.json"),
+    ]);
+    assert.equal(collectInvalidOperationCli.code, 1);
+    const collectInvalidOperationMatch = collectInvalidOperationCli.stderr.match(/operation=(tutorial-import-[0-9a-f-]{36})/);
+    assert.ok(collectInvalidOperationMatch);
+    await assertFailureJournal(importerDefaults.contentRoot, collectInvalidOperationMatch[1], "cli.operator", "usage");
+    await removeFailureJournal(importerDefaults.contentRoot, collectInvalidOperationMatch[1]);
+    const collectBoundaryCli = await runCollectCli([
+      "--operation-id",
+      "tutorial-import-collect-cli-boundary-test",
+      "--actor",
+      "cli.operator",
+      "--url",
+      "http://127.0.0.1/tutorial",
+      "--slug",
+      slug,
+      "--source-path",
+      sourcePath,
+      "--output",
+      path.join(tmpRoot, "boundary-collect.json"),
+    ]);
+    assert.equal(collectBoundaryCli.code, 1);
+    assert.match(collectBoundaryCli.stderr, /\[tutorial-importer\] unavailable operation=tutorial-import-collect-cli-boundary-test:/);
+    await assertFailureJournal(importerDefaults.contentRoot, "tutorial-import-collect-cli-boundary-test", "cli.operator", "unavailable");
+    await removeFailureJournal(importerDefaults.contentRoot, "tutorial-import-collect-cli-boundary-test");
     const snapshot = await collectFixture();
     assert.equal(snapshot.slug, slug);
     assert.equal(snapshot.sourcePath, sourcePath);
@@ -1611,7 +1694,7 @@ async function main() {
     assert.equal(staleEmptyLockResult.status, "draft");
     await assert.rejects(() => fs.access(staleEmptyLockPath), { code: "ENOENT" });
 
-    console.log("Tutorial importer contract passed: deterministic fixture collect/import, in-process recovery/restore coverage, marker gating, non-global IPv6 rejection, tuple idempotency, failure audit, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix5-tutorials-importer.log");
+    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, in-process recovery/restore coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix6-tutorials-importer.log");
   } finally {
     await fs.rm(tmpRoot, { recursive: true, force: true });
   }

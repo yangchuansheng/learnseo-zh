@@ -1,0 +1,82 @@
+
+> ai-website-clone-template@0.4.0 check
+> npm run check:data && npm run tutorials:model && npm run tutorials:seo && npm run tutorials:renderer && npm run tutorials:importer && npm run lint && npm run typecheck && npm run build && npm run test:smoke
+
+
+> ai-website-clone-template@0.4.0 check:data
+> node scripts/check-learningseo-subpages.mjs && node scripts/check-learningseo-localization.mjs
+
+Validated 161 routes, 158 content files, 1937 internal links, and 43 local assets.
+Validated 161 Chinese routes, 158 translated HTML pages, and 161 localized metadata titles.
+
+> ai-website-clone-template@0.4.0 tutorials:model
+> node scripts/check-tutorial-model.mjs
+
+Tutorial content model contract passed.
+
+> ai-website-clone-template@0.4.0 tutorials:seo
+> node scripts/check-tutorial-seo.mjs
+
+Tutorial SEO production contract passed: URL, metadata, JSON-LD, sitemap, and redirects.
+Tutorial manifest integration passed: 0 published pair(s), 0 non-indexable route(s).
+
+> ai-website-clone-template@0.4.0 tutorials:renderer
+> node scripts/check-tutorial-renderer.mjs
+
+Tutorial renderer contract passed: locale files, hashes, TOC, media, tables, attribution, header language links, and preview metadata.
+
+> ai-website-clone-template@0.4.0 tutorials:importer
+> node scripts/check-tutorial-importer.mjs
+
+[tutorial-importer] backup cleanup warning operation=tutorial-import-cleanup-test: injected cleanup failure for manifest.json
+Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, in-process recovery/restore coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix6-tutorials-importer.log
+
+> ai-website-clone-template@0.4.0 lint
+> eslint
+
+
+> ai-website-clone-template@0.4.0 typecheck
+> tsc --noEmit
+
+
+> ai-website-clone-template@0.4.0 build
+> next build
+
+▲ Next.js 16.3.0 (Turbopack)
+✓ Running next.config.ts took 106ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1437ms
+  Running TypeScript ...
+  Finished TypeScript in 798ms ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/327) ...
+  Generating static pages using 9 workers (81/327)
+  Generating static pages using 9 workers (163/327)
+  Generating static pages using 9 workers (245/327)
+✓ Generating static pages using 9 workers (327/327) in 560ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /[...slug]
+├ ƒ /en
+├ ƒ /en/[...slug]
+├ ● /en/tutorials/[slug]
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+└ ● /tutorials/[slug]
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> ai-website-clone-template@0.4.0 test:smoke
+> node scripts/smoke-learningseo.mjs
+
+LearningSEO production smoke test passed.

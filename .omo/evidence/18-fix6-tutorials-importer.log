@@ -1,0 +1,6 @@
+
+> ai-website-clone-template@0.4.0 tutorials:importer
+> node scripts/check-tutorial-importer.mjs
+
+[tutorial-importer] backup cleanup warning operation=tutorial-import-cleanup-test: injected cleanup failure for manifest.json
+Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, in-process recovery/restore coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix6-tutorials-importer.log

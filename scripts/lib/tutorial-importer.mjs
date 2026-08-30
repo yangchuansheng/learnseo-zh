@@ -250,13 +250,21 @@ function importMarkerMatches(value, expected) {
 }
 
 export function validateCollectOptions(args) {
-  if (args.fixture !== undefined) fail("usage", "--fixture is available through the programmatic fixture harness");
+  const auditContext = safeAuditContext(args.operation ?? args["operation-id"], args.actor);
+  const operationId = auditContext.operationId;
+  const actor = optionalActor(args.actor, operationId);
+  if (auditContext.invalidOperationId) fail("usage", "Invalid operation id", operationId, actor);
+  if (args.fixture !== undefined) {
+    fail("usage", "--fixture is available through the programmatic fixture harness", operationId, actor);
+  }
   return {
-    url: requireOption(args, "url"),
-    slug: requireOption(args, "slug"),
-    sourcePath: requireOption(args, "source-path"),
-    output: requireOption(args, "output"),
+    url: requireOption(args, "url", operationId, actor),
+    slug: requireOption(args, "slug", operationId, actor),
+    sourcePath: requireOption(args, "source-path", operationId, actor),
+    output: requireOption(args, "output", operationId, actor),
     fixture: null,
+    operationId,
+    actor,
   };
 }
 
