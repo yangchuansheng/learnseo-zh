@@ -19,6 +19,8 @@ Use this migration order:
 
 The importer’s canonical rule requires an explicit rebind when a card URL redirects to a different canonical path. Full-text and media reuse for the non-Google sources requires source permission or a documented license decision. The published renderer can keep these cards external while review is open.
 
+The source-specific body, navigation, media, attribution, and exact disposition rules are recorded in the [Issue #22 decision artifact](./wayfinder-seo-fundamentals-source-decisions.md).
+
 ## Eligibility and evidence method
 
 The local tutorial contract requires a public HTML response, a continuous topic-closed body, a single-page boundary, and a verified canonical. I recorded the final response, `Content-Type`, redirect chain, canonical element, source update signal, visible content root, and media/embed surface for each card. Counts below are observed from the source body when a stable body root exists; raw-response counts are labelled explicitly and include source shell elements.

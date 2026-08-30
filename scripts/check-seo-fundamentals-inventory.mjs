@@ -49,6 +49,7 @@ assert.match(inventory, /^## Decision$/m);
 assert.match(inventory, /^## Eligibility and evidence method$/m);
 assert.match(inventory, /^## Per-source findings$/m);
 assert.match(inventory, /^## Cross-source follow-up$/m);
+assert.match(inventory, /wayfinder-seo-fundamentals-source-decisions\.md/);
 
 for (const [index, cardUrl] of cardUrls.entries()) {
   const section = sectionFor(inventory, index);
