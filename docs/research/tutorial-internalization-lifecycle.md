@@ -176,7 +176,7 @@ Root roadmap navigation, author/profile links, share controls, and the Google
 Sheets `ResourceBanner` are reported as separate link categories and remain
 outside tutorial conversion. New tutorial resource surfaces register in the
 same inventory before conversion. The current pilot inventory is the
-reconciliation baseline: `2,152` resource-card occurrences and `914` normalized
+reconciliation baseline: `2,152` resource-card occurrences and `912` normalized
 source keys. An occurrence means one logical resource card shared by the two
 locale datasets: each locale renders `2,152` anchors, while the bilingual pair
 contains `4,304` rendered anchors. A link conversion report must partition the
@@ -230,7 +230,7 @@ The conversion report records total resource occurrences, unique source keys,
 published conversions, external fallbacks, duplicate occurrences, and unknown
 fragments. Acceptance requires `converted + fallback = total` and one slug per
 published source key; the pilot report must also match `2,152` logical
-occurrences, `4,304` rendered anchors, and `914` normalized keys.
+occurrences, `4,304` rendered anchors, and `912` normalized keys.
 
 ## 5. Atomic writes and failure recovery
 

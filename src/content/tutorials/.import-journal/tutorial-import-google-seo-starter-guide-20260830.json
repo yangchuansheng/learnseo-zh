@@ -1,0 +1,25 @@
+{
+  "operationId": "tutorial-import-google-seo-starter-guide-20260830",
+  "actor": "codex",
+  "phase": "failed",
+  "failedAt": "2026-08-30T12:00:40.118Z",
+  "failure": {
+    "code": "media-download",
+    "message": "Media https://developers.google.com/static/search/docs/images/grouping-pages-in-directories.png request failed for https://developers.google.com/static/search/docs/images/grouping-pages-in-directories.png: Media https://developers.google.com/static/search/docs/images/grouping-pages-in-directories.png request timed out",
+    "recordedAt": "2026-08-30T12:00:40.118Z"
+  },
+  "failures": [
+    {
+      "code": "media-download",
+      "message": "Media https://developers.google.com/static/search/docs/images/grouping-pages-in-directories.png request failed for https://developers.google.com/static/search/docs/images/grouping-pages-in-directories.png: Media https://developers.google.com/static/search/docs/images/grouping-pages-in-directories.png request timed out",
+      "recordedAt": "2026-08-30T12:00:40.118Z"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "failed",
+      "code": "media-download",
+      "recordedAt": "2026-08-30T12:00:40.118Z"
+    }
+  ]
+}

@@ -1,0 +1,435 @@
+{
+  "operationId": "tutorial-import-google-seo-starter-guide-20260830-2",
+  "actor": "codex",
+  "phase": "committed",
+  "slug": "google-seo-starter-guide",
+  "sourceKey": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+  "generation": "tutorial-import-google-seo-starter-guide-20260830-2",
+  "candidateVersion": 1,
+  "files": [
+    {
+      "relative": "content/d0d09108560732252d695800d054f2e6df964ddf39f9a42cce930c9a55907761.html",
+      "sha256": "f9b793bf2afc9204fbc21945feed7aa6f5ac5c229110d6e9710987c5eeb920fe"
+    },
+    {
+      "relative": "content/da93d6c2828ed9942c428e7a1f493ffcee00f48d5432f022c49858871cb5a8b6.html",
+      "sha256": "edb3a6fe2a2a25f761acf34b4b815b7345f1726dc898fd72ea58289cce7a93f9"
+    },
+    {
+      "relative": "manifest.json",
+      "sha256": "b3a0fac1e9b8add376c8e5d531fb458fb350802d8ebf116e7e67a100a1f768a0"
+    },
+    {
+      "relative": "manifest.en.json",
+      "sha256": "19c93ee1f473a0cef9f76f7fcf520d619f8ab7281e39dc1903c352d0b4b58e01"
+    },
+    {
+      "relative": "import-generation.json",
+      "sha256": "f13b1428896b5e859dd3496ac4a607a5d9c505a085d186e548acc1ce2a9e826f"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/e8dd7db2347198c34b2fe59c9bdc2ef7c20b0869036d2b72052e38ee41a99203.png",
+      "sha256": "e8dd7db2347198c34b2fe59c9bdc2ef7c20b0869036d2b72052e38ee41a99203"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/0c1bf4cf239952f5231a5b878b9cb77026a45390274ec6cf2e98f31fd870ba5e.png",
+      "sha256": "0c1bf4cf239952f5231a5b878b9cb77026a45390274ec6cf2e98f31fd870ba5e"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/595f41d483bf09d4afab38fce5700ed282fe79f5efe76706355e4391b23c0d49.png",
+      "sha256": "595f41d483bf09d4afab38fce5700ed282fe79f5efe76706355e4391b23c0d49"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/55d3d5d6c09fac1e96b3c8a0b6410d39859abd50c8a08a229013660600107e46.png",
+      "sha256": "55d3d5d6c09fac1e96b3c8a0b6410d39859abd50c8a08a229013660600107e46"
+    }
+  ],
+  "hashes": {
+    "sourceContentHash": "57fd67a1b55fbe6ef5b919821d451621bf53df6c4f5b5dba1e349f83755b8187",
+    "contentHash": "d0d09108560732252d695800d054f2e6df964ddf39f9a42cce930c9a55907761",
+    "translationContentHash": "da93d6c2828ed9942c428e7a1f493ffcee00f48d5432f022c49858871cb5a8b6"
+  },
+  "marker": {
+    "operationId": "tutorial-import-google-seo-starter-guide-20260830-2",
+    "generation": "tutorial-import-google-seo-starter-guide-20260830-2",
+    "slug": "google-seo-starter-guide",
+    "sourceKey": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+    "locales": [
+      "zh-CN",
+      "en"
+    ]
+  },
+  "validation": {
+    "en": {
+      "metrics": {
+        "h1": 1,
+        "h2": 11,
+        "h3": 13,
+        "h4": 2,
+        "p": 63,
+        "ul": 6,
+        "li": 17,
+        "a": 54,
+        "table": 2,
+        "code": 16,
+        "img": 4
+      },
+      "headingIds": [
+        "search-engine-optimization-seo-starter-guide",
+        "hsw",
+        "how-long-must-i-wait",
+        "find",
+        "check-if-google-can-see",
+        "dont-want-a-page-in-googles-search-results",
+        "organize",
+        "use-descriptive-urls",
+        "group-topically",
+        "reduce-duplicate-content",
+        "make-your-site-interesting",
+        "expect-search-terms",
+        "distracting-ads",
+        "link-to-relevant-resources",
+        "good-link-text",
+        "link-when-you-need-to",
+        "control-how-your-site-looks",
+        "titles",
+        "snippets",
+        "images",
+        "add-images-near-text",
+        "add-descriptive-alt-text-to-the-image",
+        "videos",
+        "promoting",
+        "focusing",
+        "next-steps",
+        "resources"
+      ],
+      "headingEntries": [
+        {
+          "id": "search-engine-optimization-seo-starter-guide",
+          "level": 1
+        },
+        {
+          "id": "hsw",
+          "level": 2
+        },
+        {
+          "id": "how-long-must-i-wait",
+          "level": 2
+        },
+        {
+          "id": "find",
+          "level": 2
+        },
+        {
+          "id": "check-if-google-can-see",
+          "level": 3
+        },
+        {
+          "id": "dont-want-a-page-in-googles-search-results",
+          "level": 3
+        },
+        {
+          "id": "organize",
+          "level": 2
+        },
+        {
+          "id": "use-descriptive-urls",
+          "level": 3
+        },
+        {
+          "id": "group-topically",
+          "level": 3
+        },
+        {
+          "id": "reduce-duplicate-content",
+          "level": 3
+        },
+        {
+          "id": "make-your-site-interesting",
+          "level": 2
+        },
+        {
+          "id": "expect-search-terms",
+          "level": 3
+        },
+        {
+          "id": "distracting-ads",
+          "level": 3
+        },
+        {
+          "id": "link-to-relevant-resources",
+          "level": 3
+        },
+        {
+          "id": "good-link-text",
+          "level": 4
+        },
+        {
+          "id": "link-when-you-need-to",
+          "level": 4
+        },
+        {
+          "id": "control-how-your-site-looks",
+          "level": 2
+        },
+        {
+          "id": "titles",
+          "level": 3
+        },
+        {
+          "id": "snippets",
+          "level": 3
+        },
+        {
+          "id": "images",
+          "level": 2
+        },
+        {
+          "id": "add-images-near-text",
+          "level": 3
+        },
+        {
+          "id": "add-descriptive-alt-text-to-the-image",
+          "level": 3
+        },
+        {
+          "id": "videos",
+          "level": 2
+        },
+        {
+          "id": "promoting",
+          "level": 2
+        },
+        {
+          "id": "focusing",
+          "level": 2
+        },
+        {
+          "id": "next-steps",
+          "level": 2
+        },
+        {
+          "id": "resources",
+          "level": 3
+        }
+      ]
+    },
+    "zh": {
+      "metrics": {
+        "h1": 1,
+        "h2": 11,
+        "h3": 13,
+        "h4": 2,
+        "p": 63,
+        "ul": 6,
+        "li": 17,
+        "a": 54,
+        "table": 2,
+        "code": 16,
+        "img": 4
+      },
+      "headingIds": [
+        "search-engine-optimization-seo-starter-guide",
+        "hsw",
+        "how-long-must-i-wait",
+        "find",
+        "check-if-google-can-see",
+        "dont-want-a-page-in-googles-search-results",
+        "organize",
+        "use-descriptive-urls",
+        "group-topically",
+        "reduce-duplicate-content",
+        "make-your-site-interesting",
+        "expect-search-terms",
+        "distracting-ads",
+        "link-to-relevant-resources",
+        "good-link-text",
+        "link-when-you-need-to",
+        "control-how-your-site-looks",
+        "titles",
+        "snippets",
+        "images",
+        "add-images-near-text",
+        "add-descriptive-alt-text-to-the-image",
+        "videos",
+        "promoting",
+        "focusing",
+        "next-steps",
+        "resources"
+      ],
+      "headingEntries": [
+        {
+          "id": "search-engine-optimization-seo-starter-guide",
+          "level": 1
+        },
+        {
+          "id": "hsw",
+          "level": 2
+        },
+        {
+          "id": "how-long-must-i-wait",
+          "level": 2
+        },
+        {
+          "id": "find",
+          "level": 2
+        },
+        {
+          "id": "check-if-google-can-see",
+          "level": 3
+        },
+        {
+          "id": "dont-want-a-page-in-googles-search-results",
+          "level": 3
+        },
+        {
+          "id": "organize",
+          "level": 2
+        },
+        {
+          "id": "use-descriptive-urls",
+          "level": 3
+        },
+        {
+          "id": "group-topically",
+          "level": 3
+        },
+        {
+          "id": "reduce-duplicate-content",
+          "level": 3
+        },
+        {
+          "id": "make-your-site-interesting",
+          "level": 2
+        },
+        {
+          "id": "expect-search-terms",
+          "level": 3
+        },
+        {
+          "id": "distracting-ads",
+          "level": 3
+        },
+        {
+          "id": "link-to-relevant-resources",
+          "level": 3
+        },
+        {
+          "id": "good-link-text",
+          "level": 4
+        },
+        {
+          "id": "link-when-you-need-to",
+          "level": 4
+        },
+        {
+          "id": "control-how-your-site-looks",
+          "level": 2
+        },
+        {
+          "id": "titles",
+          "level": 3
+        },
+        {
+          "id": "snippets",
+          "level": 3
+        },
+        {
+          "id": "images",
+          "level": 2
+        },
+        {
+          "id": "add-images-near-text",
+          "level": 3
+        },
+        {
+          "id": "add-descriptive-alt-text-to-the-image",
+          "level": 3
+        },
+        {
+          "id": "videos",
+          "level": 2
+        },
+        {
+          "id": "promoting",
+          "level": 2
+        },
+        {
+          "id": "focusing",
+          "level": 2
+        },
+        {
+          "id": "next-steps",
+          "level": 2
+        },
+        {
+          "id": "resources",
+          "level": 3
+        }
+      ]
+    }
+  },
+  "phases": [
+    {
+      "phase": "content-replace",
+      "relative": "content/d0d09108560732252d695800d054f2e6df964ddf39f9a42cce930c9a55907761.html",
+      "recordedAt": "2026-08-30T12:02:54.174Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "content/da93d6c2828ed9942c428e7a1f493ffcee00f48d5432f022c49858871cb5a8b6.html",
+      "recordedAt": "2026-08-30T12:02:54.179Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/e8dd7db2347198c34b2fe59c9bdc2ef7c20b0869036d2b72052e38ee41a99203.png",
+      "recordedAt": "2026-08-30T12:02:54.195Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/0c1bf4cf239952f5231a5b878b9cb77026a45390274ec6cf2e98f31fd870ba5e.png",
+      "recordedAt": "2026-08-30T12:02:54.200Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/595f41d483bf09d4afab38fce5700ed282fe79f5efe76706355e4391b23c0d49.png",
+      "recordedAt": "2026-08-30T12:02:54.207Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/55d3d5d6c09fac1e96b3c8a0b6410d39859abd50c8a08a229013660600107e46.png",
+      "recordedAt": "2026-08-30T12:02:54.212Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-30T12:02:54.218Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-30T12:02:54.223Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-30T12:02:54.228Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-30T12:02:54.233Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-30T12:02:54.240Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-30T12:02:54.244Z"
+    }
+  ],
+  "committedAt": "2026-08-30T12:02:54.248Z"
+}

@@ -2658,8 +2658,8 @@ export async function importTutorialDraft(options) {
         new Date().toISOString(),
       );
       const staged = [
-        await stageText(stagingRoot, `content/${hashes.english}.html`, `${englishHtml}\n`),
-        await stageText(stagingRoot, `content/${hashes.chinese}.html`, `${chineseHtml}\n`),
+        await stageText(stagingRoot, `content/${hashes.english}.html`, englishHtml),
+        await stageText(stagingRoot, `content/${hashes.chinese}.html`, chineseHtml),
         await stageText(stagingRoot, "manifest.json", `${JSON.stringify(nextZhManifest, null, 2)}\n`),
         await stageText(stagingRoot, "manifest.en.json", `${JSON.stringify(nextEnManifest, null, 2)}\n`),
         await stageText(stagingRoot, "import-generation.json", `${JSON.stringify(marker, null, 2)}\n`),

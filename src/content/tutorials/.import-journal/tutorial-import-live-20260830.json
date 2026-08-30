@@ -1,0 +1,25 @@
+{
+  "operationId": "tutorial-import-live-20260830",
+  "actor": "codex",
+  "phase": "failed",
+  "failedAt": "2026-08-30T11:48:39.234Z",
+  "failure": {
+    "code": "unavailable",
+    "message": "Source HTML request failed for https://developers.google.com/search/docs/fundamentals/seo-starter-guide: read ECONNRESET",
+    "recordedAt": "2026-08-30T11:48:39.234Z"
+  },
+  "failures": [
+    {
+      "code": "unavailable",
+      "message": "Source HTML request failed for https://developers.google.com/search/docs/fundamentals/seo-starter-guide: read ECONNRESET",
+      "recordedAt": "2026-08-30T11:48:39.234Z"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "failed",
+      "code": "unavailable",
+      "recordedAt": "2026-08-30T11:48:39.234Z"
+    }
+  ]
+}

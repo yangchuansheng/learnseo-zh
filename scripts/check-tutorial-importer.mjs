@@ -634,8 +634,8 @@ async function main() {
     assert.match(enHtml, new RegExp(`src="${result.media[0].path}"`));
     assert.match(zhHtml, /搜索引擎需要清晰的页面/);
     assert.match(zhHtml, new RegExp(`src="${result.media[0].path}"`));
-    assert.equal(sha256(enHtml.trim()), enManifest.routes[0].snapshot.contentHash);
-    assert.equal(sha256(zhHtml.trim()), zhManifest.routes[0].snapshot.translationContentHash);
+    assert.equal(sha256(enHtml), enManifest.routes[0].snapshot.contentHash);
+    assert.equal(sha256(zhHtml), zhManifest.routes[0].snapshot.translationContentHash);
     const mediaBytes = await fs.readFile(path.join(publicRoot, result.media[0].path.slice(1)));
     assert.equal(sha256(mediaBytes), result.media[0].sha256);
     const marker = JSON.parse(await fs.readFile(path.join(contentRoot, "import-generation.json"), "utf8"));

@@ -19,12 +19,13 @@ const jiti = createJiti(import.meta.url, {
   },
   jsx: true,
 });
-const [route, model, seo, headerModule, navigationMock] = await Promise.all([
+const [route, model, seo, headerModule, navigationMock, links] = await Promise.all([
   jiti.import(path.join(repositoryRoot, "src/components/tutorials/route.tsx")),
   jiti.import(path.join(repositoryRoot, "src/lib/tutorials/model.ts")),
   jiti.import(path.join(repositoryRoot, "src/lib/tutorials/seo.tsx")),
   jiti.import(path.join(repositoryRoot, "src/components/sites/learningseo-io-071dae18/root-8a5edab2/HeaderNavigation.tsx")),
   jiti.import(path.join(repositoryRoot, "scripts/fixtures/next-navigation.mock.mjs")),
+  jiti.import(path.join(repositoryRoot, "src/components/sites/learningseo-io-071dae18/shared/links.ts")),
 ]);
 
 const hex = (value) => value.repeat(64);
@@ -366,6 +367,12 @@ try {
   });
   assert.equal(previewMetadata.robots.index, false);
   assert.equal(previewMetadata.robots.follow, false);
+
+  const resourceCard = `<div class="resource"><a href="${sourceCanonical}"></a></div>`;
+  assert.match(links.localHtml(resourceCard, "zh-CN"), /href="\/tutorials\/google-seo-starter-guide\/"/);
+  assert.match(links.localHtml(resourceCard, "en"), /href="\/en\/tutorials\/google-seo-starter-guide\/"/);
+  assert.match(links.localHtml(`<article><a href="${sourceCanonical}">Source</a></article>`, "zh-CN"),
+    new RegExp(`href="${sourceCanonical}"`));
 
   console.log("Tutorial renderer contract passed: locale files, hashes, TOC, media, tables, attribution, header language links, and preview metadata.");
 } finally {

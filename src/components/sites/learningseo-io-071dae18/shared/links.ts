@@ -3,8 +3,16 @@ import {
   localizedPath,
   type Locale,
 } from "@/lib/localization";
+import { normalizeSourceKey } from "@/lib/tutorials/source-key.mjs";
 
 export const SITE_ORIGIN = "https://learningseo.io";
+
+const publishedTutorialResourcePaths = new Map([
+  [
+    normalizeSourceKey("https://developers.google.com/search/docs/fundamentals/seo-starter-guide"),
+    "/tutorials/google-seo-starter-guide/",
+  ],
+]);
 
 function isPublicPath(pathname: string): boolean {
   return pathname.startsWith("/sites/") || pathname.startsWith("/_next/");
@@ -33,9 +41,30 @@ export function localHtml(
   html: string,
   locale: Locale = DEFAULT_LOCALE,
 ): string {
-  return html.replace(
+  const localized = html.replace(
     /(href|action)=(['"])([^'"]*)\2/gi,
     (_match, attribute: string, quote: string, href: string) =>
       `${attribute}=${quote}${localHref(href, locale)}${quote}`,
+  );
+  return localized.replace(
+    /(<div\b[^>]*\bclass=(['"])resource\2[^>]*>)([\s\S]*?)(<\/div>)/gi,
+    (_match, opening: string, _quote: string, body: string, closing: string) => {
+      const resource = body.replace(
+        /(href=)(['"])([^'"]*)\2/i,
+        (anchor, attribute: string, quote: string, href: string) => {
+          try {
+            const target = publishedTutorialResourcePaths.get(
+              normalizeSourceKey(href.replace(/^http:/i, "https:")),
+            );
+            return target
+              ? `${attribute}${quote}${localHref(target, locale)}${quote}`
+              : anchor;
+          } catch {
+            return anchor;
+          }
+        },
+      );
+      return `${opening}${resource}${closing}`;
+    },
   );
 }
