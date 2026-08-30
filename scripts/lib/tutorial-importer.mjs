@@ -25,6 +25,7 @@ export const importerDefaults = Object.freeze({
 
 const snapshotKind = "learningseo-tutorial-snapshot";
 const operationIdPattern = /^tutorial-import-[a-z0-9-]+$/;
+const operationIdMaxLength = 128;
 const actorPattern = /^[a-z0-9][a-z0-9._@-]{0,127}$/i;
 const defaultImportActor = "unspecified";
 const maxRedirects = 5;
@@ -166,13 +167,19 @@ function generatedOperationId() {
   return `tutorial-import-${crypto.randomUUID()}`;
 }
 
+function isSafeOperationId(value) {
+  return typeof value === "string" &&
+    value.length <= operationIdMaxLength &&
+    operationIdPattern.test(value);
+}
+
 function safeAuditContext(operationId, actor) {
   return {
-    operationId: typeof operationId === "string" && operationIdPattern.test(operationId)
+    operationId: isSafeOperationId(operationId)
       ? operationId
       : generatedOperationId(),
     actor: typeof actor === "string" && actorPattern.test(actor.trim()) ? actor.trim() : defaultImportActor,
-    invalidOperationId: operationId !== undefined && !operationIdPattern.test(String(operationId)),
+    invalidOperationId: operationId !== undefined && !isSafeOperationId(String(operationId)),
   };
 }
 
@@ -1457,7 +1464,7 @@ async function readCommittedBackupSets(contentRoot) {
       const prefix = `${relative}.backup-`;
       if (!entry.startsWith(prefix)) continue;
       const operationId = entry.slice(prefix.length);
-      if (!operationIdPattern.test(operationId)) continue;
+      if (!isSafeOperationId(operationId)) continue;
       const group = backupsByOperation.get(operationId) ?? {
         operationId,
         paths: new Map(),

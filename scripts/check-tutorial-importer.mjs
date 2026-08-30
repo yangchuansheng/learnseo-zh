@@ -29,6 +29,7 @@ const fixtureRoot = path.join(repositoryRoot, "scripts/fixtures/tutorial-importe
 const sourceUrl = "https://developers.google.com/search/docs/fundamentals/seo-starter-guide";
 const slug = "google-seo-starter-guide";
 const sourcePath = "/seo_roadmap/seo-fundamentals/";
+const generatedOperationPattern = /^tutorial-import-[0-9a-f-]{36}$/;
 const jiti = createJiti(import.meta.url, {
   alias: { "@": path.join(repositoryRoot, "src") },
 });
@@ -122,6 +123,28 @@ async function assertFailureJournal(contentRoot, operationId, actor, code) {
 
 async function removeFailureJournal(contentRoot, operationId) {
   await fs.rm(path.join(contentRoot, ".import-journal", `${operationId}.json`), { force: true });
+}
+
+async function assertOverlongOperationCliFailure(runCli, operationFlag, extraArgs) {
+  const overlongOperationId = `tutorial-import-${"a".repeat(400)}`;
+  const result = await runCli([
+    operationFlag,
+    overlongOperationId,
+    "--actor",
+    "cli.operator",
+    ...extraArgs,
+  ]);
+  assert.equal(result.code, 1);
+  assert.doesNotMatch(result.stderr, new RegExp(overlongOperationId));
+  const match = result.stderr.match(/\[tutorial-importer\] usage operation=(tutorial-import-[0-9a-f-]{36}): Invalid operation id/);
+  assert.ok(match, result.stderr);
+  assert.match(match[1], generatedOperationPattern);
+  await assertFailureJournal(importerDefaults.contentRoot, match[1], "cli.operator", "usage");
+  await removeFailureJournal(importerDefaults.contentRoot, match[1]);
+  await assert.rejects(
+    fs.access(path.join(importerDefaults.contentRoot, ".import-journal", `${overlongOperationId}.json`)),
+    /ENOENT|ENAMETOOLONG/,
+  );
 }
 
 async function exitedPid() {
@@ -291,7 +314,7 @@ async function main() {
       (error) =>
         error instanceof TutorialImportError &&
         error.code === "usage" &&
-        /^tutorial-import-[0-9a-f-]{36}$/.test(error.operationId),
+        generatedOperationPattern.test(error.operationId),
     );
     assert.throws(
       () => validateImportOptions({ input: "snapshot.json", translation: "translation.html", "translated-at": "1" }),
@@ -374,6 +397,12 @@ async function main() {
     assert.ok(invalidOperationMatch);
     await assertFailureJournal(importerDefaults.contentRoot, invalidOperationMatch[1], "cli.operator", "usage");
     await removeFailureJournal(importerDefaults.contentRoot, invalidOperationMatch[1]);
+    await assertOverlongOperationCliFailure(runImportCli, "--operation-id", [
+      "--input",
+      "temp/missing.json",
+      "--translation",
+      "temp/missing.html",
+    ]);
     const missingTranslationCli = await runImportCli([
       "--input",
       "temp/missing.json",
@@ -446,6 +475,17 @@ async function main() {
     assert.ok(collectInvalidOperationMatch);
     await assertFailureJournal(importerDefaults.contentRoot, collectInvalidOperationMatch[1], "cli.operator", "usage");
     await removeFailureJournal(importerDefaults.contentRoot, collectInvalidOperationMatch[1]);
+    await assertOverlongOperationCliFailure(runCollectCli, "--operation-id", [
+      "--url",
+      sourceUrl,
+      "--slug",
+      slug,
+      "--source-path",
+      sourcePath,
+      "--output",
+      path.join(tmpRoot, "overlong-collect.json"),
+    ]);
+    await assertOverlongOperationCliFailure(runRecoverCli, "--operation", []);
     const collectBoundaryCli = await runCollectCli([
       "--operation-id",
       "tutorial-import-collect-cli-boundary-test",
@@ -1694,7 +1734,7 @@ async function main() {
     assert.equal(staleEmptyLockResult.status, "draft");
     await assert.rejects(() => fs.access(staleEmptyLockPath), { code: "ENOENT" });
 
-    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, in-process recovery/restore coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix6-tutorials-importer.log");
+    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, overlong operation id fallback, in-process recovery/restore coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix7-tutorials-importer.log");
   } finally {
     await fs.rm(tmpRoot, { recursive: true, force: true });
   }

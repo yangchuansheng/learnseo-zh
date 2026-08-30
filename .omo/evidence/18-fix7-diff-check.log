@@ -1,0 +1,4 @@
+Invocation: git diff --check
+Exit code: 0
+Invocation: git diff --cached --check
+Exit code: 0
