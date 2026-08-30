@@ -39,6 +39,7 @@
     "tutorials:import": "node scripts/import-learningseo-tutorial.mjs",
     "tutorials:review": "node scripts/review-learningseo-tutorial.mjs",
     "tutorials:check": "node scripts/check-learningseo-tutorial-pilot.mjs",
+    "tutorials:inventory": "node scripts/check-seo-fundamentals-inventory.mjs",
     "tutorials:importer": "node scripts/check-tutorial-importer.mjs",
     "tutorials:model": "node scripts/check-tutorial-model.mjs",
     "tutorials:renderer": "node scripts/check-tutorial-renderer.mjs",
@@ -47,7 +48,7 @@
     "lint": "eslint",
     "test:smoke": "node scripts/smoke-learningseo.mjs",
     "typecheck": "tsc --noEmit",
-    "check": "npm run check:data && npm run tutorials:check && npm run tutorials:model && npm run tutorials:seo && npm run tutorials:renderer && npm run tutorials:importer && npm run lint && npm run typecheck && npm run build && npm run test:smoke"
+    "check": "npm run check:data && npm run tutorials:check && npm run tutorials:inventory && npm run tutorials:model && npm run tutorials:seo && npm run tutorials:renderer && npm run tutorials:importer && npm run lint && npm run typecheck && npm run build && npm run test:smoke"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
