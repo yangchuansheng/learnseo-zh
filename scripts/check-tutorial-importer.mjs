@@ -1820,6 +1820,65 @@ async function main() {
       atomicRestoreBefore,
     );
 
+    const tamperedBackupMarkerContentRoot = path.join(tmpRoot, "tampered-backup-marker-content");
+    const tamperedBackupMarkerPublicRoot = path.join(tmpRoot, "tampered-backup-marker-public");
+    const readTamperedBackupMarkerLiveFiles = () => Promise.all(
+      atomicRestoreFiles.map((relative) =>
+        fs.readFile(path.join(tamperedBackupMarkerContentRoot, relative), "utf8"),
+      ),
+    );
+    await seedManifests(tamperedBackupMarkerContentRoot);
+    const tamperedBackupMarkerSeedOperation = "tutorial-import-tampered-marker-seed";
+    const tamperedBackupMarkerSeed = await importFixture(tmpRoot, snapshot, {
+      contentRoot: tamperedBackupMarkerContentRoot,
+      publicRoot: tamperedBackupMarkerPublicRoot,
+      operationId: tamperedBackupMarkerSeedOperation,
+    });
+    const tamperedBackupMarkerOperation = "tutorial-import-tampered-backup-marker-test";
+    for (const relative of ["manifest.json", "manifest.en.json"]) {
+      await fs.copyFile(
+        path.join(tamperedBackupMarkerContentRoot, relative),
+        path.join(tamperedBackupMarkerContentRoot, `${relative}.backup-${tamperedBackupMarkerOperation}`),
+      );
+    }
+    const seedMarker = JSON.parse(
+      await fs.readFile(path.join(tamperedBackupMarkerContentRoot, "import-generation.json"), "utf8"),
+    );
+    await writeJsonFile(
+      path.join(tamperedBackupMarkerContentRoot, `import-generation.json.backup-${tamperedBackupMarkerOperation}`),
+      {
+        ...seedMarker,
+        slug: "different-guide",
+        sourceKey: "https://developers.google.com/search/docs/fundamentals/different",
+      },
+    );
+    for (const relative of atomicRestoreFiles) {
+      await fs.writeFile(path.join(tamperedBackupMarkerContentRoot, relative), "{broken", "utf8");
+    }
+    const tamperedBackupMarkerBefore = await readTamperedBackupMarkerLiveFiles();
+    await writeJsonFile(
+      path.join(tamperedBackupMarkerContentRoot, ".import-journal", `${tamperedBackupMarkerOperation}.json`),
+      await recoveryJournalFixture(tamperedBackupMarkerOperation, snapshot, [
+        { relative: "manifest.json", sha256: sha256("missing-candidate-manifest") },
+        { relative: "manifest.en.json", sha256: sha256("missing-candidate-manifest-en") },
+        { relative: "import-generation.json", sha256: sha256("missing-candidate-marker") },
+      ], {
+        phases: [{ phase: "manifest-replace", relative: "manifest.json", recordedAt: "2026-08-30T00:00:00.000Z" }],
+      }),
+    );
+    await expectImportError("recovery-conflict", tamperedBackupMarkerOperation, () =>
+      recoverTutorialImport({
+        contentRoot: tamperedBackupMarkerContentRoot,
+        publicRoot: tamperedBackupMarkerPublicRoot,
+        operationId: tamperedBackupMarkerOperation,
+      }),
+    );
+    assert.deepEqual(
+      await readTamperedBackupMarkerLiveFiles(),
+      tamperedBackupMarkerBefore,
+    );
+    assert.equal(tamperedBackupMarkerSeed.generation, tamperedBackupMarkerSeedOperation);
+
     await publishImportedFixture(contentRoot);
     const publishedBefore = JSON.parse(await fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"));
     const refreshedHtml = snapshot.html.replace(

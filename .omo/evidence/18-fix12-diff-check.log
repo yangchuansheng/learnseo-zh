@@ -1,0 +1,6 @@
+Invocation: git diff --check
+Exit code: 0
+Observable: no unstaged whitespace errors reported
+Invocation: git diff --cached --check
+Exit code: 0
+Observable: no staged whitespace errors reported

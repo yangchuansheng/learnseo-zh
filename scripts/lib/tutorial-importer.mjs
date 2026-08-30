@@ -2151,17 +2151,52 @@ function isBootstrapManifest(manifest) {
   return model.isTutorialBootstrapManifest(manifest);
 }
 
+function manifestHasMarkerRoute(manifest, marker) {
+  if (
+    !marker ||
+    typeof marker !== "object" ||
+    typeof marker.slug !== "string" ||
+    typeof marker.sourceKey !== "string"
+  ) {
+    return false;
+  }
+  let sourceKey;
+  try {
+    sourceKey = normalizeSourceKey(marker.sourceKey);
+  } catch {
+    return false;
+  }
+  return manifest.routes.some((route) => {
+    try {
+      return route.slug === marker.slug && normalizeSourceKey(route.sourceKey) === sourceKey;
+    } catch {
+      return false;
+    }
+  });
+}
+
 function markerMatchesManifestPair(marker, zhManifest, enManifest) {
-  return importMarkerMatches(marker, {
-    operationId: marker?.operationId,
-    generation: marker?.generation,
-    slug: marker?.slug,
-    sourceKey: marker?.sourceKey,
-    locales: ["zh-CN", "en"],
-  }) &&
+  return marker &&
+    typeof marker === "object" &&
+    typeof marker.operationId === "string" &&
+    typeof marker.generation === "string" &&
+    Array.isArray(marker.locales) &&
+    JSON.stringify(marker.locales) === JSON.stringify(["zh-CN", "en"]) &&
     marker.operationId === marker.generation &&
     marker.generation === zhManifest.generation &&
-    marker.generation === enManifest.generation;
+    marker.generation === enManifest.generation &&
+    manifestHasMarkerRoute(zhManifest, marker) &&
+    manifestHasMarkerRoute(enManifest, marker);
+}
+
+async function fileExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch (error) {
+    if (error.code === "ENOENT") return false;
+    throw error;
+  }
 }
 
 async function parseBackupManifest(roots, relative, locale, operationId) {
@@ -2295,6 +2330,7 @@ async function restoreFilesWithRollback(contentRoot, operationId, files, hooks =
 async function restoreCommittedBackups(roots, operationId, reason, hooks = {}) {
   const markerPath = path.join(roots.contentRoot, "import-generation.json");
   const markerBackupPath = `${markerPath}.backup-${operationId}`;
+  const markerBackupExists = await fileExists(markerBackupPath);
   const zhCandidates = [
     await parseBackupManifest(roots, "manifest.json", "zh-CN", operationId),
     await parseLiveManifestForRestore(roots, "manifest.json", "zh-CN", operationId),
@@ -2306,7 +2342,7 @@ async function restoreCommittedBackups(roots, operationId, reason, hooks = {}) {
   const markerCandidates = [
     await parseMarkerForRestore(markerBackupPath, "Backup import-generation.json", operationId),
     await parseMarkerForRestore(markerPath, "Live import-generation.json", operationId),
-    null,
+    ...(markerBackupExists ? [] : [null]),
   ];
   let restore = null;
   for (const zh of zhCandidates) {
