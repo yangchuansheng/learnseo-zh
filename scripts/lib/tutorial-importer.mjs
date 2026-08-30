@@ -1632,16 +1632,32 @@ async function withImportLock(contentRoot, callback) {
   }
 }
 
-async function writeJsonFileAtomic(filePath, value) {
-  await fs.mkdir(path.dirname(filePath), { recursive: true });
-  const temporary = `${filePath}.${process.pid}.${crypto.randomUUID()}.tmp`;
+async function writeBytesToTemporary(temporary, bytes) {
+  await fs.mkdir(path.dirname(temporary), { recursive: true });
   const handle = await fs.open(temporary, "wx");
   try {
-    await handle.writeFile(`${JSON.stringify(value, null, 2)}\n`, "utf8");
+    await handle.writeFile(bytes);
     await handle.sync();
   } finally {
     await handle.close();
   }
+  return temporary;
+}
+
+async function writeJsonFileAtomic(filePath, value) {
+  const bytes = `${JSON.stringify(value, null, 2)}\n`;
+  const temporary = await writeBytesToTemporary(
+    `${filePath}.${process.pid}.${crypto.randomUUID()}.tmp`,
+    bytes,
+  );
+  await fs.rename(temporary, filePath);
+}
+
+async function writeBytesFileAtomic(filePath, bytes) {
+  const temporary = await writeBytesToTemporary(
+    `${filePath}.${process.pid}.${crypto.randomUUID()}.tmp`,
+    bytes,
+  );
   await fs.rename(temporary, filePath);
 }
 
@@ -2045,8 +2061,8 @@ async function parseBackupManifest(roots, relative, locale, operationId) {
         `backup ${relative}`,
       ),
     };
-  } catch (error) {
-    fail("recovery-conflict", `Backup ${relative} is invalid: ${error.message}`, operationId);
+  } catch {
+    return null;
   }
 }
 
@@ -2068,8 +2084,8 @@ async function parseLiveManifestForRestore(roots, relative, locale, operationId)
         `live ${relative}`,
       ),
     };
-  } catch (error) {
-    fail("recovery-conflict", `Live ${relative} is invalid: ${error.message}`, operationId);
+  } catch {
+    return null;
   }
 }
 
@@ -2085,8 +2101,8 @@ async function parseMarkerForRestore(filePath, label, operationId) {
       bytes,
       marker: parseRecoveryJson(bytes, label, operationId),
     };
-  } catch (error) {
-    fail("recovery-conflict", `${label} is invalid: ${error.message}`, operationId);
+  } catch {
+    return null;
   }
 }
 
@@ -2101,7 +2117,61 @@ function restoreCandidateIsValid(candidate) {
     (restoresBootstrap && !candidate.marker);
 }
 
-async function restoreCommittedBackups(roots, operationId, reason) {
+async function stageRestoreFile(contentRoot, relative, bytes, operationId) {
+  const target = path.join(contentRoot, relative);
+  const temporary = await writeBytesToTemporary(
+    `${target}.restore-${operationId}.${process.pid}.${crypto.randomUUID()}.tmp`,
+    bytes,
+  );
+  return { relative, target, temporary };
+}
+
+async function readRollbackCandidate(target) {
+  try {
+    return { existed: true, bytes: await fs.readFile(target) };
+  } catch (error) {
+    if (error.code === "ENOENT") return { existed: false, bytes: null };
+    throw error;
+  }
+}
+
+async function rollbackRestoreReplacements(replaced) {
+  for (const { target, rollback } of replaced.reverse()) {
+    if (rollback.existed) {
+      await writeBytesFileAtomic(target, rollback.bytes);
+    } else {
+      await fs.rm(target, { force: true });
+    }
+  }
+}
+
+async function cleanupRestoreTemporaries(files) {
+  await Promise.all(files.map((file) => fs.rm(file.temporary, { force: true }).catch(() => {})));
+}
+
+async function restoreFilesWithRollback(contentRoot, operationId, files, hooks = {}) {
+  const staged = [];
+  const replaced = [];
+  try {
+    for (const file of files) {
+      staged.push(await stageRestoreFile(contentRoot, file.relative, file.bytes, operationId));
+    }
+    for (const file of staged) {
+      const rollback = await readRollbackCandidate(file.target);
+      await fs.rename(file.temporary, file.target);
+      replaced.push({ target: file.target, rollback });
+      if (hooks.failAfterRestoreRenameRelative === file.relative) {
+        throw new Error(`Injected restore failure after rename for ${file.relative}`);
+      }
+    }
+  } catch (error) {
+    await rollbackRestoreReplacements(replaced);
+    await cleanupRestoreTemporaries(staged);
+    throw error;
+  }
+}
+
+async function restoreCommittedBackups(roots, operationId, reason, hooks = {}) {
   const markerPath = path.join(roots.contentRoot, "import-generation.json");
   const markerBackupPath = `${markerPath}.backup-${operationId}`;
   const zhCandidates = [
@@ -2136,11 +2206,15 @@ async function restoreCommittedBackups(roots, operationId, reason) {
   const enRestore = restore.en;
   const restoresBootstrap = isBootstrapManifest(zhRestore.manifest) && isBootstrapManifest(enRestore.manifest);
 
-  await fs.writeFile(path.join(roots.contentRoot, "manifest.json"), zhRestore.bytes);
-  await fs.writeFile(path.join(roots.contentRoot, "manifest.en.json"), enRestore.bytes);
+  const restoreFiles = [
+    { relative: "manifest.json", bytes: zhRestore.bytes },
+    { relative: "manifest.en.json", bytes: enRestore.bytes },
+  ];
   if (restore.marker) {
-    await fs.writeFile(markerPath, restore.marker.bytes);
-  } else if (restoresBootstrap) {
+    restoreFiles.push({ relative: "import-generation.json", bytes: restore.marker.bytes });
+  }
+  await restoreFilesWithRollback(roots.contentRoot, operationId, restoreFiles, hooks);
+  if (!restore.marker && restoresBootstrap) {
     const failedMarker = `${markerPath}.failed-${operationId}`;
     await fs.rename(markerPath, failedMarker).catch((error) => {
       if (error.code !== "ENOENT") throw error;
@@ -2206,7 +2280,7 @@ export async function recoverTutorialImport(options) {
         await validateRecoveryCandidates(roots, operationId, journal, recoveryFiles.files);
       } catch (error) {
         if (canRestoreBackups(journal)) {
-          const restored = await restoreCommittedBackups(roots, operationId, error.message);
+          const restored = await restoreCommittedBackups(roots, operationId, error.message, options.testHooks ?? {});
           if (restored) {
             await updateJournal(roots.contentRoot, operationId, {
               ...journal,

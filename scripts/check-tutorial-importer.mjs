@@ -1438,6 +1438,78 @@ async function main() {
       fs.readFile(path.join(partialBackupContentRoot, "manifest.en.json"), "utf8"),
     ]), partialBackupBefore);
 
+    const atomicRestoreContentRoot = path.join(tmpRoot, "atomic-restore-content");
+    const atomicRestorePublicRoot = path.join(tmpRoot, "atomic-restore-public");
+    await seedManifests(atomicRestoreContentRoot);
+    const atomicSeedOperation = "tutorial-import-atomic-seed";
+    await importFixture(tmpRoot, snapshot, {
+      contentRoot: atomicRestoreContentRoot,
+      publicRoot: atomicRestorePublicRoot,
+      operationId: atomicSeedOperation,
+    });
+    const atomicRestoreOperation = "tutorial-import-atomic-restore-test";
+    const atomicRestoreFiles = ["manifest.json", "manifest.en.json", "import-generation.json"];
+    const atomicRestoreBefore = await Promise.all(
+      atomicRestoreFiles.map((relative) => fs.readFile(path.join(atomicRestoreContentRoot, relative), "utf8")),
+    );
+    for (const relative of atomicRestoreFiles) {
+      await fs.copyFile(
+        path.join(atomicRestoreContentRoot, relative),
+        path.join(atomicRestoreContentRoot, `${relative}.backup-${atomicRestoreOperation}`),
+      );
+      await fs.writeFile(path.join(atomicRestoreContentRoot, relative), "{broken", "utf8");
+    }
+    await writeJsonFile(
+      path.join(atomicRestoreContentRoot, ".import-journal", `${atomicRestoreOperation}.json`),
+      await recoveryJournalFixture(atomicRestoreOperation, snapshot, [
+        { relative: "manifest.json", sha256: sha256("missing-candidate-manifest") },
+        { relative: "manifest.en.json", sha256: sha256("missing-candidate-manifest-en") },
+        { relative: "import-generation.json", sha256: sha256("missing-candidate-marker") },
+      ], {
+        phases: [{ phase: "manifest-replace", relative: "manifest.json", recordedAt: "2026-08-30T00:00:00.000Z" }],
+      }),
+    );
+    await expectImportError("unavailable", atomicRestoreOperation, () =>
+      recoverTutorialImport({
+        contentRoot: atomicRestoreContentRoot,
+        publicRoot: atomicRestorePublicRoot,
+        operationId: atomicRestoreOperation,
+        testHooks: { failAfterRestoreRenameRelative: "manifest.json" },
+      }),
+    );
+    assert.deepEqual(
+      (await fs.readdir(atomicRestoreContentRoot)).filter((entry) =>
+        entry.includes(`.restore-${atomicRestoreOperation}.`),
+      ),
+      [],
+    );
+    const atomicRestored = await recoverTutorialImport({
+      contentRoot: atomicRestoreContentRoot,
+      publicRoot: atomicRestorePublicRoot,
+      operationId: atomicRestoreOperation,
+    });
+    assert.equal(atomicRestored.status, "restored");
+    const atomicRestoreAfter = await Promise.all(
+      atomicRestoreFiles.map((relative) => fs.readFile(path.join(atomicRestoreContentRoot, relative), "utf8")),
+    );
+    assert.deepEqual(atomicRestoreAfter, atomicRestoreBefore);
+    model.validateTutorialManifestPair(
+      model.parseTutorialManifest(JSON.parse(atomicRestoreAfter[0]), "zh-CN", "atomic restore manifest.json"),
+      model.parseTutorialManifest(JSON.parse(atomicRestoreAfter[1]), "en", "atomic restore manifest.en.json"),
+    );
+    const atomicRestoredAgain = await recoverTutorialImport({
+      contentRoot: atomicRestoreContentRoot,
+      publicRoot: atomicRestorePublicRoot,
+      operationId: atomicRestoreOperation,
+    });
+    assert.equal(atomicRestoredAgain.status, "restored");
+    assert.deepEqual(
+      await Promise.all(
+        atomicRestoreFiles.map((relative) => fs.readFile(path.join(atomicRestoreContentRoot, relative), "utf8")),
+      ),
+      atomicRestoreBefore,
+    );
+
     await publishImportedFixture(contentRoot);
     const publishedBefore = JSON.parse(await fs.readFile(path.join(contentRoot, "manifest.json"), "utf8"));
     const refreshedHtml = snapshot.html.replace(
@@ -1734,7 +1806,7 @@ async function main() {
     assert.equal(staleEmptyLockResult.status, "draft");
     await assert.rejects(() => fs.access(staleEmptyLockPath), { code: "ENOENT" });
 
-    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, overlong operation id fallback, in-process recovery/restore coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix7-tutorials-importer.log");
+    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, overlong operation id fallback, in-process recovery/restore coverage, atomic restore retry coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix8-tutorials-importer.log");
   } finally {
     await fs.rm(tmpRoot, { recursive: true, force: true });
   }
