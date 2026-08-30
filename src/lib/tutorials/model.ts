@@ -1879,7 +1879,7 @@ export function validateTutorialHtml(
   const elementIds = new Set<string>();
   for (const match of html.matchAll(/<([a-z][\w:-]*)\b([^>]*)>/gi)) {
     const tag = match[1].toLowerCase();
-    const attrs = attributeMap(match[0], `${label} <${tag}>`);
+    const attrs = attributeMap(`<${tag}${match[2]}>`, `${label} <${tag}>`);
     for (const key of attrs.keys()) {
       if (!safeAttributes.has(key)) throw new Error(`${label} contains unsupported attribute ${key}`);
     }
@@ -1929,7 +1929,7 @@ export function validateTutorialHtml(
   const h1Count = openingTags(html, "h1").length;
   if ((options.requireSingleH1 ?? true) && h1Count !== 1) throw new Error(`${label} must contain one h1`);
   for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
-    const attrs = attributeMap(match[0], `${label} anchor`);
+    const attrs = attributeMap(`<a${match[1]}>`, `${label} anchor`);
     if (!attrs.get("href")) throw new Error(`${label} anchor is missing href`);
     const text = match[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
     const imageAlt = [...match[2].matchAll(/<img\b[^>]*\balt\s*=\s*(["'])(.*?)\1[^>]*>/gi)]

@@ -311,6 +311,11 @@ assert.throws(
   () => model.validateTutorialHtml(fixture.replace("<blockquote", "<script><blockquote")),
   /unsupported <script>/,
 );
+assert.doesNotThrow(() =>
+  model.validateTutorialHtml(
+    '<article><h1 id="x">Title</h1><p>Read <a href="https://example.com/docs">the docs</a>.</p></article>',
+  ),
+);
 assert.throws(
   () => model.validateTutorialHtml("<article><h1 id=\"x\">Title</h1><p><a href=\"javascript:alert(1)\" href=\"https://safe.example/\">safe</a></p></article>"),
   /duplicate attribute href/,
