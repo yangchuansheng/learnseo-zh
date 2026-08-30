@@ -72,6 +72,18 @@ async function expectImportError(code, operationId, action) {
   );
 }
 
+async function captureImportError(code, operationId, action) {
+  try {
+    await action();
+  } catch (error) {
+    assert.ok(error instanceof TutorialImportError, `expected TutorialImportError for ${operationId}`);
+    assert.equal(error.code, code);
+    assert.equal(error.operationId, operationId);
+    return error.message;
+  }
+  assert.fail(`expected ${code} for ${operationId}`);
+}
+
 async function runImportCli(args) {
   const child = spawn(process.execPath, [path.join(repositoryRoot, "scripts/import-learningseo-tutorial.mjs"), ...args], {
     stdio: ["ignore", "ignore", "pipe"],
@@ -745,6 +757,59 @@ async function main() {
       firstBackupFiles,
     );
 
+    const conflictingSourceInput = path.join(tmpRoot, "same-operation-conflicting-source-snapshot.json");
+    const conflictingSourceUrl = `${sourceUrl}?conflicting-source=1`;
+    await writeJsonFile(conflictingSourceInput, {
+      ...snapshot,
+      canonicalUrl: conflictingSourceUrl,
+      requestedUrl: conflictingSourceUrl,
+      finalUrl: conflictingSourceUrl,
+      sourceKey: conflictingSourceUrl,
+    });
+    const conflictingDuplicateMessage = await captureImportError("duplicate-operation", result.operationId, () =>
+      importTutorialDraft({
+        input: conflictingSourceInput,
+        translation: path.join(fixtureRoot, "google-devsite.zh-CN.html"),
+        contentRoot,
+        publicRoot,
+        allowFixtureMedia: true,
+        operationId: result.operationId,
+        actor: "conflict.actor",
+      }),
+    );
+    assert.equal(
+      await captureImportError("duplicate-operation", result.operationId, () =>
+        importTutorialDraft({
+          input: conflictingSourceInput,
+          translation: path.join(fixtureRoot, "google-devsite.zh-CN.html"),
+          contentRoot,
+          publicRoot,
+          allowFixtureMedia: true,
+          operationId: result.operationId,
+          actor: "conflict.actor",
+        }),
+      ),
+      conflictingDuplicateMessage,
+    );
+    assert.equal(await fs.readFile(journalPath, "utf8"), firstJournalSource);
+    assert.equal(JSON.parse(firstJournalSource).actor, "importer.test");
+    assert.equal(JSON.parse(firstJournalSource).phase, "committed");
+    assert.equal(
+      await captureImportError("duplicate-operation", result.operationId, () =>
+        importTutorialDraft({
+          input: path.join(tmpRoot, "missing-committed-operation-snapshot.json"),
+          translation: path.join(fixtureRoot, "google-devsite.zh-CN.html"),
+          contentRoot,
+          publicRoot,
+          allowFixtureMedia: true,
+          operationId: result.operationId,
+          actor: "conflict.actor",
+        }),
+      ),
+      conflictingDuplicateMessage,
+    );
+    assert.equal(await fs.readFile(journalPath, "utf8"), firstJournalSource);
+
     const generationBeforeSecondImport = zhManifest.generation;
     const secondResult = await importFixture(tmpRoot, snapshot);
     assert.equal(secondResult.idempotent, true);
@@ -1022,7 +1087,7 @@ async function main() {
     }
     try {
       let mediaRequested = false;
-      for (const mediaAddress of ["::10.0.0.1", "100::1", "2001:2::1", "3fff::1"]) {
+      for (const [mediaIndex, mediaAddress] of ["::10.0.0.1", "100::1", "2001:2::1", "3fff::1"].entries()) {
         mediaRequested = false;
         dns.lookup = async () => [{ address: mediaAddress, family: 6 }];
         https.request = () => {
@@ -1033,13 +1098,14 @@ async function main() {
           ...snapshot,
           media: [{ ...snapshot.media[0], fixtureFile: undefined }],
         });
-        await expectImportError("unavailable", "tutorial-import-private-media-dns-test", () =>
+        const operationId = `tutorial-import-private-media-dns-test-${mediaIndex + 1}`;
+        await expectImportError("unavailable", operationId, () =>
           importTutorialDraft({
             input: path.join(tmpRoot, "private-media-snapshot.json"),
             translation: path.join(fixtureRoot, "google-devsite.zh-CN.html"),
             contentRoot: path.join(tmpRoot, "private-media-content"),
             publicRoot: path.join(tmpRoot, "private-media-public"),
-            operationId: "tutorial-import-private-media-dns-test",
+            operationId,
           }),
         );
         assert.equal(mediaRequested, false);
@@ -1238,6 +1304,42 @@ async function main() {
     assert.equal(failedJournal.actor, "audit.operator");
     assert.equal(failedJournal.failure.code, "commit");
     assert.ok(failedJournal.phases.some((entry) => entry.phase === "commit-failed"));
+    const failedJournalPath = path.join(transactionContentRoot, ".import-journal", "tutorial-import-transaction-test.json");
+    const failedJournalSource = await fs.readFile(failedJournalPath, "utf8");
+    const failureDuplicateMissingInputMessage = await captureImportError("duplicate-operation", "tutorial-import-transaction-test", () =>
+      importTutorialDraft({
+        input: path.join(tmpRoot, "missing-reserved-operation-snapshot.json"),
+        translation: path.join(fixtureRoot, "google-devsite.zh-CN.html"),
+        contentRoot: transactionContentRoot,
+        publicRoot: path.join(tmpRoot, "transaction-public"),
+        operationId: "tutorial-import-transaction-test",
+        actor: "retry.operator",
+      }),
+    );
+    assert.equal(await fs.readFile(failedJournalPath, "utf8"), failedJournalSource);
+    const failureDuplicateMessage = await captureImportError("duplicate-operation", "tutorial-import-transaction-test", () =>
+      importFixture(tmpRoot, snapshot, {
+        contentRoot: transactionContentRoot,
+        publicRoot: path.join(tmpRoot, "transaction-public"),
+        operationId: "tutorial-import-transaction-test",
+        actor: "retry.operator",
+      }),
+    );
+    assert.equal(
+      await captureImportError("duplicate-operation", "tutorial-import-transaction-test", () =>
+        importFixture(tmpRoot, snapshot, {
+          contentRoot: transactionContentRoot,
+          publicRoot: path.join(tmpRoot, "transaction-public"),
+          operationId: "tutorial-import-transaction-test",
+          actor: "retry.operator",
+        }),
+      ),
+      failureDuplicateMessage,
+    );
+    assert.equal(failureDuplicateMessage, failureDuplicateMissingInputMessage);
+    assert.equal(await fs.readFile(failedJournalPath, "utf8"), failedJournalSource);
+    assert.equal(JSON.parse(failedJournalSource).actor, "audit.operator");
+    assert.equal(JSON.parse(failedJournalSource).phase, "failed");
 
     const cleanupContentRoot = path.join(tmpRoot, "cleanup-content");
     await seedManifests(cleanupContentRoot);
@@ -1973,14 +2075,31 @@ async function main() {
       }),
     );
     await fs.access(guardedReclaimLockPath);
+    const guardedReclaimJournalPath = path.join(
+      guardedReclaimContentRoot,
+      ".import-journal",
+      "tutorial-import-guarded-reclaim-test.json",
+    );
+    const guardedReclaimJournalSource = await fs.readFile(guardedReclaimJournalPath, "utf8");
     await fs.rm(`${guardedReclaimLockPath}.reclaiming`, { recursive: true, force: true });
+    await captureImportError("duplicate-operation", "tutorial-import-guarded-reclaim-test", () =>
+      importFixture(tmpRoot, {
+        ...snapshot,
+        slug: "guarded-reclaim-guide",
+      }, {
+        contentRoot: guardedReclaimContentRoot,
+        publicRoot: path.join(tmpRoot, "guarded-reclaim-public"),
+        operationId: "tutorial-import-guarded-reclaim-test",
+      }),
+    );
+    assert.equal(await fs.readFile(guardedReclaimJournalPath, "utf8"), guardedReclaimJournalSource);
     const guardedReclaimResult = await importFixture(tmpRoot, {
       ...snapshot,
       slug: "guarded-reclaim-guide",
     }, {
       contentRoot: guardedReclaimContentRoot,
       publicRoot: path.join(tmpRoot, "guarded-reclaim-public"),
-      operationId: "tutorial-import-guarded-reclaim-test",
+      operationId: "tutorial-import-guarded-reclaim-retry-test",
     });
     assert.equal(guardedReclaimResult.status, "draft");
 
@@ -2014,7 +2133,7 @@ async function main() {
     assert.equal(staleEmptyLockResult.status, "draft");
     await assert.rejects(() => fs.access(staleEmptyLockPath), { code: "ENOENT" });
 
-    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, overlong operation id fallback, in-process recovery/restore coverage, atomic restore retry coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix10-tutorials-importer.log");
+    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, overlong operation id fallback, in-process recovery/restore coverage, atomic restore retry coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix11-tutorials-importer.log");
   } finally {
     await fs.rm(tmpRoot, { recursive: true, force: true });
   }

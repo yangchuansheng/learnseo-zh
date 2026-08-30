@@ -230,6 +230,17 @@ function failWithExistingOperationAudit(code, message, operationId, actor = null
   throw error;
 }
 
+function duplicateOperationAuditError(operationId, actor = null) {
+  const error = new TutorialImportError(
+    "duplicate-operation",
+    `Operation id ${operationId} already has import artifacts: journal`,
+    operationId,
+    actor,
+  );
+  error.auditRecorded = true;
+  return error;
+}
+
 function requireOption(args, key, operationId = null, actor = null) {
   const value = args[key];
   if (typeof value !== "string" || !value.trim()) fail("usage", `Missing required --${key}`, operationId, actor);
@@ -1537,6 +1548,21 @@ async function readJsonFileOrNull(filePath) {
   }
 }
 
+async function readJournalAuditState(contentRoot, operationId) {
+  const target = path.join(contentRoot, ".import-journal", `${operationId}.json`);
+  try {
+    const bytes = await fs.readFile(target, "utf8");
+    try {
+      return { exists: true, journal: JSON.parse(bytes) };
+    } catch {
+      return { exists: true, journal: null };
+    }
+  } catch (error) {
+    if (error.code === "ENOENT") return { exists: false, journal: null };
+    throw error;
+  }
+}
+
 async function pathExists(filePath) {
   try {
     await fs.access(filePath);
@@ -1562,13 +1588,20 @@ function journalMatchesTuple(journal, snapshot, hashes) {
 }
 
 async function assertOperationAvailableForMutation(roots, operationId, actor, snapshot, hashes, manifests) {
-  const journalPath = path.join(roots.contentRoot, ".import-journal", `${operationId}.json`);
-  const [journal, marker, stagingExists, backups] = await Promise.all([
-    readJsonFileOrNull(journalPath),
+  const [journalState, marker, stagingExists, backups] = await Promise.all([
+    readJournalAuditState(roots.contentRoot, operationId),
     readJsonFileOrNull(path.join(roots.contentRoot, "import-generation.json")),
     pathExists(path.join(roots.contentRoot, ".import-staging", operationId)),
     operationBackupFiles(roots.contentRoot, operationId),
   ]);
+  const journal = journalState.journal;
+  if (journalState.exists) {
+    const idempotent = journal?.phase === "committed" && journalMatchesTuple(journal, snapshot, hashes)
+      ? idempotentResult(snapshot, hashes, manifests)
+      : null;
+    if (idempotent?.operationId === operationId) return idempotent;
+    throw duplicateOperationAuditError(operationId, actor);
+  }
   const generationInUse = manifests["zh-CN"].generation === operationId ||
     manifests.en.generation === operationId;
   const markerInUse = marker?.operationId === operationId || marker?.generation === operationId;
@@ -1600,6 +1633,7 @@ async function assertOperationAvailableForMutation(roots, operationId, actor, sn
     operationId,
     actor,
   );
+  return null;
 }
 
 function isProcessAlive(pid) {
@@ -1766,9 +1800,11 @@ async function recordFailureJournal(contentRoot, operationId, actor, error, curr
     message: error.message,
     recordedAt: new Date().toISOString(),
   };
-  const existing = currentJournal ?? await readJsonFileOrNull(
-    path.join(contentRoot, ".import-journal", `${operationId}.json`),
-  );
+  const journalState = currentJournal
+    ? { exists: true, journal: currentJournal }
+    : await readJournalAuditState(contentRoot, operationId);
+  if (!currentJournal && journalState.exists) return;
+  const existing = journalState.journal;
   const previousPhases = Array.isArray(existing?.phases) ? existing.phases : [];
   await updateJournal(contentRoot, operationId, {
     ...(existing && typeof existing === "object" ? existing : {}),
@@ -2515,9 +2551,14 @@ export async function importTutorialDraft(options) {
     publicRoot: path.resolve(options.publicRoot ?? importerDefaults.publicRoot),
   };
   let currentJournal = null;
+  let reservedJournal = null;
   try {
     actor = optionalActor(options.actor, operationId);
     if (auditContext.invalidOperationId) fail("usage", "Invalid operation id", operationId, actor);
+    reservedJournal = await readJournalAuditState(roots.contentRoot, operationId);
+    if (reservedJournal.exists && reservedJournal.journal?.phase !== "committed") {
+      throw duplicateOperationAuditError(operationId, actor);
+    }
     const snapshot = await readSnapshot(options.input);
     model.assertTutorialSlug(snapshot.slug);
     if (snapshot.canonicalMatched !== true || normalizeSourceKey(snapshot.canonicalUrl) !== normalizeSourceKey(snapshot.requestedUrl)) {
@@ -2555,10 +2596,11 @@ export async function importTutorialDraft(options) {
         readManifest(roots.contentRoot, "en"),
       ]);
       const manifests = { "zh-CN": zhManifest, en: enManifest };
+      const existingOperation = await assertOperationAvailableForMutation(roots, operationId, actor, snapshot, hashes, manifests);
+      if (existingOperation) return { ...existingOperation, actor };
       assertOwnership(snapshot, manifests);
       const idempotent = idempotentResult(snapshot, hashes, manifests);
       if (idempotent) return { ...idempotent, actor };
-      await assertOperationAvailableForMutation(roots, operationId, actor, snapshot, hashes, manifests);
       const enRecord = routeFromSnapshot(snapshot, "en", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
       const zhRecord = routeFromSnapshot(snapshot, "zh-CN", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
       const candidateVersion = zhRecord.refreshCandidate?.operationId === operationId
@@ -2670,6 +2712,9 @@ export async function importTutorialDraft(options) {
     });
   } catch (error) {
     const importError = errorWithOperation(error, operationId, actor);
+    if (reservedJournal?.exists && !currentJournal && importError.code !== "duplicate-operation") {
+      throw duplicateOperationAuditError(operationId, actor);
+    }
     if (importError.auditRecorded !== true) {
       try {
         await recordFailureJournal(roots.contentRoot, operationId, actor, importError, currentJournal);
