@@ -78,7 +78,7 @@ const semanticTags = new Set([
 ]);
 const voidTags = new Set(["br", "img"]);
 const dangerousTagPattern = /<(?:script|style|object|embed|base|meta|link|form)\b/i;
-const executableAttributePattern = /\s(?:on[a-z-]+|srcdoc|style)\s*=/i;
+const executableAttributePattern = /\s(?:on[a-z-]+|srcdoc)\s*=/i;
 const safeGlobalAttributes = new Set([
   "aria-describedby",
   "aria-label",
@@ -449,7 +449,10 @@ async function pinnedHttpsRequest(rawUrl, label, code = "unavailable") {
       path: `${parsed.pathname}${parsed.search}`,
       method: "GET",
       servername: parsed.hostname,
-      lookup: (_hostname, _options, callback) => callback(null, address, family),
+      lookup: (_hostname, options, callback) => {
+        if (options?.all) callback(null, [{ address, family }]);
+        else callback(null, address, family);
+      },
       headers: {
         host: parsed.host,
         "user-agent": "learnseo-tutorial-importer/1.0",
@@ -622,14 +625,21 @@ function normalizeBodyRoot(html) {
   return html.replace(/<([a-z][\w:-]*)\b([^>]*)class\s*=\s*(["'])[^"']*\bdevsite-article-body\b[^"']*\3([^>]*)>/i, "<article$2$4>");
 }
 
+function challengeVisibleText(html) {
+  return visibleText(html
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/<(?:script|style|template|noscript)\b[\s\S]*?<\/(?:script|style|template|noscript)>/gi, " "));
+}
+
 function detectBotChallenge(html, finalUrl) {
-  return /(?:captcha|recaptcha|cf-chl|bot challenge|enable javascript and cookies|unusual traffic)/i.test(html) ||
+  return /(?:cf-chl|challenge-platform)/i.test(html) ||
+    /(?:verify you are human|enable javascript and cookies|unusual traffic)/i.test(challengeVisibleText(html)) ||
     new URL(finalUrl).pathname.includes("/sorry/");
 }
 
 function failOnUnsafeSourceHtml(html, label) {
   if (dangerousTagPattern.test(html)) fail("unsafe-markup", `${label} contains dangerous markup`);
-  if (executableAttributePattern.test(html)) fail("unsafe-markup", `${label} contains executable or inline-style attributes`);
+  if (executableAttributePattern.test(html)) fail("unsafe-markup", `${label} contains executable attributes`);
   if (/(?:javascript|vbscript|data:text\/html):/i.test(html)) fail("unsafe-markup", `${label} contains an unsafe URL protocol`);
 }
 
@@ -1034,9 +1044,10 @@ function sanitizeAttributes(tag, attrs, baseUrl, mediaMap) {
   const safe = new Map();
   const tagSafe = safeAttributesByTag.get(tag) ?? new Set();
   for (const [key, value] of attrs.entries()) {
-    if (key.startsWith("on") || key === "srcdoc" || key === "style") {
+    if (key.startsWith("on") || key === "srcdoc") {
       fail("unsafe-markup", `Unsafe attribute ${key} on <${tag}>`);
     }
+    if (key === "style") continue;
     if (!safeGlobalAttributes.has(key) && !tagSafe.has(key)) continue;
     safe.set(key, value);
   }

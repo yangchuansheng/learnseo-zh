@@ -697,6 +697,46 @@ async function main() {
     const botChallenge = path.join(tmpRoot, "bot-challenge.html");
     await fs.writeFile(botChallenge, "captcha enable JavaScript and cookies", "utf8");
     await expectCode("bot-challenge", () => collectFixture({ fixture: botChallenge }));
+    const benignCaptchaFlag = path.join(tmpRoot, "benign-captcha-flag.html");
+    await fs.writeFile(
+      benignCaptchaFlag,
+      (await fs.readFile(path.join(fixtureRoot, "google-devsite.html"), "utf8")).replace(
+        "</head>",
+        "    <script>globalThis.DevPro__enable_devsite_captcha = 'unusual traffic';</script>\n  </head>",
+      ),
+      "utf8",
+    );
+    const benignCaptchaSnapshot = await collectFixture({ fixture: benignCaptchaFlag });
+    assert.equal(benignCaptchaSnapshot.canonicalUrl, sourceUrl);
+    const styledSource = path.join(tmpRoot, "styled-source.html");
+    await fs.writeFile(
+      styledSource,
+      (await fs.readFile(path.join(fixtureRoot, "google-devsite.html"), "utf8")).replace(
+        "<img ",
+        '<img style="display:block;margin:auto;" ',
+      ),
+      "utf8",
+    );
+    const styledSnapshot = await collectFixture({ fixture: styledSource });
+    assert.match(styledSnapshot.html, /style="display:block;margin:auto;"/);
+    const styledContentRoot = path.join(tmpRoot, "styled-content-root");
+    await seedManifests(styledContentRoot);
+    const styledImportSnapshot = {
+      ...styledSnapshot,
+      media: styledSnapshot.media.map((entry) => ({
+        ...entry,
+        fixtureFile: path.join(fixtureRoot, "media/fixture-diagram.svg"),
+      })),
+    };
+    const styledImport = await importFixture(tmpRoot, styledImportSnapshot, {
+      contentRoot: styledContentRoot,
+      publicRoot: path.join(tmpRoot, "styled-public"),
+      operationId: "tutorial-import-styled-source-test",
+    });
+    const styledManifest = JSON.parse(await fs.readFile(path.join(styledContentRoot, "manifest.en.json"), "utf8"));
+    const styledHtml = await fs.readFile(path.join(styledContentRoot, "content", styledManifest.routes[0].contentFile), "utf8");
+    assert.equal(styledImport.status, "draft");
+    assert.doesNotMatch(styledHtml, /\sstyle=/i);
     await expectCode("authentication", () => collectFixture({ fixtureStatus: 401 }));
     await expectCode("non-html", () => collectFixture({ fixtureContentType: "application/pdf" }));
 
@@ -726,10 +766,9 @@ async function main() {
         const request = new EventEmitter();
         request.setTimeout = () => request;
         request.end = () => {
-          options.lookup("example.com", {}, (error, address, family) => {
+          options.lookup("example.com", { all: true }, (error, addresses) => {
             assert.ifError(error);
-            assert.equal(address, "93.184.216.34");
-            assert.equal(family, 4);
+            assert.deepEqual(addresses, [{ address: "93.184.216.34", family: 4 }]);
             connectedToPinnedAddress = true;
             const response = Readable.from([pinnedHtml]);
             response.statusCode = 200;
