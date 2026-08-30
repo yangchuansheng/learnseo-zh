@@ -194,6 +194,9 @@ function argValue(argv, key) {
 }
 
 export async function recordCliFailure(error, argv) {
+  if (error instanceof TutorialImportError && error.auditRecorded === true) {
+    return error;
+  }
   const context = safeAuditContext(
     error instanceof TutorialImportError && error.operationId
       ? error.operationId
@@ -219,6 +222,12 @@ export function tutorialImportResultMessage(result) {
 
 function fail(code, message, operationId = null, actor = null) {
   throw new TutorialImportError(code, message, operationId, actor);
+}
+
+function failWithExistingOperationAudit(code, message, operationId, actor = null) {
+  const error = new TutorialImportError(code, message, operationId, actor);
+  error.auditRecorded = true;
+  throw error;
 }
 
 function requireOption(args, key, operationId = null, actor = null) {
@@ -1528,6 +1537,71 @@ async function readJsonFileOrNull(filePath) {
   }
 }
 
+async function pathExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function operationBackupFiles(contentRoot, operationId) {
+  const entries = await fs.readdir(contentRoot).catch(() => []);
+  return entries.filter((entry) =>
+    committedBackupRelatives.some((relative) => entry === `${relative}.backup-${operationId}`),
+  );
+}
+
+function journalMatchesTuple(journal, snapshot, hashes) {
+  return journal?.slug === snapshot.slug &&
+    journal.sourceKey === snapshot.sourceKey &&
+    journal.hashes?.sourceContentHash === snapshot.sourceContentHash &&
+    journal.hashes?.contentHash === hashes.english &&
+    journal.hashes?.translationContentHash === hashes.chinese;
+}
+
+async function assertOperationAvailableForMutation(roots, operationId, actor, snapshot, hashes, manifests) {
+  const journalPath = path.join(roots.contentRoot, ".import-journal", `${operationId}.json`);
+  const [journal, marker, stagingExists, backups] = await Promise.all([
+    readJsonFileOrNull(journalPath),
+    readJsonFileOrNull(path.join(roots.contentRoot, "import-generation.json")),
+    pathExists(path.join(roots.contentRoot, ".import-staging", operationId)),
+    operationBackupFiles(roots.contentRoot, operationId),
+  ]);
+  const generationInUse = manifests["zh-CN"].generation === operationId ||
+    manifests.en.generation === operationId;
+  const markerInUse = marker?.operationId === operationId || marker?.generation === operationId;
+  const journalHasMutation = journal?.generation === operationId ||
+    Array.isArray(journal?.files) ||
+    journal?.hashes !== undefined ||
+    journal?.slug !== undefined ||
+    journal?.sourceKey !== undefined;
+  const operationHasArtifacts = journalHasMutation ||
+    stagingExists ||
+    backups.length > 0 ||
+    generationInUse ||
+    markerInUse;
+  if (!operationHasArtifacts) return;
+
+  const code = journalHasMutation && !journalMatchesTuple(journal, snapshot, hashes)
+    ? "duplicate-operation"
+    : "recovery-conflict";
+  const artifactNames = [
+    journalHasMutation ? "journal" : null,
+    stagingExists ? "staging" : null,
+    backups.length ? "backup" : null,
+    generationInUse ? "manifest" : null,
+    markerInUse ? "marker" : null,
+  ].filter(Boolean).join(",");
+  failWithExistingOperationAudit(
+    code,
+    `Operation id ${operationId} already has import artifacts: ${artifactNames}`,
+    operationId,
+    actor,
+  );
+}
+
 function isProcessAlive(pid) {
   if (!Number.isInteger(pid) || pid <= 0) return false;
   try {
@@ -2266,9 +2340,10 @@ export async function recoverTutorialImport(options) {
     publicRoot: path.resolve(options.publicRoot ?? importerDefaults.publicRoot),
   };
   const operationId = auditContext.operationId;
-  const actor = auditContext.actor;
+  let actor = auditContext.actor;
   let currentJournal = null;
   try {
+    actor = optionalActor(options.actor, operationId);
     if (options.operationId === undefined) fail("usage", "Missing required --operation", operationId, actor);
     if (auditContext.invalidOperationId) fail("usage", "Invalid operation id", operationId, actor);
     return await withImportLock(roots.contentRoot, async () => {
@@ -2335,10 +2410,13 @@ export async function recoverTutorialImport(options) {
     });
   } catch (error) {
     const recoveryError = errorWithOperation(error, operationId, actor);
-    try {
-      await recordFailureJournal(roots.contentRoot, operationId, actor, recoveryError, currentJournal);
-    } catch (journalError) {
-      console.warn(`[tutorial-importer] failure audit warning operation=${operationId}: ${journalError.message}`);
+    if (recoveryError.auditRecorded !== true) {
+      try {
+        await recordFailureJournal(roots.contentRoot, operationId, actor, recoveryError, currentJournal);
+        recoveryError.auditRecorded = true;
+      } catch (journalError) {
+        console.warn(`[tutorial-importer] failure audit warning operation=${operationId}: ${journalError.message}`);
+      }
     }
     throw recoveryError;
   }
@@ -2480,6 +2558,7 @@ export async function importTutorialDraft(options) {
       assertOwnership(snapshot, manifests);
       const idempotent = idempotentResult(snapshot, hashes, manifests);
       if (idempotent) return { ...idempotent, actor };
+      await assertOperationAvailableForMutation(roots, operationId, actor, snapshot, hashes, manifests);
       const enRecord = routeFromSnapshot(snapshot, "en", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
       const zhRecord = routeFromSnapshot(snapshot, "zh-CN", hashes, validation, sharedMedia, manifests, operationId, translationMeta);
       const candidateVersion = zhRecord.refreshCandidate?.operationId === operationId
@@ -2591,10 +2670,13 @@ export async function importTutorialDraft(options) {
     });
   } catch (error) {
     const importError = errorWithOperation(error, operationId, actor);
-    try {
-      await recordFailureJournal(roots.contentRoot, operationId, actor, importError, currentJournal);
-    } catch (journalError) {
-      console.warn(`[tutorial-importer] failure audit warning operation=${operationId}: ${journalError.message}`);
+    if (importError.auditRecorded !== true) {
+      try {
+        await recordFailureJournal(roots.contentRoot, operationId, actor, importError, currentJournal);
+        importError.auditRecorded = true;
+      } catch (journalError) {
+        console.warn(`[tutorial-importer] failure audit warning operation=${operationId}: ${journalError.message}`);
+      }
     }
     throw importError;
   }

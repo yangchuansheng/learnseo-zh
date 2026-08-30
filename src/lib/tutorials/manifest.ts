@@ -19,6 +19,7 @@ import {
 } from "./model";
 import type {
   TutorialManifest,
+  TutorialManifestPair,
   TutorialPublicationPair,
   TutorialRecord,
 } from "./model";
@@ -113,6 +114,55 @@ async function readImportGenerationMarker(): Promise<unknown | undefined> {
   }
 }
 
+function markerValue(marker: unknown): {
+  operationId: string;
+  generation: string;
+  slug?: string;
+  sourceKey?: string;
+  locales: unknown[];
+} | null {
+  if (!marker || typeof marker !== "object") return null;
+  const value = marker as {
+    operationId?: unknown;
+    generation?: unknown;
+    slug?: unknown;
+    sourceKey?: unknown;
+    locales?: unknown;
+  };
+  if (
+    typeof value.operationId !== "string" ||
+    typeof value.generation !== "string" ||
+    value.operationId !== value.generation ||
+    !Array.isArray(value.locales) ||
+    !value.locales.includes("zh-CN") ||
+    !value.locales.includes("en")
+  ) {
+    return null;
+  }
+  return {
+    operationId: value.operationId,
+    generation: value.generation,
+    ...(typeof value.slug === "string" ? { slug: value.slug } : {}),
+    ...(typeof value.sourceKey === "string" ? { sourceKey: value.sourceKey } : {}),
+    locales: value.locales,
+  };
+}
+
+function manifestHasMarkerRoute(
+  manifest: TutorialManifest,
+  marker: ReturnType<typeof markerValue>,
+): boolean {
+  if (!marker?.slug || !marker.sourceKey) return false;
+  return manifest.routes.some((route) => {
+    try {
+      return route.slug === marker.slug &&
+        normalizeSourceKey(recordSourceKey(route)) === normalizeSourceKey(marker.sourceKey as string);
+    } catch {
+      return false;
+    }
+  });
+}
+
 export function tutorialManifestMatchesGenerationMarker(
   manifest: TutorialManifest,
   marker: unknown,
@@ -120,42 +170,77 @@ export function tutorialManifestMatchesGenerationMarker(
   if (marker === undefined) {
     return isTutorialBootstrapManifest(manifest);
   }
-  if (!marker || typeof marker !== "object") return false;
-  const value = marker as {
-    operationId?: unknown;
-    generation?: unknown;
-    locales?: unknown;
-  };
-  return typeof value.operationId === "string" &&
-    typeof value.generation === "string" &&
-    value.operationId === value.generation &&
-    value.generation === manifest.generation &&
-    Array.isArray(value.locales) &&
-    value.locales.includes("zh-CN") &&
-    value.locales.includes("en");
+  const value = markerValue(marker);
+  if (!value) return false;
+  return value.generation === manifest.generation &&
+    manifestHasMarkerRoute(manifest, value);
 }
 
-export const readTutorialManifest = cache(async (locale: Locale): Promise<TutorialManifest> => {
+export function tutorialManifestPairMatchesGenerationMarker(
+  zhManifest: TutorialManifest,
+  enManifest: TutorialManifest,
+  marker: unknown,
+): boolean {
+  if (marker === undefined) {
+    return isTutorialBootstrapManifest(zhManifest) && isTutorialBootstrapManifest(enManifest);
+  }
+  const value = markerValue(marker);
+  if (!value) return false;
+  try {
+    validateTutorialManifestPair(zhManifest, enManifest);
+  } catch {
+    return false;
+  }
+  return value.generation === zhManifest.generation &&
+    value.generation === enManifest.generation &&
+    manifestHasMarkerRoute(zhManifest, value) &&
+    manifestHasMarkerRoute(enManifest, value);
+}
+
+type RuntimeTutorialManifestPair = Pick<TutorialManifestPair, "zh" | "en">;
+
+async function readManifestFile(locale: Locale): Promise<TutorialManifest | null> {
   const filePath = manifestPath(locale);
   let source: string;
   try {
     source = await readFile(filePath, "utf8");
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return unavailableManifest(locale);
+      return null;
     }
     throw new Error(`Unable to read tutorial manifest ${filePath}: ${(error as Error).message}`);
   }
 
   try {
-    const manifest = parseTutorialManifest(JSON.parse(source) as unknown, locale, filePath);
-    const marker = await readImportGenerationMarker();
-    return tutorialManifestMatchesGenerationMarker(manifest, marker)
-      ? manifest
-      : unavailableManifest(locale);
+    return parseTutorialManifest(JSON.parse(source) as unknown, locale, filePath);
   } catch (error) {
     throw new Error(`Invalid tutorial manifest ${filePath}: ${(error as Error).message}`);
   }
+}
+
+export const readTutorialManifestPair = cache(async (): Promise<RuntimeTutorialManifestPair> => {
+  const unavailable = (): RuntimeTutorialManifestPair => ({
+    zh: unavailableManifest("zh-CN"),
+    en: unavailableManifest("en"),
+  });
+  try {
+    const [zhManifest, enManifest, marker] = await Promise.all([
+      readManifestFile("zh-CN"),
+      readManifestFile("en"),
+      readImportGenerationMarker(),
+    ]);
+    if (!zhManifest || !enManifest) return unavailable();
+    return tutorialManifestPairMatchesGenerationMarker(zhManifest, enManifest, marker)
+      ? { zh: zhManifest, en: enManifest }
+      : unavailable();
+  } catch {
+    return unavailable();
+  }
+});
+
+export const readTutorialManifest = cache(async (locale: Locale): Promise<TutorialManifest> => {
+  const pair = await readTutorialManifestPair();
+  return locale === "en" ? pair.en : pair.zh;
 });
 
 export async function getTutorialRecords(locale: Locale): Promise<readonly TutorialRecord[]> {

@@ -108,6 +108,44 @@ async function runRecoverCli(args) {
   return { code, stderr };
 }
 
+async function runRuntimeManifestProbe(cwd) {
+  const script = `
+    import { createJiti } from "jiti";
+    process.chdir(${JSON.stringify(cwd)});
+    const jiti = createJiti(${JSON.stringify(import.meta.url)}, {
+      alias: { "@": ${JSON.stringify(path.join(repositoryRoot, "src"))} },
+    });
+    const manifest = await jiti.import(${JSON.stringify(path.join(repositoryRoot, "src/lib/tutorials/manifest.ts"))});
+    const [zh, en] = await Promise.all([
+      manifest.readTutorialManifest("zh-CN"),
+      manifest.readTutorialManifest("en"),
+    ]);
+    console.log(JSON.stringify({
+      zhAvailable: zh.available,
+      enAvailable: en.available,
+      zhGeneration: zh.generation,
+      enGeneration: en.generation,
+      zhRoutes: zh.routes.length,
+      enRoutes: en.routes.length,
+    }));
+  `;
+  const child = spawn(process.execPath, ["--input-type=module", "-e", script], {
+    cwd: repositoryRoot,
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  let stdout = "";
+  let stderr = "";
+  child.stdout.on("data", (chunk) => {
+    stdout += chunk.toString();
+  });
+  child.stderr.on("data", (chunk) => {
+    stderr += chunk.toString();
+  });
+  const [code] = await once(child, "exit");
+  assert.equal(code, 0, stderr);
+  return JSON.parse(stdout);
+}
+
 async function assertFailureJournal(contentRoot, operationId, actor, code) {
   const journal = JSON.parse(await fs.readFile(
     path.join(contentRoot, ".import-journal", `${operationId}.json`),
@@ -119,6 +157,7 @@ async function assertFailureJournal(contentRoot, operationId, actor, code) {
   assert.equal(journal.failure.code, code);
   assert.ok(Array.isArray(journal.failures));
   assert.ok(journal.failures.some((failure) => failure.code === code));
+  return journal;
 }
 
 async function removeFailureJournal(contentRoot, operationId) {
@@ -365,7 +404,14 @@ async function main() {
     ]);
     assert.equal(translatorCli.code, 1);
     assert.match(translatorCli.stderr, /\[tutorial-importer\] usage operation=tutorial-import-cli-translator-test:/);
-    await assertFailureJournal(importerDefaults.contentRoot, "tutorial-import-cli-missing-input-test", "cli.operator", "usage");
+    const missingInputJournal = await assertFailureJournal(
+      importerDefaults.contentRoot,
+      "tutorial-import-cli-missing-input-test",
+      "cli.operator",
+      "usage",
+    );
+    assert.equal(missingInputJournal.failures.length, 1);
+    assert.equal(missingInputJournal.phases.filter((phase) => phase.phase === "failed").length, 1);
     await assertFailureJournal(importerDefaults.contentRoot, "tutorial-import-cli-content-root-test", "unspecified", "usage");
     await assertFailureJournal(importerDefaults.contentRoot, "tutorial-import-cli-translator-test", "unspecified", "usage");
     await removeFailureJournal(importerDefaults.contentRoot, "tutorial-import-cli-missing-input-test");
@@ -429,7 +475,30 @@ async function main() {
       "cli.operator",
       "recovery-conflict",
     );
+    const missingRecoveryJournal = JSON.parse(await fs.readFile(
+      path.join(importerDefaults.contentRoot, ".import-journal", "tutorial-import-cli-recover-missing-journal-test.json"),
+      "utf8",
+    ));
+    assert.equal(missingRecoveryJournal.failures.filter((failure) => failure.code === "recovery-conflict").length, 1);
+    assert.equal(missingRecoveryJournal.phases.filter((phase) => phase.phase === "failed").length, 1);
     await removeFailureJournal(importerDefaults.contentRoot, "tutorial-import-cli-recover-missing-journal-test");
+    const invalidActorRecoveryCli = await runRecoverCli([
+      "--operation",
+      "tutorial-import-cli-invalid-actor-test",
+      "--actor",
+      "../unsafe",
+    ]);
+    assert.equal(invalidActorRecoveryCli.code, 1);
+    assert.match(invalidActorRecoveryCli.stderr, /\[tutorial-importer\] usage operation=tutorial-import-cli-invalid-actor-test:/);
+    const invalidActorRecoveryJournal = await assertFailureJournal(
+      importerDefaults.contentRoot,
+      "tutorial-import-cli-invalid-actor-test",
+      "unspecified",
+      "usage",
+    );
+    assert.equal(invalidActorRecoveryJournal.failures.length, 1);
+    assert.equal(invalidActorRecoveryJournal.phases.filter((phase) => phase.phase === "failed").length, 1);
+    await removeFailureJournal(importerDefaults.contentRoot, "tutorial-import-cli-invalid-actor-test");
     const collectStrayCli = await runCollectCli([
       "stray",
       "--operation-id",
@@ -535,6 +604,8 @@ async function main() {
       fs.readFile(path.join(contentRoot, "manifest.json"), "utf8").then(JSON.parse),
       fs.readFile(path.join(contentRoot, "manifest.en.json"), "utf8").then(JSON.parse),
     ]);
+    const parsedZhManifest = model.parseTutorialManifest(zhManifest, "zh-CN", "imported manifest.json");
+    const parsedEnManifest = model.parseTutorialManifest(enManifest, "en", "imported manifest.en.json");
     assert.equal(zhManifest.generation, enManifest.generation);
     assert.equal(zhManifest.routes[0].status, "draft");
     assert.equal(enManifest.routes[0].status, "draft");
@@ -558,14 +629,67 @@ async function main() {
     const marker = JSON.parse(await fs.readFile(path.join(contentRoot, "import-generation.json"), "utf8"));
     assert.equal(marker.generation, result.generation);
     assert.deepEqual(marker.locales, ["zh-CN", "en"]);
-    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, marker), true);
-    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, undefined), false);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(parsedZhManifest, marker), true);
+    assert.equal(runtimeManifest.tutorialManifestPairMatchesGenerationMarker(parsedZhManifest, parsedEnManifest, marker), true);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(parsedZhManifest, undefined), false);
     assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(emptyManifest("zh-CN"), undefined), true);
-    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, {
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(parsedZhManifest, {
       ...marker,
       generation: "tutorial-import-other-generation",
     }), false);
-    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(zhManifest, { broken: true }), false);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(parsedZhManifest, {
+      ...marker,
+      slug: "different-guide",
+    }), false);
+    assert.equal(runtimeManifest.tutorialManifestPairMatchesGenerationMarker(
+      parsedZhManifest,
+      { ...parsedEnManifest, generation: "tutorial-import-mixed-generation" },
+      marker,
+    ), false);
+    assert.equal(runtimeManifest.tutorialManifestPairMatchesGenerationMarker(
+      parsedZhManifest,
+      parsedEnManifest,
+      { ...marker, sourceKey: "https://developers.google.com/search/docs/fundamentals/different" },
+    ), false);
+    assert.equal(runtimeManifest.tutorialManifestMatchesGenerationMarker(parsedZhManifest, { broken: true }), false);
+    const runtimeRoot = path.join(tmpRoot, "runtime-manifest-root");
+    const runtimeContentRoot = path.join(runtimeRoot, "src/content/tutorials");
+    await writeJsonFile(path.join(runtimeContentRoot, "manifest.json"), zhManifest);
+    await writeJsonFile(path.join(runtimeContentRoot, "manifest.en.json"), enManifest);
+    await writeJsonFile(path.join(runtimeContentRoot, "import-generation.json"), marker);
+    assert.deepEqual(await runRuntimeManifestProbe(runtimeRoot), {
+      zhAvailable: true,
+      enAvailable: true,
+      zhGeneration: result.generation,
+      enGeneration: result.generation,
+      zhRoutes: 1,
+      enRoutes: 1,
+    });
+    await writeJsonFile(path.join(runtimeContentRoot, "manifest.en.json"), {
+      ...enManifest,
+      generation: "tutorial-import-mixed-generation",
+    });
+    assert.deepEqual(await runRuntimeManifestProbe(runtimeRoot), {
+      zhAvailable: false,
+      enAvailable: false,
+      zhGeneration: null,
+      enGeneration: null,
+      zhRoutes: 0,
+      enRoutes: 0,
+    });
+    await writeJsonFile(path.join(runtimeContentRoot, "manifest.en.json"), enManifest);
+    await writeJsonFile(path.join(runtimeContentRoot, "import-generation.json"), {
+      ...marker,
+      slug: "different-guide",
+    });
+    assert.deepEqual(await runRuntimeManifestProbe(runtimeRoot), {
+      zhAvailable: false,
+      enAvailable: false,
+      zhGeneration: null,
+      enGeneration: null,
+      zhRoutes: 0,
+      enRoutes: 0,
+    });
     const journal = JSON.parse(await fs.readFile(path.join(contentRoot, ".import-journal", `${result.operationId}.json`), "utf8"));
     assert.equal(journal.phase, "committed");
     assert.ok(journal.files.every((file) => typeof file.relative === "string" && /^[a-f0-9]{64}$/.test(file.sha256)));
@@ -575,6 +699,51 @@ async function main() {
     assert.equal(journal.marker.slug, slug);
     assert.equal(journal.marker.sourceKey, snapshot.sourceKey);
     assert.deepEqual(journal.validation.en.headingEntries, journal.validation.zh.headingEntries);
+
+    const journalPath = path.join(contentRoot, ".import-journal", `${result.operationId}.json`);
+    const firstJournalSource = await fs.readFile(journalPath, "utf8");
+    const firstMarkerSource = await fs.readFile(path.join(contentRoot, "import-generation.json"), "utf8");
+    const firstBackupFiles = (await fs.readdir(contentRoot))
+      .filter((entry) => entry.endsWith(`.backup-${result.operationId}`))
+      .sort();
+    const changedHtml = snapshot.html.replace(
+      "Search engines need clear pages, durable links, and crawlable content.",
+      "Search engines need clear pages, durable links, crawlable content, and stable operation identities.",
+    );
+    const changedTranslation = path.join(tmpRoot, "same-operation-changed.zh-CN.html");
+    await fs.writeFile(
+      changedTranslation,
+      (await fs.readFile(path.join(fixtureRoot, "google-devsite.zh-CN.html"), "utf8")).replace(
+        "搜索引擎需要清晰的页面、稳定的链接和可抓取的内容。",
+        "搜索引擎需要清晰的页面、稳定的链接、可抓取的内容和稳定的操作身份。",
+      ),
+      "utf8",
+    );
+    const changedInput = path.join(tmpRoot, "same-operation-changed-snapshot.json");
+    await writeJsonFile(changedInput, {
+      ...snapshot,
+      html: changedHtml,
+      sourceContentHash: sha256(changedHtml),
+    });
+    await expectImportError("duplicate-operation", result.operationId, () =>
+      importTutorialDraft({
+        input: changedInput,
+        translation: changedTranslation,
+        contentRoot,
+        publicRoot,
+        allowFixtureMedia: true,
+        operationId: result.operationId,
+        actor: "second.actor",
+      }),
+    );
+    assert.equal(await fs.readFile(journalPath, "utf8"), firstJournalSource);
+    assert.equal(await fs.readFile(path.join(contentRoot, "import-generation.json"), "utf8"), firstMarkerSource);
+    assert.deepEqual(
+      (await fs.readdir(contentRoot))
+        .filter((entry) => entry.endsWith(`.backup-${result.operationId}`))
+        .sort(),
+      firstBackupFiles,
+    );
 
     const generationBeforeSecondImport = zhManifest.generation;
     const secondResult = await importFixture(tmpRoot, snapshot);
@@ -1845,7 +2014,7 @@ async function main() {
     assert.equal(staleEmptyLockResult.status, "draft");
     await assert.rejects(() => fs.access(staleEmptyLockPath), { code: "ENOENT" });
 
-    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, overlong operation id fallback, in-process recovery/restore coverage, atomic restore retry coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix8-tutorials-importer.log");
+    console.log("Tutorial importer contract passed: deterministic fixture collect/import, collect/import/recover CLI failure audit, overlong operation id fallback, in-process recovery/restore coverage, atomic restore retry coverage, marker gating, non-global IPv6 rejection, tuple idempotency, lock scope, provenance metadata, duplicate media staging, and refresh candidate preservation. Evidence artifact: .omo/evidence/18-fix10-tutorials-importer.log");
   } finally {
     await fs.rm(tmpRoot, { recursive: true, force: true });
   }
