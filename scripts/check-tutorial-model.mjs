@@ -375,13 +375,14 @@ assert.throws(
 const incompletePublished = {
   ...record("zh-CN"),
   snapshot: { ...record("zh-CN").snapshot, sourceUpdatedAt: undefined },
+  seo: { ...record("zh-CN").seo, dateModified: undefined },
   translation: { ...record("zh-CN").translation, translator: null, sourceSections: 0, translatedSections: 0 },
   review: { ...record("zh-CN").review, reviewer: null, reviewedAt: null },
   qualification: { ...record("zh-CN").qualification, reviewer: null, reviewedAt: null },
 };
 assert.throws(
   () => model.validateTutorialRecord(incompletePublished, "zh-CN"),
-  /sourceUpdatedAt/,
+  /dateModified/,
 );
 assert.throws(
   () => model.validateTutorialRecord({

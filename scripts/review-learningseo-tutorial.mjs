@@ -174,6 +174,27 @@ async function verifyRecord(record, locale, expected) {
   return { html, validation };
 }
 
+function snapshotHistoryEntry(route) {
+  return {
+    version: route.snapshot.version,
+    canonicalUrl: route.source.canonicalUrl,
+    sourceContentHash: route.snapshot.sourceContentHash,
+    contentHash: route.snapshot.contentHash,
+    ...(route.snapshot.translationContentHash ? { translationContentHash: route.snapshot.translationContentHash } : {}),
+    contentFile: `${route.snapshot.contentHash}.html`,
+    ...(route.snapshot.translationContentHash
+      ? { translationContentFile: `${route.snapshot.translationContentHash}.html` }
+      : {}),
+    pageCanonicalUrl: route.snapshot.pageCanonicalUrl,
+    canonicalMatched: route.snapshot.canonicalMatched,
+    requestedUrl: route.snapshot.requestedUrl,
+    finalUrl: route.snapshot.finalUrl,
+    capturedAt: route.snapshot.capturedAt,
+    ...(route.snapshot.sourceUpdatedAt ? { sourceUpdatedAt: route.snapshot.sourceUpdatedAt } : {}),
+    recordedAt: new Date().toISOString(),
+  };
+}
+
 function priorReviewEntry(review) {
   return {
     decision: review.decision,
@@ -182,6 +203,50 @@ function priorReviewEntry(review) {
     notes: review.notes,
     version: undefined,
     operationId: undefined,
+  };
+}
+
+function candidateAsRoute(route, candidate) {
+  const candidateHistory = route.snapshot.history.find((entry) =>
+    entry.version === candidate.version &&
+    entry.sourceContentHash === candidate.sourceContentHash &&
+    entry.contentHash === candidate.contentHash &&
+    entry.translationContentHash === candidate.translationContentHash);
+  return {
+    ...route,
+    status: candidate.status,
+    activeVersion: candidate.version,
+    title: candidate.title,
+    description: candidate.description,
+    contentFile: candidate.contentFile,
+    media: candidate.media,
+    toc: candidate.toc,
+    contentMetrics: candidate.contentMetrics,
+    snapshot: {
+      ...route.snapshot,
+      version: candidate.version,
+      capturedAt: candidateHistory?.capturedAt ?? route.snapshot.capturedAt,
+      pageCanonicalUrl: candidateHistory?.pageCanonicalUrl ?? route.snapshot.pageCanonicalUrl,
+      canonicalMatched: candidateHistory?.canonicalMatched ?? route.snapshot.canonicalMatched,
+      requestedUrl: candidateHistory?.requestedUrl ?? route.snapshot.requestedUrl,
+      finalUrl: candidateHistory?.finalUrl ?? route.snapshot.finalUrl,
+      ...(candidateHistory?.sourceUpdatedAt || candidate.seo.dateModified
+        ? { sourceUpdatedAt: candidateHistory?.sourceUpdatedAt ?? candidate.seo.dateModified }
+        : {}),
+      sourceContentHash: candidate.sourceContentHash,
+      contentHash: candidate.contentHash,
+      translationContentHash: candidate.translationContentHash,
+    },
+    translation: {
+      ...route.translation,
+      contentHash: candidate.translationContentHash,
+      contentFile: candidate.translationContentFile,
+    },
+    seo: {
+      ...candidate.seo,
+      indexable: false,
+    },
+    refreshCandidate: undefined,
   };
 }
 
@@ -229,6 +294,88 @@ function nextRoute(route, input) {
     seo: {
       ...route.seo,
       indexable: approved,
+    },
+  };
+}
+
+function nextRouteFromRefreshCandidate(route, input) {
+  const candidate = route.refreshCandidate;
+  const status = input.decision === "approved"
+    ? "published"
+    : input.decision === "changes-requested"
+      ? "draft"
+      : "review";
+  const previousHistory = Array.isArray(route.review.history) ? route.review.history : [];
+  const historyEntry = priorReviewEntry(route.review);
+  const history = [...previousHistory, historyEntry].map((entry) => {
+    const clean = { ...entry };
+    if (clean.version === undefined) delete clean.version;
+    if (clean.operationId === undefined) delete clean.operationId;
+    return clean;
+  });
+  const approved = status === "published";
+  if (!approved) {
+    return {
+      ...route,
+      refreshCandidate: {
+        ...candidate,
+        status,
+        seo: {
+          ...candidate.seo,
+          indexable: false,
+        },
+      },
+      review: {
+        ...route.review,
+        decision: input.decision,
+        reviewer: input.reviewer,
+        reviewedAt: input.reviewedAt,
+        notes: input.notes,
+        checklist: input.reviewChecklist,
+        history,
+      },
+    };
+  }
+
+  const priorSnapshot = snapshotHistoryEntry(route);
+  const existingHistory = route.snapshot.history.filter((entry) => entry.version !== candidate.version);
+  const snapshotHistory = existingHistory.some((entry) => entry.version === priorSnapshot.version)
+    ? existingHistory
+    : [...existingHistory, priorSnapshot];
+  const promoted = candidateAsRoute(route, candidate);
+  const routeWithoutCandidate = { ...promoted };
+  delete routeWithoutCandidate.refreshCandidate;
+  return {
+    ...routeWithoutCandidate,
+    status,
+    activeVersion: candidate.version,
+    snapshot: {
+      ...promoted.snapshot,
+      history: snapshotHistory,
+    },
+    translation: {
+      ...promoted.translation,
+      reviewedAt: input.reviewedAt,
+    },
+    review: {
+      ...route.review,
+      decision: input.decision,
+      reviewer: input.reviewer,
+      reviewedAt: input.reviewedAt,
+      notes: input.notes,
+      checklist: input.reviewChecklist,
+      history,
+    },
+    qualification: {
+      ...route.qualification,
+      decision: "qualified",
+      reviewer: input.reviewer,
+      reviewedAt: input.reviewedAt,
+      checklist: input.qualificationChecklist,
+    },
+    seo: {
+      ...promoted.seo,
+      indexable: true,
     },
   };
 }
@@ -293,18 +440,32 @@ async function main() {
     const zhRoute = zhManifest.routes.find((route) => route.slug === args.slug);
     const enRoute = enManifest.routes.find((route) => route.slug === args.slug);
     if (!zhRoute || !enRoute) throw new Error(`Unknown tutorial slug: ${args.slug}`);
-    if (zhRoute.status === "published" || enRoute.status === "published") throw new Error("Tutorial pair is already published");
-    await verifyRecord(zhRoute, "zh-CN", input);
-    await verifyRecord(enRoute, "en", input);
+    const hasRefreshCandidate = zhRoute.refreshCandidate && enRoute.refreshCandidate;
+    if ((zhRoute.status === "published" || enRoute.status === "published") && !hasRefreshCandidate) {
+      throw new Error("Tutorial pair is already published");
+    }
+    const zhReviewRoute = hasRefreshCandidate ? candidateAsRoute(zhRoute, zhRoute.refreshCandidate) : zhRoute;
+    const enReviewRoute = hasRefreshCandidate ? candidateAsRoute(enRoute, enRoute.refreshCandidate) : enRoute;
+    if (hasRefreshCandidate && zhRoute.refreshCandidate.version !== enRoute.refreshCandidate.version) {
+      throw new Error("Refresh candidate versions differ");
+    }
+    await verifyRecord(zhReviewRoute, "zh-CN", input);
+    await verifyRecord(enReviewRoute, "en", input);
     const nextZh = {
       ...zhRaw,
       activeVersion: input.decision === "approved" ? input.version : zhRaw.activeVersion,
-      routes: zhRaw.routes.map((route) => route.slug === args.slug ? nextRoute(route, input) : route),
+      routes: zhRaw.routes.map((route) =>
+        route.slug === args.slug
+          ? (hasRefreshCandidate ? nextRouteFromRefreshCandidate(route, input) : nextRoute(route, input))
+          : route),
     };
     const nextEn = {
       ...enRaw,
       activeVersion: input.decision === "approved" ? input.version : enRaw.activeVersion,
-      routes: enRaw.routes.map((route) => route.slug === args.slug ? nextRoute(route, input) : route),
+      routes: enRaw.routes.map((route) =>
+        route.slug === args.slug
+          ? (hasRefreshCandidate ? nextRouteFromRefreshCandidate(route, input) : nextRoute(route, input))
+          : route),
     };
     model.parseTutorialManifest(nextZh, "zh-CN", "candidate manifest.json");
     model.parseTutorialManifest(nextEn, "en", "candidate manifest.en.json");

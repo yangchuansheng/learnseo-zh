@@ -1,0 +1,276 @@
+{
+  "operationId": "tutorial-import-ahrefs-seo-basics-publish-20260901",
+  "actor": "codex.wave2",
+  "phase": "committed",
+  "slug": "ahrefs-seo-basics",
+  "sourceKey": "https://ahrefs.com/seo/seo-basics",
+  "generation": "tutorial-import-ahrefs-seo-basics-publish-20260901",
+  "candidateVersion": 1,
+  "files": [
+    {
+      "relative": "content/70391d1db21a39155951cf2e757d8940091796d40f031ef2926ac0c343aaa87f.html",
+      "sha256": "70391d1db21a39155951cf2e757d8940091796d40f031ef2926ac0c343aaa87f"
+    },
+    {
+      "relative": "content/55319e32971a7f9f8aa0540284803432ade8370be0efdbb075c3a0e0ce1b377e.html",
+      "sha256": "55319e32971a7f9f8aa0540284803432ade8370be0efdbb075c3a0e0ce1b377e"
+    },
+    {
+      "relative": "manifest.json",
+      "sha256": "8cba6a7dbc1fe02573c6e9de3d30873f1646aae555b50b9e07253a3c0ccc8d1f"
+    },
+    {
+      "relative": "manifest.en.json",
+      "sha256": "e63d975a07c4f86f552f5dfc1eb053cf7512039491c27d66afa55dca873dc0a8"
+    },
+    {
+      "relative": "import-generation.json",
+      "sha256": "9ae54f8b0f9269496378c231d29182c07bef44ea30828cb7d3d007c4b4d7bddd"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1.jpg",
+      "sha256": "df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927.jpg",
+      "sha256": "364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3.jpg",
+      "sha256": "ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40.png",
+      "sha256": "6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983.png",
+      "sha256": "508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816.png",
+      "sha256": "b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c.png",
+      "sha256": "e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc.png",
+      "sha256": "3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8.png",
+      "sha256": "92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8.png",
+      "sha256": "499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989.png",
+      "sha256": "b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8.png",
+      "sha256": "b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d.png",
+      "sha256": "86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95.png",
+      "sha256": "cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0.png",
+      "sha256": "01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c.png",
+      "sha256": "53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab.png",
+      "sha256": "fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab"
+    }
+  ],
+  "hashes": {
+    "sourceContentHash": "2fd636507fbca5fd247e336562de1380f2711a02e72b64077ba0448a851ee426",
+    "contentHash": "70391d1db21a39155951cf2e757d8940091796d40f031ef2926ac0c343aaa87f",
+    "translationContentHash": "55319e32971a7f9f8aa0540284803432ade8370be0efdbb075c3a0e0ce1b377e"
+  },
+  "marker": {
+    "operationId": "tutorial-import-ahrefs-seo-basics-publish-20260901",
+    "generation": "tutorial-import-ahrefs-seo-basics-publish-20260901",
+    "slug": "ahrefs-seo-basics",
+    "sourceKey": "https://ahrefs.com/seo/seo-basics",
+    "locales": [
+      "zh-CN",
+      "en"
+    ]
+  },
+  "validation": {
+    "en": {
+      "metrics": {
+        "h1": 1,
+        "h2": 6,
+        "h3": 18,
+        "h4": 8,
+        "p": 79,
+        "ul": 7,
+        "ol": 1,
+        "li": 34,
+        "a": 51,
+        "img": 17
+      },
+      "headingIds": [],
+      "headingEntries": []
+    },
+    "zh": {
+      "metrics": {
+        "h1": 1,
+        "h2": 6,
+        "h3": 18,
+        "h4": 8,
+        "p": 79,
+        "ul": 7,
+        "ol": 1,
+        "li": 34,
+        "a": 51,
+        "img": 17
+      },
+      "headingIds": [],
+      "headingEntries": []
+    }
+  },
+  "phases": [
+    {
+      "phase": "content-replace",
+      "relative": "content/70391d1db21a39155951cf2e757d8940091796d40f031ef2926ac0c343aaa87f.html",
+      "recordedAt": "2026-08-31T16:35:13.589Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "content/55319e32971a7f9f8aa0540284803432ade8370be0efdbb075c3a0e0ce1b377e.html",
+      "recordedAt": "2026-08-31T16:35:13.597Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1.jpg",
+      "recordedAt": "2026-08-31T16:35:13.609Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927.jpg",
+      "recordedAt": "2026-08-31T16:35:13.616Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3.jpg",
+      "recordedAt": "2026-08-31T16:35:13.621Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40.png",
+      "recordedAt": "2026-08-31T16:35:13.627Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983.png",
+      "recordedAt": "2026-08-31T16:35:13.633Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816.png",
+      "recordedAt": "2026-08-31T16:35:13.638Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c.png",
+      "recordedAt": "2026-08-31T16:35:13.643Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc.png",
+      "recordedAt": "2026-08-31T16:35:13.649Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8.png",
+      "recordedAt": "2026-08-31T16:35:13.654Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8.png",
+      "recordedAt": "2026-08-31T16:35:13.659Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989.png",
+      "recordedAt": "2026-08-31T16:35:13.666Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8.png",
+      "recordedAt": "2026-08-31T16:35:13.671Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d.png",
+      "recordedAt": "2026-08-31T16:35:13.676Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95.png",
+      "recordedAt": "2026-08-31T16:35:13.681Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0.png",
+      "recordedAt": "2026-08-31T16:35:13.686Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c.png",
+      "recordedAt": "2026-08-31T16:35:13.691Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab.png",
+      "recordedAt": "2026-08-31T16:35:13.696Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-31T16:35:13.701Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-31T16:35:13.707Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-31T16:35:13.713Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-31T16:35:13.718Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-31T16:35:13.723Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-31T16:35:13.730Z"
+    }
+  ],
+  "committedAt": "2026-08-31T16:35:13.735Z"
+}

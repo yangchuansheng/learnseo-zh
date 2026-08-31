@@ -51,11 +51,13 @@ Media is localized one source at a time before the global write lock. These
 limits support collection concurrency `2` and import concurrency `1`; higher
 mutation concurrency would contend on the same manifest pair.
 
-The larger candidates justify a one-item rights batch. #22 records Ahrefs at
-`130` paragraphs and `49` raw images, while Mangools has `702` paragraphs,
-`80` images, one YouTube embed, and `85` form inputs. Rights, image ownership,
-interactive-surface treatment, and source-update evidence complete before
-either candidate enters staging.
+The larger candidates justify a one-item authorized batch. #22 records Ahrefs
+at `130` paragraphs and `49` raw images, while Mangools has `702` paragraphs,
+`80` images, one YouTube embed, and `85` form inputs. On `2026-09-01`, the
+project owner authorized Ahrefs and Mangools for internalization. The import
+handoff records owner authorization, source-specific extraction, canonical
+evidence, image ownership review, interactive-surface treatment, Simplified
+Chinese translation review, and release-gate evidence for each source boundary.
 
 ## Wave order and batch policy
 
@@ -69,10 +71,10 @@ either candidate enters staging.
 Wave 1 groups two compact first-party Google pages with matching canonical
 evidence and CC BY attribution. Collection may overlap within the limit, while
 import and promotion stay serial. Wave 2 isolates Ahrefs before Mangools so
-canonical rebind, written reuse permission, and per-asset review remain
-independently auditable. Wave 3 keeps the Moz index external; an approved child
-chapter is independently qualified in TOC order. ContentKing remains a
-Conductor collection link and Semrush remains a course link.
+canonical rebind, owner authorization, and per-asset review remain independently
+auditable. Wave 3 keeps the Moz index external; an approved child chapter is
+independently qualified in TOC order. ContentKing remains a Conductor collection
+link and Semrush remains a course link.
 
 ## Source disposition and dependencies
 
@@ -110,8 +112,8 @@ in `requestedUrl`, while the approved canonical remains in `canonicalUrl`.
     {"sourceId": "google-seo-starter-guide", "waveId": "wave-0-pilot", "provider": "Google", "requestedUrl": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide", "canonicalUrl": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide", "routeSlug": "google-seo-starter-guide", "disposition": "pilot-baseline", "importMode": "published-baseline", "dependencies": ["pilot-content-media-baseline", "pilot-release-gates"]},
     {"sourceId": "google-search-works", "waveId": "wave-1-official-google", "provider": "Google", "requestedUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works", "canonicalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works", "routeSlug": "google-search-works", "disposition": "eligible-direct", "importMode": "direct", "dependencies": ["google-devsite-body", "source-updated-at", "google-cc-by-4.0", "apache-2.0-code-evidence", "translation-handoff", "all-release-gates"]},
     {"sourceId": "google-search-essentials", "waveId": "wave-1-official-google", "provider": "Google", "requestedUrl": "https://developers.google.com/search/docs/essentials", "canonicalUrl": "https://developers.google.com/search/docs/essentials", "routeSlug": "google-search-essentials", "disposition": "eligible-direct", "importMode": "direct", "dependencies": ["google-devsite-body", "source-updated-at", "google-cc-by-4.0", "apache-2.0-code-evidence", "translation-handoff", "all-release-gates"]},
-    {"sourceId": "ahrefs-seo-basics", "waveId": "wave-2-rights-reviewed", "provider": "Ahrefs", "requestedUrl": "https://ahrefs.com/blog/seo-basics/", "canonicalUrl": "https://ahrefs.com/seo/seo-basics", "routeSlug": "ahrefs-seo-basics", "disposition": "rights-gated", "importMode": "rights-gated", "dependencies": ["canonical-rebind", "source-updated-at", "written-text-permission", "per-asset-rights", "interactive-surface-review", "translation-handoff", "all-release-gates"]},
-    {"sourceId": "mangools-complete-seo-guide", "waveId": "wave-2-rights-reviewed", "provider": "Mangools", "requestedUrl": "https://mangools.com/blog/learn-seo/", "canonicalUrl": "https://mangools.com/blog/learn-seo/", "routeSlug": "mangools-complete-seo-guide", "disposition": "rights-gated", "importMode": "rights-gated", "dependencies": ["source-updated-at", "written-text-permission", "per-asset-rights", "form-cta-disposition", "youtube-allowlist-rights", "translation-handoff", "all-release-gates"]},
+    {"sourceId": "ahrefs-seo-basics", "waveId": "wave-2-rights-reviewed", "provider": "Ahrefs", "requestedUrl": "https://ahrefs.com/blog/seo-basics/", "canonicalUrl": "https://ahrefs.com/seo/seo-basics", "routeSlug": "ahrefs-seo-basics", "disposition": "authorized-internalized", "importMode": "authorized-internalized", "dependencies": ["canonical-rebind", "source-updated-at", "project-owner-authorization", "per-asset-rights", "interactive-surface-review", "translation-handoff", "all-release-gates"]},
+    {"sourceId": "mangools-complete-seo-guide", "waveId": "wave-2-rights-reviewed", "provider": "Mangools", "requestedUrl": "https://mangools.com/blog/learn-seo/", "canonicalUrl": "https://mangools.com/blog/learn-seo/", "routeSlug": "mangools-complete-seo-guide", "disposition": "authorized-internalized", "importMode": "authorized-internalized", "dependencies": ["source-updated-at", "project-owner-authorization", "per-asset-rights", "form-cta-disposition", "youtube-allowlist-rights", "translation-handoff", "all-release-gates"]},
     {"sourceId": "moz-beginners-guide", "waveId": "wave-3-manual-or-external", "provider": "Moz", "requestedUrl": "https://moz.com/beginners-guide-to-seo", "canonicalUrl": "https://moz.com/beginners-guide-to-seo", "routeSlug": null, "disposition": "manual-series", "importMode": "manual-series-child-only", "dependencies": ["series-decision", "bot-challenge-preflight", "child-page-qualification", "per-child-canonical-update-media-rights"]},
     {"sourceId": "contentking-conductor-hub", "waveId": "wave-3-manual-or-external", "provider": "ContentKing/Conductor", "requestedUrl": "https://www.contentkingapp.com/academy/seo-guide/", "canonicalUrl": "https://www.conductor.com/academy/technical-seo-hub/", "routeSlug": null, "disposition": "external-collection", "importMode": "external-only", "dependencies": ["canonical-rebind", "editorial-link-review", "conductor-terms-evidence", "continuous-body-required"]},
     {"sourceId": "semrush-seo-essentials-course", "waveId": "wave-3-manual-or-external", "provider": "Semrush", "requestedUrl": "https://www.semrush.com/academy/courses/seo-fundamentals-course-with-greg-gifford/", "canonicalUrl": "https://www.semrush.com/academy/courses/seo-essentials-with-semrush/", "routeSlug": null, "disposition": "external-course", "importMode": "external-only", "dependencies": ["canonical-rebind", "editorial-link-review", "course-surface-confirmed", "semrush-terms-evidence", "lesson-level-boundary-required"]}
@@ -153,9 +155,9 @@ For each ordered source unit:
 
 An individual draft, pending review, unresolved rights item, failed preflight,
 or runtime failure keeps its route in preview and its card external. A partial
-wave never converts a successful sibling into a published route. Retry the
-failed source unit after correction, then rerun its full preflight and review;
-the previous generation remains the rollback target.
+wave publishes zero sibling routes. Retry the failed source unit after
+correction, then rerun its full preflight and review; the previous generation
+remains the rollback target.
 
 The checker validates wave order, source dependency mapping, batch and
 concurrency limits, Pilot invariants, all-or-zero promotion, partial-wave

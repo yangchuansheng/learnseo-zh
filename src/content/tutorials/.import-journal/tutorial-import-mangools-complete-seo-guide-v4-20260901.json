@@ -1,0 +1,25 @@
+{
+  "operationId": "tutorial-import-mangools-complete-seo-guide-v4-20260901",
+  "actor": "codex.wave2",
+  "phase": "failed",
+  "failedAt": "2026-08-31T16:46:16.257Z",
+  "failure": {
+    "code": "validation",
+    "message": "Tutorial validation failed: English imported tutorial anchor accessible name is missing",
+    "recordedAt": "2026-08-31T16:46:16.257Z"
+  },
+  "failures": [
+    {
+      "code": "validation",
+      "message": "Tutorial validation failed: English imported tutorial anchor accessible name is missing",
+      "recordedAt": "2026-08-31T16:46:16.257Z"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "failed",
+      "code": "validation",
+      "recordedAt": "2026-08-31T16:46:16.257Z"
+    }
+  ]
+}

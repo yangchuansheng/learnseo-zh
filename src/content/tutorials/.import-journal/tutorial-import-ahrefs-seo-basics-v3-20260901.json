@@ -1,0 +1,630 @@
+{
+  "operationId": "tutorial-import-ahrefs-seo-basics-v3-20260901",
+  "actor": "codex.wave2",
+  "phase": "committed",
+  "slug": "ahrefs-seo-basics",
+  "sourceKey": "https://ahrefs.com/seo/seo-basics",
+  "generation": "tutorial-import-ahrefs-seo-basics-v3-20260901",
+  "candidateVersion": 3,
+  "files": [
+    {
+      "relative": "content/db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a.html",
+      "sha256": "db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a"
+    },
+    {
+      "relative": "content/93b5dd2f7d3921ad8ac4e69bdcb48f166d46e6a590f1f7df77574a2f43132e81.html",
+      "sha256": "93b5dd2f7d3921ad8ac4e69bdcb48f166d46e6a590f1f7df77574a2f43132e81"
+    },
+    {
+      "relative": "manifest.json",
+      "sha256": "7ac7daa0436e65ad2e6af5d5b6ed40808a5f1738d3f06d1af3d4d3cb6df0ad78"
+    },
+    {
+      "relative": "manifest.en.json",
+      "sha256": "fb1948699276308241125fb7c4d6fc62072e02ebd8eb769dde8a4fc3de87c294"
+    },
+    {
+      "relative": "import-generation.json",
+      "sha256": "af8b7872b641725f1656c704734032b8a56ebb12106a5838ce28cf63b18ee262"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1.jpg",
+      "sha256": "df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927.jpg",
+      "sha256": "364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3.jpg",
+      "sha256": "ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40.png",
+      "sha256": "6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983.png",
+      "sha256": "508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816.png",
+      "sha256": "b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c.png",
+      "sha256": "e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc.png",
+      "sha256": "3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8.png",
+      "sha256": "92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8.png",
+      "sha256": "499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989.png",
+      "sha256": "b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8.png",
+      "sha256": "b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d.png",
+      "sha256": "86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95.png",
+      "sha256": "cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0.png",
+      "sha256": "01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c.png",
+      "sha256": "53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c"
+    },
+    {
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab.png",
+      "sha256": "fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab"
+    }
+  ],
+  "hashes": {
+    "content/db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a.html": "db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a",
+    "content/93b5dd2f7d3921ad8ac4e69bdcb48f166d46e6a590f1f7df77574a2f43132e81.html": "93b5dd2f7d3921ad8ac4e69bdcb48f166d46e6a590f1f7df77574a2f43132e81",
+    "manifest.json": "7ac7daa0436e65ad2e6af5d5b6ed40808a5f1738d3f06d1af3d4d3cb6df0ad78",
+    "manifest.en.json": "fb1948699276308241125fb7c4d6fc62072e02ebd8eb769dde8a4fc3de87c294",
+    "import-generation.json": "af8b7872b641725f1656c704734032b8a56ebb12106a5838ce28cf63b18ee262",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1.jpg": "df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927.jpg": "364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3.jpg": "ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40.png": "6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983.png": "508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816.png": "b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c.png": "e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc.png": "3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8.png": "92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8.png": "499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989.png": "b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8.png": "b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d.png": "86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95.png": "cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0.png": "01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c.png": "53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c",
+    "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab.png": "fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab"
+  },
+  "marker": {
+    "operationId": "tutorial-import-ahrefs-seo-basics-v3-20260901",
+    "generation": "tutorial-import-ahrefs-seo-basics-v3-20260901",
+    "slug": "ahrefs-seo-basics",
+    "sourceKey": "https://ahrefs.com/seo/seo-basics",
+    "locales": [
+      "zh-CN",
+      "en"
+    ],
+    "committedAt": "2026-09-01T02:15:00.000Z"
+  },
+  "validation": {
+    "en": {
+      "metrics": {
+        "h1": 1,
+        "h2": 6,
+        "h3": 18,
+        "h4": 8,
+        "p": 79,
+        "ul": 7,
+        "ol": 1,
+        "li": 34,
+        "a": 51,
+        "img": 17
+      },
+      "headingIds": [
+        "seo-basics-beginner-s-guide-to-seo-success",
+        "seo-fundamentals",
+        "what-is-seo",
+        "why-is-seo-important",
+        "what-are-the-benefits-of-seo",
+        "how-do-you-do-seo",
+        "setting-up-for-seo-success",
+        "get-a-good-domain",
+        "domain-name",
+        "top-level-domain-tld",
+        "use-a-website-platform",
+        "use-a-good-web-host",
+        "create-a-positive-user-experience",
+        "use-https",
+        "choose-an-appealing-design",
+        "make-sure-it-s-mobile-friendly",
+        "use-a-readable-font-size",
+        "avoid-intrusive-pop-ups-and-ads",
+        "make-sure-it-loads-fast",
+        "create-a-logical-site-structure",
+        "use-a-logical-url-structure",
+        "install-an-seo-plugin",
+        "focus-on-local-seo",
+        "getting-on-google",
+        "finding-or-creating-a-sitemap",
+        "submitting-your-sitemap",
+        "how-to-track-seo-success",
+        "organic-traffic-and-impressions",
+        "keyword-rankings",
+        "ai-visibility",
+        "share-of-voice",
+        "key-takeaways",
+        "references"
+      ],
+      "headingEntries": [
+        {
+          "id": "seo-basics-beginner-s-guide-to-seo-success",
+          "level": 1
+        },
+        {
+          "id": "seo-fundamentals",
+          "level": 2
+        },
+        {
+          "id": "what-is-seo",
+          "level": 3
+        },
+        {
+          "id": "why-is-seo-important",
+          "level": 3
+        },
+        {
+          "id": "what-are-the-benefits-of-seo",
+          "level": 3
+        },
+        {
+          "id": "how-do-you-do-seo",
+          "level": 3
+        },
+        {
+          "id": "setting-up-for-seo-success",
+          "level": 2
+        },
+        {
+          "id": "get-a-good-domain",
+          "level": 3
+        },
+        {
+          "id": "domain-name",
+          "level": 4
+        },
+        {
+          "id": "top-level-domain-tld",
+          "level": 4
+        },
+        {
+          "id": "use-a-website-platform",
+          "level": 3
+        },
+        {
+          "id": "use-a-good-web-host",
+          "level": 3
+        },
+        {
+          "id": "create-a-positive-user-experience",
+          "level": 3
+        },
+        {
+          "id": "use-https",
+          "level": 4
+        },
+        {
+          "id": "choose-an-appealing-design",
+          "level": 4
+        },
+        {
+          "id": "make-sure-it-s-mobile-friendly",
+          "level": 4
+        },
+        {
+          "id": "use-a-readable-font-size",
+          "level": 4
+        },
+        {
+          "id": "avoid-intrusive-pop-ups-and-ads",
+          "level": 4
+        },
+        {
+          "id": "make-sure-it-loads-fast",
+          "level": 4
+        },
+        {
+          "id": "create-a-logical-site-structure",
+          "level": 3
+        },
+        {
+          "id": "use-a-logical-url-structure",
+          "level": 3
+        },
+        {
+          "id": "install-an-seo-plugin",
+          "level": 3
+        },
+        {
+          "id": "focus-on-local-seo",
+          "level": 3
+        },
+        {
+          "id": "getting-on-google",
+          "level": 2
+        },
+        {
+          "id": "finding-or-creating-a-sitemap",
+          "level": 3
+        },
+        {
+          "id": "submitting-your-sitemap",
+          "level": 3
+        },
+        {
+          "id": "how-to-track-seo-success",
+          "level": 2
+        },
+        {
+          "id": "organic-traffic-and-impressions",
+          "level": 3
+        },
+        {
+          "id": "keyword-rankings",
+          "level": 3
+        },
+        {
+          "id": "ai-visibility",
+          "level": 3
+        },
+        {
+          "id": "share-of-voice",
+          "level": 3
+        },
+        {
+          "id": "key-takeaways",
+          "level": 2
+        },
+        {
+          "id": "references",
+          "level": 2
+        }
+      ]
+    },
+    "zh": {
+      "metrics": {
+        "h1": 1,
+        "h2": 6,
+        "h3": 18,
+        "h4": 8,
+        "p": 79,
+        "ul": 7,
+        "ol": 1,
+        "li": 34,
+        "a": 51,
+        "img": 17
+      },
+      "headingIds": [
+        "seo-basics-beginner-s-guide-to-seo-success",
+        "seo-fundamentals",
+        "what-is-seo",
+        "why-is-seo-important",
+        "what-are-the-benefits-of-seo",
+        "how-do-you-do-seo",
+        "setting-up-for-seo-success",
+        "get-a-good-domain",
+        "domain-name",
+        "top-level-domain-tld",
+        "use-a-website-platform",
+        "use-a-good-web-host",
+        "create-a-positive-user-experience",
+        "use-https",
+        "choose-an-appealing-design",
+        "make-sure-it-s-mobile-friendly",
+        "use-a-readable-font-size",
+        "avoid-intrusive-pop-ups-and-ads",
+        "make-sure-it-loads-fast",
+        "create-a-logical-site-structure",
+        "use-a-logical-url-structure",
+        "install-an-seo-plugin",
+        "focus-on-local-seo",
+        "getting-on-google",
+        "finding-or-creating-a-sitemap",
+        "submitting-your-sitemap",
+        "how-to-track-seo-success",
+        "organic-traffic-and-impressions",
+        "keyword-rankings",
+        "ai-visibility",
+        "share-of-voice",
+        "key-takeaways",
+        "references"
+      ],
+      "headingEntries": [
+        {
+          "id": "seo-basics-beginner-s-guide-to-seo-success",
+          "level": 1
+        },
+        {
+          "id": "seo-fundamentals",
+          "level": 2
+        },
+        {
+          "id": "what-is-seo",
+          "level": 3
+        },
+        {
+          "id": "why-is-seo-important",
+          "level": 3
+        },
+        {
+          "id": "what-are-the-benefits-of-seo",
+          "level": 3
+        },
+        {
+          "id": "how-do-you-do-seo",
+          "level": 3
+        },
+        {
+          "id": "setting-up-for-seo-success",
+          "level": 2
+        },
+        {
+          "id": "get-a-good-domain",
+          "level": 3
+        },
+        {
+          "id": "domain-name",
+          "level": 4
+        },
+        {
+          "id": "top-level-domain-tld",
+          "level": 4
+        },
+        {
+          "id": "use-a-website-platform",
+          "level": 3
+        },
+        {
+          "id": "use-a-good-web-host",
+          "level": 3
+        },
+        {
+          "id": "create-a-positive-user-experience",
+          "level": 3
+        },
+        {
+          "id": "use-https",
+          "level": 4
+        },
+        {
+          "id": "choose-an-appealing-design",
+          "level": 4
+        },
+        {
+          "id": "make-sure-it-s-mobile-friendly",
+          "level": 4
+        },
+        {
+          "id": "use-a-readable-font-size",
+          "level": 4
+        },
+        {
+          "id": "avoid-intrusive-pop-ups-and-ads",
+          "level": 4
+        },
+        {
+          "id": "make-sure-it-loads-fast",
+          "level": 4
+        },
+        {
+          "id": "create-a-logical-site-structure",
+          "level": 3
+        },
+        {
+          "id": "use-a-logical-url-structure",
+          "level": 3
+        },
+        {
+          "id": "install-an-seo-plugin",
+          "level": 3
+        },
+        {
+          "id": "focus-on-local-seo",
+          "level": 3
+        },
+        {
+          "id": "getting-on-google",
+          "level": 2
+        },
+        {
+          "id": "finding-or-creating-a-sitemap",
+          "level": 3
+        },
+        {
+          "id": "submitting-your-sitemap",
+          "level": 3
+        },
+        {
+          "id": "how-to-track-seo-success",
+          "level": 2
+        },
+        {
+          "id": "organic-traffic-and-impressions",
+          "level": 3
+        },
+        {
+          "id": "keyword-rankings",
+          "level": 3
+        },
+        {
+          "id": "ai-visibility",
+          "level": 3
+        },
+        {
+          "id": "share-of-voice",
+          "level": 3
+        },
+        {
+          "id": "key-takeaways",
+          "level": 2
+        },
+        {
+          "id": "references",
+          "level": 2
+        }
+      ]
+    }
+  },
+  "phases": [
+    {
+      "phase": "content-replace",
+      "relative": "content/db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a.html",
+      "recordedAt": "2026-08-31T16:38:31.382Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "content/e5991c8d95512efdc3d451c392241cc04682269ab95dadb2cc747dcbb037da02.html",
+      "recordedAt": "2026-08-31T16:38:31.387Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1.jpg",
+      "recordedAt": "2026-08-31T16:38:31.393Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927.jpg",
+      "recordedAt": "2026-08-31T16:38:31.398Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3.jpg",
+      "recordedAt": "2026-08-31T16:38:31.404Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40.png",
+      "recordedAt": "2026-08-31T16:38:31.410Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983.png",
+      "recordedAt": "2026-08-31T16:38:31.418Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816.png",
+      "recordedAt": "2026-08-31T16:38:31.424Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c.png",
+      "recordedAt": "2026-08-31T16:38:31.428Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc.png",
+      "recordedAt": "2026-08-31T16:38:31.433Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8.png",
+      "recordedAt": "2026-08-31T16:38:31.439Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8.png",
+      "recordedAt": "2026-08-31T16:38:31.444Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989.png",
+      "recordedAt": "2026-08-31T16:38:31.449Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8.png",
+      "recordedAt": "2026-08-31T16:38:31.453Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d.png",
+      "recordedAt": "2026-08-31T16:38:31.458Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95.png",
+      "recordedAt": "2026-08-31T16:38:31.463Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0.png",
+      "recordedAt": "2026-08-31T16:38:31.468Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c.png",
+      "recordedAt": "2026-08-31T16:38:31.473Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "public/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab.png",
+      "recordedAt": "2026-08-31T16:38:31.478Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-31T16:38:31.484Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-31T16:38:31.489Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-31T16:38:31.495Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-31T16:38:31.499Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-31T16:38:31.504Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-31T16:38:31.509Z"
+    }
+  ],
+  "committedAt": "2026-09-01T02:15:00.000Z"
+}

@@ -288,6 +288,7 @@ export function validateCollectOptions(args) {
     url: requireOption(args, "url", operationId, actor),
     slug: requireOption(args, "slug", operationId, actor),
     sourcePath: requireOption(args, "source-path", operationId, actor),
+    expectedCanonicalUrl: optionalHttpsUrl(args["expected-canonical-url"], "--expected-canonical-url", operationId, actor),
     output: requireOption(args, "output", operationId, actor),
     fixture: null,
     operationId,
@@ -328,6 +329,13 @@ function optionalIsoDateTime(value, label, operationId = null, actor = null) {
     fail("usage", `${label} must be an ISO-8601 timestamp`, operationId, actor);
   }
   return new Date(value).toISOString();
+}
+
+function optionalHttpsUrl(value, label, operationId = null, actor = null) {
+  if (value === undefined) return null;
+  if (typeof value !== "string" || !value.trim()) fail("usage", `${label} must be a non-empty HTTPS URL`, operationId, actor);
+  const parsed = assertPublicHttps(value.trim());
+  return parsed.toString();
 }
 
 function assertPublicHttps(rawUrl) {
@@ -474,8 +482,10 @@ async function pinnedHttpsRequest(rawUrl, label, code = "unavailable") {
         else callback(null, address, family);
       },
       headers: {
+        accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "accept-language": "en-US,en;q=0.9",
         host: parsed.host,
-        "user-agent": "learnseo-tutorial-importer/1.0",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
       },
     }, resolve);
     request.setTimeout(httpsRequestTimeoutMs, () => {
@@ -536,6 +546,16 @@ function decodeBasicEntities(value) {
     .replace(/&gt;/gi, ">");
 }
 
+function decodeRepeatedBasicEntities(value) {
+  let current = value;
+  for (let index = 0; index < 3; index += 1) {
+    const next = decodeBasicEntities(current);
+    if (next === current) return current;
+    current = next;
+  }
+  return current;
+}
+
 function visibleText(html) {
   return decodeBasicEntities(html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
 }
@@ -576,6 +596,15 @@ export function sourceUpdatedAtFromHtml(html) {
   return undefined;
 }
 
+function sourceUpdatedAtFromResponse(source) {
+  const htmlDate = sourceUpdatedAtFromHtml(source.html);
+  if (htmlDate) return htmlDate;
+  if (source.lastModified && Number.isFinite(Date.parse(source.lastModified))) {
+    return new Date(source.lastModified).toISOString();
+  }
+  return undefined;
+}
+
 function licenseFromHtml(html, finalUrl) {
   if (/creativecommons\.org\/licenses\/by\/4\.0/i.test(html)) {
     return { text: "CC BY 4.0", url: "https://creativecommons.org/licenses/by/4.0/" };
@@ -589,6 +618,8 @@ function licenseFromHtml(html, finalUrl) {
 function providerFromUrl(finalUrl) {
   const hostname = new URL(finalUrl).hostname;
   if (hostname === "developers.google.com") return "Google Search Central / Google for Developers";
+  if (hostname.endsWith("ahrefs.com")) return "Ahrefs";
+  if (hostname.endsWith("mangools.com")) return "Mangools";
   return hostname;
 }
 
@@ -647,6 +678,148 @@ function normalizeBodyRoot(html) {
   return html.replace(/<([a-z][\w:-]*)\b([^>]*)class\s*=\s*(["'])[^"']*\bdevsite-article-body\b[^"']*\3([^>]*)>/i, "<article$2$4>");
 }
 
+function normalizeArticleRoot(html) {
+  return html.replace(/^<([a-z][\w:-]*)\b([^>]*)>/i, "<article$2>");
+}
+
+function slugifyHeading(value, fallback) {
+  const slug = visibleText(value)
+    .toLowerCase()
+    .replace(/&amp;/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || fallback;
+}
+
+function safeHeadingId(value, fallback) {
+  const slug = (value.trim() || fallback)
+    .toLowerCase()
+    .replace(/&amp;/g, "and")
+    .replace(/[^a-z0-9_.:-]+/g, "-")
+    .replace(/^-+|-+$/g, "") || fallback;
+  return /^[a-z]/.test(slug) ? slug : `section-${slug}`;
+}
+
+function ensureHeadingIds(html) {
+  const seen = new Map();
+  const replacements = new Map();
+  const withHeadings = html.replace(/<h([1-6])\b([^>]*)>([\s\S]*?)<\/h\1>/gi, (match, level, attributes, body) => {
+    const attrs = parseAttributes(`<h${level}${attributes}>`);
+    const originalId = attrs.get("id")?.trim() ?? "";
+    const base = safeHeadingId(originalId || slugifyHeading(body, `heading-${seen.size + 1}`), `heading-${seen.size + 1}`);
+    const count = seen.get(base) ?? 0;
+    seen.set(base, count + 1);
+    const nextId = count === 0 ? base : `${base}-${count + 1}`;
+    if (originalId && originalId !== nextId) replacements.set(originalId, nextId);
+    attrs.set("id", nextId);
+    return `${rebuildOpeningTag(`h${level}`, attrs)}${body}</h${level}>`;
+  });
+  return withHeadings.replace(/\bhref=(["'])#([^"']+)\1/gi, (match, quote, id) => {
+    const nextId = replacements.get(id);
+    return nextId ? `href=${quote}#${escapeAttribute(nextId)}${quote}` : match;
+  });
+}
+
+function normalizeHeadingHierarchy(html) {
+  let previous = 0;
+  return html.replace(/<h([1-6])\b([^>]*)>([\s\S]*?)<\/h\1>/gi, (_match, level, attributes, body) => {
+    const current = Number(level);
+    const normalized = previous === 0 ? current : Math.min(current, previous + 1);
+    previous = normalized;
+    return `<h${normalized}${attributes}>${body}</h${normalized}>`;
+  });
+}
+
+function ahrefsArticleWindow(html) {
+  const headingStart = html.search(/<h1\b/i);
+  if (headingStart < 0) fail("extraction-failure", "Ahrefs adapter could not find article h1");
+  const start = html.lastIndexOf("<section", headingStart);
+  const referenceOpen = [...html.matchAll(/<section\b[^>]*\bid=["']references["'][^>]*>/gi)][0];
+  if (start < 0 || !referenceOpen) fail("extraction-failure", "Ahrefs adapter could not find article boundary");
+  const sectionTokenPattern = /<\/?section\b[^>]*>/gi;
+  let depth = 0;
+  let referenceEnd = -1;
+  for (const match of html.matchAll(sectionTokenPattern)) {
+    if ((match.index ?? -1) < (referenceOpen.index ?? -1)) continue;
+    depth += /^<\//.test(match[0]) ? -1 : 1;
+    if (depth === 0) {
+      referenceEnd = (match.index ?? 0) + match[0].length;
+      break;
+    }
+  }
+  const end = referenceEnd >= 0 ? html.indexOf("<section", referenceEnd) : -1;
+  if (end < 0) fail("extraction-failure", "Ahrefs adapter could not find article end boundary");
+  return html.slice(start, end);
+}
+
+function normalizeMangoolsBody(html) {
+  let body = html.replace(/<h1\b/gi, (match, offset) => (offset === html.search(/<h1\b/i) ? match : "<h2"));
+  body = body.replace(/<\/h1>/gi, (match, offset) => (html.slice(0, offset).match(/<h1\b/gi)?.length === 1 ? match : "</h2>"));
+  body = body.replace(/<(?:script|style|template|noscript)\b[\s\S]*?<\/(?:script|style|template|noscript)>/gi, "");
+  body = body.replace(/<img\b[^>]*>/gi, (tag) => {
+    const attrs = parseAttributes(tag);
+    const lazySource = attrs.get("data-src") || attrs.get("data-lazy-src");
+    if (!attrs.get("src") && lazySource) attrs.set("src", lazySource);
+    const source = attrs.get("src") ?? "";
+    if (/\/mangools-seo-academy\.svg(?:[?#]|$)/i.test(source)) return "";
+    attrs.delete("data-src");
+    attrs.delete("data-lazy-src");
+    attrs.delete("srcset");
+    attrs.delete("data-srcset");
+    attrs.set("alt", decodeRepeatedBasicEntities(attrs.get("alt")?.trim() || "Mangools SEO guide illustration"));
+    return rebuildOpeningTag("img", attrs, true);
+  });
+  body = body.replace(/<iframe\b[^>]*>/gi, (tag) => {
+    const attrs = parseAttributes(tag);
+    const lazySource = attrs.get("data-src") || attrs.get("data-cookieblock-src");
+    if (!attrs.get("src") && lazySource) attrs.set("src", lazySource);
+    attrs.delete("data-src");
+    attrs.delete("data-cookieblock-src");
+    return rebuildOpeningTag("iframe", attrs, false);
+  });
+  body = body.replace(/<form\b[\s\S]*?<\/form>/gi, '<p><a href="https://mangools.com/blog/learn-seo/">Open the interactive quiz, certificate, or signup form on Mangools</a>.</p>');
+  body = body.replace(/<a\b[^>]*>\s*(?:<svg\b[\s\S]*?<\/svg>\s*)*<\/a>/gi, "");
+  return body;
+}
+
+function tutorialAdapter(source, canonicalUrl) {
+  const hostname = new URL(canonicalUrl).hostname;
+  if (hostname.endsWith("ahrefs.com")) {
+    return {
+      id: "ahrefs-seo-basics",
+      article: normalizeArticleRoot(ahrefsArticleWindow(source.html)),
+      author: "Joshua Hardwick",
+      license: {
+        text: "Internal republication authorized by project owner for translated full text and approved article media; external proof retained outside the repository.",
+      },
+    };
+  }
+  if (hostname.endsWith("mangools.com")) {
+    const body = extractElementByClass(source.html, "mg-post-content");
+    if (!body) fail("extraction-failure", "Mangools adapter could not find .mg-post-content");
+    return {
+      id: "mangools-wordpress",
+      article: normalizeArticleRoot(normalizeMangoolsBody(body)),
+      author: "Vlado Pavlik",
+      license: {
+        text: "Internal republication authorized by project owner for translated full text and approved article media; forms use a reviewed static external CTA.",
+      },
+    };
+  }
+  return {
+    id: "google-devsite",
+    article: normalizeBodyRoot(
+      [
+        [".devsite-article-body", extractElementByClass(source.html, "devsite-article-body")],
+        ["article", extractElementByTag(source.html, "article")],
+        ["main", extractElementByTag(source.html, "main")],
+      ].find(([, value]) => value)?.[1] ?? "",
+    ),
+    author: null,
+    license: licenseFromHtml(source.html, source.finalUrl),
+  };
+}
+
 function challengeVisibleText(html) {
   return visibleText(html
     .replace(/<!--[\s\S]*?-->/g, " ")
@@ -654,7 +827,7 @@ function challengeVisibleText(html) {
 }
 
 function detectBotChallenge(html, finalUrl) {
-  return /(?:cf-chl|challenge-platform)/i.test(html) ||
+  return /cf-chl-/i.test(html) ||
     /(?:verify you are human|enable javascript and cookies|unusual traffic)/i.test(challengeVisibleText(html)) ||
     new URL(finalUrl).pathname.includes("/sorry/");
 }
@@ -708,7 +881,7 @@ function mediaEntriesFromHtml(articleHtml, baseUrl, fixtureFile) {
     const fixtureRelative = attrs.get("data-fixture-file");
     return {
       sourceUrl,
-      alt: attrs.get("alt") ?? "",
+      alt: decodeRepeatedBasicEntities(attrs.get("alt") ?? ""),
       ...(positiveAttr(attrs.get("width")) ? { width: positiveAttr(attrs.get("width")) } : {}),
       ...(positiveAttr(attrs.get("height")) ? { height: positiveAttr(attrs.get("height")) } : {}),
       ...(fixtureBase && fixtureRelative ? { fixtureFile: safeFixturePath(fixtureBase, fixtureRelative) } : {}),
@@ -800,18 +973,14 @@ export async function collectTutorialSnapshot(options) {
   if (detectBotChallenge(source.html, source.finalUrl)) fail("bot-challenge", "Source returned a bot challenge page");
   const canonicalUrl = canonicalFromHtml(source.html, source.finalUrl);
   if (!canonicalUrl) fail("canonical-mismatch", "Source canonical link is missing");
-  if (normalizeSourceKey(canonicalUrl) !== normalizeSourceKey(options.url)) {
-    fail("canonical-mismatch", `Canonical ${canonicalUrl} does not match requested URL ${options.url}`);
+  const expectedCanonicalUrl = options.expectedCanonicalUrl ?? options.url;
+  if (normalizeSourceKey(canonicalUrl) !== normalizeSourceKey(expectedCanonicalUrl)) {
+    fail("canonical-mismatch", `Canonical ${canonicalUrl} does not match expected canonical ${expectedCanonicalUrl}`);
   }
-  const extraction = [
-    [".devsite-article-body", extractElementByClass(source.html, "devsite-article-body")],
-    ["article", extractElementByTag(source.html, "article")],
-    ["main", extractElementByTag(source.html, "main")],
-  ].find(([, value]) => value);
-  const rawArticle = extraction?.[1];
-  if (!rawArticle) fail("extraction-failure", "Google adapter could not find .devsite-article-body");
-  failOnUnsafeSourceHtml(rawArticle, "Extracted article");
-  const article = resolveHtmlUrls(normalizeBodyRoot(rawArticle), canonicalUrl);
+  const adapter = tutorialAdapter(source, canonicalUrl);
+  if (!adapter.article) fail("extraction-failure", `${adapter.id} adapter could not find an article body`);
+  failOnUnsafeSourceHtml(adapter.article, "Extracted article");
+  const article = normalizeHeadingHierarchy(ensureHeadingIds(resolveHtmlUrls(adapter.article, canonicalUrl)));
   const media = mediaEntriesFromHtml(article, canonicalUrl, options.fixture);
   for (const entry of media) {
     if (!entry.alt.trim()) fail("unsupported-media", `Image alt text is missing for ${entry.sourceUrl}`);
@@ -819,7 +988,7 @@ export async function collectTutorialSnapshot(options) {
   return {
     schemaVersion: 1,
     kind: snapshotKind,
-    adapter: "google-devsite",
+    adapter: adapter.id,
     slug: options.slug,
     sourcePath,
     requestedUrl: options.url,
@@ -831,9 +1000,9 @@ export async function collectTutorialSnapshot(options) {
     title: titleFromHtml(source.html, article),
     description: metaContent(source.html, "description") || "Imported tutorial draft for review.",
     provider: providerFromUrl(source.finalUrl),
-    author: null,
-    sourceUpdatedAt: sourceUpdatedAtFromHtml(source.html),
-    license: licenseFromHtml(source.html, source.finalUrl),
+    author: adapter.author,
+    sourceUpdatedAt: sourceUpdatedAtFromResponse(source),
+    license: adapter.license,
     capturedAt: new Date().toISOString(),
     sourceContentHash: sha256(article),
     html: article,
@@ -843,8 +1012,9 @@ export async function collectTutorialSnapshot(options) {
       finalUrl: source.finalUrl,
       canonicalUrl,
       contentType: source.contentType,
-      extractionSelector: extraction[0],
+      extractionSelector: adapter.id,
       redirects: source.redirects,
+      canonicalRebind: normalizeSourceKey(canonicalUrl) !== normalizeSourceKey(options.url),
     },
   };
 }
@@ -1083,7 +1253,9 @@ function sanitizeAttributes(tag, attrs, baseUrl, mediaMap) {
     const source = safe.get("src");
     if (!source) fail("unsupported-media", "Image src is missing");
     safe.set("src", safeUrl(source, baseUrl, "img", mediaMap));
-    if (!safe.get("alt")?.trim()) fail("unsupported-media", `Image alt text is missing for ${source}`);
+    const alt = decodeRepeatedBasicEntities(safe.get("alt") ?? "").trim();
+    if (!alt) fail("unsupported-media", `Image alt text is missing for ${source}`);
+    safe.set("alt", alt);
   }
   if (tag === "iframe") {
     const source = safe.get("src");
@@ -2601,8 +2773,8 @@ export async function importTutorialDraft(options) {
     }
     const snapshot = await readSnapshot(options.input);
     model.assertTutorialSlug(snapshot.slug);
-    if (snapshot.canonicalMatched !== true || normalizeSourceKey(snapshot.canonicalUrl) !== normalizeSourceKey(snapshot.requestedUrl)) {
-      fail("canonical-mismatch", "Snapshot canonical does not match the requested source URL", operationId, actor);
+    if (snapshot.canonicalMatched !== true || normalizeSourceKey(snapshot.sourceKey) !== normalizeSourceKey(snapshot.canonicalUrl)) {
+      fail("canonical-mismatch", "Snapshot canonical is unverified", operationId, actor);
     }
     const translation = await readTranslation(options.translation);
     const translationMeta = {

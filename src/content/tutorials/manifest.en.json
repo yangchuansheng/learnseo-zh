@@ -2,9 +2,453 @@
   "$schema": "https://learningseo.io/schemas/tutorial-manifest.json",
   "schemaVersion": 1,
   "locale": "en",
-  "generation": "tutorial-import-google-search-essentials-20260831",
-  "activeVersion": 1,
+  "generation": "tutorial-import-mangools-complete-seo-guide-v12-20260901",
+  "activeVersion": 4,
   "routes": [
+    {
+      "slug": "ahrefs-seo-basics",
+      "path": "/en/tutorials/ahrefs-seo-basics/",
+      "title": "SEO Basics: Beginner’s Guide to SEO Success",
+      "description": "The basics of SEO are actually quite simple.",
+      "provider": "Ahrefs",
+      "status": "published",
+      "sourceKey": "https://ahrefs.com/seo/seo-basics",
+      "source": {
+        "title": "SEO Basics: Beginner’s Guide to SEO Success",
+        "provider": "Ahrefs",
+        "author": "Joshua Hardwick",
+        "canonicalUrl": "https://ahrefs.com/seo/seo-basics",
+        "sourcePath": "/seo_roadmap/seo-fundamentals/",
+        "requestedUrl": "https://ahrefs.com/blog/seo-basics/",
+        "finalUrl": "https://ahrefs.com/seo/seo-basics",
+        "contentType": "text/html",
+        "license": {
+          "text": "Internal republication authorized by project owner for translated full text and approved article media; external proof retained outside the repository."
+        }
+      },
+      "snapshot": {
+        "version": 3,
+        "capturedAt": "2026-09-01T02:15:00.000Z",
+        "sourceUpdatedAt": "2026-08-31T14:43:38.000Z",
+        "pageCanonicalUrl": "https://ahrefs.com/seo/seo-basics",
+        "canonicalMatched": true,
+        "requestedUrl": "https://ahrefs.com/blog/seo-basics/",
+        "finalUrl": "https://ahrefs.com/seo/seo-basics",
+        "sourceContentHash": "01abb86a98b97720dab98d355ea89f30ed2ac557b1c532f0854d4b8d333fc98c",
+        "contentHash": "db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a",
+        "translationContentHash": "93b5dd2f7d3921ad8ac4e69bdcb48f166d46e6a590f1f7df77574a2f43132e81",
+        "history": [
+          {
+            "version": 1,
+            "canonicalUrl": "https://ahrefs.com/seo/seo-basics",
+            "sourceContentHash": "2fd636507fbca5fd247e336562de1380f2711a02e72b64077ba0448a851ee426",
+            "contentHash": "70391d1db21a39155951cf2e757d8940091796d40f031ef2926ac0c343aaa87f",
+            "translationContentHash": "55319e32971a7f9f8aa0540284803432ade8370be0efdbb075c3a0e0ce1b377e",
+            "contentFile": "70391d1db21a39155951cf2e757d8940091796d40f031ef2926ac0c343aaa87f.html",
+            "translationContentFile": "55319e32971a7f9f8aa0540284803432ade8370be0efdbb075c3a0e0ce1b377e.html",
+            "pageCanonicalUrl": "https://ahrefs.com/seo/seo-basics",
+            "canonicalMatched": true,
+            "requestedUrl": "https://ahrefs.com/blog/seo-basics/",
+            "finalUrl": "https://ahrefs.com/seo/seo-basics",
+            "capturedAt": "2026-08-31T16:30:32.256Z",
+            "sourceUpdatedAt": "2026-08-31T14:43:38.000Z",
+            "recordedAt": "2026-08-31T16:38:31.330Z",
+            "operationId": "tutorial-import-ahrefs-seo-basics-v2-20260901"
+          },
+          {
+            "version": 2,
+            "canonicalUrl": "https://ahrefs.com/seo/seo-basics",
+            "sourceContentHash": "01abb86a98b97720dab98d355ea89f30ed2ac557b1c532f0854d4b8d333fc98c",
+            "contentHash": "db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a",
+            "translationContentHash": "e5991c8d95512efdc3d451c392241cc04682269ab95dadb2cc747dcbb037da02",
+            "contentFile": "db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a.html",
+            "translationContentFile": "e5991c8d95512efdc3d451c392241cc04682269ab95dadb2cc747dcbb037da02.html",
+            "pageCanonicalUrl": "https://ahrefs.com/seo/seo-basics",
+            "canonicalMatched": true,
+            "requestedUrl": "https://ahrefs.com/blog/seo-basics/",
+            "finalUrl": "https://ahrefs.com/seo/seo-basics",
+            "capturedAt": "2026-08-31T16:36:02.658Z",
+            "sourceUpdatedAt": "2026-08-31T14:43:38.000Z",
+            "recordedAt": "2026-09-01T02:15:00.000Z",
+            "operationId": "tutorial-import-ahrefs-seo-basics-v3-20260901"
+          }
+        ]
+      },
+      "activeVersion": 3,
+      "translation": {
+        "sourceLanguage": "en",
+        "language": "zh-CN",
+        "translator": "codex-wave2",
+        "translatedAt": "2026-09-01T02:15:00.000Z",
+        "reviewedAt": "2026-09-01T02:15:00.000Z",
+        "sourceSections": 33,
+        "translatedSections": 33,
+        "contentHash": "93b5dd2f7d3921ad8ac4e69bdcb48f166d46e6a590f1f7df77574a2f43132e81",
+        "contentFile": "93b5dd2f7d3921ad8ac4e69bdcb48f166d46e6a590f1f7df77574a2f43132e81.html"
+      },
+      "review": {
+        "decision": "approved",
+        "reviewer": "Codex Wave 2 editorial review",
+        "reviewedAt": "2026-09-01T02:15:00.000Z",
+        "notes": "Approved for internal publication after project-owner written authorization handoff, canonical rebind review, full body preservation through the Ahrefs article boundary, Simplified Chinese handoff with semantic/link/numeric parity checks, approved article media localization, contributor/reviewer attribution evidence, source update evidence review, metadata, resource-card, runtime, and rollback checks. Completed literal Simplified Chinese translation coverage review.",
+        "checklist": {
+          "contentComplete": true,
+          "dataPreserved": true,
+          "factsPreserved": true,
+          "logicPreserved": true,
+          "terminologyCorrect": true,
+          "chineseNatural": true,
+          "authorVoicePreserved": true,
+          "linksPreserved": true,
+          "mediaVerified": true,
+          "attributionPresent": true,
+          "seoVerified": true
+        },
+        "history": [
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import awaiting editorial review.",
+            "version": 2,
+            "operationId": "tutorial-import-ahrefs-seo-basics-v2-20260901"
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import created by tutorials:import; review and publication remain manual."
+          },
+          {
+            "decision": "approved",
+            "reviewer": "Codex Wave 2 editorial review",
+            "reviewedAt": "2026-09-01T00:10:00.000Z",
+            "notes": "Approved for internal publication after project-owner written authorization handoff, canonical rebind review, full body preservation through the Ahrefs article boundary, Simplified Chinese handoff with semantic/link/numeric parity checks, approved article media localization, contributor/reviewer attribution evidence, source update evidence review, metadata, resource-card, runtime, and rollback checks.",
+            "version": 2,
+            "operationId": "tutorial-import-ahrefs-seo-basics-v3-20260901"
+          }
+        ]
+      },
+      "qualification": {
+        "decision": "qualified",
+        "reviewer": "Codex Wave 2 editorial review",
+        "reviewedAt": "2026-09-01T00:10:00.000Z",
+        "checklist": {
+          "publiclyAccessible": true,
+          "continuousBody": true,
+          "topicComplete": true,
+          "singlePage": true,
+          "canonicalVerified": true
+        }
+      },
+      "contentFile": "db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a.html",
+      "toc": [
+        {
+          "id": "seo-basics-beginner-s-guide-to-seo-success",
+          "title": "SEO Basics: Beginner’s Guide to SEO Success",
+          "level": 1
+        },
+        {
+          "id": "seo-fundamentals",
+          "title": "SEO fundamentals",
+          "level": 2
+        },
+        {
+          "id": "what-is-seo",
+          "title": "What is SEO?",
+          "level": 3
+        },
+        {
+          "id": "why-is-seo-important",
+          "title": "Why is SEO important?",
+          "level": 3
+        },
+        {
+          "id": "what-are-the-benefits-of-seo",
+          "title": "What are the benefits of SEO?",
+          "level": 3
+        },
+        {
+          "id": "how-do-you-do-seo",
+          "title": "How do you do SEO?",
+          "level": 3
+        },
+        {
+          "id": "setting-up-for-seo-success",
+          "title": "Setting up for SEO success",
+          "level": 2
+        },
+        {
+          "id": "get-a-good-domain",
+          "title": "Get a good domain",
+          "level": 3
+        },
+        {
+          "id": "domain-name",
+          "title": "Domain name",
+          "level": 4
+        },
+        {
+          "id": "top-level-domain-tld",
+          "title": "Top-level domain (TLD)",
+          "level": 4
+        },
+        {
+          "id": "use-a-website-platform",
+          "title": "Use a website platform",
+          "level": 3
+        },
+        {
+          "id": "use-a-good-web-host",
+          "title": "Use a good web host",
+          "level": 3
+        },
+        {
+          "id": "create-a-positive-user-experience",
+          "title": "Create a positive user experience",
+          "level": 3
+        },
+        {
+          "id": "use-https",
+          "title": "Use HTTPS",
+          "level": 4
+        },
+        {
+          "id": "choose-an-appealing-design",
+          "title": "Choose an appealing design",
+          "level": 4
+        },
+        {
+          "id": "make-sure-it-s-mobile-friendly",
+          "title": "Make sure it’s mobile-friendly",
+          "level": 4
+        },
+        {
+          "id": "use-a-readable-font-size",
+          "title": "Use a readable font size",
+          "level": 4
+        },
+        {
+          "id": "avoid-intrusive-pop-ups-and-ads",
+          "title": "Avoid intrusive pop-ups and ads",
+          "level": 4
+        },
+        {
+          "id": "make-sure-it-loads-fast",
+          "title": "Make sure it loads fast",
+          "level": 4
+        },
+        {
+          "id": "create-a-logical-site-structure",
+          "title": "Create a logical site structure",
+          "level": 3
+        },
+        {
+          "id": "use-a-logical-url-structure",
+          "title": "Use a logical URL structure",
+          "level": 3
+        },
+        {
+          "id": "install-an-seo-plugin",
+          "title": "Install an SEO plugin",
+          "level": 3
+        },
+        {
+          "id": "focus-on-local-seo",
+          "title": "Focus on local SEO",
+          "level": 3
+        },
+        {
+          "id": "getting-on-google",
+          "title": "Getting on Google",
+          "level": 2
+        },
+        {
+          "id": "finding-or-creating-a-sitemap",
+          "title": "Finding or creating a sitemap",
+          "level": 3
+        },
+        {
+          "id": "submitting-your-sitemap",
+          "title": "Submitting your sitemap",
+          "level": 3
+        },
+        {
+          "id": "how-to-track-seo-success",
+          "title": "How to track SEO success",
+          "level": 2
+        },
+        {
+          "id": "organic-traffic-and-impressions",
+          "title": "Organic traffic and impressions",
+          "level": 3
+        },
+        {
+          "id": "keyword-rankings",
+          "title": "Keyword rankings",
+          "level": 3
+        },
+        {
+          "id": "ai-visibility",
+          "title": "AI visibility",
+          "level": 3
+        },
+        {
+          "id": "share-of-voice",
+          "title": "Share of Voice",
+          "level": 3
+        },
+        {
+          "id": "key-takeaways",
+          "title": "Key takeaways",
+          "level": 2
+        },
+        {
+          "id": "references",
+          "title": "References",
+          "level": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1.jpg",
+          "sha256": "df27d47d197bf1bc9909f4f9c875130d3ccee1b44c1abf7f675f25298f80aec1",
+          "alt": "Portrait of Joshua Hardwick",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/joshua-hardwick-SDOAESU2.jpg",
+          "id": "df27d47d197b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927.jpg",
+          "sha256": "364aefa4d4ceeb7f71850254fb0f5deb395b10b6159b547c6f698e554b869927",
+          "alt": "Portrait of Sam Oh",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/sam-oh-5QNQ2KFT.jpg",
+          "id": "364aefa4d4ce"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3.jpg",
+          "sha256": "ae6459ea8127e1f469115bfbc581323281e0f460129ba7c69d235ccfa03709f3",
+          "alt": "Portrait of Louise Linehan",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/louise-linehan-7FN5W76D.jpg",
+          "id": "ae6459ea8127"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40.png",
+          "sha256": "6447786df12b975213787b2573b99badfcd5dcace3de13802be89c2a62a9bc40",
+          "alt": "Screenshot of Ahrefs Site Explorer showing organic traffic growth",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-overview-seo-A6OMWYSM.png",
+          "id": "6447786df12b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983.png",
+          "sha256": "508e62272e43488feb66e0144e1984f073c9803266a7c63c3805c70583b3b983",
+          "alt": "Examples of good and bad domain names for SEO",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/image-domains-B6I6NRMQ.png",
+          "id": "508e62272e43"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816.png",
+          "sha256": "b0ac49e1116d89970e108c5e00ba88de6a3eb51bb6e09756d11572b7b1936816",
+          "alt": "Comparison of hosted platforms like Wix and Shopify versus self-hosted platforms like WordPress",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/image-hosted-platforms-BGFFLHZD.png",
+          "id": "b0ac49e1116d"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c.png",
+          "sha256": "e759e08fe06d200ffbb5742bc2822d9e9b73d31f00c1322ce2f8f55a490c8a0c",
+          "alt": "Example of a mind map used to create a logical website structure for SEO",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/image-mind-map-3AFDC3K6.png",
+          "id": "e759e08fe06d"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc.png",
+          "sha256": "3fa1df1c1036f4bbfcd3fd79a210d941a6828f3b8853ffd0a10c695da85e89cc",
+          "alt": "Screenshot of a Google Business Profile showing local business information",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-business-info-6FCRTHE6.png",
+          "id": "3fa1df1c1036"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8.png",
+          "sha256": "92f6e236587e4fa989d35d67bb7a66a46c8904a3d2b2d932b93f2a5d666945b8",
+          "alt": "Diagram showing the steps to submit your website to Google",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/image-submit-to-google-JBOSYINK.png",
+          "id": "92f6e236587e"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8.png",
+          "sha256": "499e4c575d8a9d15b1b3ebd4f7e544533ecbe6e925f54d455446cfb7cb845bf8",
+          "alt": "Screenshot showing how to find your sitemap URL in robots.txt",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-user-agent-53F7BABK.png",
+          "id": "499e4c575d8a"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989.png",
+          "sha256": "b74548a1dfc9c76a1bd81342a0f69d913a62fa459e53d5e7a89ec0c88bdea989",
+          "alt": "Screenshot of Google Search Console showing how to submit a sitemap",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-google-search-console-T7MZPCDP.png",
+          "id": "b74548a1dfc9"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8.png",
+          "sha256": "b831618237c5e2bf4e38247dbfa534f8e849556475336eae6804a9fbdc9048b8",
+          "alt": "Screenshot of Ahrefs Site Explorer showing organic traffic data",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-organic-traffic-6OKUEAJC.png",
+          "id": "b831618237c5"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d.png",
+          "sha256": "86104a3840613612228f2e661dcd2261fae9bde8cd3204d2d230579964aaec4d",
+          "alt": "Screenshot of Google Search Console Performance report showing impressions data",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-performance-on-search-results-6QAMIE4G.png",
+          "id": "86104a384061"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95.png",
+          "sha256": "cddd5eee5bab88371b98dc628d942ce4953773374efed0c65a1530d1050d9f95",
+          "alt": "Screenshot of Ahrefs Web Analytics showing site traffic data",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-webanalytics-Q6FQEP72.png",
+          "id": "cddd5eee5bab"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0.png",
+          "sha256": "01d48614c4b42352298717c51e40d4c1efa2953621d4510d7a357254ad1774d0",
+          "alt": "Screenshot of Ahrefs Rank Tracker showing keyword ranking data",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-rank-tracker-OHLGJ2SM.png",
+          "id": "01d48614c4b4"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c.png",
+          "sha256": "53bb7387f61b967f1cb92cebe72925f7c60a6570935308241976396e0195620c",
+          "alt": "Screenshot of Ahrefs Brand Radar showing AI visibility data across platforms",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-brand-radar-WKOAM2AQ.png",
+          "id": "53bb7387f61b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/ahrefs-seo-basics/fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab.png",
+          "sha256": "fd7c4717285c68be51343d110e2955763150fe934ab9a95ec13848381351abab",
+          "alt": "Screenshot of Ahrefs Rank Tracker showing Share of Voice data",
+          "sourceUrl": "https://ahrefs.com/assets/esbuild/screenshot-share-of-voice-B5P43BST.png",
+          "id": "fd7c4717285c"
+        }
+      ],
+      "contentMetrics": {
+        "h1": 1,
+        "h2": 6,
+        "h3": 18,
+        "h4": 8,
+        "p": 79,
+        "ul": 7,
+        "ol": 1,
+        "li": 34,
+        "a": 51,
+        "img": 17
+      },
+      "seo": {
+        "title": "SEO Basics: Beginner’s Guide to SEO Success",
+        "description": "The basics of SEO are actually quite simple.",
+        "indexable": true,
+        "dateModified": "2026-08-31T14:43:38.000Z"
+      }
+    },
     {
       "slug": "google-search-essentials",
       "path": "/en/tutorials/google-search-essentials/",
@@ -103,23 +547,23 @@
       "toc": [
         {
           "id": "google-search-essentials",
-          "level": 1,
-          "title": "Google Search Essentials"
+          "title": "Google Search Essentials",
+          "level": 1
         },
         {
           "id": "technical-requirements",
-          "level": 2,
-          "title": "Technical requirements"
+          "title": "Technical requirements",
+          "level": 2
         },
         {
           "id": "spam-policies",
-          "level": 2,
-          "title": "Spam policies"
+          "title": "Spam policies",
+          "level": 2
         },
         {
           "id": "key-best-practices",
-          "level": 2,
-          "title": "Key best practices"
+          "title": "Key best practices",
+          "level": 2
         }
       ],
       "media": [],
@@ -568,7 +1012,1733 @@
         "indexable": true,
         "dateModified": "2025-12-10T00:00:00.000Z"
       }
+    },
+    {
+      "slug": "mangools-complete-seo-guide",
+      "path": "/en/tutorials/mangools-complete-seo-guide/",
+      "title": "SEO basics",
+      "description": "Search Engine Optimization (SEO) is about optimizing your website to get more organic traffic. Learn SEO with our detailed guide!",
+      "provider": "Mangools",
+      "status": "published",
+      "sourceKey": "https://mangools.com/blog/learn-seo",
+      "source": {
+        "title": "SEO basics",
+        "provider": "Mangools",
+        "author": "Vlado Pavlik",
+        "canonicalUrl": "https://mangools.com/blog/learn-seo/",
+        "sourcePath": "/seo_roadmap/seo-fundamentals/",
+        "requestedUrl": "https://mangools.com/blog/learn-seo/",
+        "finalUrl": "https://mangools.com/blog/learn-seo/",
+        "contentType": "text/html",
+        "license": {
+          "text": "Internal republication authorized by project owner for translated full text and approved article media; forms use a reviewed static external CTA."
+        }
+      },
+      "snapshot": {
+        "version": 7,
+        "capturedAt": "2026-09-01T02:45:00.000Z",
+        "sourceUpdatedAt": "2026-08-31T17:13:11.000Z",
+        "pageCanonicalUrl": "https://mangools.com/blog/learn-seo/",
+        "canonicalMatched": true,
+        "requestedUrl": "https://mangools.com/blog/learn-seo/",
+        "finalUrl": "https://mangools.com/blog/learn-seo/",
+        "sourceContentHash": "0bfe35aa1399147ffdb65e8f44f12da7a37decd743f3e90d3551ee58b9ff0040",
+        "contentHash": "d91ddc51aea90edf635a316a02bd298819c91478cd428f7758cc7f630f0ace6d",
+        "translationContentHash": "5889ce618f1905ad985f2a971dc65390d652a49a641526b3245a43a196e7845e",
+        "history": [
+          {
+            "version": 1,
+            "canonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "sourceContentHash": "7970caf6b62e1b8ce7f151efa177fd0b906de721a5147456826db54df3217e96",
+            "contentHash": "1ec023ed11e0e72d270abd15da85d2de8beb0dc7176405c1cfc538801cee9623",
+            "translationContentHash": "f7b38ed61791c5f01d2f4d5d00dfdf74adaf095ae991aa55c3eaebc9045a6a64",
+            "contentFile": "1ec023ed11e0e72d270abd15da85d2de8beb0dc7176405c1cfc538801cee9623.html",
+            "translationContentFile": "f7b38ed61791c5f01d2f4d5d00dfdf74adaf095ae991aa55c3eaebc9045a6a64.html",
+            "pageCanonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "canonicalMatched": true,
+            "requestedUrl": "https://mangools.com/blog/learn-seo/",
+            "finalUrl": "https://mangools.com/blog/learn-seo/",
+            "capturedAt": "2026-08-31T16:46:47.997Z",
+            "sourceUpdatedAt": "2026-08-31T16:46:47.000Z",
+            "recordedAt": "2026-08-31T17:05:46.479Z"
+          },
+          {
+            "version": 2,
+            "canonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "sourceContentHash": "3bba82a70f2272b50a5169b9e4aeab7a73263cc926a94690b86c5f9dd398008b",
+            "contentHash": "9ada93bf8f3778e18504bb6704486a8fc788d422ab86621ba17a2e0b2815ae9a",
+            "translationContentHash": "a884ea215d1bb99e8b7cdd694b5387f41c818a3de6def61f461bcbda50493389",
+            "contentFile": "9ada93bf8f3778e18504bb6704486a8fc788d422ab86621ba17a2e0b2815ae9a.html",
+            "translationContentFile": "a884ea215d1bb99e8b7cdd694b5387f41c818a3de6def61f461bcbda50493389.html",
+            "pageCanonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "canonicalMatched": true,
+            "requestedUrl": "https://mangools.com/blog/learn-seo/",
+            "finalUrl": "https://mangools.com/blog/learn-seo/",
+            "capturedAt": "2026-08-31T17:00:57.458Z",
+            "sourceUpdatedAt": "2026-08-31T17:00:56.000Z",
+            "recordedAt": "2026-08-31T17:07:55.840Z"
+          },
+          {
+            "version": 3,
+            "canonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "sourceContentHash": "69c4cb7c9ef0436f41007e33c4200270cd2de9750e27e4c9a52bb8fd5d2821c0",
+            "contentHash": "8aebd6711311483802fd36cf51784d729cf8063400eb2bb7ea210b8c7c6de5f1",
+            "translationContentHash": "92604ff271a91da403dec1e64f7e34e47270039da44b218e66d6dce420b8d333",
+            "contentFile": "8aebd6711311483802fd36cf51784d729cf8063400eb2bb7ea210b8c7c6de5f1.html",
+            "translationContentFile": "92604ff271a91da403dec1e64f7e34e47270039da44b218e66d6dce420b8d333.html",
+            "pageCanonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "canonicalMatched": true,
+            "requestedUrl": "https://mangools.com/blog/learn-seo/",
+            "finalUrl": "https://mangools.com/blog/learn-seo/",
+            "capturedAt": "2026-08-31T17:06:38.488Z",
+            "sourceUpdatedAt": "2026-08-31T17:06:37.000Z",
+            "recordedAt": "2026-08-31T17:14:25.963Z"
+          },
+          {
+            "version": 4,
+            "canonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "sourceContentHash": "0bfe35aa1399147ffdb65e8f44f12da7a37decd743f3e90d3551ee58b9ff0040",
+            "contentHash": "1cf4b0164a426da1801d6404ddb0ab0d7b4dbec6daf9e36befe17d2eb064251a",
+            "translationContentHash": "c9d7cd97a5bb1f298af4c16d40912528f3b411ece3024174703c535de4d970a8",
+            "contentFile": "1cf4b0164a426da1801d6404ddb0ab0d7b4dbec6daf9e36befe17d2eb064251a.html",
+            "translationContentFile": "c9d7cd97a5bb1f298af4c16d40912528f3b411ece3024174703c535de4d970a8.html",
+            "pageCanonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "canonicalMatched": true,
+            "requestedUrl": "https://mangools.com/blog/learn-seo/",
+            "finalUrl": "https://mangools.com/blog/learn-seo/",
+            "capturedAt": "2026-08-31T17:13:12.500Z",
+            "sourceUpdatedAt": "2026-08-31T17:13:11.000Z",
+            "recordedAt": "2026-09-01T01:30:00.000Z",
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v10-20260901"
+          },
+          {
+            "version": 5,
+            "canonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "sourceContentHash": "0bfe35aa1399147ffdb65e8f44f12da7a37decd743f3e90d3551ee58b9ff0040",
+            "contentHash": "d91ddc51aea90edf635a316a02bd298819c91478cd428f7758cc7f630f0ace6d",
+            "translationContentHash": "e943ed6bfd36c15d5d9dcdf3934a13dc3af23b5ea596d51d44e81c3ef8d4fdbc",
+            "contentFile": "d91ddc51aea90edf635a316a02bd298819c91478cd428f7758cc7f630f0ace6d.html",
+            "translationContentFile": "e943ed6bfd36c15d5d9dcdf3934a13dc3af23b5ea596d51d44e81c3ef8d4fdbc.html",
+            "pageCanonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "canonicalMatched": true,
+            "requestedUrl": "https://mangools.com/blog/learn-seo/",
+            "finalUrl": "https://mangools.com/blog/learn-seo/",
+            "capturedAt": "2026-09-01T01:30:00.000Z",
+            "sourceUpdatedAt": "2026-08-31T17:13:11.000Z",
+            "recordedAt": "2026-09-01T02:30:00.000Z",
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v11-20260901"
+          },
+          {
+            "version": 6,
+            "canonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "sourceContentHash": "0bfe35aa1399147ffdb65e8f44f12da7a37decd743f3e90d3551ee58b9ff0040",
+            "contentHash": "d91ddc51aea90edf635a316a02bd298819c91478cd428f7758cc7f630f0ace6d",
+            "translationContentHash": "36ed06889660c0f919c9cf7508be7d721bb736acc6a0208e7a69db6edad0ee2f",
+            "contentFile": "d91ddc51aea90edf635a316a02bd298819c91478cd428f7758cc7f630f0ace6d.html",
+            "translationContentFile": "36ed06889660c0f919c9cf7508be7d721bb736acc6a0208e7a69db6edad0ee2f.html",
+            "pageCanonicalUrl": "https://mangools.com/blog/learn-seo/",
+            "canonicalMatched": true,
+            "requestedUrl": "https://mangools.com/blog/learn-seo/",
+            "finalUrl": "https://mangools.com/blog/learn-seo/",
+            "capturedAt": "2026-09-01T02:30:00.000Z",
+            "sourceUpdatedAt": "2026-08-31T17:13:11.000Z",
+            "recordedAt": "2026-09-01T02:45:00.000Z",
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v12-20260901"
+          }
+        ]
+      },
+      "activeVersion": 7,
+      "translation": {
+        "sourceLanguage": "en",
+        "language": "zh-CN",
+        "translator": "codex-wave2",
+        "translatedAt": "2026-09-01T02:45:00.000Z",
+        "reviewedAt": "2026-09-01T02:45:00.000Z",
+        "sourceSections": 146,
+        "translatedSections": 146,
+        "contentHash": "5889ce618f1905ad985f2a971dc65390d652a49a641526b3245a43a196e7845e",
+        "contentFile": "5889ce618f1905ad985f2a971dc65390d652a49a641526b3245a43a196e7845e.html"
+      },
+      "review": {
+        "decision": "approved",
+        "reviewer": "codex.wave2",
+        "reviewedAt": "2026-09-01T02:45:00.000Z",
+        "notes": "Wave 2 authorized refresh review approved after safe heading-id normalization, nested image-alt entity normalization, project-owner authorization handoff, Mangools chapter H1 demotion, static form/quiz/certificate CTA treatment, approved image localization, remote YouTube allowlist review, bilingual semantic/heading/link/numeric/media parity, and release-gate readiness checks. Corrected Simplified Chinese text coverage and entity-decoded image alt text. Repaired a malformed invisible-character emphasis tag. Restored missing emphasis markup during bilingual structural review.",
+        "checklist": {
+          "contentComplete": true,
+          "dataPreserved": true,
+          "factsPreserved": true,
+          "logicPreserved": true,
+          "terminologyCorrect": true,
+          "chineseNatural": true,
+          "authorVoicePreserved": true,
+          "linksPreserved": true,
+          "mediaVerified": true,
+          "attributionPresent": true,
+          "seoVerified": true
+        },
+        "history": [
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import awaiting editorial review.",
+            "version": 1,
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v5-20260901"
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import created by tutorials:import; review and publication remain manual."
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Refresh candidate imported; review required before publication.",
+            "version": 2,
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v6-20260901"
+          },
+          {
+            "decision": "approved",
+            "reviewer": "Codex Wave 2 editorial review",
+            "reviewedAt": "2026-09-01T00:30:00.000Z",
+            "notes": "Approved for internal publication after project-owner written authorization handoff, full .mg-post-content body preservation, chapter H1 demotion to one page H1 with continuous heading hierarchy, forms/quiz/certificate converted to reviewed static external CTA treatment, Simplified Chinese handoff with semantic/link/numeric parity checks, approved article media localization excluding unsafe active SVG, allowlisted titled YouTube embed decision, metadata, resource-card, runtime, and rollback checks."
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Refresh candidate imported; review required before publication.",
+            "version": 3,
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v7-20260901"
+          },
+          {
+            "decision": "approved",
+            "reviewer": "codex.wave2",
+            "reviewedAt": "2026-09-01T01:05:00.000Z",
+            "notes": "Wave 2 authorized refresh review approved after project-owner authorization handoff, Mangools chapter H1 demotion, static form/quiz/certificate CTA treatment, approved image localization, remote YouTube allowlist review, bilingual semantic/heading/link/numeric/media parity, and release-gate readiness checks."
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Refresh candidate imported; review required before publication.",
+            "version": 4,
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v9-20260901"
+          },
+          {
+            "decision": "approved",
+            "reviewer": "codex.wave2",
+            "reviewedAt": "2026-09-01T01:25:00.000Z",
+            "notes": "Wave 2 authorized refresh review approved after nested image-alt entity normalization, project-owner authorization handoff, Mangools chapter H1 demotion, static form/quiz/certificate CTA treatment, approved image localization, remote YouTube allowlist review, bilingual semantic/heading/link/numeric/media parity, and release-gate readiness checks."
+          },
+          {
+            "decision": "approved",
+            "reviewer": "codex.wave2",
+            "reviewedAt": "2026-09-01T02:05:00.000Z",
+            "notes": "Wave 2 authorized refresh review approved after safe heading-id normalization, nested image-alt entity normalization, project-owner authorization handoff, Mangools chapter H1 demotion, static form/quiz/certificate CTA treatment, approved image localization, remote YouTube allowlist review, bilingual semantic/heading/link/numeric/media parity, and release-gate readiness checks.",
+            "version": 4,
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v10-20260901"
+          },
+          {
+            "decision": "approved",
+            "reviewer": "codex.wave2",
+            "reviewedAt": "2026-09-01T01:30:00.000Z",
+            "notes": "Wave 2 authorized refresh review approved after safe heading-id normalization, nested image-alt entity normalization, project-owner authorization handoff, Mangools chapter H1 demotion, static form/quiz/certificate CTA treatment, approved image localization, remote YouTube allowlist review, bilingual semantic/heading/link/numeric/media parity, and release-gate readiness checks. Corrected Simplified Chinese text coverage and entity-decoded image alt text.",
+            "version": 5,
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v11-20260901"
+          },
+          {
+            "decision": "approved",
+            "reviewer": "codex.wave2",
+            "reviewedAt": "2026-09-01T02:30:00.000Z",
+            "notes": "Wave 2 authorized refresh review approved after safe heading-id normalization, nested image-alt entity normalization, project-owner authorization handoff, Mangools chapter H1 demotion, static form/quiz/certificate CTA treatment, approved image localization, remote YouTube allowlist review, bilingual semantic/heading/link/numeric/media parity, and release-gate readiness checks. Corrected Simplified Chinese text coverage and entity-decoded image alt text. Repaired a malformed invisible-character emphasis tag.",
+            "version": 6,
+            "operationId": "tutorial-import-mangools-complete-seo-guide-v12-20260901"
+          }
+        ]
+      },
+      "qualification": {
+        "decision": "qualified",
+        "reviewer": "codex.wave2",
+        "reviewedAt": "2026-09-01T02:05:00.000Z",
+        "checklist": {
+          "publiclyAccessible": true,
+          "continuousBody": true,
+          "topicComplete": true,
+          "singlePage": true,
+          "canonicalVerified": true
+        }
+      },
+      "contentFile": "d91ddc51aea90edf635a316a02bd298819c91478cd428f7758cc7f630f0ace6d.html",
+      "toc": [
+        {
+          "id": "part1",
+          "level": 1,
+          "title": "SEO basics"
+        },
+        {
+          "id": "what-is-seo",
+          "level": 2,
+          "title": "What is SEO?"
+        },
+        {
+          "id": "seo-in-practice",
+          "level": 2,
+          "title": "SEO in a nutshell"
+        },
+        {
+          "id": "vocabulary",
+          "level": 2,
+          "title": "Useful vocabulary"
+        },
+        {
+          "id": "on-page-seo-off-page-seo",
+          "level": 3,
+          "title": "On-page SEO & off-page SEO"
+        },
+        {
+          "id": "white-hat-seo-vs-black-hat-seo",
+          "level": 3,
+          "title": "White hat SEO vs. black hat SEO"
+        },
+        {
+          "id": "faq",
+          "level": 2,
+          "title": "Frequently asked questions"
+        },
+        {
+          "id": "can-i-do-seo-on-my-own",
+          "level": 3,
+          "title": "Can I do SEO on my own?"
+        },
+        {
+          "id": "how-can-i-learn-seo",
+          "level": 3,
+          "title": "How can I learn SEO?"
+        },
+        {
+          "id": "how-long-does-it-take-to-learn-seo",
+          "level": 3,
+          "title": "How long does it take to learn SEO?"
+        },
+        {
+          "id": "do-i-need-seo-tools",
+          "level": 3,
+          "title": "Do I need SEO tools?"
+        },
+        {
+          "id": "is-seo-dead",
+          "level": 3,
+          "title": "Is SEO dead?"
+        },
+        {
+          "id": "part2",
+          "level": 2,
+          "title": "Search engines"
+        },
+        {
+          "id": "what-are-search-angines",
+          "level": 2,
+          "title": "What are search engines?"
+        },
+        {
+          "id": "search-engines-work",
+          "level": 2,
+          "title": "How search engines work"
+        },
+        {
+          "id": "crawling",
+          "level": 3,
+          "title": "Crawling"
+        },
+        {
+          "id": "indexing",
+          "level": 3,
+          "title": "Indexing"
+        },
+        {
+          "id": "picking-the-results",
+          "level": 3,
+          "title": "Picking the results"
+        },
+        {
+          "id": "algorithm",
+          "level": 2,
+          "title": "Google algorithm"
+        },
+        {
+          "id": "search-quality-raters",
+          "level": 3,
+          "title": "Search Quality Raters"
+        },
+        {
+          "id": "ranking-factors",
+          "level": 2,
+          "title": "Ranking factors"
+        },
+        {
+          "id": "expert-insight-by-kevin-indig",
+          "level": 3,
+          "title": "Expert insight by Kevin Indig"
+        },
+        {
+          "id": "part3",
+          "level": 2,
+          "title": "Keyword research"
+        },
+        {
+          "id": "where-keywords",
+          "level": 2,
+          "title": "Where to find keywords?"
+        },
+        {
+          "id": "google-suggestions",
+          "level": 3,
+          "title": "Google suggestions"
+        },
+        {
+          "id": "keyword-tools",
+          "level": 3,
+          "title": "Keyword tools"
+        },
+        {
+          "id": "keyword-metrics",
+          "level": 2,
+          "title": "Keyword metrics"
+        },
+        {
+          "id": "search-volume",
+          "level": 3,
+          "title": "Search volume"
+        },
+        {
+          "id": "long-tail-keywords-vs-search-volumes",
+          "level": 3,
+          "title": "Long-tail keywords vs. search volumes"
+        },
+        {
+          "id": "difficulty",
+          "level": 3,
+          "title": "Keyword difficulty"
+        },
+        {
+          "id": "relevance",
+          "level": 3,
+          "title": "Keyword relevance"
+        },
+        {
+          "id": "expert-insight-by-gael-breton",
+          "level": 3,
+          "title": "Expert insight by Gael Breton"
+        },
+        {
+          "id": "part4",
+          "level": 2,
+          "title": "Content optimization"
+        },
+        {
+          "id": "topics",
+          "level": 2,
+          "title": "Topic identification & organization"
+        },
+        {
+          "id": "how-to-organize-the-topics",
+          "level": 3,
+          "title": "How to organize the topics?"
+        },
+        {
+          "id": "target-various-intent-types",
+          "level": 4,
+          "title": "Target various intent types"
+        },
+        {
+          "id": "focus-keyword",
+          "level": 2,
+          "title": "Focus keyword optimization"
+        },
+        {
+          "id": "title-tag-and-meta-description",
+          "level": 3,
+          "title": "Title tag and meta description"
+        },
+        {
+          "id": "url",
+          "level": 3,
+          "title": "URL"
+        },
+        {
+          "id": "headings-and-body-text",
+          "level": 3,
+          "title": "Headings and body text"
+        },
+        {
+          "id": "image-metadata",
+          "level": 3,
+          "title": "Image metadata"
+        },
+        {
+          "id": "anchor-text-of-the-internal-links",
+          "level": 3,
+          "title": "Anchor text of the internal links"
+        },
+        {
+          "id": "what-about-lsi-keywords",
+          "level": 3,
+          "title": "What about LSI keywords?"
+        },
+        {
+          "id": "quality",
+          "level": 2,
+          "title": "Quality of content"
+        },
+        {
+          "id": "better-quality",
+          "level": 3,
+          "title": "Better quality"
+        },
+        {
+          "id": "is-8220-linking-out-8221-to-other-websites-good-for-seo",
+          "level": 4,
+          "title": "Is &#8220;linking out&#8221; to other websites good for SEO?"
+        },
+        {
+          "id": "better-design",
+          "level": 3,
+          "title": "Better design"
+        },
+        {
+          "id": "better-ux",
+          "level": 3,
+          "title": "Better UX"
+        },
+        {
+          "id": "length",
+          "level": 2,
+          "title": "Content length"
+        },
+        {
+          "id": "expert-insight-by-julia-mccoy",
+          "level": 3,
+          "title": "Expert insight by Julia McCoy"
+        },
+        {
+          "id": "updates",
+          "level": 2,
+          "title": "Content updates"
+        },
+        {
+          "id": "updating-vs-republishing",
+          "level": 3,
+          "title": "Updating vs. republishing"
+        },
+        {
+          "id": "part5",
+          "level": 2,
+          "title": "On-page & technical SEO"
+        },
+        {
+          "id": "internal-linking",
+          "level": 2,
+          "title": "Internal linking"
+        },
+        {
+          "id": "use-clear-navigational-elements",
+          "level": 3,
+          "title": "Use clear navigational elements"
+        },
+        {
+          "id": "link-from-the-body-of-the-page",
+          "level": 3,
+          "title": "Link from the body of the page"
+        },
+        {
+          "id": "expert-insight-by-glen-allsopp",
+          "level": 3,
+          "title": "Expert insight by Glen Allsopp"
+        },
+        {
+          "id": "sitemaps",
+          "level": 2,
+          "title": "Sitemaps"
+        },
+        {
+          "id": "do-you-always-need-a-sitemap",
+          "level": 3,
+          "title": "Do you always need a sitemap?"
+        },
+        {
+          "id": "https",
+          "level": 2,
+          "title": "HTTPS"
+        },
+        {
+          "id": "mobile",
+          "level": 2,
+          "title": "Mobile-friendliness"
+        },
+        {
+          "id": "page-speed",
+          "level": 2,
+          "title": "Page speed"
+        },
+        {
+          "id": "section-1-use-a-quality-web-hosting",
+          "level": 3,
+          "title": "1. Use a quality web hosting"
+        },
+        {
+          "id": "section-2-implement-caching",
+          "level": 3,
+          "title": "2. Implement caching"
+        },
+        {
+          "id": "section-3-consider-amp",
+          "level": 3,
+          "title": "3. Consider AMP"
+        },
+        {
+          "id": "section-4-limit-third-party-scripts",
+          "level": 3,
+          "title": "4. Limit third party-scripts"
+        },
+        {
+          "id": "section-5-optimize-your-images",
+          "level": 3,
+          "title": "5. Optimize your images"
+        },
+        {
+          "id": "a-use-the-right-file-type",
+          "level": 4,
+          "title": "a) Use the right file type"
+        },
+        {
+          "id": "b-resize-your-images",
+          "level": 4,
+          "title": "b) Resize your images"
+        },
+        {
+          "id": "c-compress-your-images",
+          "level": 4,
+          "title": "c) Compress your images"
+        },
+        {
+          "id": "d-consider-lazy-loading",
+          "level": 4,
+          "title": "d) Consider lazy loading"
+        },
+        {
+          "id": "alt-texts",
+          "level": 2,
+          "title": "Image alt texts"
+        },
+        {
+          "id": "title-meta",
+          "level": 2,
+          "title": "Title tags and meta descriptions"
+        },
+        {
+          "id": "section-1-include-the-focus-keyword",
+          "level": 3,
+          "title": "1. Include the focus keyword"
+        },
+        {
+          "id": "section-2-be-careful-about-the-length",
+          "level": 3,
+          "title": "2. Be careful about the length"
+        },
+        {
+          "id": "section-3-stand-out-from-the-crowd",
+          "level": 3,
+          "title": "3. Stand out from the crowd"
+        },
+        {
+          "id": "featured-snippets",
+          "level": 2,
+          "title": "Featured snippets"
+        },
+        {
+          "id": "section-1-look-for-keywords-with-featured-snippets",
+          "level": 3,
+          "title": "1. Look for keywords with featured snippets"
+        },
+        {
+          "id": "section-2-answer-the-question-first",
+          "level": 3,
+          "title": "2. Answer the question first"
+        },
+        {
+          "id": "section-3-follow-the-optimal-word-count",
+          "level": 3,
+          "title": "3. Follow the optimal word count"
+        },
+        {
+          "id": "section-4-see-what-works-for-your-competitors",
+          "level": 3,
+          "title": "4. See what works for your competitors"
+        },
+        {
+          "id": "part6",
+          "level": 2,
+          "title": "Backlinks & link building"
+        },
+        {
+          "id": "backlink",
+          "level": 2,
+          "title": "What is a backlink?"
+        },
+        {
+          "id": "why-are-backlinks-so-important",
+          "level": 3,
+          "title": "Why are backlinks so important?"
+        },
+        {
+          "id": "link-equity",
+          "level": 3,
+          "title": "Link equity"
+        },
+        {
+          "id": "google-pagerank",
+          "level": 3,
+          "title": "Google PageRank"
+        },
+        {
+          "id": "pagerank-metric",
+          "level": 4,
+          "title": "PageRank metric"
+        },
+        {
+          "id": "link-types",
+          "level": 2,
+          "title": "Types of links"
+        },
+        {
+          "id": "internal-vs-external-links",
+          "level": 3,
+          "title": "Internal vs. external links"
+        },
+        {
+          "id": "nofollow-links",
+          "level": 3,
+          "title": "Nofollow links"
+        },
+        {
+          "id": "link-profile",
+          "level": 2,
+          "title": "Link profile"
+        },
+        {
+          "id": "anchor-text",
+          "level": 3,
+          "title": "Anchor text"
+        },
+        {
+          "id": "valuable-backlink",
+          "level": 2,
+          "title": "Attributes of a valuable backlink"
+        },
+        {
+          "id": "section-1-relevant",
+          "level": 3,
+          "title": "1. Relevant"
+        },
+        {
+          "id": "section-2-from-an-authoritative-website",
+          "level": 3,
+          "title": "2. From an authoritative website"
+        },
+        {
+          "id": "section-3-unique",
+          "level": 3,
+          "title": "3. Unique"
+        },
+        {
+          "id": "a-website-level",
+          "level": 4,
+          "title": "a) Website level"
+        },
+        {
+          "id": "b-page-level",
+          "level": 4,
+          "title": "b) Page level"
+        },
+        {
+          "id": "c-number-of-other-links",
+          "level": 4,
+          "title": "c) Number of other links"
+        },
+        {
+          "id": "section-4-placed-near-the-top-in-the-body",
+          "level": 3,
+          "title": "4. Placed near the top in the body"
+        },
+        {
+          "id": "section-5-has-relevant-anchor-text",
+          "level": 3,
+          "title": "5. Has relevant anchor text"
+        },
+        {
+          "id": "link-building",
+          "level": 2,
+          "title": "Should you do link building?"
+        },
+        {
+          "id": "should-you-buy-links",
+          "level": 3,
+          "title": "Should you buy links?"
+        },
+        {
+          "id": "expert-insight-by-alexandra-tachalova",
+          "level": 3,
+          "title": "Expert insight by Alexandra Tachalova"
+        },
+        {
+          "id": "link-building-strategies",
+          "level": 2,
+          "title": "Link building strategies"
+        },
+        {
+          "id": "linkable-assets",
+          "level": 3,
+          "title": "Linkable assets"
+        },
+        {
+          "id": "guest-posting",
+          "level": 3,
+          "title": "Guest posting"
+        },
+        {
+          "id": "competitor-s-backlinks",
+          "level": 3,
+          "title": "Competitor’s backlinks"
+        },
+        {
+          "id": "the-skyscraper-technique",
+          "level": 4,
+          "title": "The Skyscraper Technique"
+        },
+        {
+          "id": "other-common-link-building-techniques",
+          "level": 3,
+          "title": "Other common link building techniques"
+        },
+        {
+          "id": "part7",
+          "level": 2,
+          "title": "Analytics & metrics"
+        },
+        {
+          "id": "search-console",
+          "level": 2,
+          "title": "Google Search Console"
+        },
+        {
+          "id": "performance-report",
+          "level": 3,
+          "title": "Performance report"
+        },
+        {
+          "id": "troubleshoot-the-performance-drops",
+          "level": 4,
+          "title": "Troubleshoot the performance drops"
+        },
+        {
+          "id": "find-pages-that-need-the-ctr-optimization",
+          "level": 4,
+          "title": "Find pages that need the CTR optimization"
+        },
+        {
+          "id": "compare-your-performance-on-desktop-and-mobile-devices",
+          "level": 4,
+          "title": "Compare your performance on desktop and mobile devices"
+        },
+        {
+          "id": "find-low-hanging-keywords-you-can-rank-for-easily",
+          "level": 4,
+          "title": "Find low-hanging keywords you can rank for easily"
+        },
+        {
+          "id": "compare-branded-and-non-branded-searches",
+          "level": 4,
+          "title": "Compare branded and non-branded searches"
+        },
+        {
+          "id": "analytics",
+          "level": 2,
+          "title": "Google Analytics"
+        },
+        {
+          "id": "what-kind-of-data-can-you-find-in-ga",
+          "level": 3,
+          "title": "What kind of data can you find in GA?"
+        },
+        {
+          "id": "data-segmentation",
+          "level": 3,
+          "title": "Data segmentation"
+        },
+        {
+          "id": "date-range",
+          "level": 4,
+          "title": "Date range"
+        },
+        {
+          "id": "segments",
+          "level": 4,
+          "title": "Segments"
+        },
+        {
+          "id": "secondary-dimension",
+          "level": 4,
+          "title": "Secondary dimension"
+        },
+        {
+          "id": "search",
+          "level": 4,
+          "title": "Search"
+        },
+        {
+          "id": "the-most-useful-reports",
+          "level": 3,
+          "title": "The most useful reports"
+        },
+        {
+          "id": "section-1-see-the-most-visited-pages-on-your-website",
+          "level": 4,
+          "title": "1. See the most visited pages on your website"
+        },
+        {
+          "id": "section-2-see-the-first-pages-people-visit-on-your-site",
+          "level": 4,
+          "title": "2. See the first pages people visit on your site"
+        },
+        {
+          "id": "section-3-find-the-best-sources-of-your-traffic",
+          "level": 4,
+          "title": "3. Find the best sources of your traffic"
+        },
+        {
+          "id": "section-4-get-to-know-your-visitors",
+          "level": 4,
+          "title": "4. Get to know your visitors"
+        },
+        {
+          "id": "the-most-useful-metrics",
+          "level": 3,
+          "title": "The most useful metrics"
+        },
+        {
+          "id": "traffic-acquisition-metrics",
+          "level": 4,
+          "title": "Traffic acquisition metrics"
+        },
+        {
+          "id": "bounce-rate",
+          "level": 4,
+          "title": "Bounce rate"
+        },
+        {
+          "id": "pages-per-session",
+          "level": 4,
+          "title": "Pages per session"
+        },
+        {
+          "id": "average-time-on-page-session-duration",
+          "level": 4,
+          "title": "Average time on page / Session duration"
+        },
+        {
+          "id": "rank-tracking",
+          "level": 2,
+          "title": "Rank tracking"
+        },
+        {
+          "id": "ai-search-monitoring",
+          "level": 3,
+          "title": "AI search monitoring"
+        },
+        {
+          "id": "analytics-tips",
+          "level": 2,
+          "title": "Analytics tips and best practices"
+        },
+        {
+          "id": "watch-the-overall-progress-dig-into-details",
+          "level": 3,
+          "title": "Watch the overall progress, dig into details"
+        },
+        {
+          "id": "understand-the-metrics",
+          "level": 3,
+          "title": "Understand the metrics"
+        },
+        {
+          "id": "always-try-to-understand-the-context",
+          "level": 3,
+          "title": "Always try to understand the context"
+        },
+        {
+          "id": "use-annotations-to-add-context",
+          "level": 3,
+          "title": "Use annotations to add context"
+        },
+        {
+          "id": "set-up-alerts-to-be-notified-about-any-dramatic-changes",
+          "level": 3,
+          "title": "Set up alerts to be notified about any dramatic changes"
+        },
+        {
+          "id": "part8",
+          "level": 2,
+          "title": "SEO test (+certificate)"
+        },
+        {
+          "id": "congratulations-you-ve-answered-all-the-questions-correctly",
+          "level": 2,
+          "title": "Congratulations! You've answered all the questions correctly! 😎"
+        },
+        {
+          "id": "tell-your-friends-about-your-achievement",
+          "level": 2,
+          "title": "Tell your friends about your achievement!"
+        }
+      ],
+      "media": [
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/79bc84a944211fc2f76638cc00ea31fcd7d2a48ad20732e4cd228e314da26bf7.png",
+          "sha256": "79bc84a944211fc2f76638cc00ea31fcd7d2a48ad20732e4cd228e314da26bf7",
+          "alt": "Mangools SEO guide illustration",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/chapter-1.png",
+          "width": 400,
+          "id": "79bc84a94421"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/c39426904f11d2cdcd356c5ecafb650a98b287172a0fe2d4aa6ba5b0199ed729.png",
+          "sha256": "c39426904f11d2cdcd356c5ecafb650a98b287172a0fe2d4aa6ba5b0199ed729",
+          "alt": "paid vs organic results",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/paid-vs-organic-results-1.png",
+          "width": 1300,
+          "height": 1100,
+          "id": "c39426904f11"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/8094d0f9ae7603104a1aed5ecc81ce5ecd77af3d2e2266f5ffa804b0c09c12ba.png",
+          "sha256": "8094d0f9ae7603104a1aed5ecc81ce5ecd77af3d2e2266f5ffa804b0c09c12ba",
+          "alt": "The SEO soup - the top 3 ingerdients to rank your website",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/seo-soup.png",
+          "width": 1100,
+          "height": 700,
+          "id": "8094d0f9ae76"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/288fbe28567f1ef65472df63c72bb6d3eede66de3e22c5bf2bb97dcfc950d095.png",
+          "sha256": "288fbe28567f1ef65472df63c72bb6d3eede66de3e22c5bf2bb97dcfc950d095",
+          "alt": "black hat vs. white hat SEO differences",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/01-black-hat-white-hat-3-1.png",
+          "width": 1100,
+          "height": 806,
+          "id": "288fbe28567f"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/5d0c095817f80d5339bf7ee523c981f2828e8d4dead156f1df3ece42f1b003e4.png",
+          "sha256": "5d0c095817f80d5339bf7ee523c981f2828e8d4dead156f1df3ece42f1b003e4",
+          "alt": "Mangools SEO guide illustration",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/chapter-2.png",
+          "width": 400,
+          "id": "5d0c095817f8"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/66c4fd1143e2faf48a455294edf378e0297da96d3e8b21ae857ff022699609b6.png",
+          "sha256": "66c4fd1143e2faf48a455294edf378e0297da96d3e8b21ae857ff022699609b6",
+          "alt": "search engines market share worldwide",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/search-engines-market-share-worldwide-2.png",
+          "width": 1104,
+          "height": 804,
+          "id": "66c4fd1143e2"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/115927cfcb4609f245243df959c817ab4f0d11d6ec7be5bc330f0952abfd1c03.png",
+          "sha256": "115927cfcb4609f245243df959c817ab4f0d11d6ec7be5bc330f0952abfd1c03",
+          "alt": "how search engines work - crawling, indexing, ranking and serving",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/10/how-search-engines-work.png",
+          "width": 1100,
+          "height": 1058,
+          "id": "115927cfcb46"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/a2d6694d423df3719b51592669433c2395d09a717bc698d5efdc4b6bf05f8d06.png",
+          "sha256": "a2d6694d423df3719b51592669433c2395d09a717bc698d5efdc4b6bf05f8d06",
+          "alt": "google search console url inspection tool",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/google-search-console-url-inspection-tool.png",
+          "width": 1401,
+          "height": 645,
+          "id": "a2d6694d423d"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/a6cf1ea2039589341e094e3576f2737ecdbaa280f47798bf41572701bc7c5951.png",
+          "sha256": "a6cf1ea2039589341e094e3576f2737ecdbaa280f47798bf41572701bc7c5951",
+          "alt": "10 critical SEO success factors list",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/ranking-factors.png",
+          "width": 1100,
+          "height": 904,
+          "id": "a6cf1ea20395"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/a44ffba45ce8dde64a941c1190b5ba93e2ae844b93834efd0f4bae2a37397fe4.jpg",
+          "sha256": "a44ffba45ce8dde64a941c1190b5ba93e2ae844b93834efd0f4bae2a37397fe4",
+          "alt": "Kevin Indig",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2021/02/Kevin-Indig.jpg",
+          "width": 160,
+          "height": 160,
+          "id": "a44ffba45ce8"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/6852a0b0e335c4e9e5152ed5446d767ac84b0fc3e985d60049ad16e837677224.png",
+          "sha256": "6852a0b0e335c4e9e5152ed5446d767ac84b0fc3e985d60049ad16e837677224",
+          "alt": "Mangools SEO guide illustration",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/chapter-5.png",
+          "width": 400,
+          "id": "6852a0b0e335"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/5891f24f75aa617ca22330e4b2858a07ccfe59e4a6205fcd1a8724f16923c254.png",
+          "sha256": "5891f24f75aa617ca22330e4b2858a07ccfe59e4a6205fcd1a8724f16923c254",
+          "alt": "Google autocomplete",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/autocomplete.png",
+          "width": 1060,
+          "height": 757,
+          "id": "5891f24f75aa"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/af9f3d975bc14704610054e11c4ed887b3be9a23cd133410b6dd384ced509381.png",
+          "sha256": "af9f3d975bc14704610054e11c4ed887b3be9a23cd133410b6dd384ced509381",
+          "alt": "searches related to",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/searches-related-to.png",
+          "width": 971,
+          "height": 445,
+          "id": "af9f3d975bc1"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/4a75042f11d7d457553352b4555024a5baaab7db5c926092ac09c4ed3408408b.png",
+          "sha256": "4a75042f11d7d457553352b4555024a5baaab7db5c926092ac09c4ed3408408b",
+          "alt": "kwfinder seed keyword search",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/kwfinder-seed-keyword-search.png",
+          "width": 981,
+          "height": 924,
+          "id": "4a75042f11d7"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/016326df364a06ae4e77beb3e9b9738666c4695cfbfbd8ca9e87401c7465edde.png",
+          "sha256": "016326df364a06ae4e77beb3e9b9738666c4695cfbfbd8ca9e87401c7465edde",
+          "alt": "Performing competitor keyword research in Mangools KWFinder - example",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/kwfinder-competitors-domain.png",
+          "width": 983,
+          "height": 928,
+          "id": "016326df364a"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/7e0b78f704d113c853e3e538f8ec2ecb6d10de6032a6174d02536a1900440e8a.png",
+          "sha256": "7e0b78f704d113c853e3e538f8ec2ecb6d10de6032a6174d02536a1900440e8a",
+          "alt": "keyword gap analysis - example",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2025/12/keyword-gap-analysis-example.png",
+          "width": 1448,
+          "height": 801,
+          "id": "7e0b78f704d1"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/6ffd68228a4cd884d8727e00abfafc2372d7ce2844b33d5c480120b9ed052d6a.png",
+          "sha256": "6ffd68228a4cd884d8727e00abfafc2372d7ce2844b33d5c480120b9ed052d6a",
+          "alt": "The Keyword Tripod Rule",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2021/04/The-Keyword-Tripod-Rule.png",
+          "width": 1100,
+          "height": 744,
+          "id": "6ffd68228a4c"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/9923bca71661d9bfce661cc30d1a80a90f3b79b3a3b77d35297929c0b878a783.png",
+          "sha256": "9923bca71661d9bfce661cc30d1a80a90f3b79b3a3b77d35297929c0b878a783",
+          "alt": "long tail keywords",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/long-tail-keywords.png",
+          "width": 1100,
+          "height": 904,
+          "id": "9923bca71661"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/b8bac12cfb926b95d42567a5ec5dcd3dccd9540cd679e85832c102925fac87a4.png",
+          "sha256": "b8bac12cfb926b95d42567a5ec5dcd3dccd9540cd679e85832c102925fac87a4",
+          "alt": "Example of the Keyword Difficulty metric in Mangools KWFinder",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/10/lps-into-kd.png",
+          "width": 970,
+          "height": 854,
+          "id": "b8bac12cfb92"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/b7c302f44a2f3f2252b24ea7b770a37777ca415a1abf9f1c0079a104d627d793.png",
+          "sha256": "b7c302f44a2f3f2252b24ea7b770a37777ca415a1abf9f1c0079a104d627d793",
+          "alt": "search intent types",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/search-intent-types-1.png",
+          "width": 1099,
+          "height": 621,
+          "id": "b7c302f44a2f"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/9ffdc512abf5581da6d92bd0b4f78b8fe83e05f5cdb3cc330f56802e9057ac39.jpg",
+          "sha256": "9ffdc512abf5581da6d92bd0b4f78b8fe83e05f5cdb3cc330f56802e9057ac39",
+          "alt": "Gael Breton",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2021/04/gael-breton.jpg",
+          "width": 160,
+          "height": 160,
+          "id": "9ffdc512abf5"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/033f0bfc0a03c8b85fb4bcfa51499aa3b1705039b0ec98f7db5b187236cfafac.png",
+          "sha256": "033f0bfc0a03c8b85fb4bcfa51499aa3b1705039b0ec98f7db5b187236cfafac",
+          "alt": "Analyzing search intent in the SERP for the keyword &quot;vacuum cleaners&quot; - example",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2021/04/vacuum-cleaners-serp.png",
+          "width": 1233,
+          "height": 797,
+          "id": "033f0bfc0a03"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/af3504efefa2fb36a53ff004fe60c37ac730c36269100ad8a25ef02a90296f4c.png",
+          "sha256": "af3504efefa2fb36a53ff004fe60c37ac730c36269100ad8a25ef02a90296f4c",
+          "alt": "Analyzing search intent in Google SERP for the query “best vacuum cleaners” - example",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2021/04/best-vacuum-cleaners.png",
+          "width": 1265,
+          "height": 1143,
+          "id": "af3504efefa2"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/b554659bea21d7d4b21cca30edca36e6dc1e5a8f77795f8cc617c240382e2765.png",
+          "sha256": "b554659bea21d7d4b21cca30edca36e6dc1e5a8f77795f8cc617c240382e2765",
+          "alt": "Mangools SEO guide illustration",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/chapter-4.png",
+          "width": 400,
+          "id": "b554659bea21"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/ae501013dcdf12cf71914d7f5c19edb402ce2cf184f88c07a9a79157c9fafe11.png",
+          "sha256": "ae501013dcdf12cf71914d7f5c19edb402ce2cf184f88c07a9a79157c9fafe11",
+          "alt": "keywords vs topics",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/keywords-vs-topics.png",
+          "width": 1100,
+          "height": 763,
+          "id": "ae501013dcdf"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/edaa5037b275d87a85a742af4117577fb593f35c9291ea4ba5f0a2ae2b3302cb.png",
+          "sha256": "edaa5037b275d87a85a742af4117577fb593f35c9291ea4ba5f0a2ae2b3302cb",
+          "alt": "The Content Hub Model (a.k.a. topic clusters)",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/10/content-hub-model-1.png",
+          "width": 1100,
+          "height": 908,
+          "id": "edaa5037b275"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/ddfe53ff687baec79fe302dbb537c3dbdf0588715fc5657e1675e23e61e5d6a5.png",
+          "sha256": "ddfe53ff687baec79fe302dbb537c3dbdf0588715fc5657e1675e23e61e5d6a5",
+          "alt": "focus keyword optimization",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/focus-keyword-optimization.png",
+          "width": 1100,
+          "height": 1653,
+          "id": "ddfe53ff687b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/476fe71c1bebfc1e2092e4d35f0dcd929e350104c756f73a44fa8f06453569a5.png",
+          "sha256": "476fe71c1bebfc1e2092e4d35f0dcd929e350104c756f73a44fa8f06453569a5",
+          "alt": "seo strategy serp snippet",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/seo-strategy-serp-snippet.png",
+          "width": 955,
+          "height": 213,
+          "id": "476fe71c1beb"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/5a5cf5e48c25335de330d4f76409dc6ec1ed17fedf0bfb385f3c2a9f0d1caaf3.png",
+          "sha256": "5a5cf5e48c25335de330d4f76409dc6ec1ed17fedf0bfb385f3c2a9f0d1caaf3",
+          "alt": "focus keyword in subheading and body text",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/focus-keyword-in-subheading-and-body-text.png",
+          "width": 1041,
+          "height": 351,
+          "id": "5a5cf5e48c25"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/dea1217f39c11f3282bc4a9067d803b6b18a9d0d083d26c74b528d75c6cd55e0.png",
+          "sha256": "dea1217f39c11f3282bc4a9067d803b6b18a9d0d083d26c74b528d75c6cd55e0",
+          "alt": "focus keyword image metadata",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/focus-keyword-image-metadata.png",
+          "width": 1032,
+          "height": 728,
+          "id": "dea1217f39c1"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/f37169b06ac660596181946a95f7f79a6301ef122e6a7a2c2c8e64062f972bf4.png",
+          "sha256": "f37169b06ac660596181946a95f7f79a6301ef122e6a7a2c2c8e64062f972bf4",
+          "alt": "10x content SEO technique summary",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/02/10x-content-1.png",
+          "width": 1100,
+          "height": 1527,
+          "id": "f37169b06ac6"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/a767e83176561a728c3647df11fe2e29e377ddb109d8ad5f8a6f9a4d1835611f.png",
+          "sha256": "a767e83176561a728c3647df11fe2e29e377ddb109d8ad5f8a6f9a4d1835611f",
+          "alt": "average blog post length on the 1st SERP",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/09/average-post-length.png",
+          "width": 1100,
+          "height": 868,
+          "id": "a767e8317656"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/51b69705bbc594dafee5902169efcb84dea9a0134cde8dcba86434e502d6c464.jpg",
+          "sha256": "51b69705bbc594dafee5902169efcb84dea9a0134cde8dcba86434e502d6c464",
+          "alt": "Julia McCoy",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2018/12/julia_mccoy.jpg",
+          "width": 160,
+          "height": 160,
+          "id": "51b69705bbc5"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/544853da115ba94530d60f8496c87842dba7b61c196b875eab9defda8d22101f.jpg",
+          "sha256": "544853da115ba94530d60f8496c87842dba7b61c196b875eab9defda8d22101f",
+          "alt": "5 phases of the content lifecycle",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/11/stages-of-content-lifecycle.jpg",
+          "width": 1104,
+          "height": 724,
+          "id": "544853da115b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/e54bd29a4db383508999e43abf8ba8a30aa137c18e243508d071fd4d9a95ec60.png",
+          "sha256": "e54bd29a4db383508999e43abf8ba8a30aa137c18e243508d071fd4d9a95ec60",
+          "alt": "Mangools SEO guide illustration",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/chapter-3.png",
+          "width": 400,
+          "id": "e54bd29a4db3"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/447bccad9e334194d7fc3ec847e06ee42d8a64a7ca3bb055d8caf2e0d0f325e7.png",
+          "sha256": "447bccad9e334194d7fc3ec847e06ee42d8a64a7ca3bb055d8caf2e0d0f325e7",
+          "alt": "thr ideal internal links structure",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/internal-links-structure.png",
+          "width": 1100,
+          "height": 834,
+          "id": "447bccad9e33"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/aa3ccff0dfa8dea02fe1b2ea07057841d0debd318a80cba7c7b32a73353553b1.png",
+          "sha256": "aa3ccff0dfa8dea02fe1b2ea07057841d0debd318a80cba7c7b32a73353553b1",
+          "alt": "Glen Allsopp",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2018/12/glen_allsop.png",
+          "width": 160,
+          "height": 160,
+          "id": "aa3ccff0dfa8"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/e699a785439ac42cd943c063a4aba686f11fcdb3bf560fa5d16b3e35a72c238d.png",
+          "sha256": "e699a785439ac42cd943c063a4aba686f11fcdb3bf560fa5d16b3e35a72c238d",
+          "alt": "xml sitemap example",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/07/xml-sitemap.png",
+          "width": 1253,
+          "height": 560,
+          "id": "e699a785439a"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/ddefa7e60b9ae970a0b576ad846359227c72fdedc954130ba5d1070567afcfda.png",
+          "sha256": "ddefa7e60b9ae970a0b576ad846359227c72fdedc954130ba5d1070567afcfda",
+          "alt": "search console add sitemap",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/07/search-console-create-sitemap.png",
+          "width": 1314,
+          "height": 515,
+          "id": "ddefa7e60b9a"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/5a57df6a196313211fe03d9f15d3bad21e04e05e05c55dc076879488d05e0498.png",
+          "sha256": "5a57df6a196313211fe03d9f15d3bad21e04e05e05c55dc076879488d05e0498",
+          "alt": "HTTP vs. HTTPS",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/09/not-secure.png",
+          "width": 1100,
+          "height": 875,
+          "id": "5a57df6a1963"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/b7a7ff7d9fe19e7df571f0c9bd54c60b5a9fb48c7afb880ac15b5b3cc01c0815.png",
+          "sha256": "b7a7ff7d9fe19e7df571f0c9bd54c60b5a9fb48c7afb880ac15b5b3cc01c0815",
+          "alt": "mobile friendliness testing tool by Google",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/mobile-friendliness-testing-tool-by-Google.png",
+          "width": 1334,
+          "height": 874,
+          "id": "b7a7ff7d9fe1"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/e6534d9ad322280806dec57e9eab466af8ffbd082ea319f10933b5470cec7e89.png",
+          "sha256": "e6534d9ad322280806dec57e9eab466af8ffbd082ea319f10933b5470cec7e89",
+          "alt": "pagespeed insights preview",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/pagespeed-insights-preview.png",
+          "width": 1610,
+          "height": 950,
+          "id": "e6534d9ad322"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/2be5b9cf99c2f99d307ad3bcb5f2162191e5d40ab6550d10054c94050575e584.png",
+          "sha256": "2be5b9cf99c2f99d307ad3bcb5f2162191e5d40ab6550d10054c94050575e584",
+          "alt": "Image File Type Guide",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/04/image-file-type-guide.png",
+          "width": 1100,
+          "height": 1000,
+          "id": "2be5b9cf99c2"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/c736da9d7b1ce80b386b5c8ff6c27b4dee5a991b2659c18b299551ad364a2208.png",
+          "sha256": "c736da9d7b1ce80b386b5c8ff6c27b4dee5a991b2659c18b299551ad364a2208",
+          "alt": "How to write a descriptive alt mage alt text for SEO",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/04/image-alt-text.png",
+          "width": 1099,
+          "height": 743,
+          "id": "c736da9d7b1c"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/dabb5e220c6f6dd9b9f557235542683e4f8054528ecef4e1c112600ab102b86d.png",
+          "sha256": "dabb5e220c6f6dd9b9f557235542683e4f8054528ecef4e1c112600ab102b86d",
+          "alt": "title tag and meta description",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/title-tag-and-meta-description.png",
+          "width": 1099,
+          "height": 477,
+          "id": "dabb5e220c6f"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/307c7b7bb5519eeb6d241fc239ffc61fd42088221fcc0842cf39381d7652624e.png",
+          "sha256": "307c7b7bb5519eeb6d241fc239ffc61fd42088221fcc0842cf39381d7652624e",
+          "alt": "SERP snippet bad",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/07/SERP-snippet-bad.png",
+          "width": 1051,
+          "height": 225,
+          "id": "307c7b7bb551"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/add1e70cc07e249cc0d429549111fbef299cfed14fab8add2e65ba3cacf24a55.png",
+          "sha256": "add1e70cc07e249cc0d429549111fbef299cfed14fab8add2e65ba3cacf24a55",
+          "alt": "serp simulator title and description",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/serp-simulator-title-and-description.png",
+          "width": 723,
+          "height": 819,
+          "id": "add1e70cc07e"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/e36319c84d391111b9f57c711e1c0630e076a5f3f9d57a08fd1366b5dddad2bd.png",
+          "sha256": "e36319c84d391111b9f57c711e1c0630e076a5f3f9d57a08fd1366b5dddad2bd",
+          "alt": "serp simulator serp results",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/serp-simulator-serp-results.png",
+          "width": 1289,
+          "height": 821,
+          "id": "e36319c84d39"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/f123795767529ec1dfb47f62617fef6b450ecc426e0695bed362b22054e04ae2.png",
+          "sha256": "f123795767529ec1dfb47f62617fef6b450ecc426e0695bed362b22054e04ae2",
+          "alt": "featured snippet example",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/featured-snippet-example.png",
+          "width": 1246,
+          "height": 734,
+          "id": "f12379576752"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/4b005352fb3ec84a5f03d43aac181b973ce26a3fbc991e4a3daa902005804054.png",
+          "sha256": "4b005352fb3ec84a5f03d43aac181b973ce26a3fbc991e4a3daa902005804054",
+          "alt": "kwfinder featured snippet detection",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/kwfinder-featured-snippet-detection.png",
+          "width": 976,
+          "height": 771,
+          "id": "4b005352fb3e"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/a8a8e3d8a84c7d1236697f0045b93ac219dce6a4005e6ac63bc185665f3ab7ba.png",
+          "sha256": "a8a8e3d8a84c7d1236697f0045b93ac219dce6a4005e6ac63bc185665f3ab7ba",
+          "alt": "inverted pyramid writing style",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/inverted-pyramid-writing-style.png",
+          "width": 1577,
+          "height": 1155,
+          "id": "a8a8e3d8a84c"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/5cf1a14d892b88750c67c463b57d035543b4fd9e27171b199c24de3be13047a3.png",
+          "sha256": "5cf1a14d892b88750c67c463b57d035543b4fd9e27171b199c24de3be13047a3",
+          "alt": "Mangools SEO guide illustration",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/chapter-6.png",
+          "width": 400,
+          "id": "5cf1a14d892b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/c16d141c20305b2bf575d46b2a0b3854b3474039b1879d06a36d4b0303e18228.png",
+          "sha256": "c16d141c20305b2bf575d46b2a0b3854b3474039b1879d06a36d4b0303e18228",
+          "alt": "what is a backlink",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/what-is-a-backlink.png",
+          "width": 1100,
+          "height": 819,
+          "id": "c16d141c2030"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/5d6d8f914000d4de538d76f76d96239fc41b748cab2f2ddd637ddbd25c73a08f.png",
+          "sha256": "5d6d8f914000d4de538d76f76d96239fc41b748cab2f2ddd637ddbd25c73a08f",
+          "alt": "How PageRank works",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/how-pagerank-works.png",
+          "width": 1100,
+          "height": 1114,
+          "id": "5d6d8f914000"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/d22152e6066427f22c77e6b8b9470797a83db4fb8d7f63722f683eef5f3944fb.png",
+          "sha256": "d22152e6066427f22c77e6b8b9470797a83db4fb8d7f63722f683eef5f3944fb",
+          "alt": "what is a nofollow link",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/06/what-is-a-nofollow-link.png",
+          "width": 1100,
+          "height": 1434,
+          "id": "d22152e60664"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/4928e5ea6e6874173b7339487f19996fb742695c10bc340deaeeb0c7c1d055d0.png",
+          "sha256": "4928e5ea6e6874173b7339487f19996fb742695c10bc340deaeeb0c7c1d055d0",
+          "alt": "anchor text",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/anchor-text-1.png",
+          "width": 1100,
+          "height": 470,
+          "id": "4928e5ea6e68"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/74d148c14e4b5522d4258376bcb22881b1bedb5d2b82b2730863e29dac2bcf5e.png",
+          "sha256": "74d148c14e4b5522d4258376bcb22881b1bedb5d2b82b2730863e29dac2bcf5e",
+          "alt": "backlinks topical relevance",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/backlinks-topical-relevance.png",
+          "width": 1100,
+          "height": 873,
+          "id": "74d148c14e4b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/f9de02ff46c781ae31bad1402b1a3fec476efbdeddd2e7c7f32497ba3ae5bad2.png",
+          "sha256": "f9de02ff46c781ae31bad1402b1a3fec476efbdeddd2e7c7f32497ba3ae5bad2",
+          "alt": "link placement and the value of a backlink",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/link-placement.png",
+          "width": 1100,
+          "height": 957,
+          "id": "f9de02ff46c7"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/f90cbff7fc2bc5683719877a6585e7168abe573e43cfe8e13d086324e6be5825.jpg",
+          "sha256": "f90cbff7fc2bc5683719877a6585e7168abe573e43cfe8e13d086324e6be5825",
+          "alt": "Alexandra Tachalova",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2021/02/alex-tachalova.jpg",
+          "width": 160,
+          "height": 160,
+          "id": "f90cbff7fc2b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/2ce06bbf216d576ea3db090b390f86d6a66180bb89feac87c0b216bc0ad48b28.png",
+          "sha256": "2ce06bbf216d576ea3db090b390f86d6a66180bb89feac87c0b216bc0ad48b28",
+          "alt": "how to get links to the money pages",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/02/links-to-money-pages.png",
+          "width": 1100,
+          "height": 749,
+          "id": "2ce06bbf216d"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/15345466079ba546272a25716530307bc11d867211c25a7e003840e2ddcc8806.png",
+          "sha256": "15345466079ba546272a25716530307bc11d867211c25a7e003840e2ddcc8806",
+          "alt": "link building technique guest blogging search operator",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2017/05/linkbuilding-finding-guest-blog-opportunities.png",
+          "width": 1164,
+          "height": 984,
+          "id": "15345466079b"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/c64253462cf1811e6004803f6d6ca99b3fad26dbf6b4b38455b209b5066307c9.png",
+          "sha256": "c64253462cf1811e6004803f6d6ca99b3fad26dbf6b4b38455b209b5066307c9",
+          "alt": "linkminer domain search",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/linkminer-domain.png",
+          "width": 1379,
+          "height": 927,
+          "id": "c64253462cf1"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/0365d710e895d3cc06240720426c33b1d5a6fdb1fd65c0aae683defaa317977d.png",
+          "sha256": "0365d710e895d3cc06240720426c33b1d5a6fdb1fd65c0aae683defaa317977d",
+          "alt": "linkminer exact url",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/linkminer-exact-url.png",
+          "width": 1379,
+          "height": 924,
+          "id": "0365d710e895"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/68c7252776c0e3951da6576d92fdba4efc44874743f8a8b174a50f6b84100be7.png",
+          "sha256": "68c7252776c0e3951da6576d92fdba4efc44874743f8a8b174a50f6b84100be7",
+          "alt": "Mangools SEO guide illustration",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/09/chapter-6b.png",
+          "width": 400,
+          "id": "68c7252776c0"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/151f69bc6635aac0297cead2c96fc6e7e8ef4ef0499435393e2381746263995f.png",
+          "sha256": "151f69bc6635aac0297cead2c96fc6e7e8ef4ef0499435393e2381746263995f",
+          "alt": "search console overview",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/search-console-overview.png",
+          "width": 1551,
+          "height": 847,
+          "id": "151f69bc6635"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/aa73e0b1034dbe7068cd101e3422181c011647fa442495db1427e770dca3acca.png",
+          "sha256": "aa73e0b1034dbe7068cd101e3422181c011647fa442495db1427e770dca3acca",
+          "alt": "google search console performance report overview",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2021/04/google-search-console-performance-report-overview.png",
+          "width": 1266,
+          "height": 1229,
+          "id": "aa73e0b1034d"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/041397bebf8d4868e07dd700b4c3c2e2d9076f27abe45ab1dbb806ff040339c6.png",
+          "sha256": "041397bebf8d4868e07dd700b4c3c2e2d9076f27abe45ab1dbb806ff040339c6",
+          "alt": "search console low ctr",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/search-console-low-ctr.png",
+          "width": 1040,
+          "height": 710,
+          "id": "041397bebf8d"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/8aa803c98b03cbba455f96676752041368d0162709a83b269ce51aa10120600e.png",
+          "sha256": "8aa803c98b03cbba455f96676752041368d0162709a83b269ce51aa10120600e",
+          "alt": "search console device type comparison",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/search-console-comparison.png",
+          "width": 1081,
+          "height": 730,
+          "id": "8aa803c98b03"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/e022ac9107ef622bdb46b903146582b9b4474cad4389329f8d23f6069be409a7.png",
+          "sha256": "e022ac9107ef622bdb46b903146582b9b4474cad4389329f8d23f6069be409a7",
+          "alt": "google analytics reports navigation",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/google-analytics-reports-navigation.png",
+          "width": 1335,
+          "height": 627,
+          "id": "e022ac9107ef"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/b96753aab4a799387d9d99169054b581cc8415ab98c5b2d6a154d8a5a462f033.png",
+          "sha256": "b96753aab4a799387d9d99169054b581cc8415ab98c5b2d6a154d8a5a462f033",
+          "alt": "google analytics further segmentation",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/google-analytics-further-filtering.png",
+          "width": 1309,
+          "height": 755,
+          "id": "b96753aab4a7"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/44a29c2a3272721dcdf9ade52a6b64546d99a3d93a733c3aaf6bee61c9c116c2.png",
+          "sha256": "44a29c2a3272721dcdf9ade52a6b64546d99a3d93a733c3aaf6bee61c9c116c2",
+          "alt": "google analytics segments example",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/google-analytics-segments-example.png",
+          "width": 1187,
+          "height": 630,
+          "id": "44a29c2a3272"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/e47bd18a9b37726fdd524d3a4f224311408541287245ea3b568893d51caa8822.png",
+          "sha256": "e47bd18a9b37726fdd524d3a4f224311408541287245ea3b568893d51caa8822",
+          "alt": "googel analytics all pages report",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/googel-analytics-all-pages.png",
+          "width": 1661,
+          "height": 850,
+          "id": "e47bd18a9b37"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/aa0f945f62b004a02176e2361ac66c9b0db7baa092523ae0b8e9bf51f11afd6b.png",
+          "sha256": "aa0f945f62b004a02176e2361ac66c9b0db7baa092523ae0b8e9bf51f11afd6b",
+          "alt": "google analytics landing pages report",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/google-analytics-landing-pages.png",
+          "width": 1761,
+          "height": 844,
+          "id": "aa0f945f62b0"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/fc941f45d164d2f4d59785a0594046af8d335e57e0ce325e8528a33eaeb92c65.png",
+          "sha256": "fc941f45d164d2f4d59785a0594046af8d335e57e0ce325e8528a33eaeb92c65",
+          "alt": "google analytics all traffic",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/google-analytics-all-traffic.png",
+          "width": 1903,
+          "height": 920,
+          "id": "fc941f45d164"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/61bb1f1c992daa5bf3f36ca95c32dafae3898ed4faeea58929115c2dea442e28.png",
+          "sha256": "61bb1f1c992daa5bf3f36ca95c32dafae3898ed4faeea58929115c2dea442e28",
+          "alt": "google analytics audience demographics",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/google-analytics-audience-demographics.png",
+          "width": 1776,
+          "height": 868,
+          "id": "61bb1f1c992d"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/2b7a95de39e6f530f33b035d97b5269370065c3f4baf3c06b1bd5ffafc63a4db.png",
+          "sha256": "2b7a95de39e6f530f33b035d97b5269370065c3f4baf3c06b1bd5ffafc63a4db",
+          "alt": "google analytics audience overview metrics",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/google-analytics-audience-overview-metrics.png",
+          "width": 1266,
+          "height": 534,
+          "id": "2b7a95de39e6"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/49a1f7ae6034f0279dc32085183b59bca02c69e91f163727dce2ded7dc556086.png",
+          "sha256": "49a1f7ae6034f0279dc32085183b59bca02c69e91f163727dce2ded7dc556086",
+          "alt": "serpwatcher tracking overview",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2020/12/serpwatcher-tracking-overview-1.png",
+          "width": 1699,
+          "height": 886,
+          "id": "49a1f7ae6034"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/ec7964e18421382603faeb65277aadf5060a2f32ab2daa1444adc2d54bd1d710.png",
+          "sha256": "ec7964e18421382603faeb65277aadf5060a2f32ab2daa1444adc2d54bd1d710",
+          "alt": "ai search watcher dashboard",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2025/11/ai-search-watcher-dasboard.png",
+          "width": 1982,
+          "height": 1415,
+          "id": "ec7964e18421"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/mangools-complete-seo-guide/e37e57b7c2c6f48cda0909080b1b59d4c7e43318b2a234aa38c176df4b801641.png",
+          "sha256": "e37e57b7c2c6f48cda0909080b1b59d4c7e43318b2a234aa38c176df4b801641",
+          "alt": "Mangools SEO guide illustration",
+          "sourceUrl": "https://mangools.com/blog/wp-content/uploads/2019/07/chapter-8.png",
+          "width": 400,
+          "id": "e37e57b7c2c6"
+        }
+      ],
+      "contentMetrics": {
+        "h1": 1,
+        "h2": 42,
+        "h3": 75,
+        "h4": 28,
+        "p": 667,
+        "ul": 68,
+        "ol": 5,
+        "li": 280,
+        "a": 168,
+        "blockquote": 4,
+        "img": 79,
+        "iframe": 1
+      },
+      "seo": {
+        "title": "SEO basics",
+        "description": "Search Engine Optimization (SEO) is about optimizing your website to get more organic traffic. Learn SEO with our detailed guide!",
+        "indexable": true,
+        "dateModified": "2026-08-31T17:13:11.000Z"
+      }
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "sourceKey": "https://ahrefs.com/blog/seo-basics",
+      "slug": "ahrefs-seo-basics",
+      "sourceUrl": "https://ahrefs.com/blog/seo-basics/",
+      "createdAt": "2026-09-01T00:35:00.000Z",
+      "reason": "Wave 2 canonical rebind: requested blog URL redirects to approved Ahrefs canonical tutorial."
+    }
+  ]
 }

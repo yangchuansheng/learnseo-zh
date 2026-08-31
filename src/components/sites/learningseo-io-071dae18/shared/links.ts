@@ -20,6 +20,18 @@ const publishedTutorialResourcePaths = new Map([
     normalizeSourceKey("https://developers.google.com/search/docs/essentials"),
     "/tutorials/google-search-essentials/",
   ],
+  [
+    normalizeSourceKey("https://ahrefs.com/seo/seo-basics"),
+    "/tutorials/ahrefs-seo-basics/",
+  ],
+  [
+    normalizeSourceKey("https://ahrefs.com/blog/seo-basics/"),
+    "/tutorials/ahrefs-seo-basics/",
+  ],
+  [
+    normalizeSourceKey("https://mangools.com/blog/learn-seo/"),
+    "/tutorials/mangools-complete-seo-guide/",
+  ],
 ]);
 
 function isPublicPath(pathname: string): boolean {

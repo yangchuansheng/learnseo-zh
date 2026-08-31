@@ -1,11 +1,11 @@
 {
-  "operationId": "tutorial-import-google-search-essentials-20260831",
-  "generation": "tutorial-import-google-search-essentials-20260831",
-  "slug": "google-search-essentials",
-  "sourceKey": "https://developers.google.com/search/docs/essentials",
+  "operationId": "tutorial-import-mangools-complete-seo-guide-v12-20260901",
+  "generation": "tutorial-import-mangools-complete-seo-guide-v12-20260901",
+  "slug": "mangools-complete-seo-guide",
+  "sourceKey": "https://mangools.com/blog/learn-seo",
   "locales": [
     "zh-CN",
     "en"
   ],
-  "committedAt": "2026-08-31T11:09:45.940Z"
+  "committedAt": "2026-09-01T02:45:00.000Z"
 }

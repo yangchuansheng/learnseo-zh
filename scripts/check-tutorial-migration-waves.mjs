@@ -29,8 +29,8 @@ const expectedSources = [
   ["google-seo-starter-guide", "wave-0-pilot", "pilot-baseline", "google-seo-starter-guide", "https://developers.google.com/search/docs/fundamentals/seo-starter-guide", "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"],
   ["google-search-works", "wave-1-official-google", "eligible-direct", "google-search-works", "https://developers.google.com/search/docs/fundamentals/how-search-works", "https://developers.google.com/search/docs/fundamentals/how-search-works"],
   ["google-search-essentials", "wave-1-official-google", "eligible-direct", "google-search-essentials", "https://developers.google.com/search/docs/essentials", "https://developers.google.com/search/docs/essentials"],
-  ["ahrefs-seo-basics", "wave-2-rights-reviewed", "rights-gated", "ahrefs-seo-basics", "https://ahrefs.com/blog/seo-basics/", "https://ahrefs.com/seo/seo-basics"],
-  ["mangools-complete-seo-guide", "wave-2-rights-reviewed", "rights-gated", "mangools-complete-seo-guide", "https://mangools.com/blog/learn-seo/", "https://mangools.com/blog/learn-seo/"],
+  ["ahrefs-seo-basics", "wave-2-rights-reviewed", "authorized-internalized", "ahrefs-seo-basics", "https://ahrefs.com/blog/seo-basics/", "https://ahrefs.com/seo/seo-basics"],
+  ["mangools-complete-seo-guide", "wave-2-rights-reviewed", "authorized-internalized", "mangools-complete-seo-guide", "https://mangools.com/blog/learn-seo/", "https://mangools.com/blog/learn-seo/"],
   ["moz-beginners-guide", "wave-3-manual-or-external", "manual-series", null, "https://moz.com/beginners-guide-to-seo", "https://moz.com/beginners-guide-to-seo"],
   ["contentking-conductor-hub", "wave-3-manual-or-external", "external-collection", null, "https://www.contentkingapp.com/academy/seo-guide/", "https://www.conductor.com/academy/technical-seo-hub/"],
   ["semrush-seo-essentials-course", "wave-3-manual-or-external", "external-course", null, "https://www.semrush.com/academy/courses/seo-fundamentals-course-with-greg-gifford/", "https://www.semrush.com/academy/courses/seo-essentials-with-semrush/"],
@@ -120,9 +120,9 @@ function validateSources(contract) {
       assert.ok(source.dependencies.includes("translation-handoff"), `${sourceId} translation dependency is missing`);
       assert.ok(source.dependencies.includes("all-release-gates"), `${sourceId} release-gate dependency is missing`);
     }
-    if (disposition === "rights-gated") {
-      assert.equal(source.importMode, "rights-gated", `${sourceId} rights mode drifted`);
-      for (const dependency of ["written-text-permission", "per-asset-rights"]) {
+    if (disposition === "authorized-internalized") {
+      assert.equal(source.importMode, "authorized-internalized", `${sourceId} authorized import mode drifted`);
+      for (const dependency of ["project-owner-authorization", "per-asset-rights", "translation-handoff", "all-release-gates"]) {
         assert.ok(source.dependencies.includes(dependency), `${sourceId} lacks ${dependency}`);
       }
     }

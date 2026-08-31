@@ -1,0 +1,25 @@
+{
+  "operationId": "tutorial-import-ahrefs-seo-basics-collect-20260901",
+  "actor": "codex.wave2",
+  "phase": "failed",
+  "failedAt": "2026-08-31T16:30:01.695Z",
+  "failure": {
+    "code": "bot-challenge",
+    "message": "Source returned a bot challenge page",
+    "recordedAt": "2026-08-31T16:30:01.695Z"
+  },
+  "failures": [
+    {
+      "code": "bot-challenge",
+      "message": "Source returned a bot challenge page",
+      "recordedAt": "2026-08-31T16:30:01.695Z"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "failed",
+      "code": "bot-challenge",
+      "recordedAt": "2026-08-31T16:30:01.695Z"
+    }
+  ]
+}

@@ -199,8 +199,9 @@ function validateProvenance(record, locale) {
     `${label} source content type must be text/html`);
   assertString(snapshot.capturedAt, `${label} snapshot.capturedAt`);
   assert.ok(Number.isFinite(Date.parse(snapshot.capturedAt)), `${label} snapshot.capturedAt must be a date`);
-  assertString(snapshot.sourceUpdatedAt, `${label} snapshot.sourceUpdatedAt`);
-  assert.ok(Number.isFinite(Date.parse(snapshot.sourceUpdatedAt)), `${label} snapshot.sourceUpdatedAt must be a date`);
+  const dateModified = snapshot.sourceUpdatedAt ?? record.seo.dateModified;
+  assertString(dateModified, `${label} dateModified`);
+  assert.ok(Number.isFinite(Date.parse(dateModified)), `${label} dateModified must be a date`);
   assertString(licenseText(source.license), `${label} source license evidence`);
   assertHash(snapshot.sourceContentHash, `${label} sourceContentHash`);
   assertHash(snapshot.contentHash, `${label} contentHash`);
@@ -634,9 +635,12 @@ async function validateCurrentRelease({ runtime = false } = {}) {
   }
 
   const evidence = {
-    waveId: publishedPairs.length === 1 && publishedPairs[0].zh.slug === pilotSlug
-      ? "wave-0-pilot"
-      : "wave-1-official-google",
+    waveId: publishedPairs.some(({ zh: record }) =>
+      ["ahrefs-seo-basics", "mangools-complete-seo-guide"].includes(record.slug))
+      ? "wave-2-rights-reviewed"
+      : publishedPairs.length === 1 && publishedPairs[0].zh.slug === pilotSlug
+        ? "wave-0-pilot"
+        : "wave-1-official-google",
     slugs: publishedPairs.map(({ zh: record }) => record.slug),
     previousGeneration: zh.generation,
     candidateGeneration: zh.generation,

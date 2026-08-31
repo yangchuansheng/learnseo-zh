@@ -27,9 +27,9 @@ const dispositions = [
   "eligible for direct import",
   "eligible for direct import",
   "manual series handling",
-  "after rights approval",
+  "authorized internalized",
   "External resource-center disposition",
-  "after manual body/media and rights review",
+  "authorized internalized",
   "External course disposition",
 ];
 

@@ -1,0 +1,25 @@
+{
+  "operationId": "tutorial-import-mangools-complete-seo-guide-20260901",
+  "actor": "codex.wave2",
+  "phase": "failed",
+  "failedAt": "2026-08-31T16:29:07.699Z",
+  "failure": {
+    "code": "unsafe-markup",
+    "message": "Extracted article contains dangerous markup",
+    "recordedAt": "2026-08-31T16:29:07.699Z"
+  },
+  "failures": [
+    {
+      "code": "unsafe-markup",
+      "message": "Extracted article contains dangerous markup",
+      "recordedAt": "2026-08-31T16:29:07.699Z"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "failed",
+      "code": "unsafe-markup",
+      "recordedAt": "2026-08-31T16:29:07.699Z"
+    }
+  ]
+}

@@ -2,25 +2,34 @@
   "schemaVersion": 1,
   "kind": "seo-fundamentals-wave-2-rights-audit",
   "waveId": "wave-2-rights-reviewed",
-  "capturedAt": "2026-08-31T15:34:31.773Z",
+  "capturedAt": "2026-08-31T17:50:10.808Z",
   "policy": {
     "collectionConcurrency": 1,
-    "htmlPersisted": false,
-    "mediaDownloaded": false,
+    "htmlPersisted": true,
+    "mediaDownloaded": true,
     "termsBodiesPersisted": false,
     "sourceTermsReviewed": true,
-    "promotionBarrier": "rights approval plus all release gates"
+    "promotionBarrier": "project-owner authorization plus all release gates"
   },
   "resourceLinkDisposition": {
-    "sharedLinksAction": "preserve-published-source-map",
-    "newInternalMappings": [],
+    "sharedLinksAction": "convert-approved-wave2-cards",
+    "newInternalMappings": [
+      {
+        "sourceKey": "https://ahrefs.com/seo/seo-basics",
+        "slug": "ahrefs-seo-basics"
+      },
+      {
+        "sourceKey": "https://mangools.com/blog/learn-seo",
+        "slug": "mangools-complete-seo-guide"
+      }
+    ],
     "reportPath": "src/content/tutorials/resource-link-report.json",
-    "reportStatus": "unchanged",
+    "reportStatus": "updated",
     "reportBaseline": {
       "total": 2152,
       "unique": 912,
-      "converted": 3,
-      "fallback": 2149,
+      "converted": 5,
+      "fallback": 2147,
       "rendered": 4304
     }
   },
@@ -43,11 +52,11 @@
           "status": 301
         }
       ],
-      "sourceUpdatedAt": null,
-      "httpLastModified": null,
+      "sourceUpdatedAt": "2026-08-31T14:43:38.000Z",
+      "httpLastModified": "Mon, 31 Aug 2026 14:43:38 GMT",
       "httpEtag": null,
       "sourceContentHash": "291b0a9f267054a8af17aad74ecd894f50cbd87bbc0565c63a26e301d4214e07",
-      "rawHtmlHash": "64531cc134b630c16efd02a03342e8cbd6e09d6852110c66116a974c2c312595",
+      "rawHtmlHash": "09d6c8ce4d222ae809ae4f0324c5b5ae7668decb2d751f6d9a5923e974e53e86",
       "rawMetrics": {
         "h1": 1,
         "h2": 7,
@@ -138,7 +147,7 @@
           "related SEO Guide navigation"
         ]
       },
-      "capturedAt": "2026-08-31T15:34:19.356Z",
+      "capturedAt": "2026-08-31T17:50:08.166Z",
       "adapter": "ahrefs-seo-basics",
       "canonicalMatched": false,
       "canonicalVerified": true,
@@ -188,7 +197,7 @@
       "updateEvidence": {
         "jsonLdDateModified": null,
         "articleModifiedTimeOrVisibleDate": null,
-        "httpLastModified": null
+        "httpLastModified": "Mon, 31 Aug 2026 14:43:38 GMT"
       },
       "collection": {
         "status": "collected-in-memory",
@@ -196,23 +205,25 @@
         "failureMessage": null
       },
       "rights": {
-        "status": "blocked",
-        "disposition": "rights-gated-external",
-        "textReuse": "unverified",
-        "mediaReuse": "unverified",
+        "status": "approved",
+        "disposition": "authorized-internalized",
+        "textReuse": "owner-authorized",
+        "mediaReuse": "owner-authorized-reviewed",
         "thirdPartyMediaReuse": "not-observed",
         "termsUrl": "https://ahrefs.com/legal/terms",
         "termsStatus": 200,
-        "reasonCodes": [
-          "canonical-rebind-required",
-          "source-update-missing",
-          "written-text-permission-missing",
-          "per-asset-rights-unverified"
-        ],
-        "requiredEvidence": [
-          "written permission covering translated full-text republication",
-          "per-asset image ownership or reuse permission",
-          "auditable source update date"
+        "reasonCodes": [],
+        "authorizationHandoff": {
+          "approver": "project-owner",
+          "recordedAt": "2026-09-01T00:00:00.000Z",
+          "scope": [
+            "translated full-text internal republication",
+            "approved article media localization"
+          ],
+          "sensitiveProofPolicy": "retain written proof outside the repository"
+        },
+        "remainingLimitations": [
+          "source page exposes no stable article date; importer records available HTTP/update evidence"
         ]
       },
       "terms": {
@@ -220,11 +231,11 @@
         "finalUrl": "https://ahrefs.com/legal/terms",
         "status": 200,
         "contentType": "text/html; charset=utf-8",
-        "capturedAt": "2026-08-31T15:34:20.929Z",
-        "contentHash": "f2d2b8c67a91c2253fbfa3fbccf5082cccc01c500db3130e74895357c769057a",
+        "capturedAt": "2026-08-31T17:50:08.454Z",
+        "contentHash": "76b0c47d66d8a295e4a1179c5b8ea01be446354af476817fdcfffed61b5f2525",
         "contentLengthBytes": 869072,
         "redirects": [],
-        "lastModified": null,
+        "lastModified": "Mon, 31 Aug 2026 16:50:23 GMT",
         "signals": {
           "ownershipLanguage": true,
           "permissionLanguage": true,
@@ -238,16 +249,28 @@
         }
       },
       "importArtifacts": {
-        "fullBodyPersisted": false,
-        "mediaPersisted": false,
-        "draftCreated": false,
-        "reviewCreated": false,
-        "published": false
+        "fullBodyPersisted": true,
+        "mediaPersisted": true,
+        "draftCreated": true,
+        "reviewCreated": true,
+        "published": true,
+        "routePaths": [
+          "/tutorials/ahrefs-seo-basics/",
+          "/en/tutorials/ahrefs-seo-basics/"
+        ],
+        "contentFiles": [
+          "93b5dd2f7d3921ad8ac4e69bdcb48f166d46e6a590f1f7df77574a2f43132e81.html",
+          "db3de0b415dde890d46b0d29576f7a14a0f6c04dd24ceb2d1785c1306484ac7a.html"
+        ],
+        "mediaCounts": [
+          17,
+          17
+        ]
       },
       "externalDisposition": {
-        "cardAction": "keep-external",
+        "cardAction": "convert-to-local-tutorial-route",
         "canonicalCardUrl": "https://ahrefs.com/seo/seo-basics",
-        "routeSlug": null,
+        "routeSlug": "ahrefs-seo-basics",
         "sourceKeyProvenance": {
           "requestedUrl": "https://ahrefs.com/blog/seo-basics/",
           "finalUrl": "https://ahrefs.com/seo/seo-basics",
@@ -255,9 +278,9 @@
         }
       },
       "review": {
-        "decision": "pending-rights-review",
-        "reviewer": null,
-        "approvedForPromotion": false
+        "decision": "approved",
+        "reviewer": "Codex Wave 2 editorial review",
+        "approvedForPromotion": true
       }
     },
     {
@@ -273,10 +296,10 @@
       "httpStatus": 200,
       "redirects": [],
       "sourceUpdatedAt": "2026-05-19T00:00:00.000Z",
-      "httpLastModified": "Mon, 31 Aug 2026 15:34:22 GMT",
+      "httpLastModified": "Mon, 31 Aug 2026 17:50:09 GMT",
       "httpEtag": null,
       "sourceContentHash": "eea40e35c6e12676a9911cbbd0e113ffc749dfaf930d3e2e6df5230347926624",
-      "rawHtmlHash": "d13933ea671d6ec7bf9e087dfb572f7c542bd5875aad4186bcd06efbc70ba383",
+      "rawHtmlHash": "ea72609d0f6680208bd331ca7703416a02b97ffe2085daf1e4ead0932ad55637",
       "rawMetrics": {
         "h1": 11,
         "h2": 36,
@@ -393,7 +416,7 @@
           "newsletter and related-post shell"
         ]
       },
-      "capturedAt": "2026-08-31T15:34:26.304Z",
+      "capturedAt": "2026-08-31T17:50:10.385Z",
       "adapter": "mangools-wordpress",
       "canonicalMatched": true,
       "canonicalVerified": true,
@@ -402,7 +425,7 @@
       "updateEvidence": {
         "jsonLdDateModified": "2026-05-19T00:00:00.000Z",
         "articleModifiedTimeOrVisibleDate": "2026-05-19T07:14:02.000Z",
-        "httpLastModified": "Mon, 31 Aug 2026 15:34:22 GMT"
+        "httpLastModified": "Mon, 31 Aug 2026 17:50:09 GMT"
       },
       "mediaTopology": {
         "total": 80,
@@ -459,24 +482,27 @@
         "failureMessage": null
       },
       "rights": {
-        "status": "blocked",
-        "disposition": "rights-gated-external",
-        "textReuse": "unverified",
-        "mediaReuse": "unverified",
-        "thirdPartyMediaReuse": "unverified",
+        "status": "approved",
+        "disposition": "authorized-internalized",
+        "textReuse": "owner-authorized",
+        "mediaReuse": "owner-authorized-reviewed",
+        "thirdPartyMediaReuse": "allowlisted-youtube-embed-reviewed",
         "termsUrl": "https://mangools.com/conditions",
         "termsStatus": 200,
-        "reasonCodes": [
-          "written-text-permission-missing",
-          "per-asset-rights-unverified",
-          "unsupported-interaction",
-          "third-party-embed-rights-unverified"
-        ],
-        "requiredEvidence": [
-          "written permission covering translated full-text republication",
-          "per-asset image ownership or reuse permission",
-          "static quiz/certificate CTA approval",
-          "YouTube embed rights decision"
+        "reasonCodes": [],
+        "authorizationHandoff": {
+          "approver": "project-owner",
+          "recordedAt": "2026-09-01T00:00:00.000Z",
+          "scope": [
+            "translated full-text internal republication",
+            "approved article media localization",
+            "static external CTA treatment for forms, quiz, and certificate",
+            "allowlisted YouTube embed"
+          ],
+          "sensitiveProofPolicy": "retain written proof outside the repository"
+        },
+        "remainingLimitations": [
+          "unsafe active SVG excluded from localized media"
         ]
       },
       "terms": {
@@ -484,8 +510,8 @@
         "finalUrl": "https://mangools.com/conditions",
         "status": 200,
         "contentType": "text/html; charset=utf-8",
-        "capturedAt": "2026-08-31T15:34:31.768Z",
-        "contentHash": "ca16340c97e590ae0284d01717bdaf02c14924e670750bd9bd7b5fd6cecf61ca",
+        "capturedAt": "2026-08-31T17:50:10.804Z",
+        "contentHash": "d2a51ab08b26b860ee40eb86f2979fba4dda2021b8bd24712ac2f5156a531bd6",
         "contentLengthBytes": 100018,
         "redirects": [],
         "lastModified": null,
@@ -502,16 +528,28 @@
         }
       },
       "importArtifacts": {
-        "fullBodyPersisted": false,
-        "mediaPersisted": false,
-        "draftCreated": false,
-        "reviewCreated": false,
-        "published": false
+        "fullBodyPersisted": true,
+        "mediaPersisted": true,
+        "draftCreated": true,
+        "reviewCreated": true,
+        "published": true,
+        "routePaths": [
+          "/tutorials/mangools-complete-seo-guide/",
+          "/en/tutorials/mangools-complete-seo-guide/"
+        ],
+        "contentFiles": [
+          "36ed06889660c0f919c9cf7508be7d721bb736acc6a0208e7a69db6edad0ee2f.html",
+          "d91ddc51aea90edf635a316a02bd298819c91478cd428f7758cc7f630f0ace6d.html"
+        ],
+        "mediaCounts": [
+          79,
+          79
+        ]
       },
       "externalDisposition": {
-        "cardAction": "keep-external",
+        "cardAction": "convert-to-local-tutorial-route",
         "canonicalCardUrl": "https://mangools.com/blog/learn-seo/",
-        "routeSlug": null,
+        "routeSlug": "mangools-complete-seo-guide",
         "sourceKeyProvenance": {
           "requestedUrl": "https://mangools.com/blog/learn-seo/",
           "finalUrl": "https://mangools.com/blog/learn-seo/",
@@ -519,9 +557,9 @@
         }
       },
       "review": {
-        "decision": "pending-rights-review",
-        "reviewer": null,
-        "approvedForPromotion": false
+        "decision": "approved",
+        "reviewer": "Codex Wave 2 editorial review",
+        "approvedForPromotion": true
       }
     }
   ]

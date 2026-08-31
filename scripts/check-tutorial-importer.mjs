@@ -593,7 +593,7 @@ async function main() {
     assert.equal(snapshot.contentType, "text/html");
     assert.equal(snapshot.media.length, 1);
     assert.equal(snapshot.media[0].sourceUrl, "https://developers.google.com/static/search/docs/images/fixture-diagram.svg");
-    assert.equal(snapshot.media[0].alt, "A simple search result diagram");
+    assert.equal(snapshot.media[0].alt, 'A "quoted" search result diagram');
     const encodedDescriptionFixture = path.join(tmpRoot, "encoded-description.html");
     await fs.writeFile(
       encodedDescriptionFixture,
@@ -643,6 +643,8 @@ async function main() {
     const enHtml = await fs.readFile(path.join(contentRoot, "content", enManifest.routes[0].contentFile), "utf8");
     const zhHtml = await fs.readFile(path.join(contentRoot, "content", zhManifest.routes[0].contentFile), "utf8");
     assert.match(enHtml, new RegExp(`src="${result.media[0].path}"`));
+    assert.match(enHtml, /alt="A &quot;quoted&quot; search result diagram"/);
+    assert.doesNotMatch(enHtml, /&amp;quot;/);
     assert.match(zhHtml, /搜索引擎需要清晰的页面/);
     assert.match(zhHtml, new RegExp(`src="${result.media[0].path}"`));
     assert.equal(sha256(enHtml), enManifest.routes[0].snapshot.contentHash);

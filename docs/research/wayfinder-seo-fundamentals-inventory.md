@@ -11,13 +11,13 @@ Use this migration order:
 
 1. **In-Depth Guide to How Google Search Works** — direct single-page Google documentation, stable canonical, compact body, CC BY 4.0.
 2. **Google Search Essentials** — direct single-page Google documentation, stable canonical, compact body, CC BY 4.0.
-3. **SEO Basics: Beginner’s Guide to SEO Success (Ahrefs)** — import after an explicit canonical rebind and written rights review.
-4. **The Complete SEO Guide for Beginners (Mangools)** — import the article body after a manual interactive/media review and written rights review.
+3. **SEO Basics: Beginner’s Guide to SEO Success (Ahrefs)** — published after explicit canonical rebind, project-owner written authorization, and article-media review.
+4. **The Complete SEO Guide for Beginners (Mangools)** — published after body/media review, chapter-heading normalization, static interaction treatment, and project-owner written authorization.
 5. **The Beginner’s Guide to SEO (Moz)** — treat as a multi-page series; audit and migrate child chapters as separate records when the series decision is approved.
 6. **The Beginner’s Guide to SEO (ContentKing)** — retain as an external resource-center link; the source now resolves to a Conductor hub.
 7. **SEO Fundamentals Course with Greg Gifford (Semrush)** — retain as an external course link; the source now resolves to a 20-lesson video course.
 
-The importer’s canonical rule requires an explicit rebind when a card URL redirects to a different canonical path. Full-text and media reuse for the non-Google sources requires source permission or a documented license decision. The published renderer can keep these cards external while review is open.
+The importer’s canonical rule requires an explicit rebind when a card URL redirects to a different canonical path. Ahrefs and Mangools have Wave 2 owner-authorization handoffs recorded on `2026-09-01`; other non-Google full-text/media reuse still requires source permission or a documented license decision. The published renderer can keep unresolved cards external while review is open.
 
 The source-specific body, navigation, media, attribution, and exact disposition rules are recorded in the [Issue #22 decision artifact](./wayfinder-seo-fundamentals-source-decisions.md).
 
@@ -70,8 +70,8 @@ Google’s own [Site Policies](https://developers.google.com/terms/site-policies
 - Topology: the final page is a single current SEO Basics article with four in-page section anchors (`#seo-guide-tracked-section-0` through `#seo-guide-tracked-section-3`). The surrounding Ahrefs SEO Guide links other chapters as separate URLs; those chapters sit outside this card’s single-page boundary. The rendered main content observed `h1 1`, `h2 7`, `h3 28`, `h4 8`, `p 130`, `ul 7`, `ol 1`, `li 34`, `a 241`.
 - Media/embed: the raw response contains `49` `<img>` elements including page shell assets and no literal content `iframe`, `video`, or `audio` tags. A browser run exposed one hidden utility iframe from the page shell; treat it as shell and exclude it from the imported body. Image ownership and remote asset URLs require per-asset review.
 - Attribution/license: the page identifies Joshua Hardwick as author, Sam Oh and Louise Linehan as contributors, and Ryan Law as reviewer in the visible article header. The [Ahrefs Terms of Service](https://ahrefs.com/legal/terms) sections 12.1–12.7 reserve Ahrefs and third-party intellectual-property rights and require express written consent for copying, publishing, or derivative use beyond the granted service access.
-- Recommendation: **P2 after rights approval**. Rebind the source identity to `https://ahrefs.com/seo/seo-basics`, then use a proposed slug `ahrefs-seo-basics`. Import the current page as one article after written reuse permission and image review are recorded.
-- Open uncertainties: the final page did not expose a reliable published/modified date in the captured HTML; Ahrefs can change the page structure and chapter topology; the source’s image and third-party reference rights need separate evidence.
+- Recommendation: **P2, authorized internalized**. Rebind the source identity to `https://ahrefs.com/seo/seo-basics`, then publish the current page as one article at slug `ahrefs-seo-basics` after owner authorization and image review are recorded.
+- Open uncertainties: the final page did not expose a reliable published/modified date in the captured HTML; the Wave 2 import uses HTTP `Last-Modified` plus capture evidence as the source update signal. Ahrefs can change the page structure and chapter topology, so future refreshes need the same adapter-boundary review.
 
 ### 5. The Beginner’s Guide to SEO (ContentKing)
 
@@ -92,8 +92,8 @@ Google’s own [Site Policies](https://developers.google.com/terms/site-policies
 - Topology: one long public article at a stable canonical with eight chapter bodies and in-page navigation. The `.mg-post-content` body observed `h1 8`, `h2 35`, `h3 107`, `h4 29`, `p 702`, `ul 68`, `ol 5`, `li 280`, and `blockquote 4`; the chapter sequence is continuous on this URL.
 - Media/embed: `.mg-post-content` contains `80` images and one YouTube iframe (`https://www.youtube.com/embed/wTwnFcWUM3k?feature=oembed`). It also contains `mangools-quiz` and `mangools-certificate` forms with 85 inputs. These quiz, certificate, newsletter, and product surfaces need explicit extraction rules; the YouTube embed requires allowlist and media attribution review.
 - Attribution/license: the [Mangools Terms & Conditions](https://mangools.com/conditions) identify text, databases, graphics, and related components as Mangools or third-party intellectual property, reserve all ungranted rights, prohibit copying/derivative use, and require prior written consent for IP use. The article visibly credits Vlado Pavlik; preserve author and source attribution.
-- Recommendation: **P2 after manual body/media and rights review**. Proposed slug: `mangools-complete-seo-guide`. Import the continuous guide body as one candidate only after deciding whether the quiz/certificate remain external links or become static explanatory blocks; keep the YouTube player allowlisted or retain a source link.
-- Open uncertainties: many diagrams may include third-party data or screenshots; the source page’s interactive scripts and certificate behavior need a browser capture before translation; the page can change quickly because its update date is recent.
+- Recommendation: **P2, authorized internalized**. Publish the continuous guide body at slug `mangools-complete-seo-guide` after owner authorization, image review, chapter H1 demotion, form/quiz/certificate static CTA treatment, and YouTube allowlist review.
+- Open uncertainties: many diagrams may include third-party data or screenshots; future refreshes need the same per-media review. The page can change quickly because its update date is recent.
 
 ### 7. SEO Fundamentals Course with Greg Gifford (Semrush)
 
@@ -110,6 +110,6 @@ Google’s own [Site Policies](https://developers.google.com/terms/site-policies
 
 - Run importer preflight again at execution time for all seven URLs and preserve redirect, canonical, content-type, and bot-challenge evidence.
 - Execute the two Google imports first; their body roots and CC BY attribution provide the lowest-risk second migration wave after the published Starter Guide.
-- Create explicit source rebind records for Ahrefs, ContentKing, and Semrush before any card target changes. Ahrefs can become a tutorial candidate after rebind; ContentKing and Semrush remain collection/course surfaces.
-- Obtain rights decisions for Moz, Ahrefs, Mangools, Conductor, and Semrush text/media before storing full copied bodies. Keep unresolved cards external while the decision is open.
+- Preserve the Ahrefs rebind record in manifests, provenance, and resource-card mappings. Create explicit source rebind records for ContentKing and Semrush before any card target changes; ContentKing and Semrush remain collection/course surfaces.
+- Obtain rights decisions for Moz, Conductor, and Semrush text/media before storing full copied bodies. Keep unresolved cards external while the decision is open.
 - Keep quiz, certificate, account, newsletter, paid-trial, and video application behavior outside the single-page renderer unless a later decision ticket expands the supported surface.

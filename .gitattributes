@@ -7,3 +7,6 @@
 # Batch files must always use CRLF
 *.bat text eol=crlf
 *.cmd text eol=crlf
+
+# Content-addressed tutorial snapshots include their original bytes in the hash.
+src/content/tutorials/content/*.html -text -whitespace

@@ -1,0 +1,25 @@
+{
+  "operationId": "tutorial-import-mangools-complete-seo-guide-v2-20260901",
+  "actor": "codex.wave2",
+  "phase": "failed",
+  "failedAt": "2026-08-31T16:40:02.803Z",
+  "failure": {
+    "code": "unsupported-media",
+    "message": "Media https://mangools.com/blog/wp-content/themes/wordpress-theme/assets/images/other/mangools-seo-academy.svg SVG contains active content",
+    "recordedAt": "2026-08-31T16:40:02.803Z"
+  },
+  "failures": [
+    {
+      "code": "unsupported-media",
+      "message": "Media https://mangools.com/blog/wp-content/themes/wordpress-theme/assets/images/other/mangools-seo-academy.svg SVG contains active content",
+      "recordedAt": "2026-08-31T16:40:02.803Z"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "failed",
+      "code": "unsupported-media",
+      "recordedAt": "2026-08-31T16:40:02.803Z"
+    }
+  ]
+}

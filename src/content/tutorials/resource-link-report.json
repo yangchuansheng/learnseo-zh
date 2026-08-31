@@ -1,8 +1,8 @@
 {
   "total": 2152,
   "unique": 912,
-  "converted": 3,
-  "fallback": 2149,
+  "converted": 5,
+  "fallback": 2147,
   "rendered": 4304,
   "duplicateOccurrences": 1240,
   "unknownFragments": 31,
@@ -12897,9 +12897,9 @@
     },
     {
       "sourceKey": "https://ahrefs.com/blog/seo-basics",
-      "slug": null,
+      "slug": "ahrefs-seo-basics",
       "fragment": null,
-      "converted": false
+      "converted": true
     },
     {
       "sourceKey": "https://www.contentkingapp.com/academy/seo-guide",
@@ -12909,9 +12909,9 @@
     },
     {
       "sourceKey": "https://mangools.com/blog/learn-seo",
-      "slug": null,
+      "slug": "mangools-complete-seo-guide",
       "fragment": null,
-      "converted": false
+      "converted": true
     },
     {
       "sourceKey": "https://www.semrush.com/academy/courses/seo-fundamentals-course-with-greg-gifford",

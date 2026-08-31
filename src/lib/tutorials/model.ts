@@ -1300,7 +1300,9 @@ function parseRecord(value: unknown, locale: Locale, index: number): TutorialRec
   if (status === "published") {
     if (!contentFile) throw new Error(`Tutorial route ${slug} published records require contentFile`);
     if (!snapshot.canonicalMatched) throw new Error(`Tutorial route ${slug} canonical match is unverified`);
-    if (!snapshot.sourceUpdatedAt) throw new Error(`Tutorial route ${slug} published records require sourceUpdatedAt`);
+    if (!snapshot.sourceUpdatedAt && !seo.dateModified) {
+      throw new Error(`Tutorial route ${slug} published records require dateModified`);
+    }
     if (!snapshot.translationContentHash) {
       throw new Error(`Tutorial route ${slug} published records require translationContentHash`);
     }

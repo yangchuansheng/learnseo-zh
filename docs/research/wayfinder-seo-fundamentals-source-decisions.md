@@ -19,6 +19,7 @@ this artifact supplies the source profile each future collection must satisfy.
 | --- | --- | --- | --- |
 | `eligible-direct` | Public, continuous, topic-closed single-page body with canonical and license evidence. | Convert after the normal bilingual review. | Use the existing single-page importer and publish only after every release gate passes. |
 | `rights-gated` | A single-page body can be bounded, with reuse rights or asset ownership requiring written evidence. | Keep the source URL external while rights review is pending. | Stage a draft after canonical and rights evidence; publish after `provenance` and `media-integrity` pass. |
+| `authorized-internalized` | A previously rights-gated single-page source has project-owner written authorization, source-specific normalization, per-media review, bilingual review, and release-gate evidence. | Convert the approved card occurrence to the local bilingual tutorial route while retaining requested/final/canonical attribution. | Publish the English and Simplified Chinese pair atomically with review, provenance, media, and rollback evidence. |
 | `manual-series` | A source presents an index plus child chapters or another multi-page boundary. | Keep the index card external. | Create one independently qualified record per approved child chapter; preserve chapter links and series context. |
 | `external-collection` | The current destination is a resource hub or collection grid. | Keep the collection URL external. | Select an individual article through a separate inventory decision. |
 | `external-course` | The current destination is a course application with lesson state, video delivery, enrollment, or certificate behavior. | Keep the course URL external. | Treat each future public lesson as a separate qualification candidate; retain the course as a course link. |
@@ -48,12 +49,12 @@ The manifest source record stores `title`, `provider`, nullable `author`,
 part of the candidate record.
 
 A card redirect whose final canonical differs from the requested card URL
-requires an explicit source rebind record. The lifecycle document specifies the
-future `rebind-tutorial-source.mjs` operation; the current repository has no
-such command, so Ahrefs, ContentKing, and Semrush retain their original card
-occurrence plus redirect evidence until an operator records the rebind or
-external disposition. A title, host similarity, or path shape supplies review
-context and never merges source keys.
+requires an explicit source rebind record. The Ahrefs Wave 2 import records that
+rebind through `expectedCanonicalUrl`, manifest aliases, provenance
+`canonicalRebind`, and the resource-card mapping. ContentKing and Semrush retain
+their original card occurrence plus redirect evidence until an operator records
+an external disposition update. A title, host similarity, or path shape supplies
+review context and never merges source keys.
 
 ### Body boundary and navigation
 
@@ -188,14 +189,14 @@ profiles below; the other profiles cite their owning terms directly.
 ### 4. SEO Basics: Beginner's Guide to SEO Success (Ahrefs)
 
 - Source evidence: [Ahrefs — current SEO Basics page](https://ahrefs.com/seo/seo-basics), [card URL and redirect origin](https://ahrefs.com/blog/seo-basics/), and [Ahrefs Terms of Service](https://ahrefs.com/legal/terms).
-- Observed boundary: card URL returned `301` to `https://ahrefs.com/seo/seo-basics`; final response `200 text/html`; final canonical is the current SEO Guide path. Rendered main metrics were `h1 1`, `h2 7`, `h3 28`, `h4 8`, `p 130`, `ul 7`, `ol 1`, `li 34`, `a 241`; the page has four in-page section anchors. The captured HTML exposes no reliable published/modified date, so source-update evidence remains open and blocks publication.
-- Normalization: Run an explicit canonical rebind from the card URL to `https://ahrefs.com/seo/seo-basics` before collection. Extract the current single article body and propose slug `ahrefs-seo-basics`; keep surrounding Ahrefs Guide chapters outside this record.
+- Observed boundary: card URL returned `301` to `https://ahrefs.com/seo/seo-basics`; final response `200 text/html`; final canonical is the current SEO Guide path. The bounded article window is the section containing the first `h1` through the section after `#references`; collection preserved the full body with one route `h1`, stable heading IDs, paragraphs, lists, links, and approved article media. HTTP `Last-Modified` supplies the auditable source update signal for the published record.
+- Normalization: Rebind the card URL to `https://ahrefs.com/seo/seo-basics` during collection. Extract the current single article body under slug `ahrefs-seo-basics`; keep surrounding Ahrefs Guide chapters outside this record.
 - Navigation: Preserve the four in-page fragments and their heading IDs. Keep links to other guide chapters as ordinary external links; a chapter card receives a separate inventory entry.
 - Interactive: One hidden utility iframe appeared in the browser shell; exclude it from the body. A future body iframe needs allowlist, title, provider, and rights evidence.
 - Tables and code: Preserve semantic tables and inline/block code when present in the approved body. Review data sources and code ownership under the Ahrefs terms before translation.
-- Images and third-party media: Raw HTML contained `49` images including shell assets; browser evidence exposed no content video/audio and one shell iframe. Build a per-asset list, localize only approved images, preserve alt/hash/order, and keep unresolved third-party assets as links or external media.
-- Attribution evidence: Visible roles are Joshua Hardwick (author), Sam Oh and Louise Linehan (contributors), and Ryan Law (reviewer). Store Joshua Hardwick in `source.author`, Ahrefs in `source.provider`, and the complete role list in review evidence. Ahrefs Terms sections 12.1–12.7 provide the rights boundary and written-consent evidence requirement.
-- Exact disposition: **after rights approval** (`rights-gated`, P2). Complete canonical rebind evidence, written text/media permission, and per-asset review before staging; keep the card external while any item remains open.
+- Images and third-party media: Localize the `17` approved article images with source URL, local path, SHA-256, alt text, order, and authorization scope. Shell navigation, promotion, related-guide navigation, and shell iframe evidence stay outside the imported body.
+- Attribution evidence: Visible roles are Joshua Hardwick (author), Sam Oh and Louise Linehan (contributors), and Ryan Law (reviewer). Store Joshua Hardwick in `source.author`, Ahrefs in `source.provider`, and the complete role list in review evidence. Ahrefs Terms sections 12.1–12.7 provide the rights boundary; project-owner written authorization on `2026-09-01` supplies the import approval handoff, with sensitive proof retained outside the repository.
+- Exact disposition: **authorized internalized** (`authorized-internalized`, P2). Publish the bilingual pair at `/tutorials/ahrefs-seo-basics/` after canonical rebind, owner authorization, per-asset media review, Simplified Chinese handoff, and release gates are recorded.
 
 ### 5. The Beginner's Guide to SEO (ContentKing)
 
@@ -215,11 +216,11 @@ profiles below; the other profiles cite their owning terms directly.
 - Observed boundary: `200 text/html`, canonical equals the card URL, `robots` is `index, follow`; the page identifies Vlado Pavlik, `datePublished: 2026-05-14`, `dateModified: 2026-05-19`, and roughly 130 minutes. One `.mg-post-content` contains eight chapter bodies and in-page navigation; observed metrics were `h1 8`, `h2 35`, `h3 107`, `h4 29`, `p 702`, `ul 68`, `ol 5`, `li 280`, `blockquote 4`.
 - Normalization: The eight chapter bodies form one continuous canonical article. Keep the article title as the single route `h1`; demote the seven additional chapter `h1` labels to `h2` in the normalized body, preserving each label's text, `id`, order, and TOC mapping. Record this source-to-output heading map in review evidence, then preserve paragraphs, lists, quotes, tables, code, and approved media in one candidate with proposed slug `mangools-complete-seo-guide`.
 - Navigation: Preserve the eight in-page chapter links and their fragments. Keep unrelated product links as outbound source links. The article's quiz/certificate endpoints remain separate application surfaces.
-- Interactive: Body evidence includes `mangools-quiz` and `mangools-certificate` forms with `85` inputs. Forms, answer state, certificate generation, newsletter, and product behavior are unsupported; retain reviewed external CTAs or static explanatory text only after a separate editorial/rights decision. The YouTube iframe is eligible for remote allowlist review.
+- Interactive: Body evidence includes `mangools-quiz` and `mangools-certificate` forms with `85` inputs. Forms, answer state, certificate generation, newsletter, and product behavior stay as reviewed external/static CTA treatment linking back to Mangools. The YouTube iframe remains a reviewed remote allowlisted embed.
 - Tables and code: Preserve semantic tables and inline/block code after rights review, source-data review, and accessibility validation. Store table/code metrics and source credits in the candidate handoff.
-- Images and third-party media: The body contains `80` images and one YouTube embed at `https://www.youtube.com/embed/wTwnFcWUM3k?feature=oembed`. Localize approved images with alt/hash/order evidence; keep the YouTube player remote with title/provider/rights evidence; omit unresolved diagrams through an explicit review decision.
-- Attribution evidence: Visible metadata credits Vlado Pavlik. Store Vlado Pavlik in `source.author`, Mangools in `source.provider`, both update dates, canonical URL, source path, capture/hash evidence, and Mangools terms. The terms assign page text/graphics and third-party components to their respective owners and require prior written consent for reuse.
-- Exact disposition: **after manual body/media and rights review** (`rights-gated`, P2). Stage one single-page candidate only after form/CTA treatment, YouTube and image rights, table/code review, and written reuse permission are recorded; keep the card external while any item remains open.
+- Images and third-party media: The body contains `80` image candidates and one YouTube embed at `https://www.youtube.com/embed/wTwnFcWUM3k?feature=oembed`. Localize the `79` approved images with alt/hash/order evidence; omit the active `mangools-seo-academy.svg` through explicit unsupported-media review; keep the YouTube player remote with title/provider/rights evidence.
+- Attribution evidence: Visible metadata credits Vlado Pavlik. Store Vlado Pavlik in `source.author`, Mangools in `source.provider`, both update dates, canonical URL, source path, capture/hash evidence, and Mangools terms. The terms assign page text/graphics and third-party components to their respective owners and require prior written consent for reuse; project-owner written authorization on `2026-09-01` supplies the import approval handoff, with sensitive proof retained outside the repository.
+- Exact disposition: **authorized internalized** (`authorized-internalized`, P2). Publish the bilingual pair at `/tutorials/mangools-complete-seo-guide/` after form/CTA disposition, YouTube review, image rights, table/code review, owner authorization, Simplified Chinese handoff, and release gates are recorded.
 
 ### 7. SEO Fundamentals Course with Greg Gifford (Semrush)
 
@@ -254,9 +255,9 @@ The following checks bind this artifact to the existing implementation:
 5. `npm run check` runs the source-decision checker with the repository-wide
    data, tutorial, type, lint, build, and smoke checks.
 
-The exact card partition after this decision is: Google Search Works and Google
-Search Essentials are `eligible-direct`; Ahrefs and Mangools are `rights-gated`;
-Moz is `manual-series`; ContentKing is `external-collection`; and Semrush is
-`external-course`. This partition is the source-specific input for the migration
-waves in Issue #21: official Google first, rights-reviewed single pages second,
-manual or external surfaces third.
+The exact card partition after the Wave 2 authorization update is: Google
+Search Works and Google Search Essentials are `eligible-direct`; Ahrefs and
+Mangools are `authorized-internalized`; Moz is `manual-series`; ContentKing is
+`external-collection`; and Semrush is `external-course`. This partition is the
+source-specific input for the migration waves in Issue #21: official Google
+first, authorized single pages second, manual or external surfaces third.
