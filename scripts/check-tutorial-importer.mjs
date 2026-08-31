@@ -594,6 +594,17 @@ async function main() {
     assert.equal(snapshot.media.length, 1);
     assert.equal(snapshot.media[0].sourceUrl, "https://developers.google.com/static/search/docs/images/fixture-diagram.svg");
     assert.equal(snapshot.media[0].alt, "A simple search result diagram");
+    const encodedDescriptionFixture = path.join(tmpRoot, "encoded-description.html");
+    await fs.writeFile(
+      encodedDescriptionFixture,
+      (await fs.readFile(path.join(fixtureRoot, "google-devsite.html"), "utf8")).replace(
+        "A deterministic Google DevSite tutorial fixture.",
+        "Google&#39;s deterministic DevSite tutorial fixture.",
+      ),
+      "utf8",
+    );
+    const encodedDescriptionSnapshot = await collectFixture({ fixture: encodedDescriptionFixture });
+    assert.equal(encodedDescriptionSnapshot.description, "Google's deterministic DevSite tutorial fixture.");
     assert.match(snapshot.html, /<article/);
     assert.match(snapshot.html, /href="https:\/\/developers\.google\.com\/search\/docs\/fundamentals\/how-search-works"/);
     assert.match(snapshot.html, /src="https:\/\/developers\.google\.com\/static\/search\/docs\/images\/fixture-diagram\.svg"/);

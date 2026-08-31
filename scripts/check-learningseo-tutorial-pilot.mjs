@@ -425,9 +425,25 @@ function validateGeneration(zhManifest, enManifest, marker) {
   assert.equal(zhGeneration, enGeneration, "locale manifests have different commit generations");
   assert.equal(marker.operationId, zhGeneration, "import marker operation differs from manifest generation");
   assert.equal(marker.generation, zhGeneration, "import marker generation differs from manifest generation");
-  assert.equal(marker.slug, pilotSlug, "import marker slug differs from pilot slug");
-  assert.equal(normalizeSourceKey(marker.sourceKey), normalizeSourceKey(sourceCanonical),
-    "import marker source differs from pilot source");
+  assertString(marker.slug, "import marker slug");
+  assertString(marker.sourceKey, "import marker source");
+  const zhRoutes = Array.isArray(zhManifest.data.routes) ? zhManifest.data.routes : [];
+  const enRoutes = Array.isArray(enManifest.data.routes) ? enManifest.data.routes : [];
+  const zhMarked = zhRoutes.find((route) => route?.slug === marker.slug);
+  const enMarked = enRoutes.find((route) => route?.slug === marker.slug);
+  if (zhMarked || enMarked) {
+    assert.ok(zhMarked && enMarked, "import marker route is missing from one locale");
+    const zhSource = zhMarked.sourceKey || zhMarked.source?.canonicalUrl;
+    const enSource = enMarked.sourceKey || enMarked.source?.canonicalUrl;
+    assert.equal(normalizeSourceKey(marker.sourceKey), normalizeSourceKey(zhSource),
+      "import marker source differs from marked Chinese route");
+    assert.equal(normalizeSourceKey(marker.sourceKey), normalizeSourceKey(enSource),
+      "import marker source differs from marked English route");
+  } else {
+    assert.equal(marker.slug, pilotSlug, "import marker route is missing");
+    assert.equal(normalizeSourceKey(marker.sourceKey), normalizeSourceKey(sourceCanonical),
+      "import marker source differs from pilot source");
+  }
   assert.deepEqual(marker.locales, ["zh-CN", "en"], "import marker locales differ");
 }
 
@@ -550,6 +566,21 @@ function validateLifecycleMarkerFixture() {
     () => validateGeneration(zhManifest, enManifest, { ...marker, generation: "tutorial-import-other" }),
     /import marker generation differs/,
   );
+  const candidateSource = "https://developers.google.com/search/docs/essentials";
+  const candidateRoutes = [
+    { slug: pilotSlug, sourceKey: sourceCanonical },
+    { slug: "google-search-essentials", sourceKey: candidateSource },
+  ];
+  const candidateManifests = [0, 1].map(() => ({
+    data: { generation: "tutorial-import-candidate", routes: candidateRoutes },
+  }));
+  validateGeneration(candidateManifests[0], candidateManifests[1], {
+    operationId: "tutorial-import-candidate",
+    generation: "tutorial-import-candidate",
+    slug: "google-search-essentials",
+    sourceKey: candidateSource,
+    locales: ["zh-CN", "en"],
+  });
 }
 
 async function runtimeCheck() {

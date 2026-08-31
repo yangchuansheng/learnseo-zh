@@ -1,0 +1,296 @@
+{
+  "$schema": "https://learningseo.io/schemas/tutorial-manifest.json",
+  "schemaVersion": 1,
+  "locale": "en",
+  "generation": "tutorial-import-google-seo-starter-guide-20260830-2",
+  "activeVersion": 1,
+  "routes": [
+    {
+      "slug": "google-seo-starter-guide",
+      "path": "/en/tutorials/google-seo-starter-guide/",
+      "title": "Search Engine Optimization (SEO) Starter Guide",
+      "description": "A knowledge of basic SEO can have a noticeable impact. Explore the Google SEO starter guide for an overview of search engine optimization essentials.",
+      "provider": "Google Search Central / Google for Developers",
+      "status": "published",
+      "sourceKey": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+      "source": {
+        "title": "Search Engine Optimization (SEO) Starter Guide",
+        "provider": "Google Search Central / Google for Developers",
+        "author": null,
+        "canonicalUrl": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+        "sourcePath": "/seo_roadmap/seo-fundamentals/",
+        "requestedUrl": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+        "finalUrl": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+        "contentType": "text/html",
+        "license": {
+          "text": "CC BY 4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      },
+      "snapshot": {
+        "version": 1,
+        "capturedAt": "2026-08-30T11:48:53.595Z",
+        "sourceUpdatedAt": "2025-12-10T00:00:00.000Z",
+        "pageCanonicalUrl": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+        "canonicalMatched": true,
+        "requestedUrl": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+        "finalUrl": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+        "sourceContentHash": "57fd67a1b55fbe6ef5b919821d451621bf53df6c4f5b5dba1e349f83755b8187",
+        "contentHash": "d0d09108560732252d695800d054f2e6df964ddf39f9a42cce930c9a55907761",
+        "translationContentHash": "da93d6c2828ed9942c428e7a1f493ffcee00f48d5432f022c49858871cb5a8b6",
+        "history": []
+      },
+      "activeVersion": 1,
+      "translation": {
+        "sourceLanguage": "en",
+        "language": "zh-CN",
+        "translator": "Google Search Central localized source",
+        "translatedAt": "2026-08-30T11:55:00.000Z",
+        "reviewedAt": "2026-08-30T12:30:00.000Z",
+        "sourceSections": 27,
+        "translatedSections": 27,
+        "contentHash": "da93d6c2828ed9942c428e7a1f493ffcee00f48d5432f022c49858871cb5a8b6",
+        "contentFile": "da93d6c2828ed9942c428e7a1f493ffcee00f48d5432f022c49858871cb5a8b6.html"
+      },
+      "review": {
+        "decision": "approved",
+        "reviewer": "Codex editorial review",
+        "reviewedAt": "2026-08-30T12:30:00.000Z",
+        "notes": "Approved after source, translation, media, accessibility, security, provenance, and SEO checks.",
+        "checklist": {
+          "contentComplete": true,
+          "dataPreserved": true,
+          "factsPreserved": true,
+          "logicPreserved": true,
+          "terminologyCorrect": true,
+          "chineseNatural": true,
+          "authorVoicePreserved": true,
+          "linksPreserved": true,
+          "mediaVerified": true,
+          "attributionPresent": true,
+          "seoVerified": true
+        },
+        "history": [
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import awaiting editorial review.",
+            "version": 1,
+            "operationId": "tutorial-import-google-seo-starter-guide-20260830-2"
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import created by tutorials:import; review and publication remain manual."
+          }
+        ]
+      },
+      "qualification": {
+        "decision": "qualified",
+        "reviewer": "Codex editorial review",
+        "reviewedAt": "2026-08-30T12:30:00.000Z",
+        "checklist": {
+          "publiclyAccessible": true,
+          "continuousBody": true,
+          "topicComplete": true,
+          "singlePage": true,
+          "canonicalVerified": true
+        }
+      },
+      "contentFile": "d0d09108560732252d695800d054f2e6df964ddf39f9a42cce930c9a55907761.html",
+      "toc": [
+        {
+          "id": "search-engine-optimization-seo-starter-guide",
+          "level": 1,
+          "title": "Search Engine Optimization (SEO) Starter Guide"
+        },
+        {
+          "id": "hsw",
+          "level": 2,
+          "title": "How does Google Search work?"
+        },
+        {
+          "id": "how-long-must-i-wait",
+          "level": 2,
+          "title": "How long until I see impact in search results?"
+        },
+        {
+          "id": "find",
+          "level": 2,
+          "title": "Help Google find your content"
+        },
+        {
+          "id": "check-if-google-can-see",
+          "level": 3,
+          "title": "Check if Google can see your page the same way a user does"
+        },
+        {
+          "id": "dont-want-a-page-in-googles-search-results",
+          "level": 3,
+          "title": "Don't want a page in Google's search results?"
+        },
+        {
+          "id": "organize",
+          "level": 2,
+          "title": "Organize your site"
+        },
+        {
+          "id": "use-descriptive-urls",
+          "level": 3,
+          "title": "Use descriptive URLs"
+        },
+        {
+          "id": "group-topically",
+          "level": 3,
+          "title": "Group topically similar pages in directories"
+        },
+        {
+          "id": "reduce-duplicate-content",
+          "level": 3,
+          "title": "Reduce duplicate content"
+        },
+        {
+          "id": "make-your-site-interesting",
+          "level": 2,
+          "title": "Make your site interesting and useful"
+        },
+        {
+          "id": "expect-search-terms",
+          "level": 3,
+          "title": "Expect your readers' search terms"
+        },
+        {
+          "id": "distracting-ads",
+          "level": 3,
+          "title": "Avoid distracting advertisements"
+        },
+        {
+          "id": "link-to-relevant-resources",
+          "level": 3,
+          "title": "Link to relevant resources"
+        },
+        {
+          "id": "good-link-text",
+          "level": 4,
+          "title": "Write good link text"
+        },
+        {
+          "id": "link-when-you-need-to",
+          "level": 4,
+          "title": "Link when you need to"
+        },
+        {
+          "id": "control-how-your-site-looks",
+          "level": 2,
+          "title": "Influence how your site looks in Google Search"
+        },
+        {
+          "id": "titles",
+          "level": 3,
+          "title": "Influence your title links"
+        },
+        {
+          "id": "snippets",
+          "level": 3,
+          "title": "Control your snippets"
+        },
+        {
+          "id": "images",
+          "level": 2,
+          "title": "Add images to your site, and optimize them"
+        },
+        {
+          "id": "add-images-near-text",
+          "level": 3,
+          "title": "Add high-quality images near relevant text"
+        },
+        {
+          "id": "add-descriptive-alt-text-to-the-image",
+          "level": 3,
+          "title": "Add descriptive alt text to the image"
+        },
+        {
+          "id": "videos",
+          "level": 2,
+          "title": "Optimize your videos"
+        },
+        {
+          "id": "promoting",
+          "level": 2,
+          "title": "Promote your website"
+        },
+        {
+          "id": "focusing",
+          "level": 2,
+          "title": "Things we believe you shouldn't focus on"
+        },
+        {
+          "id": "next-steps",
+          "level": 2,
+          "title": "Next steps"
+        },
+        {
+          "id": "resources",
+          "level": 3,
+          "title": "Stay informed and ask questions"
+        }
+      ],
+      "media": [
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/e8dd7db2347198c34b2fe59c9bdc2ef7c20b0869036d2b72052e38ee41a99203.png",
+          "sha256": "e8dd7db2347198c34b2fe59c9bdc2ef7c20b0869036d2b72052e38ee41a99203",
+          "alt": "An illustration of how to group pages in directories",
+          "sourceUrl": "https://developers.google.com/static/search/docs/images/grouping-pages-in-directories.png",
+          "width": 280,
+          "id": "e8dd7db23471"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/0c1bf4cf239952f5231a5b878b9cb77026a45390274ec6cf2e98f31fd870ba5e.png",
+          "sha256": "0c1bf4cf239952f5231a5b878b9cb77026a45390274ec6cf2e98f31fd870ba5e",
+          "alt": "An illustration that shows how one web page is linking to other relevant resources",
+          "sourceUrl": "https://developers.google.com/static/search/docs/images/link-to-relevant-resources.png",
+          "width": 500,
+          "id": "0c1bf4cf2399"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/595f41d483bf09d4afab38fce5700ed282fe79f5efe76706355e4391b23c0d49.png",
+          "sha256": "595f41d483bf09d4afab38fce5700ed282fe79f5efe76706355e4391b23c0d49",
+          "alt": "An illustration that shows text part of a link",
+          "sourceUrl": "https://developers.google.com/static/search/docs/images/what-is-link-text.png",
+          "width": 600,
+          "id": "595f41d483bf"
+        },
+        {
+          "path": "/sites/learningseo-io-071dae18/tutorials/google-seo-starter-guide/55d3d5d6c09fac1e96b3c8a0b6410d39859abd50c8a08a229013660600107e46.png",
+          "sha256": "55d3d5d6c09fac1e96b3c8a0b6410d39859abd50c8a08a229013660600107e46",
+          "alt": "An illustration of how title text looks on a web page, and then how it looks in the HTML",
+          "sourceUrl": "https://developers.google.com/static/search/docs/images/titles-on-page-html.png",
+          "width": 700,
+          "id": "55d3d5d6c09f"
+        }
+      ],
+      "contentMetrics": {
+        "h1": 1,
+        "h2": 11,
+        "h3": 13,
+        "h4": 2,
+        "p": 63,
+        "ul": 6,
+        "li": 17,
+        "a": 54,
+        "table": 2,
+        "code": 16,
+        "img": 4
+      },
+      "seo": {
+        "title": "Search Engine Optimization (SEO) Starter Guide",
+        "description": "A knowledge of basic SEO can have a noticeable impact. Explore the Google SEO starter guide for an overview of search engine optimization essentials.",
+        "indexable": true,
+        "dateModified": "2025-12-10T00:00:00.000Z"
+      }
+    }
+  ],
+  "aliases": []
+}

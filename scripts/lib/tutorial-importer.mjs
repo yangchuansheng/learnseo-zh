@@ -561,7 +561,9 @@ function metaContent(html, name) {
   for (const match of html.matchAll(/<meta\b[^>]*>/gi)) {
     const attrs = parseAttributes(match[0]);
     const attrName = attrs.get("name") ?? attrs.get("property");
-    if (attrName?.toLowerCase() === name.toLowerCase()) return attrs.get("content") ?? "";
+    if (attrName?.toLowerCase() === name.toLowerCase()) {
+      return decodeBasicEntities(attrs.get("content") ?? "");
+    }
   }
   return "";
 }

@@ -2,9 +2,287 @@
   "$schema": "https://learningseo.io/schemas/tutorial-manifest.json",
   "schemaVersion": 1,
   "locale": "en",
-  "generation": "tutorial-import-google-seo-starter-guide-20260830-2",
+  "generation": "tutorial-import-google-search-essentials-20260831",
   "activeVersion": 1,
   "routes": [
+    {
+      "slug": "google-search-essentials",
+      "path": "/en/tutorials/google-search-essentials/",
+      "title": "Google Search Essentials",
+      "description": "The Google Search Essentials make up the core parts of what makes your web-based content (web pages, images, videos, or other publicly-available material that Google finds on the web) eligible to appear and perform well on Google Search.",
+      "provider": "Google Search Central / Google for Developers",
+      "status": "published",
+      "sourceKey": "https://developers.google.com/search/docs/essentials",
+      "source": {
+        "title": "Google Search Essentials",
+        "provider": "Google Search Central / Google for Developers",
+        "author": null,
+        "canonicalUrl": "https://developers.google.com/search/docs/essentials",
+        "sourcePath": "/seo_roadmap/seo-fundamentals/",
+        "requestedUrl": "https://developers.google.com/search/docs/essentials",
+        "finalUrl": "https://developers.google.com/search/docs/essentials",
+        "contentType": "text/html",
+        "license": {
+          "text": "CC BY 4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      },
+      "snapshot": {
+        "version": 1,
+        "capturedAt": "2026-08-31T11:03:09.263Z",
+        "sourceUpdatedAt": "2025-12-10T00:00:00.000Z",
+        "pageCanonicalUrl": "https://developers.google.com/search/docs/essentials",
+        "canonicalMatched": true,
+        "requestedUrl": "https://developers.google.com/search/docs/essentials",
+        "finalUrl": "https://developers.google.com/search/docs/essentials",
+        "sourceContentHash": "548e6ccb2b1ba0b7399434c1b9784b507744a98cef92c608b7f3b17e94b024b3",
+        "contentHash": "a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22",
+        "translationContentHash": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7",
+        "history": []
+      },
+      "activeVersion": 1,
+      "translation": {
+        "sourceLanguage": "en",
+        "language": "zh-CN",
+        "translator": "codex-wave1",
+        "translatedAt": "2026-08-31T11:18:00.000Z",
+        "reviewedAt": "2026-08-31T11:22:00.000Z",
+        "sourceSections": 4,
+        "translatedSections": 4,
+        "contentHash": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7",
+        "contentFile": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7.html"
+      },
+      "review": {
+        "decision": "approved",
+        "reviewer": "Codex Wave 1 editorial review",
+        "reviewedAt": "2026-08-31T11:22:00.000Z",
+        "notes": "Approved after verified Google source provenance, CC BY 4.0 attribution, complete Simplified Chinese translation, semantic and link parity, empty media surface, sanitizer, accessibility, metadata, resource-card, runtime, and rollback checks.",
+        "checklist": {
+          "contentComplete": true,
+          "dataPreserved": true,
+          "factsPreserved": true,
+          "logicPreserved": true,
+          "terminologyCorrect": true,
+          "chineseNatural": true,
+          "authorVoicePreserved": true,
+          "linksPreserved": true,
+          "mediaVerified": true,
+          "attributionPresent": true,
+          "seoVerified": true
+        },
+        "history": [
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import awaiting editorial review.",
+            "version": 1,
+            "operationId": "tutorial-import-google-search-essentials-20260831"
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import created by tutorials:import; review and publication remain manual."
+          }
+        ]
+      },
+      "qualification": {
+        "decision": "qualified",
+        "reviewer": "Codex Wave 1 editorial review",
+        "reviewedAt": "2026-08-31T11:22:00.000Z",
+        "checklist": {
+          "publiclyAccessible": true,
+          "continuousBody": true,
+          "topicComplete": true,
+          "singlePage": true,
+          "canonicalVerified": true
+        }
+      },
+      "contentFile": "a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22.html",
+      "toc": [
+        {
+          "id": "google-search-essentials",
+          "level": 1,
+          "title": "Google Search Essentials"
+        },
+        {
+          "id": "technical-requirements",
+          "level": 2,
+          "title": "Technical requirements"
+        },
+        {
+          "id": "spam-policies",
+          "level": 2,
+          "title": "Spam policies"
+        },
+        {
+          "id": "key-best-practices",
+          "level": 2,
+          "title": "Key best practices"
+        }
+      ],
+      "media": [],
+      "contentMetrics": {
+        "h1": 1,
+        "h2": 3,
+        "p": 5,
+        "ul": 2,
+        "li": 10,
+        "a": 14
+      },
+      "seo": {
+        "title": "Google Search Essentials",
+        "description": "The Google Search Essentials make up the core parts of what makes your web-based content (web pages, images, videos, or other publicly-available material that Google finds on the web) eligible to appear and perform well on Google Search.",
+        "indexable": true,
+        "dateModified": "2025-12-10T00:00:00.000Z"
+      }
+    },
+    {
+      "slug": "google-search-works",
+      "path": "/en/tutorials/google-search-works/",
+      "title": "In-depth guide to how Google Search works",
+      "description": "Get an in-depth understanding of how Google Search works and improve your site for Google's crawling, indexing, and ranking processes.",
+      "provider": "Google Search Central / Google for Developers",
+      "status": "published",
+      "sourceKey": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+      "source": {
+        "title": "In-depth guide to how Google Search works",
+        "provider": "Google Search Central / Google for Developers",
+        "author": null,
+        "canonicalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "sourcePath": "/seo_roadmap/seo-fundamentals/",
+        "requestedUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "finalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "contentType": "text/html",
+        "license": {
+          "text": "CC BY 4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      },
+      "snapshot": {
+        "version": 1,
+        "capturedAt": "2026-08-31T11:02:59.981Z",
+        "sourceUpdatedAt": "2025-12-18T00:00:00.000Z",
+        "pageCanonicalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "canonicalMatched": true,
+        "requestedUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "finalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "sourceContentHash": "39344c4da00d1282cf1e43d8d5afaf5fdbf25941c8c32af5e5343abe485eded6",
+        "contentHash": "db982ba4f4e98ff65840297afa4f86f67842a15e49361763da621ecee8660cdd",
+        "translationContentHash": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980",
+        "history": []
+      },
+      "activeVersion": 1,
+      "translation": {
+        "sourceLanguage": "en",
+        "language": "zh-CN",
+        "translator": "codex-wave1",
+        "translatedAt": "2026-08-31T11:10:00.000Z",
+        "reviewedAt": "2026-08-31T11:15:00.000Z",
+        "sourceSections": 6,
+        "translatedSections": 6,
+        "contentHash": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980",
+        "contentFile": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980.html"
+      },
+      "review": {
+        "decision": "approved",
+        "reviewer": "Codex Wave 1 editorial review",
+        "reviewedAt": "2026-08-31T11:15:00.000Z",
+        "notes": "Approved after verified Google source provenance, CC BY 4.0 attribution, complete Simplified Chinese translation, semantic and numeric parity, link preservation, empty media surface, sanitizer, accessibility, metadata, resource-card, runtime, and rollback checks.",
+        "checklist": {
+          "contentComplete": true,
+          "dataPreserved": true,
+          "factsPreserved": true,
+          "logicPreserved": true,
+          "terminologyCorrect": true,
+          "chineseNatural": true,
+          "authorVoicePreserved": true,
+          "linksPreserved": true,
+          "mediaVerified": true,
+          "attributionPresent": true,
+          "seoVerified": true
+        },
+        "history": [
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import awaiting editorial review.",
+            "version": 1,
+            "operationId": "tutorial-import-google-search-works-20260831"
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import created by tutorials:import; review and publication remain manual."
+          }
+        ]
+      },
+      "qualification": {
+        "decision": "qualified",
+        "reviewer": "Codex Wave 1 editorial review",
+        "reviewedAt": "2026-08-31T11:15:00.000Z",
+        "checklist": {
+          "publiclyAccessible": true,
+          "continuousBody": true,
+          "topicComplete": true,
+          "singlePage": true,
+          "canonicalVerified": true
+        }
+      },
+      "contentFile": "db982ba4f4e98ff65840297afa4f86f67842a15e49361763da621ecee8660cdd.html",
+      "toc": [
+        {
+          "id": "in-depth-guide-to-how-google-search-works",
+          "title": "In-depth guide to how Google Search works",
+          "level": 1
+        },
+        {
+          "id": "a-few-notes-before-we-get-started",
+          "title": "A few notes before we get started",
+          "level": 2
+        },
+        {
+          "id": "introducing-the-three-stages-of-google-search",
+          "title": "Introducing the three stages of Google Search",
+          "level": 2
+        },
+        {
+          "id": "crawling",
+          "title": "Crawling",
+          "level": 2
+        },
+        {
+          "id": "indexing",
+          "title": "Indexing",
+          "level": 2
+        },
+        {
+          "id": "serving",
+          "title": "Serving search results",
+          "level": 2
+        }
+      ],
+      "media": [],
+      "contentMetrics": {
+        "h1": 1,
+        "h2": 5,
+        "p": 18,
+        "ul": 3,
+        "ol": 1,
+        "li": 12,
+        "a": 29,
+        "code": 3
+      },
+      "seo": {
+        "title": "In-depth guide to how Google Search works",
+        "description": "Get an in-depth understanding of how Google Search works and improve your site for Google's crawling, indexing, and ranking processes.",
+        "indexable": true,
+        "dateModified": "2025-12-18T00:00:00.000Z"
+      }
+    },
     {
       "slug": "google-seo-starter-guide",
       "path": "/en/tutorials/google-seo-starter-guide/",
@@ -103,138 +381,138 @@
       "toc": [
         {
           "id": "search-engine-optimization-seo-starter-guide",
-          "level": 1,
-          "title": "Search Engine Optimization (SEO) Starter Guide"
+          "title": "Search Engine Optimization (SEO) Starter Guide",
+          "level": 1
         },
         {
           "id": "hsw",
-          "level": 2,
-          "title": "How does Google Search work?"
+          "title": "How does Google Search work?",
+          "level": 2
         },
         {
           "id": "how-long-must-i-wait",
-          "level": 2,
-          "title": "How long until I see impact in search results?"
+          "title": "How long until I see impact in search results?",
+          "level": 2
         },
         {
           "id": "find",
-          "level": 2,
-          "title": "Help Google find your content"
+          "title": "Help Google find your content",
+          "level": 2
         },
         {
           "id": "check-if-google-can-see",
-          "level": 3,
-          "title": "Check if Google can see your page the same way a user does"
+          "title": "Check if Google can see your page the same way a user does",
+          "level": 3
         },
         {
           "id": "dont-want-a-page-in-googles-search-results",
-          "level": 3,
-          "title": "Don't want a page in Google's search results?"
+          "title": "Don't want a page in Google's search results?",
+          "level": 3
         },
         {
           "id": "organize",
-          "level": 2,
-          "title": "Organize your site"
+          "title": "Organize your site",
+          "level": 2
         },
         {
           "id": "use-descriptive-urls",
-          "level": 3,
-          "title": "Use descriptive URLs"
+          "title": "Use descriptive URLs",
+          "level": 3
         },
         {
           "id": "group-topically",
-          "level": 3,
-          "title": "Group topically similar pages in directories"
+          "title": "Group topically similar pages in directories",
+          "level": 3
         },
         {
           "id": "reduce-duplicate-content",
-          "level": 3,
-          "title": "Reduce duplicate content"
+          "title": "Reduce duplicate content",
+          "level": 3
         },
         {
           "id": "make-your-site-interesting",
-          "level": 2,
-          "title": "Make your site interesting and useful"
+          "title": "Make your site interesting and useful",
+          "level": 2
         },
         {
           "id": "expect-search-terms",
-          "level": 3,
-          "title": "Expect your readers' search terms"
+          "title": "Expect your readers' search terms",
+          "level": 3
         },
         {
           "id": "distracting-ads",
-          "level": 3,
-          "title": "Avoid distracting advertisements"
+          "title": "Avoid distracting advertisements",
+          "level": 3
         },
         {
           "id": "link-to-relevant-resources",
-          "level": 3,
-          "title": "Link to relevant resources"
+          "title": "Link to relevant resources",
+          "level": 3
         },
         {
           "id": "good-link-text",
-          "level": 4,
-          "title": "Write good link text"
+          "title": "Write good link text",
+          "level": 4
         },
         {
           "id": "link-when-you-need-to",
-          "level": 4,
-          "title": "Link when you need to"
+          "title": "Link when you need to",
+          "level": 4
         },
         {
           "id": "control-how-your-site-looks",
-          "level": 2,
-          "title": "Influence how your site looks in Google Search"
+          "title": "Influence how your site looks in Google Search",
+          "level": 2
         },
         {
           "id": "titles",
-          "level": 3,
-          "title": "Influence your title links"
+          "title": "Influence your title links",
+          "level": 3
         },
         {
           "id": "snippets",
-          "level": 3,
-          "title": "Control your snippets"
+          "title": "Control your snippets",
+          "level": 3
         },
         {
           "id": "images",
-          "level": 2,
-          "title": "Add images to your site, and optimize them"
+          "title": "Add images to your site, and optimize them",
+          "level": 2
         },
         {
           "id": "add-images-near-text",
-          "level": 3,
-          "title": "Add high-quality images near relevant text"
+          "title": "Add high-quality images near relevant text",
+          "level": 3
         },
         {
           "id": "add-descriptive-alt-text-to-the-image",
-          "level": 3,
-          "title": "Add descriptive alt text to the image"
+          "title": "Add descriptive alt text to the image",
+          "level": 3
         },
         {
           "id": "videos",
-          "level": 2,
-          "title": "Optimize your videos"
+          "title": "Optimize your videos",
+          "level": 2
         },
         {
           "id": "promoting",
-          "level": 2,
-          "title": "Promote your website"
+          "title": "Promote your website",
+          "level": 2
         },
         {
           "id": "focusing",
-          "level": 2,
-          "title": "Things we believe you shouldn't focus on"
+          "title": "Things we believe you shouldn't focus on",
+          "level": 2
         },
         {
           "id": "next-steps",
-          "level": 2,
-          "title": "Next steps"
+          "title": "Next steps",
+          "level": 2
         },
         {
           "id": "resources",
-          "level": 3,
-          "title": "Stay informed and ask questions"
+          "title": "Stay informed and ask questions",
+          "level": 3
         }
       ],
       "media": [

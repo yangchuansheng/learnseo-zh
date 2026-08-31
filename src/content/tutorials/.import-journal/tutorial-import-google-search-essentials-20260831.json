@@ -1,0 +1,159 @@
+{
+  "operationId": "tutorial-import-google-search-essentials-20260831",
+  "actor": "codex-wave1",
+  "phase": "committed",
+  "slug": "google-search-essentials",
+  "sourceKey": "https://developers.google.com/search/docs/essentials",
+  "generation": "tutorial-import-google-search-essentials-20260831",
+  "candidateVersion": 1,
+  "files": [
+    {
+      "relative": "content/a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22.html",
+      "sha256": "a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22"
+    },
+    {
+      "relative": "content/d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7.html",
+      "sha256": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7"
+    },
+    {
+      "relative": "manifest.json",
+      "sha256": "51212973c319993df6201cd4053e87685b65d1b524816c134008e793eb0a5986"
+    },
+    {
+      "relative": "manifest.en.json",
+      "sha256": "570fe6bf62c0f494e5ce8c16ed24e85620c4c3abe613dc782db73f021baaf91e"
+    },
+    {
+      "relative": "import-generation.json",
+      "sha256": "927f6e5072a2ebb54d4532e1e1680277cb530234e4dcc28e1b653381008531d3"
+    }
+  ],
+  "hashes": {
+    "sourceContentHash": "548e6ccb2b1ba0b7399434c1b9784b507744a98cef92c608b7f3b17e94b024b3",
+    "contentHash": "a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22",
+    "translationContentHash": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7"
+  },
+  "marker": {
+    "operationId": "tutorial-import-google-search-essentials-20260831",
+    "generation": "tutorial-import-google-search-essentials-20260831",
+    "slug": "google-search-essentials",
+    "sourceKey": "https://developers.google.com/search/docs/essentials",
+    "locales": [
+      "zh-CN",
+      "en"
+    ]
+  },
+  "validation": {
+    "en": {
+      "metrics": {
+        "h1": 1,
+        "h2": 3,
+        "p": 5,
+        "ul": 2,
+        "li": 10,
+        "a": 14
+      },
+      "headingIds": [
+        "google-search-essentials",
+        "technical-requirements",
+        "spam-policies",
+        "key-best-practices"
+      ],
+      "headingEntries": [
+        {
+          "id": "google-search-essentials",
+          "level": 1
+        },
+        {
+          "id": "technical-requirements",
+          "level": 2
+        },
+        {
+          "id": "spam-policies",
+          "level": 2
+        },
+        {
+          "id": "key-best-practices",
+          "level": 2
+        }
+      ]
+    },
+    "zh": {
+      "metrics": {
+        "h1": 1,
+        "h2": 3,
+        "p": 5,
+        "ul": 2,
+        "li": 10,
+        "a": 14
+      },
+      "headingIds": [
+        "google-search-essentials",
+        "technical-requirements",
+        "spam-policies",
+        "key-best-practices"
+      ],
+      "headingEntries": [
+        {
+          "id": "google-search-essentials",
+          "level": 1
+        },
+        {
+          "id": "technical-requirements",
+          "level": 2
+        },
+        {
+          "id": "spam-policies",
+          "level": 2
+        },
+        {
+          "id": "key-best-practices",
+          "level": 2
+        }
+      ]
+    }
+  },
+  "phases": [
+    {
+      "phase": "content-replace",
+      "relative": "content/a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22.html",
+      "recordedAt": "2026-08-31T11:09:45.956Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "content/d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7.html",
+      "recordedAt": "2026-08-31T11:09:45.967Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-31T11:09:45.976Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-31T11:09:45.983Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-31T11:09:45.989Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-31T11:09:45.996Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-31T11:09:46.001Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-31T11:09:46.007Z"
+    }
+  ],
+  "committedAt": "2026-08-31T11:09:46.012Z"
+}

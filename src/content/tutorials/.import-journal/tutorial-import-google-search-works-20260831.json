@@ -1,0 +1,183 @@
+{
+  "operationId": "tutorial-import-google-search-works-20260831",
+  "actor": "codex-wave1",
+  "phase": "committed",
+  "slug": "google-search-works",
+  "sourceKey": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+  "generation": "tutorial-import-google-search-works-20260831",
+  "candidateVersion": 1,
+  "files": [
+    {
+      "relative": "content/db982ba4f4e98ff65840297afa4f86f67842a15e49361763da621ecee8660cdd.html",
+      "sha256": "db982ba4f4e98ff65840297afa4f86f67842a15e49361763da621ecee8660cdd"
+    },
+    {
+      "relative": "content/606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980.html",
+      "sha256": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980"
+    },
+    {
+      "relative": "manifest.json",
+      "sha256": "1a7272de3205c432033ff3c361ea7ce5ef017d4102eed8f95db2fb0fa7cc5fdb"
+    },
+    {
+      "relative": "manifest.en.json",
+      "sha256": "6110221d6baa48fa3496d9b1e359e4f05324ff223c78671059ffc16de50f07a5"
+    },
+    {
+      "relative": "import-generation.json",
+      "sha256": "84fa3a60d96b78d4649f5acc94816a52e0446c2b3aeaa0840788b3bd9ee4d0a3"
+    }
+  ],
+  "hashes": {
+    "sourceContentHash": "39344c4da00d1282cf1e43d8d5afaf5fdbf25941c8c32af5e5343abe485eded6",
+    "contentHash": "db982ba4f4e98ff65840297afa4f86f67842a15e49361763da621ecee8660cdd",
+    "translationContentHash": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980"
+  },
+  "marker": {
+    "operationId": "tutorial-import-google-search-works-20260831",
+    "generation": "tutorial-import-google-search-works-20260831",
+    "slug": "google-search-works",
+    "sourceKey": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+    "locales": [
+      "zh-CN",
+      "en"
+    ]
+  },
+  "validation": {
+    "en": {
+      "metrics": {
+        "h1": 1,
+        "h2": 5,
+        "p": 18,
+        "ul": 3,
+        "ol": 1,
+        "li": 12,
+        "a": 29,
+        "code": 3
+      },
+      "headingIds": [
+        "in-depth-guide-to-how-google-search-works",
+        "a-few-notes-before-we-get-started",
+        "introducing-the-three-stages-of-google-search",
+        "crawling",
+        "indexing",
+        "serving"
+      ],
+      "headingEntries": [
+        {
+          "id": "in-depth-guide-to-how-google-search-works",
+          "level": 1
+        },
+        {
+          "id": "a-few-notes-before-we-get-started",
+          "level": 2
+        },
+        {
+          "id": "introducing-the-three-stages-of-google-search",
+          "level": 2
+        },
+        {
+          "id": "crawling",
+          "level": 2
+        },
+        {
+          "id": "indexing",
+          "level": 2
+        },
+        {
+          "id": "serving",
+          "level": 2
+        }
+      ]
+    },
+    "zh": {
+      "metrics": {
+        "h1": 1,
+        "h2": 5,
+        "p": 18,
+        "ul": 3,
+        "ol": 1,
+        "li": 12,
+        "a": 29,
+        "code": 3
+      },
+      "headingIds": [
+        "in-depth-guide-to-how-google-search-works",
+        "a-few-notes-before-we-get-started",
+        "introducing-the-three-stages-of-google-search",
+        "crawling",
+        "indexing",
+        "serving"
+      ],
+      "headingEntries": [
+        {
+          "id": "in-depth-guide-to-how-google-search-works",
+          "level": 1
+        },
+        {
+          "id": "a-few-notes-before-we-get-started",
+          "level": 2
+        },
+        {
+          "id": "introducing-the-three-stages-of-google-search",
+          "level": 2
+        },
+        {
+          "id": "crawling",
+          "level": 2
+        },
+        {
+          "id": "indexing",
+          "level": 2
+        },
+        {
+          "id": "serving",
+          "level": 2
+        }
+      ]
+    }
+  },
+  "phases": [
+    {
+      "phase": "content-replace",
+      "relative": "content/db982ba4f4e98ff65840297afa4f86f67842a15e49361763da621ecee8660cdd.html",
+      "recordedAt": "2026-08-31T11:07:32.673Z"
+    },
+    {
+      "phase": "content-replace",
+      "relative": "content/606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980.html",
+      "recordedAt": "2026-08-31T11:07:32.682Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-31T11:07:32.689Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-31T11:07:32.701Z"
+    },
+    {
+      "phase": "manifest-backup",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-31T11:07:32.705Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.json",
+      "recordedAt": "2026-08-31T11:07:32.712Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "manifest.en.json",
+      "recordedAt": "2026-08-31T11:07:32.719Z"
+    },
+    {
+      "phase": "manifest-replace",
+      "relative": "import-generation.json",
+      "recordedAt": "2026-08-31T11:07:32.725Z"
+    }
+  ],
+  "committedAt": "2026-08-31T11:07:32.730Z"
+}

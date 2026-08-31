@@ -1,8 +1,8 @@
 {
   "total": 2152,
   "unique": 912,
-  "converted": 1,
-  "fallback": 2151,
+  "converted": 3,
+  "fallback": 2149,
   "rendered": 4304,
   "duplicateOccurrences": 1240,
   "unknownFragments": 31,
@@ -12873,9 +12873,9 @@
     },
     {
       "sourceKey": "https://developers.google.com/search/docs/fundamentals/how-search-works",
-      "slug": null,
+      "slug": "google-search-works",
       "fragment": null,
-      "converted": false
+      "converted": true
     },
     {
       "sourceKey": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
@@ -12885,9 +12885,9 @@
     },
     {
       "sourceKey": "https://developers.google.com/search/docs/essentials",
-      "slug": null,
+      "slug": "google-search-essentials",
       "fragment": null,
-      "converted": false
+      "converted": true
     },
     {
       "sourceKey": "https://moz.com/beginners-guide-to-seo",

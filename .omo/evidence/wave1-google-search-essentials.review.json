@@ -1,0 +1,32 @@
+{
+  "decision": "approved",
+  "reviewer": "Codex Wave 1 editorial review",
+  "reviewedAt": "2026-08-31T11:22:00.000Z",
+  "notes": "Approved after verified Google source provenance, CC BY 4.0 attribution, complete Simplified Chinese translation, semantic and link parity, empty media surface, sanitizer, accessibility, metadata, resource-card, runtime, and rollback checks.",
+  "checklist": {
+    "contentComplete": true,
+    "dataPreserved": true,
+    "factsPreserved": true,
+    "logicPreserved": true,
+    "terminologyCorrect": true,
+    "chineseNatural": true,
+    "authorVoicePreserved": true,
+    "linksPreserved": true,
+    "mediaVerified": true,
+    "attributionPresent": true,
+    "seoVerified": true
+  },
+  "qualification": {
+    "publiclyAccessible": true,
+    "continuousBody": true,
+    "topicComplete": true,
+    "singlePage": true,
+    "canonicalVerified": true
+  },
+  "snapshot": {
+    "version": 1,
+    "sourceContentHash": "548e6ccb2b1ba0b7399434c1b9784b507744a98cef92c608b7f3b17e94b024b3",
+    "contentHash": "a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22",
+    "translationContentHash": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7"
+  }
+}

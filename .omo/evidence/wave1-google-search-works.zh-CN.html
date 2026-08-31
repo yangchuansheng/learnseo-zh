@@ -1,0 +1,173 @@
+<article>
+
+  
+    
+    
+  <h1 class="page-title" id="in-depth-guide-to-how-google-search-works" data-text="有关 Google 搜索工作原理的深入指南" tabindex="-1">有关 Google 搜索工作原理的深入指南</h1>
+  
+<div class="video-wrapper" style="margin-top: 20px;">
+  <devsite-video data-list="PLKoqnv2vTMUN83JWBNM6MoBuBcyqhFNY3">
+  </devsite-video>
+</div>
+<p>
+  Google 搜索是一款完全自动化的搜索引擎，它使用称为网络爬虫的软件定期探索网络，查找要添加到索引中的网页。事实上，
+  我们结果中列出的绝大多数网页都没有由人工手动提交，而是由网络爬虫探索网络后自动发现并添加的。本指南将结合您的网站，
+  解释 Google 搜索的工作阶段。掌握这些基础知识有助于您解决抓取问题，让网页编入索引，并了解如何优化网站在 Google 搜索中的呈现方式。
+</p>
+<aside class="note">
+  想了解更通俗的内容？请查看我们的
+  <a href="https://www.google.com/search/howsearchworks/" class="external-link">How Search Works 网站</a>，
+  该网站从搜索用户的角度解释 Google 搜索的工作方式。
+</aside>
+<h2 id="a-few-notes-before-we-get-started" data-text="开始之前的几点说明" tabindex="-1">开始之前的几点说明</h2>
+<p>
+  在详细了解 Google 搜索的工作方式之前，需要说明的是，Google 不接受任何付款来更频繁地抓取网站，也不会因此提高网站排名。
+  如果有人告诉您相反的说法，那就是错误的。
+</p>
+<p>
+  即使您的网页遵循<a href="https://developers.google.com/search/docs/essentials">Google 搜索要点</a>，Google 也不会保证一定会抓取、编入索引或提供该网页。
+</p>
+<h2 id="introducing-the-three-stages-of-google-search" data-text="Google 搜索的三个阶段" tabindex="-1">Google 搜索的三个阶段</h2>
+<p>Google 搜索分为三个阶段，并非所有网页都能通过每个阶段：</p>
+<ol>
+  <li>
+    <a href="#crawling"><strong>抓取：</strong></a> Google 使用称为爬虫的自动程序，从其在互联网上找到的网页中下载文本、图片和视频。
+  </li>
+  <li>
+    <a href="#indexing"><strong>编入索引：</strong></a> Google 分析网页上的文本、图片和视频文件，并将相关信息存储在 Google 索引中；Google 索引是一个大型数据库。
+  </li>
+  <li>
+    <a href="#serving"><strong>提供搜索结果：</strong></a> 用户在 Google 上进行搜索时，Google 会返回与用户查询相关的信息。
+  </li>
+</ol>
+
+    
+  
+<h2 id="crawling" data-text="抓取" tabindex="-1">抓取</h2>
+<p>
+  第一个阶段是找出网络上存在哪些网页。网络上没有所有网页的中央登记册，因此 Google 必须持续寻找新网页和更新后的网页，
+  并将它们添加到已知网页列表中。这个过程称为“网址发现”。有些网页之所以已知，是因为 Google 之前访问过它们。其他网页则是在 Google
+  从已知网页中提取出指向新网页的链接时发现的：例如，类别页等中心页会链接到新的博客文章。还有一些网页是在您提交网页列表（即
+  <a href="https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview">站点地图</a>）供 Google 抓取时发现的。
+</p>
+<div class="video-wrapper">
+  <devsite-video video-id="JuK7NnfyEuc">
+  </devsite-video>
+</div>
+<p>
+  Google 发现网页网址后，可能会访问（或“抓取”）该网页，以了解其中的内容。我们使用大量计算机来抓取网络上的数十亿个网页。
+  负责获取内容的程序称为<a href="https://developers.google.com/search/docs/crawling-indexing/googlebot">Googlebot</a>（也称为爬虫、机器人、bot 或 spider）。
+  Googlebot 使用算法流程来确定要抓取哪些网站、多久抓取一次，以及从每个网站获取多少网页。
+  <a href="https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers">Google 的爬虫</a>还经过编程，会尽量避免抓取网站过快而导致网站过载。
+  该机制取决于网站的响应（例如，<a href="https://developers.google.com/search/docs/crawling-indexing/http-network-errors#http-status-codes">HTTP 500 错误表示“减慢速度”</a>）。
+</p>
+<p>
+  但是，Googlebot 不会抓取它发现的所有网页。有些网页可能被网站所有者通过
+  <a href="https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt#disallow">规则禁止抓取</a>，其他网页则必须登录网站后才能访问。
+</p>
+<p>
+  在抓取期间，Google 会渲染网页，并使用接近
+  <a href="https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics#how-googlebot-processes-javascript">Googlebot 发现的任何 JavaScript</a>
+  的最新版本运行这些 JavaScript，所使用的版本与您的浏览器渲染网页时类似，例如
+  <a href="https://www.google.com/chrome/" class="external-link">Chrome</a>。渲染非常重要，因为网站通常依赖 JavaScript 将内容加载到网页中；
+  如果不进行渲染，Google 可能看不到这些内容。
+</p>
+<p>
+  抓取取决于 Google 的爬虫能否访问网站。Googlebot 访问网站时常见的问题包括：
+</p>
+<ul>
+  <li>
+    <a href="https://developers.google.com/search/docs/crawling-indexing/http-network-errors#http-status-codes">服务器处理网站时出现问题</a>
+  </li>
+  <li>
+    <a href="https://developers.google.com/crawling/docs/troubleshooting/dns-network-errors">网络问题</a>
+  </li>
+  <li>
+    <a href="https://developers.google.com/search/docs/crawling-indexing/robots/intro">robots.txt 规则阻止 Googlebot 访问网页</a>
+  </li>
+</ul>
+
+<h2 id="indexing" data-text="编入索引" tabindex="-1">编入索引</h2>
+<p>
+  网页被抓取后，Google 会尝试了解网页的主题。这个阶段称为编入索引，其中包括处理和分析文本内容，以及关键内容标记和属性，例如
+  <a href="https://developers.google.com/search/docs/appearance/title-link"><code translate="no" dir="ltr">&lt;title&gt;</code> 元素</a>、alt 属性、
+  <a href="https://developers.google.com/search/docs/appearance/google-images">图片</a>、
+  <a href="https://developers.google.com/search/docs/appearance/video">视频</a>等。
+</p>
+<div class="video-wrapper">
+  <devsite-video video-id="pe-NSvBTg2o">
+  </devsite-video>
+</div>
+<p>
+  在编入索引的过程中，Google 会判断网页是否是互联网上另一个网页的
+  <a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">重复网页或规范网页</a>。
+  规范网页是可能显示在搜索结果中的网页。为了选择规范网页，我们首先将互联网上发现的内容相似的网页归为一组（也称为聚类），
+  然后选择最能代表该组的网页。组中的其他网页属于替代版本，可能会在不同场景中提供，例如用户使用移动设备搜索，或查找该组中的某个具体网页时。
+</p>
+<p>
+  Google 还会收集有关规范网页及其内容的信号，这些信号可能会用于下一阶段，即在搜索结果中提供网页。信号包括网页使用的语言、内容所属的国家/地区以及网页的易用性。
+</p>
+<p>
+  有关规范网页及其集群的信息可能会存储在 Google 索引中。Google 索引是一个托管在数千台计算机上的大型数据库。
+  Google 不保证一定会编入索引；Google 处理的网页并非都会被编入索引。
+</p>
+<p>
+  编入索引还取决于网页的内容及其元数据。常见的索引问题包括：
+</p>
+<ul>
+  <li>
+    <a href="https://developers.google.com/search/docs/essentials">网页内容质量较低</a>
+  </li>
+  <li>
+    <a href="https://developers.google.com/search/docs/crawling-indexing/block-indexing"><span translate="no">Robots</span> <code translate="no" dir="ltr">meta</code> 规则禁止编入索引</a>
+  </li>
+  <li>
+    <a href="https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics">网站设计可能导致编入索引变得困难</a>
+  </li>
+</ul>
+<h2 id="serving" data-text="提供搜索结果" tabindex="-1">提供搜索结果</h2>
+<aside class="note">
+  Google 不接受付款来提高网页排名，排名通过程序完成。<a href="https://www.google.com/search/howsearchworks/our-approach/ads-on-search/" class="external-link">详细了解 Google 搜索中的广告</a>。
+</aside>
+<p>
+  用户输入查询后，我们的计算机会在索引中搜索匹配的网页，并返回我们认为质量最高且与查询最相关的结果。相关性由数百种因素决定，
+  其中可能包括用户所在位置、语言和设备（台式机或手机）等信息。例如，搜索“自行车维修店”时，巴黎用户看到的结果与香港用户看到的结果会有所不同。
+</p>
+<div class="video-wrapper">
+  <devsite-video video-id="lgQazesEjO4">
+  </devsite-video>
+</div>
+<p>
+  根据用户的查询，搜索结果页上显示的搜索功能也会发生变化。例如，搜索“自行车维修店”可能会显示本地结果，而不会显示
+  <a href="https://developers.google.com/search/docs/appearance/visual-elements-gallery#image-result">图片结果</a>；
+  但搜索“现代自行车”更可能显示图片结果，而不会显示本地结果。您可以在我们的
+  <a href="https://developers.google.com/search/docs/appearance/visual-elements-gallery">视觉元素库</a>中探索 Google 网页搜索中最常见的界面元素。
+</p>
+<p>
+  Search Console 可能会告诉您网页已编入索引，但您在搜索结果中看不到该网页。原因可能包括：
+</p>
+<ul>
+  <li>
+    <a href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide#expect-search-terms">网页内容与用户的查询无关</a>
+  </li>
+  <li>
+    <a href="https://developers.google.com/search/docs/essentials">内容质量较低</a>
+  </li>
+  <li>
+    <a href="https://developers.google.com/search/docs/crawling-indexing/block-indexing"><span translate="no">Robots</span> <code translate="no" dir="ltr">meta</code> 规则阻止提供该网页</a>
+  </li>
+</ul>
+<p>
+  本指南介绍了 Google 搜索的工作方式，同时我们也一直在改进算法。您可以关注
+  <a href="https://developers.google.com/search/blog">Google 搜索中心博客</a>，了解这些变化。
+</p>
+
+  
+  
+  
+  
+
+  
+    <devsite-hats-survey class="nocontent" data-nosnippet hats-id="egUfosvgZ0gb2CML1jd0VMoBx2ec" listnr-id="103417"></devsite-hats-survey>
+  
+</div>

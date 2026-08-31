@@ -1,0 +1,11 @@
+{
+  "operationId": "tutorial-import-google-search-works-20260831",
+  "generation": "tutorial-import-google-search-works-20260831",
+  "slug": "google-search-works",
+  "sourceKey": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+  "locales": [
+    "zh-CN",
+    "en"
+  ],
+  "committedAt": "2026-08-31T11:07:32.651Z"
+}

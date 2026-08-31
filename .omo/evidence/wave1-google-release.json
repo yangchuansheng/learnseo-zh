@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "kind": "learningseo-wave-release-record",
+  "waveId": "wave-1-official-google",
+  "status": "published",
+  "sourceRights": {
+    "publisher": "Google Search Central / Google for Developers",
+    "sitePoliciesUrl": "https://developers.google.com/terms/site-policies",
+    "proseLicense": {
+      "text": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "codeLicense": {
+      "text": "Apache License 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "modifications": "The published Chinese pair preserves the source semantics, semantic HTML, heading IDs, links, and numeric facts while providing a Simplified Chinese translation."
+  },
+  "sources": [
+    {
+      "sourceId": "google-search-works",
+      "slug": "google-search-works",
+      "requestedUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+      "canonicalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+      "sourcePath": "/seo_roadmap/seo-fundamentals/",
+      "bodySelector": ".devsite-article-body",
+      "sourceUpdatedAt": "2025-12-18T00:00:00.000Z",
+      "capturedAt": "2026-08-31T11:02:59.981Z",
+      "sourceContentHash": "39344c4da00d1282cf1e43d8d5afaf5fdbf25941c8c32af5e5343abe485eded6",
+      "englishContentHash": "db982ba4f4e98ff65840297afa4f86f67842a15e49361763da621ecee8660cdd",
+      "chineseContentHash": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980",
+      "metadata": {
+        "descriptionNormalization": "Decode HTML character references before publishing metadata",
+        "sourceSnapshotDescription": "Get an in-depth understanding of how Google Search works and improve your site for Google&#39;s crawling, indexing, and ranking processes.",
+        "publishedDescription": "Get an in-depth understanding of how Google Search works and improve your site for Google's crawling, indexing, and ranking processes."
+      },
+      "snapshotEvidence": ".omo/evidence/wave1-google-search-works-snapshot.json",
+      "translationEvidence": ".omo/evidence/wave1-google-search-works.zh-CN.html",
+      "reviewEvidence": ".omo/evidence/wave1-google-search-works.review.json",
+      "import": {
+        "operationId": "tutorial-import-google-search-works-20260831",
+        "journal": "src/content/tutorials/.import-journal/tutorial-import-google-search-works-20260831.json",
+        "reviewOperationId": "tutorial-review-google-search-works-1788174567127"
+      },
+      "normalizedBody": {
+        "contentMetrics": {
+          "h1": 1,
+          "h2": 5,
+          "p": 18,
+          "ul": 3,
+          "ol": 1,
+          "li": 12,
+          "a": 29,
+          "code": 3
+        },
+        "numericFacts": [500],
+        "media": {
+          "images": 0,
+          "iframes": 0,
+          "audio": 0,
+          "sanitizedDevsiteVideoWrappers": 4
+        }
+      },
+      "publishedRoutes": [
+        "/tutorials/google-search-works/",
+        "/en/tutorials/google-search-works/"
+      ]
+    },
+    {
+      "sourceId": "google-search-essentials",
+      "slug": "google-search-essentials",
+      "requestedUrl": "https://developers.google.com/search/docs/essentials",
+      "canonicalUrl": "https://developers.google.com/search/docs/essentials",
+      "sourcePath": "/seo_roadmap/seo-fundamentals/",
+      "bodySelector": ".devsite-article-body",
+      "sourceUpdatedAt": "2025-12-10T00:00:00.000Z",
+      "capturedAt": "2026-08-31T11:03:09.263Z",
+      "sourceContentHash": "548e6ccb2b1ba0b7399434c1b9784b507744a98cef92c608b7f3b17e94b024b3",
+      "englishContentHash": "a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22",
+      "chineseContentHash": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7",
+      "snapshotEvidence": ".omo/evidence/wave1-google-search-essentials-snapshot.json",
+      "translationEvidence": ".omo/evidence/wave1-google-search-essentials.zh-CN.html",
+      "reviewEvidence": ".omo/evidence/wave1-google-search-essentials.review.json",
+      "import": {
+        "operationId": "tutorial-import-google-search-essentials-20260831",
+        "journal": "src/content/tutorials/.import-journal/tutorial-import-google-search-essentials-20260831.json",
+        "reviewOperationId": "tutorial-review-google-search-essentials-1788174610957"
+      },
+      "normalizedBody": {
+        "contentMetrics": {
+          "h1": 1,
+          "h2": 3,
+          "p": 5,
+          "ul": 2,
+          "li": 10,
+          "a": 14
+        },
+        "numericFacts": [],
+        "media": {
+          "images": 0,
+          "iframes": 0,
+          "audio": 0,
+          "sanitizedDevsiteVideoWrappers": 0
+        }
+      },
+      "publishedRoutes": [
+        "/tutorials/google-search-essentials/",
+        "/en/tutorials/google-search-essentials/"
+      ]
+    }
+  ],
+  "resourceCardConversion": {
+    "waveConverted": 2,
+    "publishedConvertedTotal": 3,
+    "fallbackTotal": 2149,
+    "totalOccurrences": 2152,
+    "renderedOccurrences": 4304,
+    "unknownFragments": 31,
+    "report": "src/content/tutorials/resource-link-report.json",
+    "map": "src/components/sites/learningseo-io-071dae18/shared/links.ts",
+    "convertedSourceKeys": [
+      "https://developers.google.com/search/docs/fundamentals/how-search-works",
+      "https://developers.google.com/search/docs/essentials"
+    ]
+  },
+  "rollback": {
+    "pilotBaselinePreserved": true,
+    "pilotSlug": "google-seo-starter-guide",
+    "previousGeneration": "tutorial-import-google-search-works-20260831",
+    "currentGeneration": "tutorial-import-google-search-essentials-20260831",
+    "generationMarker": "src/content/tutorials/import-generation.json",
+    "backupArtifacts": [
+      "src/content/tutorials/import-generation.json.backup-tutorial-import-google-search-works-20260831",
+      "src/content/tutorials/manifest.json.backup-tutorial-import-google-search-works-20260831",
+      "src/content/tutorials/manifest.en.json.backup-tutorial-import-google-search-works-20260831",
+      "src/content/tutorials/import-generation.json.backup-tutorial-import-google-search-essentials-20260831",
+      "src/content/tutorials/manifest.json.backup-tutorial-import-google-search-essentials-20260831",
+      "src/content/tutorials/manifest.en.json.backup-tutorial-import-google-search-essentials-20260831"
+    ],
+    "journals": [
+      "src/content/tutorials/.import-journal/tutorial-import-google-search-works-20260831.json",
+      "src/content/tutorials/.import-journal/tutorial-import-google-search-essentials-20260831.json"
+    ]
+  },
+  "verification": {
+    "offline": [
+      "npm run tutorials:check -- --contract",
+      "npm run tutorials:check",
+      "npm run tutorials:release-gates",
+      "npm run tutorials:inventory",
+      "npm run tutorials:source-decisions",
+      "npm run tutorials:migration-waves"
+    ],
+    "runtime": [
+      "BASE_URL=http://127.0.0.1:3107 npm run tutorials:release-gates -- --runtime",
+      "Targeted Playwright checks for Chinese and English roadmap cards and both bilingual tutorial routes",
+      "npm run test:smoke"
+    ],
+    "fullCheck": "npm run check",
+    "result": "passed"
+  }
+}

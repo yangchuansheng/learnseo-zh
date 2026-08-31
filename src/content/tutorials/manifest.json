@@ -2,9 +2,287 @@
   "$schema": "https://learningseo.io/schemas/tutorial-manifest.json",
   "schemaVersion": 1,
   "locale": "zh-CN",
-  "generation": "tutorial-import-google-seo-starter-guide-20260830-2",
+  "generation": "tutorial-import-google-search-essentials-20260831",
   "activeVersion": 1,
   "routes": [
+    {
+      "slug": "google-search-essentials",
+      "path": "/tutorials/google-search-essentials/",
+      "title": "Google 搜索要点",
+      "description": "Google 搜索要点构成了网络内容（网页、图片、视频或 Google 在网络上找到的其他公开材料）能够出现在 Google 搜索中并获得良好表现的核心条件：",
+      "provider": "Google Search Central / Google for Developers",
+      "status": "published",
+      "sourceKey": "https://developers.google.com/search/docs/essentials",
+      "source": {
+        "title": "Google Search Essentials",
+        "provider": "Google Search Central / Google for Developers",
+        "author": null,
+        "canonicalUrl": "https://developers.google.com/search/docs/essentials",
+        "sourcePath": "/seo_roadmap/seo-fundamentals/",
+        "requestedUrl": "https://developers.google.com/search/docs/essentials",
+        "finalUrl": "https://developers.google.com/search/docs/essentials",
+        "contentType": "text/html",
+        "license": {
+          "text": "CC BY 4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      },
+      "snapshot": {
+        "version": 1,
+        "capturedAt": "2026-08-31T11:03:09.263Z",
+        "sourceUpdatedAt": "2025-12-10T00:00:00.000Z",
+        "pageCanonicalUrl": "https://developers.google.com/search/docs/essentials",
+        "canonicalMatched": true,
+        "requestedUrl": "https://developers.google.com/search/docs/essentials",
+        "finalUrl": "https://developers.google.com/search/docs/essentials",
+        "sourceContentHash": "548e6ccb2b1ba0b7399434c1b9784b507744a98cef92c608b7f3b17e94b024b3",
+        "contentHash": "a761687f686a4baf40ab6fd00be54701e5bd963a90213a558286d5b5735b0c22",
+        "translationContentHash": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7",
+        "history": []
+      },
+      "activeVersion": 1,
+      "translation": {
+        "sourceLanguage": "en",
+        "language": "zh-CN",
+        "translator": "codex-wave1",
+        "translatedAt": "2026-08-31T11:18:00.000Z",
+        "reviewedAt": "2026-08-31T11:22:00.000Z",
+        "sourceSections": 4,
+        "translatedSections": 4,
+        "contentHash": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7",
+        "contentFile": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7.html"
+      },
+      "review": {
+        "decision": "approved",
+        "reviewer": "Codex Wave 1 editorial review",
+        "reviewedAt": "2026-08-31T11:22:00.000Z",
+        "notes": "Approved after verified Google source provenance, CC BY 4.0 attribution, complete Simplified Chinese translation, semantic and link parity, empty media surface, sanitizer, accessibility, metadata, resource-card, runtime, and rollback checks.",
+        "checklist": {
+          "contentComplete": true,
+          "dataPreserved": true,
+          "factsPreserved": true,
+          "logicPreserved": true,
+          "terminologyCorrect": true,
+          "chineseNatural": true,
+          "authorVoicePreserved": true,
+          "linksPreserved": true,
+          "mediaVerified": true,
+          "attributionPresent": true,
+          "seoVerified": true
+        },
+        "history": [
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import awaiting editorial review.",
+            "version": 1,
+            "operationId": "tutorial-import-google-search-essentials-20260831"
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import created by tutorials:import; review and publication remain manual."
+          }
+        ]
+      },
+      "qualification": {
+        "decision": "qualified",
+        "reviewer": "Codex Wave 1 editorial review",
+        "reviewedAt": "2026-08-31T11:22:00.000Z",
+        "checklist": {
+          "publiclyAccessible": true,
+          "continuousBody": true,
+          "topicComplete": true,
+          "singlePage": true,
+          "canonicalVerified": true
+        }
+      },
+      "contentFile": "d1651d701c2273fb6e3ca60370c136a33c9e9da58f041ad49aea60ebb3fb76e7.html",
+      "toc": [
+        {
+          "id": "google-search-essentials",
+          "level": 1,
+          "title": "Google 搜索要点"
+        },
+        {
+          "id": "technical-requirements",
+          "level": 2,
+          "title": "技术要求"
+        },
+        {
+          "id": "spam-policies",
+          "level": 2,
+          "title": "垃圾内容政策"
+        },
+        {
+          "id": "key-best-practices",
+          "level": 2,
+          "title": "关键最佳实践"
+        }
+      ],
+      "media": [],
+      "contentMetrics": {
+        "h1": 1,
+        "h2": 3,
+        "p": 5,
+        "ul": 2,
+        "li": 10,
+        "a": 14
+      },
+      "seo": {
+        "title": "Google 搜索要点",
+        "description": "Google 搜索要点构成了网络内容（网页、图片、视频或 Google 在网络上找到的其他公开材料）能够出现在 Google 搜索中并获得良好表现的核心条件：",
+        "indexable": true,
+        "dateModified": "2025-12-10T00:00:00.000Z"
+      }
+    },
+    {
+      "slug": "google-search-works",
+      "path": "/tutorials/google-search-works/",
+      "title": "有关 Google 搜索工作原理的深入指南",
+      "description": "Google 搜索是一款完全自动化的搜索引擎，它使用称为网络爬虫的软件定期探索网络，查找要添加到索引中的网页。事实上， 我们结果中列出的绝大多数网页都没有由人工手动提交，而是由网络爬虫探索网络后自动发现并添加的。本指南将结合您的网站， 解释 Google 搜索的工作阶段。掌握这些基础知识有助于您解决抓取问题，让网页编入索引，并了解如何优化网站在 Google 搜索中的呈现方式。",
+      "provider": "Google Search Central / Google for Developers",
+      "status": "published",
+      "sourceKey": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+      "source": {
+        "title": "In-depth guide to how Google Search works",
+        "provider": "Google Search Central / Google for Developers",
+        "author": null,
+        "canonicalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "sourcePath": "/seo_roadmap/seo-fundamentals/",
+        "requestedUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "finalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "contentType": "text/html",
+        "license": {
+          "text": "CC BY 4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      },
+      "snapshot": {
+        "version": 1,
+        "capturedAt": "2026-08-31T11:02:59.981Z",
+        "sourceUpdatedAt": "2025-12-18T00:00:00.000Z",
+        "pageCanonicalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "canonicalMatched": true,
+        "requestedUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "finalUrl": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+        "sourceContentHash": "39344c4da00d1282cf1e43d8d5afaf5fdbf25941c8c32af5e5343abe485eded6",
+        "contentHash": "db982ba4f4e98ff65840297afa4f86f67842a15e49361763da621ecee8660cdd",
+        "translationContentHash": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980",
+        "history": []
+      },
+      "activeVersion": 1,
+      "translation": {
+        "sourceLanguage": "en",
+        "language": "zh-CN",
+        "translator": "codex-wave1",
+        "translatedAt": "2026-08-31T11:10:00.000Z",
+        "reviewedAt": "2026-08-31T11:15:00.000Z",
+        "sourceSections": 6,
+        "translatedSections": 6,
+        "contentHash": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980",
+        "contentFile": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980.html"
+      },
+      "review": {
+        "decision": "approved",
+        "reviewer": "Codex Wave 1 editorial review",
+        "reviewedAt": "2026-08-31T11:15:00.000Z",
+        "notes": "Approved after verified Google source provenance, CC BY 4.0 attribution, complete Simplified Chinese translation, semantic and numeric parity, link preservation, empty media surface, sanitizer, accessibility, metadata, resource-card, runtime, and rollback checks.",
+        "checklist": {
+          "contentComplete": true,
+          "dataPreserved": true,
+          "factsPreserved": true,
+          "logicPreserved": true,
+          "terminologyCorrect": true,
+          "chineseNatural": true,
+          "authorVoicePreserved": true,
+          "linksPreserved": true,
+          "mediaVerified": true,
+          "attributionPresent": true,
+          "seoVerified": true
+        },
+        "history": [
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import awaiting editorial review.",
+            "version": 1,
+            "operationId": "tutorial-import-google-search-works-20260831"
+          },
+          {
+            "decision": "pending",
+            "reviewer": null,
+            "reviewedAt": null,
+            "notes": "Draft import created by tutorials:import; review and publication remain manual."
+          }
+        ]
+      },
+      "qualification": {
+        "decision": "qualified",
+        "reviewer": "Codex Wave 1 editorial review",
+        "reviewedAt": "2026-08-31T11:15:00.000Z",
+        "checklist": {
+          "publiclyAccessible": true,
+          "continuousBody": true,
+          "topicComplete": true,
+          "singlePage": true,
+          "canonicalVerified": true
+        }
+      },
+      "contentFile": "606302ef36d84fd687f4a64c5f7f8415b863fae667a70915a94b90adbe4c7980.html",
+      "toc": [
+        {
+          "id": "in-depth-guide-to-how-google-search-works",
+          "title": "有关 Google 搜索工作原理的深入指南",
+          "level": 1
+        },
+        {
+          "id": "a-few-notes-before-we-get-started",
+          "title": "开始之前的几点说明",
+          "level": 2
+        },
+        {
+          "id": "introducing-the-three-stages-of-google-search",
+          "title": "Google 搜索的三个阶段",
+          "level": 2
+        },
+        {
+          "id": "crawling",
+          "title": "抓取",
+          "level": 2
+        },
+        {
+          "id": "indexing",
+          "title": "编入索引",
+          "level": 2
+        },
+        {
+          "id": "serving",
+          "title": "提供搜索结果",
+          "level": 2
+        }
+      ],
+      "media": [],
+      "contentMetrics": {
+        "h1": 1,
+        "h2": 5,
+        "p": 18,
+        "ul": 3,
+        "ol": 1,
+        "li": 12,
+        "a": 29,
+        "code": 3
+      },
+      "seo": {
+        "title": "有关 Google 搜索工作原理的深入指南",
+        "description": "Google 搜索是一款完全自动化的搜索引擎，它使用称为网络爬虫的软件定期探索网络，查找要添加到索引中的网页。事实上， 我们结果中列出的绝大多数网页都没有由人工手动提交，而是由网络爬虫探索网络后自动发现并添加的。本指南将结合您的网站， 解释 Google 搜索的工作阶段。掌握这些基础知识有助于您解决抓取问题，让网页编入索引，并了解如何优化网站在 Google 搜索中的呈现方式。",
+        "indexable": true,
+        "dateModified": "2025-12-18T00:00:00.000Z"
+      }
+    },
     {
       "slug": "google-seo-starter-guide",
       "path": "/tutorials/google-seo-starter-guide/",
@@ -103,138 +381,138 @@
       "toc": [
         {
           "id": "search-engine-optimization-seo-starter-guide",
-          "level": 1,
-          "title": "搜索引擎优化 (SEO) 入门指南"
+          "title": "搜索引擎优化 (SEO) 入门指南",
+          "level": 1
         },
         {
           "id": "hsw",
-          "level": 2,
-          "title": "Google 搜索的工作原理"
+          "title": "Google 搜索的工作原理",
+          "level": 2
         },
         {
           "id": "how-long-must-i-wait",
-          "level": 2,
-          "title": "我多久才能在搜索结果中看到效果？"
+          "title": "我多久才能在搜索结果中看到效果？",
+          "level": 2
         },
         {
           "id": "find",
-          "level": 2,
-          "title": "帮助 Google 找到您的内容"
+          "title": "帮助 Google 找到您的内容",
+          "level": 2
         },
         {
           "id": "check-if-google-can-see",
-          "level": 3,
-          "title": "检查是否向 Google 和用户呈现了相同的网页"
+          "title": "检查是否向 Google 和用户呈现了相同的网页",
+          "level": 3
         },
         {
           "id": "dont-want-a-page-in-googles-search-results",
-          "level": 3,
-          "title": "不希望某个网页出现在 Google 搜索结果中？"
+          "title": "不希望某个网页出现在 Google 搜索结果中？",
+          "level": 3
         },
         {
           "id": "organize",
-          "level": 2,
-          "title": "整理网站"
+          "title": "整理网站",
+          "level": 2
         },
         {
           "id": "use-descriptive-urls",
-          "level": 3,
-          "title": "使用描述性网址"
+          "title": "使用描述性网址",
+          "level": 3
         },
         {
           "id": "group-topically",
-          "level": 3,
-          "title": "在目录中将主题相似的网页归为一组"
+          "title": "在目录中将主题相似的网页归为一组",
+          "level": 3
         },
         {
           "id": "reduce-duplicate-content",
-          "level": 3,
-          "title": "减少重复内容"
+          "title": "减少重复内容",
+          "level": 3
         },
         {
           "id": "make-your-site-interesting",
-          "level": 2,
-          "title": "让网站有趣且实用"
+          "title": "让网站有趣且实用",
+          "level": 2
         },
         {
           "id": "expect-search-terms",
-          "level": 3,
-          "title": "预期读者使用的搜索字词"
+          "title": "预期读者使用的搜索字词",
+          "level": 3
         },
         {
           "id": "distracting-ads",
-          "level": 3,
-          "title": "避免投放会分散用户注意力的广告"
+          "title": "避免投放会分散用户注意力的广告",
+          "level": 3
         },
         {
           "id": "link-to-relevant-resources",
-          "level": 3,
-          "title": "指向相关资源的链接"
+          "title": "指向相关资源的链接",
+          "level": 3
         },
         {
           "id": "good-link-text",
-          "level": 4,
-          "title": "撰写优质链接文字"
+          "title": "撰写优质链接文字",
+          "level": 4
         },
         {
           "id": "link-when-you-need-to",
-          "level": 4,
-          "title": "在需要时提供链接"
+          "title": "在需要时提供链接",
+          "level": 4
         },
         {
           "id": "control-how-your-site-looks",
-          "level": 2,
-          "title": "影响您的网站在 Google 搜索中的外观"
+          "title": "影响您的网站在 Google 搜索中的外观",
+          "level": 2
         },
         {
           "id": "titles",
-          "level": 3,
-          "title": "影响标题链接"
+          "title": "影响标题链接",
+          "level": 3
         },
         {
           "id": "snippets",
-          "level": 3,
-          "title": "控制摘要"
+          "title": "控制摘要",
+          "level": 3
         },
         {
           "id": "images",
-          "level": 2,
-          "title": "向您的网站添加图片并进行优化"
+          "title": "向您的网站添加图片并进行优化",
+          "level": 2
         },
         {
           "id": "add-images-near-text",
-          "level": 3,
-          "title": "在相关文字附近添加高画质图片"
+          "title": "在相关文字附近添加高画质图片",
+          "level": 3
         },
         {
           "id": "add-descriptive-alt-text-to-the-image",
-          "level": 3,
-          "title": "为图片添加描述性替代文本"
+          "title": "为图片添加描述性替代文本",
+          "level": 3
         },
         {
           "id": "videos",
-          "level": 2,
-          "title": "优化您的视频"
+          "title": "优化您的视频",
+          "level": 2
         },
         {
           "id": "promoting",
-          "level": 2,
-          "title": "推广您的网站"
+          "title": "推广您的网站",
+          "level": 2
         },
         {
           "id": "focusing",
-          "level": 2,
-          "title": "我们认为您不应重点关注的方面"
+          "title": "我们认为您不应重点关注的方面",
+          "level": 2
         },
         {
           "id": "next-steps",
-          "level": 2,
-          "title": "后续步骤"
+          "title": "后续步骤",
+          "level": 2
         },
         {
           "id": "resources",
-          "level": 3,
-          "title": "随时了解最新资讯并提出问题"
+          "title": "随时了解最新资讯并提出问题",
+          "level": 3
         }
       ],
       "media": [

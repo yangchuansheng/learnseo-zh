@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "kind": "learningseo-tutorial-snapshot",
+  "adapter": "google-devsite",
+  "slug": "google-search-essentials",
+  "sourcePath": "/seo_roadmap/seo-fundamentals/",
+  "requestedUrl": "https://developers.google.com/search/docs/essentials",
+  "finalUrl": "https://developers.google.com/search/docs/essentials",
+  "canonicalUrl": "https://developers.google.com/search/docs/essentials",
+  "sourceKey": "https://developers.google.com/search/docs/essentials",
+  "canonicalMatched": true,
+  "contentType": "text/html",
+  "title": "Google Search Essentials",
+  "description": "The Google Search Essentials make up the core parts of what makes your web-based content (web pages, images, videos, or other publicly-available material that Google finds on the web) eligible to appear and perform well on Google Search.",
+  "provider": "Google Search Central / Google for Developers",
+  "author": null,
+  "sourceUpdatedAt": "2025-12-10T00:00:00.000Z",
+  "license": {
+    "text": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "capturedAt": "2026-08-31T11:03:09.263Z",
+  "sourceContentHash": "548e6ccb2b1ba0b7399434c1b9784b507744a98cef92c608b7f3b17e94b024b3",
+  "html": "<article>\n\n  \n    \n    \n  <h1 class=\"page-title\" id=\"google-search-essentials\" data-text=\"Google Search Essentials\" tabindex=\"-1\">Google Search Essentials</h1>\n  \n<p>\n  The Google Search Essentials make up the core parts of what makes your web-based content\n  (web pages, images, videos, or other publicly-available material that Google finds on the web)\n  eligible to appear and perform well on Google Search:\n</p>\n<ul>\n  <li><b>Technical requirements</b>: What Google needs from a web page to show it in Google Search.</li>\n  <li><b>Spam policies</b>: The behaviors and tactics that can lead to lower ranking or being completely omitted from Google Search results.</li>\n  <li><b>Key best practices</b>: The main things that can help improve how your site appears in Google Search results.</li>\n</ul>\n<p>\n  It doesn't cost any money to appear in Google Search results, no matter what anyone tries to tell you.\n  It's important to note that just because a page meets all of these requirements and\n  best practices, doesn't mean that Google will crawl, index, or serve its content. Learn more\n  about <a href=\"https://developers.google.com/search/docs/fundamentals/how-search-works\">How Search Works</a>.\n</p>\n<h2 id=\"technical-requirements\" data-text=\"   Technical requirements \" tabindex=\"-1\">\n  Technical requirements\n</h2>\n<p>\n  The <a href=\"https://developers.google.com/search/docs/essentials/technical\">technical requirements</a> cover the bare\n  minimum that Google Search needs from a web page in order to show it in search results. There\n  are actually very few technical things you need to do to a web page; most sites pass the\n  technical requirements without even realizing it.\n</p>\n<h2 id=\"spam-policies\" data-text=\"   Spam policies \" tabindex=\"-1\">\n  Spam policies\n</h2>\n<p>The <a href=\"https://developers.google.com/search/docs/essentials/spam-policies\">spam policies</a> detail the behaviors\n  and tactics that can lead to a page or an entire site being ranked lower or completely omitted\n  from Google Search. Sites that focus on providing the best content and experience for people\n  and uphold the spirit of our principles are more likely to do well in Google Search results.</p>\n<h2 id=\"key-best-practices\" data-text=\"   Key best practices \" tabindex=\"-1\">\n  Key best practices\n</h2>\n<p>\n  While there are many things you can do to <a href=\"https://developers.google.com/search/docs\">improve your site's SEO</a>,\n  there are a few core practices that can have the most impact on your web content's ranking and\n  appearance on Google Search:\n</p>\n<ul>\n  <li><a href=\"https://developers.google.com/search/docs/fundamentals/creating-helpful-content\">Create helpful, reliable, people-first content</a>.</li>\n  <li>Use words that people would use to look for your content, and place those words in\n    prominent locations on the page, such as the <a href=\"https://developers.google.com/search/docs/appearance/title-link#page-titles\">title and main heading</a>\n    of a page, and other descriptive locations such as <a href=\"https://developers.google.com/search/docs/appearance/google-images#use-descriptive-alt-text\">alt text</a>\n    and link text.</li>\n  <li><a href=\"https://developers.google.com/search/docs/crawling-indexing/links-crawlable#crawlable-links\">Make your links crawlable</a>\n    so that Google can find other pages on your site via the links on your page.</li>\n  <li>Tell people about your site. Be active in communities where you can tell like-minded people\n    about your services and products that you mention on your site.</li>\n  <li>If you have other content, such as <a href=\"https://developers.google.com/search/docs/appearance/google-images\">images</a>,\n    <a href=\"https://developers.google.com/search/docs/appearance/video\">videos</a>, <a href=\"https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data\">structured data</a>,\n    and <a href=\"https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics\">JavaScript</a>,\n    make sure you're following those specific best practices so that we can understand those parts\n    of your page too.</li>\n  <li>Enhance <a href=\"https://developers.google.com/search/docs/appearance/visual-elements-gallery\">how your site appears</a> on Google Search\n    by enabling features that make sense for your site.</li>\n  <li>If you have content that shouldn't be found in search results or you want to opt out entirely,\n    use the appropriate method for <a href=\"https://developers.google.com/search/docs/crawling-indexing/control-what-you-share\">controlling how your content appears in Google Search</a>.</li>\n</ul>\n\n  \n  \n  \n  \n\n  \n    <devsite-hats-survey class=\"nocontent\" data-nosnippet hats-id=\"egUfosvgZ0gb2CML1jd0VMoBx2ec\" listnr-id=\"103417\"></devsite-hats-survey>\n  \n</div>",
+  "media": [],
+  "provenance": {
+    "requestedUrl": "https://developers.google.com/search/docs/essentials",
+    "finalUrl": "https://developers.google.com/search/docs/essentials",
+    "canonicalUrl": "https://developers.google.com/search/docs/essentials",
+    "contentType": "text/html; charset=utf-8",
+    "extractionSelector": ".devsite-article-body",
+    "redirects": []
+  }
+}

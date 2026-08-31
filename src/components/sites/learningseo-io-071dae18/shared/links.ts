@@ -12,6 +12,14 @@ const publishedTutorialResourcePaths = new Map([
     normalizeSourceKey("https://developers.google.com/search/docs/fundamentals/seo-starter-guide"),
     "/tutorials/google-seo-starter-guide/",
   ],
+  [
+    normalizeSourceKey("https://developers.google.com/search/docs/fundamentals/how-search-works"),
+    "/tutorials/google-search-works/",
+  ],
+  [
+    normalizeSourceKey("https://developers.google.com/search/docs/essentials"),
+    "/tutorials/google-search-essentials/",
+  ],
 ]);
 
 function isPublicPath(pathname: string): boolean {
