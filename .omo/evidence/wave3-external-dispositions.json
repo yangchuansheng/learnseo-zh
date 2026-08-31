@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "kind": "seo-fundamentals-wave-3-external-dispositions",
+  "waveId": "wave-3-manual-or-external",
+  "capturedAt": "2026-08-31T15:59:54.865Z",
+  "policy": {
+    "htmlPersisted": false,
+    "mediaDownloaded": false,
+    "tutorialRoutesCreated": false,
+    "livePreflightRequired": true
+  },
+  "cards": {
+    "en": {
+      "moz-beginners-guide": {
+        "titleAttribute": "The Beginner’s Guide to SEO",
+        "heading": "The Beginner’s Guide to SEO"
+      },
+      "contentking-conductor-hub": {
+        "titleAttribute": "Technical SEO articles",
+        "heading": "Technical SEO articles"
+      },
+      "semrush-seo-essentials-course": {
+        "titleAttribute": "SEO Essentials with Semrush",
+        "heading": "SEO Essentials with Semrush"
+      }
+    },
+    "zh": {
+      "moz-beginners-guide": {
+        "titleAttribute": "SEO 初学者指南",
+        "heading": "SEO 初学者指南"
+      },
+      "contentking-conductor-hub": {
+        "titleAttribute": "技术 SEO 文章",
+        "heading": "技术 SEO 文章"
+      },
+      "semrush-seo-essentials-course": {
+        "titleAttribute": "Semrush SEO 要点课程",
+        "heading": "Semrush SEO 要点课程"
+      }
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "moz-beginners-guide",
+      "provider": "Moz",
+      "requestedUrl": "https://moz.com/beginners-guide-to-seo",
+      "finalUrl": "https://moz.com/beginners-guide-to-seo",
+      "canonicalUrl": "https://moz.com/beginners-guide-to-seo",
+      "redirectChain": [],
+      "requestedStatus": 200,
+      "requestedContentType": "text/html; charset=UTF-8",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=utf-8",
+      "httpLastModified": "Tue, 25 Aug 2026 01:06:39 GMT",
+      "httpEtag": null,
+      "title": "Beginner's Guide to SEO (Search Engine Optimization) - Moz",
+      "heading": "The Beginner's Guide to SEO",
+      "sourceUpdatedAt": {
+        "jsonLdDateModified": "2025-12-02T21:37:11.000Z",
+        "httpLastModified": "Tue, 25 Aug 2026 01:06:39 GMT"
+      },
+      "sourceContentHash": "67a316b2b2166372902d07371b975c19311635da7a807adf57f96bcba774cc0a",
+      "sourceContentLengthBytes": 102362,
+      "topology": {
+        "kind": "series-index",
+        "selector": ".article-body within .guides-chapter",
+        "childPaths": [
+          "/beginners-guide-to-seo",
+          "/beginners-guide-to-seo/quick-start-guide",
+          "/beginners-guide-to-seo/why-search-engine-marketing-is-necessary",
+          "/beginners-guide-to-seo/how-search-engines-operate",
+          "/beginners-guide-to-seo/keyword-research",
+          "/beginners-guide-to-seo/on-page-seo",
+          "/beginners-guide-to-seo/technical-seo",
+          "/beginners-guide-to-seo/growing-popularity-and-links",
+          "/beginners-guide-to-seo/measuring-and-tracking-success",
+          "/beginners-guide-to-seo/seo-glossary"
+        ],
+        "bodyMetrics": {
+          "h2": 3,
+          "h3": 2,
+          "p": 33,
+          "ol": 1,
+          "li": 7,
+          "a": 16,
+          "img": 3
+        },
+        "excluded": [
+          "site navigation",
+          "series table of contents",
+          "academy CTA",
+          "lead form"
+        ],
+        "importBoundary": "one independently qualified child chapter"
+      },
+      "terms": {
+        "requestedUrl": "https://moz.com/terms-of-use",
+        "finalUrl": "https://moz.com/terms-of-use",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "lastModified": "Tue, 25 Aug 2026 01:35:11 GMT",
+        "contentHash": "c506f4f9535fe0ed76d1df0a8b99a107c464c753a4f03723d44e3d7e76d722dc",
+        "contentLengthBytes": 106251,
+        "assertions": {
+          "Moz Trademarks": true,
+          "prior written consent": true
+        }
+      },
+      "disposition": "manual-series",
+      "importMode": "manual-series-child-only",
+      "routeSlug": null,
+      "persisted": {
+        "sourceBody": false,
+        "media": false,
+        "tutorialRoute": false
+      }
+    },
+    {
+      "sourceId": "contentking-conductor-hub",
+      "provider": "ContentKing/Conductor",
+      "requestedUrl": "https://www.contentkingapp.com/academy/seo-guide/",
+      "finalUrl": "https://www.conductor.com/academy/technical-seo-hub/",
+      "canonicalUrl": "https://www.conductor.com/academy/technical-seo-hub/",
+      "redirectChain": [
+        {
+          "from": "https://www.contentkingapp.com/academy/seo-guide/",
+          "to": "https://www.conductor.com/academy/technical-seo-hub/",
+          "status": 301
+        }
+      ],
+      "requestedStatus": 301,
+      "requestedContentType": "text/html; charset=UTF-8",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=utf-8",
+      "httpLastModified": null,
+      "httpEtag": null,
+      "title": "Technical SEO Resources | Conductor",
+      "heading": "Technical SEO articles",
+      "sourceUpdatedAt": {
+        "jsonLdDateModified": null,
+        "httpLastModified": null
+      },
+      "sourceContentHash": "a91394d234e3c1e105c7275f924ffa12a14bed5ba1c22f333cb804b62397a485",
+      "sourceContentLengthBytes": 514537,
+      "topology": {
+        "kind": "collection-grid",
+        "selector": "filter controls plus ArticleCardBuilder cards",
+        "bodyMetrics": {
+          "h1": 1,
+          "h2": 1,
+          "h3": 4,
+          "p": 3,
+          "ul": 19,
+          "ol": 1,
+          "li": 83,
+          "a": 123,
+          "img": 35,
+          "iframe": 1,
+          "form": 1,
+          "input": 1,
+          "button": 4
+        },
+        "excluded": [
+          "filter state",
+          "article-card thumbnails",
+          "tracking iframe",
+          "lead form"
+        ],
+        "importBoundary": "one future article with its own canonical, body, and rights review"
+      },
+      "terms": {
+        "requestedUrl": "https://www.conductor.com/legal/terms-of-use/",
+        "finalUrl": "https://www.conductor.com/legal/terms-of-use/",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "lastModified": null,
+        "contentHash": "89bfd1883b2009e09bf562c42ad6617ba963c525aefe94f4461d0aaa35e35a94",
+        "contentLengthBytes": 376991,
+        "assertions": {
+          "personal, non-commercial use only": true,
+          "must not reproduce": true
+        }
+      },
+      "disposition": "external-collection",
+      "importMode": "external-only",
+      "routeSlug": null,
+      "persisted": {
+        "sourceBody": false,
+        "media": false,
+        "tutorialRoute": false
+      }
+    },
+    {
+      "sourceId": "semrush-seo-essentials-course",
+      "provider": "Semrush",
+      "requestedUrl": "https://www.semrush.com/academy/courses/seo-fundamentals-course-with-greg-gifford/",
+      "finalUrl": "https://www.semrush.com/academy/courses/seo-essentials-with-semrush/",
+      "canonicalUrl": "https://www.semrush.com/academy/courses/seo-essentials-with-semrush/",
+      "redirectChain": [
+        {
+          "from": "https://www.semrush.com/academy/courses/seo-fundamentals-course-with-greg-gifford/",
+          "to": "https://www.semrush.com/academy/courses/seo-essentials-with-semrush/",
+          "status": 308
+        }
+      ],
+      "requestedStatus": 308,
+      "requestedContentType": null,
+      "httpStatus": 200,
+      "contentType": "text/html; charset=utf-8",
+      "httpLastModified": null,
+      "httpEtag": "\"hgbnhfepwv5le7\"",
+      "title": "Beginner SEO with Semrush: Learn SEO Fundamentals & AI Optimization - Semrush Academy",
+      "heading": "SEO Essentials with Semrush",
+      "sourceUpdatedAt": {
+        "jsonLdDateModified": null,
+        "httpLastModified": null
+      },
+      "sourceContentHash": "e0a73ea5a5fd0d4790c648a787fda944be44c687ab4c20637f39c65f5bd44652",
+      "sourceContentLengthBytes": 261097,
+      "topology": {
+        "kind": "course-application",
+        "selector": ".course-default with .course-structure-item",
+        "bodyMetrics": {
+          "h1": 1,
+          "h2": 9,
+          "h3": 20,
+          "p": 103,
+          "ul": 11,
+          "li": 64,
+          "a": 140,
+          "img": 3,
+          "button": 23
+        },
+        "courseItems": 20,
+        "excluded": [
+          "enrollment",
+          "certificate",
+          "account walkthroughs",
+          "lesson playback"
+        ],
+        "importBoundary": "one future public lesson with its own canonical, body, and rights review"
+      },
+      "terms": {
+        "requestedUrl": "https://www.semrush.com/company/legal/website-terms-of-use/",
+        "finalUrl": "https://www.semrush.com/company/legal/website-terms-of-use/",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "lastModified": null,
+        "contentHash": "666e85010dcbef354e08be7253af1756fc9ca368f69347da89ff6bdb08349f7d",
+        "contentLengthBytes": 130931,
+        "assertions": {
+          "may not be copied": true,
+          "approved in writing": true
+        }
+      },
+      "disposition": "external-course",
+      "importMode": "external-only",
+      "routeSlug": null,
+      "persisted": {
+        "sourceBody": false,
+        "media": false,
+        "tutorialRoute": false
+      }
+    }
+  ]
+}

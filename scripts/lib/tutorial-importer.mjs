@@ -540,7 +540,7 @@ function visibleText(html) {
   return decodeBasicEntities(html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
 }
 
-function canonicalFromHtml(html, fallbackUrl) {
+export function canonicalFromHtml(html, fallbackUrl) {
   for (const match of html.matchAll(/<link\b[^>]*>/gi)) {
     const attrs = parseAttributes(match[0]);
     if (attrs.get("rel")?.toLowerCase().split(/\s+/).includes("canonical")) {
@@ -568,7 +568,7 @@ function metaContent(html, name) {
   return "";
 }
 
-function sourceUpdatedAtFromHtml(html) {
+export function sourceUpdatedAtFromHtml(html) {
   const timeTag = html.match(/<time\b[^>]*datetime\s*=\s*(["'])(.*?)\1[^>]*>/i);
   if (timeTag && Number.isFinite(Date.parse(timeTag[2]))) return new Date(timeTag[2]).toISOString();
   const updated = visibleText(html).match(/Last updated\s+(\d{4}-\d{2}-\d{2})\s+UTC/i);
@@ -592,7 +592,7 @@ function providerFromUrl(finalUrl) {
   return hostname;
 }
 
-function extractElementByClass(html, className) {
+export function extractElementByClass(html, className) {
   const tagPattern = /<!--[\s\S]*?(?:-->|$)|<\/?([a-z][\w:-]*)\b[^>]*>/gi;
   let captureTag = null;
   let start = -1;
@@ -731,7 +731,7 @@ function positiveAttr(value) {
   return parsed > 0 ? parsed : undefined;
 }
 
-async function fetchSourceHtml(initialUrl) {
+export async function fetchSourceHtml(initialUrl) {
   let current = initialUrl;
   const seen = new Set();
   const redirects = [];
@@ -769,6 +769,8 @@ async function fetchSourceHtml(initialUrl) {
       contentType,
       status,
       redirects,
+      lastModified: responseHeader(response.headers, "last-modified") || null,
+      etag: responseHeader(response.headers, "etag") || null,
     };
   }
   fail("redirect-loop", `Redirect limit exceeded after ${maxRedirects} hops`);
