@@ -2,7 +2,7 @@
   "locale": "zh-CN",
   "sourceContentSha256": "5acd71d3c08dc443b6d51a95f7a065118561a17b52d03cbf097a9a75b9e7d02e",
   "localizedContentSha256": "db93fbe703b4a219d0e664cdb5de0d0b048f9cfca158af9dd9c4b5335f30ff71",
-  "sourceManifestSha256": "c22162f9ebb95bafb7a9519cc512a1ee511b9bc579a27a90afee2fb9e3d21b1d",
+  "sourceManifestSha256": "2cc60c596c5d55ad752765beb149261da41a46ccb48e1f7c21747f1a9dc17103",
   "segments": {
     "1": "1",
     "2": "2",
@@ -4955,9 +4955,9 @@
       "sourceSha256": "526a9483ba58ad98a7cd715271d7c8e66b368b245c843d4b0908265b04aad579",
       "localizedSha256": "66076d95653719c76e5c76858b833b69df0d230f0f0a20562b814b070ead4b2d"
     },
-    "5403f1ab90285065f3dfa1f5989103658265ad192132de9f64f993a8273c0044.html": {
-      "sourceSha256": "5403f1ab90285065f3dfa1f5989103658265ad192132de9f64f993a8273c0044",
-      "localizedSha256": "6738a6f5574984ac71f96780bc1b941c9c6361ac890caf9be5b90dac1cff2c28"
+    "8968768137f43b7622924284b262b5fcc03cc2df0488ab0a333def9c14128c40.html": {
+      "sourceSha256": "8968768137f43b7622924284b262b5fcc03cc2df0488ab0a333def9c14128c40",
+      "localizedSha256": "250fa6d21d963bb3f9b596df3d9212f6460ba0548324043e5ae8c8d48f699817"
     },
     "5559be6759beb191dd7a22ef3e358a81bfa0eedbbecdb79b096bbec3a616c41b.html": {
       "sourceSha256": "5559be6759beb191dd7a22ef3e358a81bfa0eedbbecdb79b096bbec3a616c41b",

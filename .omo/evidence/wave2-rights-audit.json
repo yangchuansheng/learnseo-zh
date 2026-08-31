@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 1,
+  "kind": "seo-fundamentals-wave-2-rights-audit",
+  "waveId": "wave-2-rights-reviewed",
+  "capturedAt": "2026-08-31T15:34:31.773Z",
+  "policy": {
+    "collectionConcurrency": 1,
+    "htmlPersisted": false,
+    "mediaDownloaded": false,
+    "termsBodiesPersisted": false,
+    "sourceTermsReviewed": true,
+    "promotionBarrier": "rights approval plus all release gates"
+  },
+  "resourceLinkDisposition": {
+    "sharedLinksAction": "preserve-published-source-map",
+    "newInternalMappings": [],
+    "reportPath": "src/content/tutorials/resource-link-report.json",
+    "reportStatus": "unchanged",
+    "reportBaseline": {
+      "total": 2152,
+      "unique": 912,
+      "converted": 3,
+      "fallback": 2149,
+      "rendered": 4304
+    }
+  },
+  "sources": [
+    {
+      "sourceId": "ahrefs-seo-basics",
+      "slug": "ahrefs-seo-basics",
+      "provider": "Ahrefs",
+      "author": "Joshua Hardwick",
+      "requestedUrl": "https://ahrefs.com/blog/seo-basics/",
+      "finalUrl": "https://ahrefs.com/seo/seo-basics",
+      "canonicalUrl": "https://ahrefs.com/seo/seo-basics",
+      "sourceKey": "https://ahrefs.com/seo/seo-basics",
+      "contentType": "text/html",
+      "httpStatus": 200,
+      "redirects": [
+        {
+          "from": "https://ahrefs.com/blog/seo-basics/",
+          "to": "https://ahrefs.com/seo/seo-basics",
+          "status": 301
+        }
+      ],
+      "sourceUpdatedAt": null,
+      "httpLastModified": null,
+      "httpEtag": null,
+      "sourceContentHash": "291b0a9f267054a8af17aad74ecd894f50cbd87bbc0565c63a26e301d4214e07",
+      "rawHtmlHash": "64531cc134b630c16efd02a03342e8cbd6e09d6852110c66116a974c2c312595",
+      "rawMetrics": {
+        "h1": 1,
+        "h2": 7,
+        "h3": 28,
+        "h4": 8,
+        "p": 130,
+        "ul": 7,
+        "ol": 1,
+        "li": 34,
+        "a": 241,
+        "img": 47,
+        "button": 10
+      },
+      "rawLexicalMetrics": {
+        "h1": 1,
+        "h2": 7,
+        "h3": 28,
+        "h4": 8,
+        "p": 130,
+        "ul": 7,
+        "ol": 1,
+        "li": 34,
+        "a": 241,
+        "img": 49,
+        "button": 10
+      },
+      "bodyMetrics": {
+        "h1": 1,
+        "h2": 6,
+        "h3": 18,
+        "h4": 8,
+        "p": 79,
+        "ul": 7,
+        "ol": 1,
+        "li": 34,
+        "a": 51,
+        "img": 17,
+        "button": 1
+      },
+      "topology": {
+        "rawBaseline": {
+          "h1": 1,
+          "h2": 7,
+          "h3": 28,
+          "h4": 8,
+          "p": 130,
+          "ul": 7,
+          "ol": 1,
+          "li": 34,
+          "a": 241,
+          "img": 49
+        },
+        "renderedRawBaseline": {
+          "h1": 1,
+          "h2": 7,
+          "h3": 28,
+          "h4": 8,
+          "p": 130,
+          "ul": 7,
+          "ol": 1,
+          "li": 34,
+          "a": 241,
+          "img": 47
+        },
+        "bodyBaseline": {
+          "h1": 1,
+          "h2": 6,
+          "h3": 18,
+          "h4": 8,
+          "p": 79,
+          "ul": 7,
+          "ol": 1,
+          "li": 34,
+          "a": 51,
+          "img": 17
+        },
+        "rawDiff": {},
+        "renderedRawDiff": {},
+        "bodyDiff": {},
+        "baselineStatus": "baseline-match"
+      },
+      "bodyBoundary": {
+        "start": "article hero section containing the first semantic h1",
+        "end": "section after #references",
+        "excluded": [
+          "global header/navigation",
+          "promotional banners",
+          "related SEO Guide navigation"
+        ]
+      },
+      "capturedAt": "2026-08-31T15:34:19.356Z",
+      "adapter": "ahrefs-seo-basics",
+      "canonicalMatched": false,
+      "canonicalVerified": true,
+      "canonicalRebindRequired": true,
+      "title": "SEO Basics: Beginner’s Guide to SEO Success",
+      "mediaTopology": {
+        "total": 17,
+        "dataSrcCount": 0,
+        "srcCount": 17,
+        "missingAltCount": 0,
+        "sourceHosts": [
+          "ahrefs.com"
+        ],
+        "normalizedSourceCount": 17
+      },
+      "iframeTopology": {
+        "count": 0,
+        "frames": [],
+        "rights": "none"
+      },
+      "navigationTopology": {
+        "articleWindow": "first h1 through related-guide heading",
+        "excludedRegions": [
+          "global header/navigation",
+          "promotional banners",
+          "related SEO Guide navigation"
+        ],
+        "dynamicClassPolicy": "stable semantic markers only"
+      },
+      "normalization": {
+        "bodyRoot": "semantic article window",
+        "transforms": [
+          "exclude global navigation and promotional sections",
+          "exclude related SEO Guide navigation",
+          "retain article headings, paragraphs, lists, links, references, and reviewed media candidates",
+          "run sanitizer and media rights review before any import"
+        ]
+      },
+      "authorRoles": {
+        "author": "Joshua Hardwick",
+        "contributors": [
+          "Sam Oh",
+          "Louise Linehan"
+        ],
+        "reviewer": "Ryan Law"
+      },
+      "updateEvidence": {
+        "jsonLdDateModified": null,
+        "articleModifiedTimeOrVisibleDate": null,
+        "httpLastModified": null
+      },
+      "collection": {
+        "status": "collected-in-memory",
+        "failureCode": null,
+        "failureMessage": null
+      },
+      "rights": {
+        "status": "blocked",
+        "disposition": "rights-gated-external",
+        "textReuse": "unverified",
+        "mediaReuse": "unverified",
+        "thirdPartyMediaReuse": "not-observed",
+        "termsUrl": "https://ahrefs.com/legal/terms",
+        "termsStatus": 200,
+        "reasonCodes": [
+          "canonical-rebind-required",
+          "source-update-missing",
+          "written-text-permission-missing",
+          "per-asset-rights-unverified"
+        ],
+        "requiredEvidence": [
+          "written permission covering translated full-text republication",
+          "per-asset image ownership or reuse permission",
+          "auditable source update date"
+        ]
+      },
+      "terms": {
+        "requestedUrl": "https://ahrefs.com/legal/terms",
+        "finalUrl": "https://ahrefs.com/legal/terms",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "capturedAt": "2026-08-31T15:34:20.929Z",
+        "contentHash": "f2d2b8c67a91c2253fbfa3fbccf5082cccc01c500db3130e74895357c769057a",
+        "contentLengthBytes": 869072,
+        "redirects": [],
+        "lastModified": null,
+        "signals": {
+          "ownershipLanguage": true,
+          "permissionLanguage": true,
+          "copyRestrictionLanguage": true,
+          "openLicenseLanguage": false
+        },
+        "sourceAssertions": {
+          "intellectual-property-section": true,
+          "ahrefs-ownership": true,
+          "express-grant-limit": true
+        }
+      },
+      "importArtifacts": {
+        "fullBodyPersisted": false,
+        "mediaPersisted": false,
+        "draftCreated": false,
+        "reviewCreated": false,
+        "published": false
+      },
+      "externalDisposition": {
+        "cardAction": "keep-external",
+        "canonicalCardUrl": "https://ahrefs.com/seo/seo-basics",
+        "routeSlug": null,
+        "sourceKeyProvenance": {
+          "requestedUrl": "https://ahrefs.com/blog/seo-basics/",
+          "finalUrl": "https://ahrefs.com/seo/seo-basics",
+          "canonicalUrl": "https://ahrefs.com/seo/seo-basics"
+        }
+      },
+      "review": {
+        "decision": "pending-rights-review",
+        "reviewer": null,
+        "approvedForPromotion": false
+      }
+    },
+    {
+      "sourceId": "mangools-complete-seo-guide",
+      "slug": "mangools-complete-seo-guide",
+      "provider": "Mangools",
+      "author": "Vlado Pavlik",
+      "requestedUrl": "https://mangools.com/blog/learn-seo/",
+      "finalUrl": "https://mangools.com/blog/learn-seo/",
+      "canonicalUrl": "https://mangools.com/blog/learn-seo/",
+      "sourceKey": "https://mangools.com/blog/learn-seo",
+      "contentType": "text/html",
+      "httpStatus": 200,
+      "redirects": [],
+      "sourceUpdatedAt": "2026-05-19T00:00:00.000Z",
+      "httpLastModified": "Mon, 31 Aug 2026 15:34:22 GMT",
+      "httpEtag": null,
+      "sourceContentHash": "eea40e35c6e12676a9911cbbd0e113ffc749dfaf930d3e2e6df5230347926624",
+      "rawHtmlHash": "d13933ea671d6ec7bf9e087dfb572f7c542bd5875aad4186bcd06efbc70ba383",
+      "rawMetrics": {
+        "h1": 11,
+        "h2": 36,
+        "h3": 116,
+        "h4": 33,
+        "h5": 5,
+        "p": 711,
+        "ul": 78,
+        "ol": 5,
+        "li": 338,
+        "a": 264,
+        "blockquote": 4,
+        "img": 124,
+        "iframe": 1,
+        "form": 6,
+        "input": 92,
+        "button": 14
+      },
+      "rawLexicalMetrics": {
+        "h1": 11,
+        "h2": 36,
+        "h3": 116,
+        "h4": 33,
+        "h5": 5,
+        "p": 712,
+        "ul": 78,
+        "ol": 5,
+        "li": 338,
+        "a": 267,
+        "blockquote": 4,
+        "img": 124,
+        "iframe": 1,
+        "form": 6,
+        "input": 92,
+        "button": 14
+      },
+      "bodyMetrics": {
+        "h1": 8,
+        "h2": 35,
+        "h3": 107,
+        "h4": 29,
+        "p": 702,
+        "ul": 68,
+        "ol": 5,
+        "li": 280,
+        "a": 171,
+        "blockquote": 4,
+        "img": 80,
+        "iframe": 1,
+        "form": 2,
+        "input": 85,
+        "button": 2
+      },
+      "topology": {
+        "rawBaseline": {
+          "h1": 11,
+          "h2": 36,
+          "h3": 116,
+          "h4": 33,
+          "h5": 5,
+          "p": 712,
+          "ul": 78,
+          "ol": 5,
+          "li": 338,
+          "img": 124,
+          "iframe": 1,
+          "form": 6,
+          "input": 92,
+          "button": 14,
+          "blockquote": 4
+        },
+        "renderedRawBaseline": {
+          "h1": 11,
+          "h2": 36,
+          "h3": 116,
+          "h4": 33,
+          "h5": 5,
+          "p": 711,
+          "ul": 78,
+          "ol": 5,
+          "li": 338,
+          "img": 124,
+          "iframe": 1,
+          "form": 6,
+          "input": 92,
+          "button": 14,
+          "blockquote": 4
+        },
+        "bodyBaseline": {
+          "h1": 8,
+          "h2": 35,
+          "h3": 107,
+          "h4": 29,
+          "p": 702,
+          "ul": 68,
+          "ol": 5,
+          "li": 280,
+          "img": 80,
+          "iframe": 1,
+          "form": 2,
+          "input": 85,
+          "button": 2,
+          "blockquote": 4
+        },
+        "rawDiff": {},
+        "renderedRawDiff": {},
+        "bodyDiff": {},
+        "baselineStatus": "baseline-match"
+      },
+      "bodyBoundary": {
+        "selector": ".mg-post-content",
+        "excludedRegions": [
+          "WordPress theme navigation",
+          "newsletter and related-post shell"
+        ]
+      },
+      "capturedAt": "2026-08-31T15:34:26.304Z",
+      "adapter": "mangools-wordpress",
+      "canonicalMatched": true,
+      "canonicalVerified": true,
+      "canonicalRebindRequired": false,
+      "title": "SEO basics",
+      "updateEvidence": {
+        "jsonLdDateModified": "2026-05-19T00:00:00.000Z",
+        "articleModifiedTimeOrVisibleDate": "2026-05-19T07:14:02.000Z",
+        "httpLastModified": "Mon, 31 Aug 2026 15:34:22 GMT"
+      },
+      "mediaTopology": {
+        "total": 80,
+        "dataSrcCount": 80,
+        "srcCount": 0,
+        "missingAltCount": 8,
+        "sourceHosts": [
+          "mangools.com"
+        ],
+        "normalizedSourceCount": 80
+      },
+      "iframeTopology": {
+        "count": 1,
+        "frames": [
+          {
+            "sourceAttribute": "data-src",
+            "host": "www.youtube.com",
+            "titlePresent": true,
+            "allowlisted": true
+          }
+        ],
+        "rights": "unverified"
+      },
+      "headingNormalization": {
+        "rawH1": 8,
+        "targetH1": 1,
+        "demotedH1Count": 7,
+        "targetH2": 42
+      },
+      "interactionTopology": {
+        "forms": [
+          "mangools-quiz",
+          "mangools-certificate"
+        ],
+        "formCount": 2,
+        "inputCount": 85,
+        "buttonCount": 2,
+        "disposition": "external-cta",
+        "localCapability": "static explanatory text and source link only"
+      },
+      "normalization": {
+        "bodyRoot": ".mg-post-content",
+        "transforms": [
+          "retain only .mg-post-content",
+          "demote seven chapter-level H1 labels to H2 under one page H1",
+          "prefer data-src for media and normalize it to src during an authorized import",
+          "preserve titled YouTube iframe only after embed rights review",
+          "replace quiz and certificate forms with reviewed external CTAs"
+        ]
+      },
+      "collection": {
+        "status": "collected-in-memory",
+        "failureCode": null,
+        "failureMessage": null
+      },
+      "rights": {
+        "status": "blocked",
+        "disposition": "rights-gated-external",
+        "textReuse": "unverified",
+        "mediaReuse": "unverified",
+        "thirdPartyMediaReuse": "unverified",
+        "termsUrl": "https://mangools.com/conditions",
+        "termsStatus": 200,
+        "reasonCodes": [
+          "written-text-permission-missing",
+          "per-asset-rights-unverified",
+          "unsupported-interaction",
+          "third-party-embed-rights-unverified"
+        ],
+        "requiredEvidence": [
+          "written permission covering translated full-text republication",
+          "per-asset image ownership or reuse permission",
+          "static quiz/certificate CTA approval",
+          "YouTube embed rights decision"
+        ]
+      },
+      "terms": {
+        "requestedUrl": "https://mangools.com/conditions",
+        "finalUrl": "https://mangools.com/conditions",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "capturedAt": "2026-08-31T15:34:31.768Z",
+        "contentHash": "ca16340c97e590ae0284d01717bdaf02c14924e670750bd9bd7b5fd6cecf61ca",
+        "contentLengthBytes": 100018,
+        "redirects": [],
+        "lastModified": null,
+        "signals": {
+          "ownershipLanguage": true,
+          "permissionLanguage": true,
+          "copyRestrictionLanguage": true,
+          "openLicenseLanguage": false
+        },
+        "sourceAssertions": {
+          "license-scope-section": true,
+          "ip-rights-ownership": true,
+          "written-consent-requirement": true
+        }
+      },
+      "importArtifacts": {
+        "fullBodyPersisted": false,
+        "mediaPersisted": false,
+        "draftCreated": false,
+        "reviewCreated": false,
+        "published": false
+      },
+      "externalDisposition": {
+        "cardAction": "keep-external",
+        "canonicalCardUrl": "https://mangools.com/blog/learn-seo/",
+        "routeSlug": null,
+        "sourceKeyProvenance": {
+          "requestedUrl": "https://mangools.com/blog/learn-seo/",
+          "finalUrl": "https://mangools.com/blog/learn-seo/",
+          "canonicalUrl": "https://mangools.com/blog/learn-seo/"
+        }
+      },
+      "review": {
+        "decision": "pending-rights-review",
+        "reviewer": null,
+        "approvedForPromotion": false
+      }
+    }
+  ]
+}
